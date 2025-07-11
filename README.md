@@ -1,7 +1,7 @@
 # Eventra
 
 Eventra is a modern full-stack open-source event management system designed to help communities, colleges, and organizations create, manage, and track events with ease.
-
+It provides a comprehensive set of features for event creation, attendee management, check-in processes, and post-event feedback.
 ---
 ## ✨ Features
 
