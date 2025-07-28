@@ -277,3 +277,87 @@
     font-size: 1.3rem;
   }
 }
+
+/* ===== DARK THEME OVERRIDES FOR What's Happening ===== */
+.hero-dark .whats-happening,
+.dark-theme .whats-happening {
+  background: #1a1a1a;
+}
+
+.dark-theme .section-title {
+  color: #f9fafb;
+}
+
+.dark-theme .section-subtitle {
+  color: #d1d5db;
+}
+
+.dark-theme .event-card {
+  background: rgba(34, 34, 34, 0.6);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark-theme .event-title {
+  color: #f9fafb;
+}
+
+.dark-theme .event-description,
+.dark-theme .event-date,
+.dark-theme .event-type {
+  color: #d1d5db;
+}
+
+.dark-theme .event-status.registration-open {
+  background-color: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.dark-theme .event-status.coming-soon {
+  background-color: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.dark-theme .event-status.planning {
+  background-color: rgba(168, 85, 247, 0.2);
+  color: #a855f7;
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.dark-theme .event-link.btn-secondary {
+  color: #f9fafb;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark-theme .event-link.btn-secondary:hover {
+  color: #a5b4fc;
+  border-color: #a5b4fc;
+}
+
+/* Community highlight fixes */
+.dark-theme .community-highlight {
+  background-color: rgba(34, 34, 34, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .highlight-content h3 {
+  color: #f9fafb;
+}
+
+.dark-theme .highlight-content p {
+  color: #d1d5db;
+}
+
+.dark-theme .highlight-actions .btn-secondary {
+  color: #f9fafb;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark-theme .highlight-actions .btn-secondary:hover {
+  color: #a5b4fc;
+  border-color: #a5b4fc;
+}
+section.whats-happening.dark-theme {
+  background: linear-gradient(135deg, #1f1f1f 0%, #2a2a2a 100%) !important;
+}

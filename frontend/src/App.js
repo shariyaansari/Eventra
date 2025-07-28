@@ -7,10 +7,12 @@ import Features from './components/Features';
 import Testimonials from './components/Testimonials';
 import Community from './components/Community';
 import Footer from './components/Footer';
+import { ThemeProvider } from './ThemeContext';
 import './App.css';
 
 function App() {
   return (
+    <ThemeProvider>
     <Router>
       <div className="App">
         <Navbar />
@@ -24,7 +26,9 @@ function App() {
         <Footer />
       </div>
     </Router>
+    </ThemeProvider>
   );
 }
 
 export default App;
+
