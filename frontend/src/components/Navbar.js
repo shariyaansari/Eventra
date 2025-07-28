@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './shared-layout.css';
-
+import { useTheme } from '../ThemeContext';
 const Navbar = () => {
+  
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,13 +24,15 @@ const Navbar = () => {
   ];
 
   return (
-    <motion.nav 
-      className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}
+   <motion.nav 
+  className={`navbar ${isScrolled ? 'navbar-scrolled' : ''} ${theme === 'dark' ? 'dark-theme' : ''}`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
     >
       <div className="navbar-container">
+        
+
         <div className="navbar-brand">
           <h2 className="text-gradient">Eventra</h2>
         </div>
@@ -48,6 +52,10 @@ const Navbar = () => {
         <div className="navbar-auth desktop-nav">
           <a href="#signin" className="btn-secondary">Sign In</a>
           <a href="#signup" className="btn-primary">Get Started</a>
+         <div/>  
+  <button className="theme-toggle" onClick={toggleTheme}>
+    {theme === 'dark' ? '🌞' : '🌙'}
+  </button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -60,7 +68,7 @@ const Navbar = () => {
           <span></span>
         </button>
       </div>
-
+     
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <motion.div 

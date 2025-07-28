@@ -61,7 +61,7 @@
   max-width: 600px;
 }
 
-.hero-title {
+ .hero-title {
   font-size: 3.5rem;
   font-weight: 800;
   line-height: 1.1;
@@ -254,4 +254,71 @@
     height: 32px;
     font-size: 18px;
   }
+
+  /* Light mode overrides */
+.hero-light .hero-title {
+  color: #1a1a1a;
+}
+
+.hero-light .hero-subtitle {
+  color: #6b7280;
+}
+
+.hero-light .card-header {
+  color: #1a1a1a;
+}
+
+.hero-light .card {
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Dark mode overrides */
+.hero-dark .hero-title {
+  color: #ffffff;
+}
+
+.hero-dark .hero-subtitle {
+  color: #cfcfcf;
+}
+
+.hero-dark .card-header {
+  color: #f0f0f0;
+}
+
+.hero-dark .card {
+  background-color: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+}
+.hero-light {
+  background-color: #fdfdfd;
+  color: #1a1a1a;
+}
+
+.hero-dark {
+  background-color: #121212;
+  color: #f1f1f1;
+}
+
+/* ===== DARK THEME OVERRIDES FOR HERO ===== */
+
+.hero-dark .hero-title {
+  color: #f9fafb;
+}
+
+.hero-dark .hero-subtitle {
+  color: #d1d5db;
+}
+
+.hero-dark .btn-secondary.hero-btn {
+  color: #f9fafb;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.hero-dark .btn-secondary.hero-btn:hover {
+  color: #a5b4fc;
+  border-color: #a5b4fc;
 }
