@@ -1,6 +1,9 @@
-/* Custom app styles will go here */
+.App {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-/* Override any Material-UI styles if needed */
-.MuiCssBaseline-root {
-  @apply bg-gray-50;
+main {
+  position: relative;
+  z-index: 1;
 }
