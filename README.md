@@ -1,177 +1,92 @@
-# Eventra
+# DBMS_Project
 
-Eventra is a modern full-stack open-source event management system designed to help communities, colleges, and organizations create, manage, and track events with ease.
-It provides a comprehensive set of features for event creation, attendee management, check-in processes, and post-event feedback.
-
----
-## ✨ Features
-
-| Category            | Highlights                                                                 |
-|---------------------|----------------------------------------------------------------------------|
-| **Event Management** | Create one‑off or recurring events, set capacities, ticket tiers, and registration windows. |
-| **RSVP & Attendees** | Public/Private RSVP, waiting‑list automation, real‑time attendee counts.   |
-| **Check‑in**         | QR‑code generation, mobile scan interface, offline fallback list.          |
-| **Dashboards**       | Role‑aware analytics (organizer, volunteer, admin).                        |
-| **Feedback**         | Post‑event survey builder, rating widgets, export to CSV.                  |
-| **Permissions**      | Fine‑grained roles (Super‑Admin ▸ Admin ▸ Organizer ▸ Staff ▸ Attendee).   |
+Movie Theatre Management System using Java and MySQL.
 
 ---
 
-## 🏗️ Architecture
+## Local Development Setup
 
-### Frontend (React.js)
-- **Framework**: React 18.2.0 with modern hooks and functional components
-- **Routing**: React Router DOM v6 for navigation
-- **Animations**: Framer Motion for smooth UI transitions
-- **UI Components**: Custom components with responsive design
-- **State Management**: React Context and hooks
-- **Styling**: CSS modules with shared layouts
-
-#### Frontend Components
-- **Landing Page**: Hero section, features showcase, testimonials
-- **Authentication**: Login, registration, and profile management
-- **Event Management**: Create, view, and manage events
-- **Dashboard**: Role-based analytics and management interface
-- **Community**: Social features and user interaction
-
-### Backend (Spring Boot)
-- **Framework**: Spring Boot with Java
-- **Database**: MySQL with JPA/Hibernate
-- **Authentication**: JWT-based security
-- **API**: RESTful endpoints
-
----
-
-## 🛠️ Tech Stack
-
-### Frontend
-- **React.js** 18.2.0 - Modern UI library
-- **React Router DOM** 6.8.0 - Client-side routing
-- **Framer Motion** 8.5.2 - Animation library
-- **React Intersection Observer** 9.4.1 - Scroll-based animations
-- **Heroicons** 2.0.16 - Icon library
-
-### Backend
-- **Spring Boot** - Java framework
-- **MySQL** - Database
-- **Maven** - Build tool
-- **JWT** - Authentication
-
----
-
-## 📦 Installation
+This guide will help you set up and run the Movie Theatre Management System on your local machine.
 
 ### Prerequisites
-- **Node.js** (v16 or higher)
-- **Java** 11 or higher
-- **Maven** 3.6+
-- **MySQL** 8.0+
 
-### Frontend Setup
-```bash
-# Navigate to frontend directory
-cd frontend
+Before you begin, ensure you have the following installed:
 
-# Install dependencies
-npm install
-
-# Start development server
-npm start
-```
-
-The frontend will be available at `http://localhost:3000`
-
-### Backend Setup
-```bash
-# Navigate to backend directory
-cd backend
-
-# Install dependencies and build
-mvn clean install
-
-# Run the application
-mvn spring-boot:run
-```
-
-The backend API will be available at `http://localhost:8080`
+* **Java Development Kit (JDK) 11 or higher**: Download from [Oracle JDK](https://www.oracle.com/java/technologies/downloads/) or [OpenJDK](https://openjdk.java.net/install/). (Updated to 11+ as is common for Spring Boot)
+* **Maven 3.6+**: Download from [Apache Maven](https://maven.apache.org/download.cgi).
+* **MySQL Database Server**: Download from [MySQL Community Downloads](https://dev.mysql.com/downloads/mysql/).
+* **MySQL Connector/J (JDBC Driver)**: The project uses `mysql-connector-j-9.2.0.jar`. You will need to download this JDBC driver to establish a connection between Java and MySQL. You can download it from [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/).
+* **An IDE (Integrated Development Environment)**: Such as [IntelliJ IDEA Community Edition](https://www.jetbrains.com/idea/download/) or [Apache NetBeans](https://netbeans.apache.org/download/index.html). These IDEs make it easier to manage Java projects and dependencies.
 
 ### Database Setup
-1. Create a MySQL database named `eventra`
-2. Update `backend/src/main/resources/application.properties` with your database credentials
-3. The application will auto-create tables on first run
+
+1.  **Start MySQL Server**: Ensure your MySQL server is running.
+
+2.  **Create Database and Tables**:
+    * Open your MySQL client (e.g., MySQL Workbench, command-line client).
+    * Execute the SQL script located in `movie_ticket_management_system_CP.sql`. This script will create the `movie_ticket_management_system_CP` database and all necessary tables.
+
+    ```sql
+    -- Example commands if using MySQL command line:
+    -- mysql -u root -p
+    -- SOURCE path/to/your/cloned/repo/movie_ticket_management_system_CP.sql;
+    ```
+
+3.  **Configure Database Connection**:
+    * The project uses the `Conn.java` file for database connectivity.
+    * **Crucially, update the connection details in `Conn.java`** to match your MySQL server's root password (or create a new user and use its credentials).
+    * **Default Connection String (from `Conn.java`):**
+        ```java
+        c = DriverManager.getConnection("jdbc:mysql:///movie_ticket_management_system_CP", "root", "12345");
+        ```
+    * **Change `"12345"` to your actual MySQL root password.** If your MySQL server is running on a different host or port, you'll need to update `jdbc:mysql:///movie_ticket_management_system_CP` accordingly (e.g., `jdbc:mysql://localhost:3306/movie_ticket_management_system_CP`).
+
+### Application Setup and Run (Backend)
+
+1.  **Clone the Repository**:
+    ```bash
+    git clone [https://github.com/SandeepVashishtha/Eventra.git](https://github.com/SandeepVashishtha/Eventra.git)
+    cd Eventra/backend
+    ```
+
+2.  **Add MySQL Connector/J to Classpath**:
+    * Place the downloaded `mysql-connector-j-9.2.0.jar` file into a `lib` folder within your `Eventra/backend` project directory (you might need to create this folder).
+    * **In your IDE (Recommended):**
+        * **IntelliJ IDEA**: Right-click on your `backend` module -> `Open Module Settings` -> `Libraries` tab -> Click `+` -> `Java` -> Select `mysql-connector-j-9.2.0.jar`.
+        * **NetBeans**: Right-click on your project -> `Properties` -> `Libraries` -> `Add JAR/Folder` and select `mysql-connector-j-9.2.0.jar`.
+        * **VS Code (with Java Extension Pack)**: You might need to configure the `JAVA_HOME` environment variable and add the JAR to the project's build path via `pom.xml` if using Maven, or through VS Code's Java project settings.
+
+3.  **Build the Backend Project**:
+    * Navigate to the `Eventra/backend` directory in your terminal.
+    * Run: `mvn clean install`
+
+4.  **Run the Backend Application**:
+    * From the `Eventra/backend` directory, run: `mvn spring-boot:run`
+    * The backend API will be available at `http://localhost:8080` (as per Eventra's original README, which is good to cross-reference).
+
+### Login Credentials (Default/Example)
+
+* **To create a user**: The `Login.java` has a "Sign up" button that leads to `Signup.java`. You should use this to create new user accounts in the `users` table.
+* The `signup` table also stores user data; it seems to be an older version or a separate registration flow. Focus on the `users` table for login.
 
 ---
 
-## 🚀 Available Scripts
+## Project Structure (Key Files)
 
-### Frontend
-- `npm start` - Start development server
-- `npm build` - Build for production
-- `npm test` - Run tests
-- `npm eject` - Eject from Create React App
-
-### Backend
-- `mvn spring-boot:run` - Start the application
-- `mvn clean install` - Build the project
-- `mvn test` - Run tests
-
----
-
-## 📁 Project Structure
-
-```
-Eventra/
-├── frontend/                 # React.js frontend
-│   ├── public/              # Static assets
-│   ├── src/
-│   │   ├── components/      # Reusable UI components
-│   │   ├── pages/           # Page components
-│   │   ├── App.js           # Main App component
-│   │   └── index.js         # Entry point
-│   └── package.json
-├── backend/                 # Spring Boot backend
-│   ├── src/main/java/       # Java source code
-│   ├── src/main/resources/  # Configuration files
-│   └── pom.xml
-└── README.md
-```
+* `BackendApplication.java`: The main Spring Boot application entry point, located at `com.eventra.BackendApplication`.
+* `Conn.java`: Manages the MySQL database connection. **(Remember to update credentials here)**
+* `movie_ticket_management_system_CP.sql`: SQL script for database creation and initial table population.
+* `mysql-connector-j-9.2.0.jar`: MySQL JDBC driver.
+* Other `.java` files:
+    * `com.eventra.controller/`: Contains REST API endpoint classes (e.g., `AdminController.java`, `AuthController.java`, `UserController.java`, `StatusController.java`).
+    * `com.eventra.dto/`: Contains Data Transfer Objects for API requests/responses (e.g., `AuthResponse.java`, `LoginRequest.java`, `MessageResponse.java`, `SignupRequest.java`).
+    * `com.eventra.entity/`: Contains JPA entities (e.g., `User.java`).
+    * `com.eventra.filter/`: Contains servlet filters (e.g., `JwtAuthenticationFilter.java`).
+    * `com.eventra.repository/`: Contains Spring Data JPA repositories (e.g., `UserRepository.java`).
+    * `com.eventra.service/`: Contains business logic and service layer components (e.g., `AuthService.java`, `CustomUserDetailsService.java`).
+    * `com.eventra.util/`: Contains utility and helper classes (e.g., `JwtUtil.java`).
+    * `com.eventra.config/`: Contains Spring configuration classes (e.g., `SecurityConfig.java`).
 
 ---
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 📚 API Documentation
-
-Comprehensive API documentation is available for developers and integrators:
-
-- **[API Documentation](./docs/README.md)** - Complete API reference and guides
-- **[OpenAPI Specification](./docs/openapi.yaml)** - Machine-readable API specification
-- **[Authentication Guide](./docs/authentication.md)** - User management and security
-- **[Events API](./docs/events.md)** - Event creation and management
-- **[RSVP & Attendees](./docs/rsvp-attendees.md)** - Registration and attendee management
-- **[Check-in System](./docs/checkin.md)** - QR codes and attendance tracking
-- **[Analytics & Dashboards](./docs/dashboards.md)** - Event analytics and reporting
-- **[Feedback & Surveys](./docs/feedback.md)** - Post-event feedback collection
-- **[Admin Operations](./docs/admin.md)** - Administrative functionality
-- **[Error Codes](./docs/errors.md)** - Complete error reference
-
-## 🔗 Links
-
-- **Frontend**: Modern React.js application with responsive design
-- **Backend**: RESTful API built with Spring Boot
-- **Database**: MySQL for reliable data storage
-- **API Docs**: Comprehensive API documentation for developers
+Feel free to open an issue or pull request if you encounter any problems or have suggestions for improvement.
