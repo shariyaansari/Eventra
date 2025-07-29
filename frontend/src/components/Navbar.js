@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './shared-layout.css';
-import { useTheme } from '../ThemeContext';
+
 const Navbar = () => {
-  
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +15,7 @@ const Navbar = () => {
   }, []);
 
   const navItems = [
+    { name: 'Events', href: '#events' },
     { name: 'Hackathons', href: '#hackathons' },
     { name: 'Projects', href: '#projects' },
     { name: 'Community', href: '#community' },
@@ -25,7 +24,7 @@ const Navbar = () => {
 
   return (
    <motion.nav 
-  className={`navbar ${isScrolled ? 'navbar-scrolled' : ''} ${theme === 'dark' ? 'dark-theme' : ''}`}
+  className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
@@ -52,10 +51,6 @@ const Navbar = () => {
         <div className="navbar-auth desktop-nav">
           <a href="#signin" className="btn-secondary">Sign In</a>
           <a href="#signup" className="btn-primary">Get Started</a>
-         <div/>  
-  <button className="theme-toggle" onClick={toggleTheme}>
-    {theme === 'dark' ? '🌞' : '🌙'}
-  </button>
         </div>
 
         {/* Mobile Menu Button */}

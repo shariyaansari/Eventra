@@ -1,10 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import './Testimonials.css';
-import { useTheme } from '../ThemeContext';
+import './components.css';
+
 const Testimonials = () => {
-  const { theme } = useTheme();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.2
@@ -52,7 +51,7 @@ const Testimonials = () => {
   };
 
   return (
-    <section className={`testimonials section-padding ${theme === 'dark' ? 'dark-theme' : ''}`} ref={ref}>
+    <section className="testimonials section-padding" ref={ref}>
       <div className="container">
         <motion.div 
           className="testimonials-header"

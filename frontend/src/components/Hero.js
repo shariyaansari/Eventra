@@ -1,12 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import './Hero.css';
-import { useTheme } from '../ThemeContext';
-
+import './components.css';
 
 const Hero = () => {
-  const { theme } = useTheme();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1
@@ -33,7 +30,7 @@ const Hero = () => {
   };
 
   return (
-   <section className={`hero ${theme === 'dark' ? 'hero-dark' : 'hero-light'}`} ref={ref}>
+   <section className="hero" ref={ref}>
       <div className="hero-background">
         <div className="hero-gradient"></div>
       </div>
@@ -66,7 +63,7 @@ const Hero = () => {
           </motion.div>
         </motion.div>
         
-        <motion.div 
+        {/* <motion.div 
           className="hero-visual"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
@@ -92,7 +89,7 @@ const Hero = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

@@ -1,22 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import './Community.css';
-
-
-
-import { useTheme } from '../ThemeContext'; // ✅ using the hook
+import './components.css';
 
 const Community = () => {
-  const { theme } = useTheme();// ✅ uses the hook directly
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.3
   });
 
   return (
-    
-    <section className={`community section-padding ${theme === 'dark' ? 'dark' : ''}`} ref={ref}>
+    <section className="community section-padding" ref={ref}>
       <div className="container">
         <motion.div 
           className="community-content"

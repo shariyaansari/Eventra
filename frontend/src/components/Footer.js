@@ -1,11 +1,8 @@
 import React from 'react';
 import './shared-layout.css';
 
-import { useTheme } from '../ThemeContext'; // ✅ Theme integration
 const Footer = () => {
-  
   const currentYear = new Date().getFullYear();
-  const { theme } = useTheme();
 
   const footerLinks = {
     community: [
@@ -39,7 +36,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className={`footer ${theme === 'dark' ? 'footer-dark' : 'footer-light'}`}>
+    <footer className="footer">
       <div className="container">
         <div className="footer-content">
           <div className="footer-brand">

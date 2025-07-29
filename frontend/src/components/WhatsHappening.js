@@ -1,11 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import './WhatsHappening.css';
-import { useTheme } from '../ThemeContext';
+import './components.css';
 
 const WhatsHappening = () => {
-  const { theme } = useTheme();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.2
@@ -65,7 +63,7 @@ const WhatsHappening = () => {
   };
 
   return (
-    <section className={`whats-happening section-padding ${theme === 'dark' ? 'dark-theme' : ''}`} ref={ref}>
+    <section className="whats-happening section-padding" ref={ref}>
       <div className="container">
         <motion.div 
           className="section-header"
