@@ -3,7 +3,7 @@
 spring.application.name=backend
 
 # MySQL configuration for Spring Boot
-spring.datasource.url=mysql url
+spring.datasource.url=jdbc:mysql://localhost:3306/eventra_db
 spring.datasource.username= your username
 spring.datasource.password= password
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
