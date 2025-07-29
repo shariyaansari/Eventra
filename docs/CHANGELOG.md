@@ -266,9 +266,6 @@ Accept: application/vnd.eventra.v1+json
 ## Support & Resources
 
 ### Getting Help
-- 📚 **Documentation**: [https://docs.eventra.com](https://docs.eventra.com)
-- 💬 **Community Discord**: [https://discord.gg/eventra](https://discord.gg/eventra)
-- 📧 **API Support**: [api-support@eventra.com](mailto:api-support@eventra.com)
 - 🐛 **Bug Reports**: [GitHub Issues](https://github.com/SandeepVashishtha/Eventra/issues)
 
 ### Resources
