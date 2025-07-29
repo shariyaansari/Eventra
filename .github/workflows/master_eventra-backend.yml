@@ -25,13 +25,14 @@ jobs:
           distribution: 'microsoft'
 
       - name: Build with Maven
+        working-directory : backend
         run: mvn clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: '${{ github.workspace }}/backend/target/*.jar'
 
   deploy:
     runs-on: windows-latest
@@ -59,5 +60,5 @@ jobs:
         with:
           app-name: 'Eventra-Backend'
           slot-name: 'Production'
-          package: '*.jar'
+          package: 'backend/target/*.jar'
           
