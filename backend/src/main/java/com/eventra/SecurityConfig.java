@@ -1,4 +1,4 @@
-package com.eventra.config;
+package com.eventra;
 
 import com.eventra.filter.JwtAuthenticationFilter;
 import com.eventra.service.CustomUserDetailsService;
