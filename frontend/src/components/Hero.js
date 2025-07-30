@@ -2,6 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import './components.css';
+import { Link } from 'react-router-dom';
+
 
 const Hero = () => {
   const [ref, inView] = useInView({
@@ -30,13 +32,13 @@ const Hero = () => {
   };
 
   return (
-   <section className="hero" ref={ref}>
+    <section className="hero" ref={ref}>
       <div className="hero-background">
         <div className="hero-gradient"></div>
       </div>
-      
+
       <div className="container">
-        <motion.div 
+        <motion.div
           className="hero-content"
           variants={containerVariants}
           initial="hidden"
@@ -47,22 +49,22 @@ const Hero = () => {
             <br />
             <span className="text-gradient">for Communities</span>
           </motion.h1>
-          
+
           <motion.p variants={itemVariants} className="hero-subtitle">
-            Create, manage, and track events with ease. A comprehensive open-source platform 
+            Create, manage, and track events with ease. A comprehensive open-source platform
             designed for communities, colleges, and organizations worldwide.
           </motion.p>
-          
+
           <motion.div variants={itemVariants} className="hero-actions">
-            <a href="#get-started" className="btn-primary hero-btn">
-              Create Event
-            </a>
+           <Link to="/create-event" className="btn-primary hero-btn">
+              Create Event  
+            </Link>
             <a href="#learn-more" className="btn-secondary hero-btn">
               View Demo
             </a>
           </motion.div>
         </motion.div>
-        
+
         {/* <motion.div 
           className="hero-visual"
           initial={{ opacity: 0, scale: 0.8 }}

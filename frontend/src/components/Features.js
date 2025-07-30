@@ -1,9 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { useNavigate } from 'react-router-dom'; 
 import './components.css';
 
+
 const Features = () => {
+  const navigate = useNavigate(); 
+  
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.2
@@ -16,7 +20,8 @@ const Features = () => {
       description: "Launch events in minutes with intelligent templates, automatic capacity management, and integrated ticketing. Support for workshops, conferences, meetups, and more.",
       cta: "Start Creating",
       highlight: true,
-      stats: "90% faster setup"
+      stats: "90% faster setup",
+      action: () => navigate('/create-event') 
     },
     {
       icon: "⚡",
@@ -114,13 +119,11 @@ const Features = () => {
                 <h3 className="feature-title">{feature.title}</h3>
                 <span className="feature-stat">{feature.stats}</span>
               </div>
-              <p className="feature-description">{feature.description}</p>
+               <p className="feature-description">{feature.description}</p>
               <button 
                 className="feature-cta"
-                onClick={() => {
-                  // Add actual navigation logic here
-                  console.log(`Navigate to ${feature.cta}`);
-                }}
+                onClick={feature.action ? feature.action : () => {}} 
+                disabled={!feature.action}
               >
                 {feature.cta}
                 <span className="cta-arrow">→</span>
