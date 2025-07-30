@@ -12,7 +12,7 @@ const Footer = () => {
       { name: 'Documentation', href: '#docs' }
     ],
     company: [
-      { name: 'About', href: '#about' },
+      { name: 'About', href: '/about' },
       { name: 'Open Source', href: '#opensource' },
       { name: 'GitHub', href: 'https://github.com/sandeepvashishtha/Eventra' },
       { name: 'Changelog', href: '#changelog' },

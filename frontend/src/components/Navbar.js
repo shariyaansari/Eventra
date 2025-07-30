@@ -17,7 +17,7 @@ const Navbar = () => {
   const navItems = [
     { name: 'Events', href: '#events' },
     { name: 'Hackathons', href: '#hackathons' },
-    { name: 'About', href: '#about' }
+    { name: 'About', href: '/about' }
   ];
 
   return (
@@ -29,10 +29,11 @@ const Navbar = () => {
     >
       <div className="navbar-container">
         
-
+        <a href="/" className="nav-link">
         <div className="navbar-brand">
           <h2 className="text-gradient">Eventra</h2>
         </div>
+        </a>
 
         {/* Desktop Navigation */}
         <ul className="navbar-nav desktop-nav">
