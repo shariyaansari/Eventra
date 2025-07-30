@@ -7,8 +7,9 @@ import Features from './components/Features';
 import Testimonials from './components/Testimonials';
 import Community from './components/Community';
 import Footer from './components/Footer';
-
 import EventCreation from './components/common/EventCreation'; 
+import AboutPage from './components/AboutPage';
+import './App.css';
 
 function App() {
   return (
@@ -16,21 +17,21 @@ function App() {
       <div className="App">
         <Navbar />
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <main>
+        <main>
+          <Routes>
+            <Route path="/" element={
+              <>
                 <Hero />
                 <WhatsHappening />
                 <Features />
                 <Testimonials />
                 <Community />
-              </main>
-            }
-          />
-          <Route path="/create-event" element={<EventCreation />} /> {/* ✅ New route */}
-        </Routes>
+              </>
+            } />
+            <Route path="/create-event" element={<EventCreation />} />
+            <Route path="/about" element={<AboutPage />} />
+          </Routes>
+        </main>
 
         <Footer />
       </div>
