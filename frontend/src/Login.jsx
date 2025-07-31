@@ -49,8 +49,8 @@ function LoginPage() {
             />
             <a>reset Password</a>
             <button type="submit">Login</button>
-            <a href="#google">google</a> // href="http://localhost:8080/oauth2/authorization/google" for google o auth
-            <a href="#facebook">facebook</a> //href="http://localhost:8080/oauth2/authorization/facebook"
+            <a href="http://localhost:8080/oauth2/authorization/google">google</a>
+            <a href="http://localhost:8080/oauth2/authorization/facebook">facebook</a>
         </form>
     );
 
