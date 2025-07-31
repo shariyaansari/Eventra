@@ -29,11 +29,13 @@ const Navbar = () => {
     >
       <div className="navbar-container">
         
-        <a href="/" className="nav-link">
-        <div className="navbar-brand">
-          <h2 className="text-gradient">Eventra</h2>
-        </div>
-        </a>
+      <div 
+  className="nav-link navbar-brand"
+  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+  style={{ cursor: 'pointer' }}
+>
+  <h2 className="text-gradient">Eventra</h2>
+</div>
 
         {/* Desktop Navigation */}
         <ul className="navbar-nav desktop-nav">

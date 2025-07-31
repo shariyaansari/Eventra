@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import WhatsHappening from './components/WhatsHappening';
@@ -10,10 +9,14 @@ import Community from './components/Community';
 import Footer from './components/Footer';
 import EventCreation from './components/common/EventCreation';
 import AboutPage from './components/AboutPage';
-
+import createScrollToTopButton from './components/scrolltotopButton';
 import './App.css';
 
 function App() {
+  useEffect(() => {
+    createScrollToTopButton(); 
+  }, []);
+
   return (
     <Router>
       <div className="App">
