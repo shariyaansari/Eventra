@@ -1,30 +1,29 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import WhatsHappening from './components/WhatsHappening';
-import Features from './components/Features';
-import Testimonials from './components/Testimonials';
-import Community from './components/Community';
-import Footer from './components/Footer';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
+import LoginPage from "./Login";
+import HomePage from './HomePage';
+import ProtectedRoute from "./ProtectedRoute";
+import RegisterPage from "./Register";
+import OAuthLogin from "./OAuthLogin";
+import Logout from "./Logout";
 
 function App() {
-  return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <main>
-          <Hero />
-          <WhatsHappening />
-          <Features />
-          <Testimonials />
-          <Community />
-        </main>
-        <Footer />
-      </div>
-    </Router>
-  );
+    return (
+        <Router>
+            <Routes>
+                <Route path="/login" element={<LoginPage/>}/>
+                <Route path="/register" element={<RegisterPage/>}/>
+                <Route path="/" element={<ProtectedRoute><HomePage/></ProtectedRoute>}/>
+                <Route path="/oauth-login" element={<OAuthLogin/>}> </Route>
+                <Route path="/logout" element={<Logout/>}> </Route>
+
+                //enclose any page you want to protect with protected route
+            </Routes>
+
+
+        </Router>
+    );
 }
 
 export default App;

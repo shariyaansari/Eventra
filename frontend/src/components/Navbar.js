@@ -46,8 +46,9 @@ const Navbar = () => {
 
         {/* Auth Buttons */}
         <div className="navbar-auth desktop-nav">
-          <a href="#signin" className="btn-secondary">Sign In</a>
-          <a href="#signup" className="btn-primary">Get Started</a>
+          <a href="#login" className="btn-secondary">Sign In</a>//change to /login in original button for login
+          <a href="#register" className="btn-primary">Get Started</a> //change to /register in original button for register
+        <a href="#logout" className="btn-secondary">Logout</a>  //change to /logout in original button for logout
         </div>
 
         {/* Mobile Menu Button */}
