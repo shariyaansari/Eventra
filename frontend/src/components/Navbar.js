@@ -14,6 +14,7 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+
     const navItems = [
         {name: 'Hackathons', href: '#hackathons'},
         {name: 'Projects', href: '#projects'},
@@ -28,6 +29,7 @@ const Navbar = () => {
         const signUpBtn = document.getElementById("signUpBtn");
         const cookies = document.cookie.split(';').map(cookie => cookie.trim());
         const tokenCookie = cookies.find(cookie => cookie.startsWith("jwtToken="));
+
 
         if (tokenCookie) {
             signInBtn.style.display = "none";
@@ -48,6 +50,7 @@ const Navbar = () => {
             animate={{y: 0}}
             transition={{duration: 0.6}}
         >
+
             <div className="navbar-container">
                 <div className="navbar-brand">
                     <h2 className="text-gradient">Eventra</h2>
@@ -108,6 +111,7 @@ const Navbar = () => {
             )}
         </motion.nav>
     );
+
 };
 
 export default Navbar;

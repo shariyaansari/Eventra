@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import './WhatsHappening.css';
+import './components.css';
 
 const WhatsHappening = () => {
   const [ref, inView] = useInView({

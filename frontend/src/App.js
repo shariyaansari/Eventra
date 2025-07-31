@@ -1,3 +1,4 @@
+
 import React from 'react';
 import './App.css';
 import WhatsHappening from "./components/WhatsHappening";
@@ -22,6 +23,7 @@ function App() {
                 <Footer/>
             </div>
         </>);
+
 }
 
 export default App;

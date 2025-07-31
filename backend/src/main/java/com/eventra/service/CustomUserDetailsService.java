@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+
 public class CustomUserDetailsService implements UserDetailsService {
     private final UserAuthRepo userAuthRepo;
 
@@ -27,5 +28,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .password(user.getPassword())
                 .roles("USER")
                 .build();
+
     }
 }

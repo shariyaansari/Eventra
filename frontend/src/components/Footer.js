@@ -6,13 +6,13 @@ const Footer = () => {
 
   const footerLinks = {
     community: [
-      { name: 'Create Event', href: '#create' },
+      { name: 'Create Event', href: '/create-event' },
       { name: 'Event Templates', href: '#templates' },
       { name: 'Community Events', href: '#community' },
       { name: 'Documentation', href: '#docs' }
     ],
     company: [
-      { name: 'About', href: '#about' },
+      { name: 'About', href: '/about' },
       { name: 'Open Source', href: '#opensource' },
       { name: 'GitHub', href: 'https://github.com/sandeepvashishtha/Eventra' },
       { name: 'Changelog', href: '#changelog' },

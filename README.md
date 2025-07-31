@@ -154,8 +154,24 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
+## 📚 API Documentation
+
+Comprehensive API documentation is available for developers and integrators:
+
+- **[API Documentation](./docs/README.md)** - Complete API reference and guides
+- **[OpenAPI Specification](./docs/openapi.yaml)** - Machine-readable API specification
+- **[Authentication Guide](./docs/authentication.md)** - User management and security
+- **[Events API](./docs/events.md)** - Event creation and management
+- **[RSVP & Attendees](./docs/rsvp-attendees.md)** - Registration and attendee management
+- **[Check-in System](./docs/checkin.md)** - QR codes and attendance tracking
+- **[Analytics & Dashboards](./docs/dashboards.md)** - Event analytics and reporting
+- **[Feedback & Surveys](./docs/feedback.md)** - Post-event feedback collection
+- **[Admin Operations](./docs/admin.md)** - Administrative functionality
+- **[Error Codes](./docs/errors.md)** - Complete error reference
+
 ## 🔗 Links
 
 - **Frontend**: Modern React.js application with responsive design
 - **Backend**: RESTful API built with Spring Boot
 - **Database**: MySQL for reliable data storage
+- **API Docs**: Comprehensive API documentation for developers
