@@ -1,21 +1,33 @@
 package com.eventra.service;
 
-import com.eventra.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import com.eventra.Dao.UserAuthRepo;
+import com.eventra.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+public class CustomUserDetailsService implements UserDetailsService {
+    private final UserAuthRepo userAuthRepo;
+
+    @Autowired
+    public CustomUserDetailsService(UserAuthRepo userAuthRepo) {
+        this.userAuthRepo = userAuthRepo;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+        User user = userAuthRepo
+                .findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return org.springframework.security.core.userdetails.User
+                .withUsername(email)
+                .password(user.getPassword())
+                .roles("USER")
+                .build();
+
     }
 }
