@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import './shared-layout.css';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [languageDropdown, setLanguageDropdown] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState('EN');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,9 +18,19 @@ const Navbar = () => {
   }, []);
 
   const navItems = [
-    { name: 'Events', href: '#events' },
-    { name: 'Hackathons', href: '#hackathons' },
+    { name: 'Events', href: '/events' },
+    { name: 'Hackathons', href: '/hackathons' },
+    { name: 'Projects', href: '/projects' },
+    { name: 'Leaderboard', href: '/leaderboard' },
     { name: 'About', href: '/about' }
+  ];
+
+  const languages = [
+    { code: 'EN', name: 'English' },
+    { code: 'ES', name: 'Español' },
+    { code: 'FR', name: 'Français' },
+    { code: 'DE', name: 'Deutsch' },
+    { code: 'HI', name: 'हिंदी' }
   ];
 
   return (
@@ -29,27 +42,56 @@ const Navbar = () => {
     >
       <div className="navbar-container">
         
-      <div 
-  className="nav-link navbar-brand"
-  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-  style={{ cursor: 'pointer' }}
->
-  <h2 className="text-gradient">Eventra</h2>
-</div>
+        <Link 
+          to="/"
+          className="nav-link navbar-brand"
+          style={{ cursor: 'pointer', textDecoration: 'none' }}
+        >
+          <h2 className="text-gradient">Eventra</h2>
+        </Link>
 
         {/* Desktop Navigation */}
         <ul className="navbar-nav desktop-nav">
           {navItems.map((item) => (
             <li key={item.name}>
-              <a href={item.href} className="nav-link">
+              <Link to={item.href} className="nav-link">
                 {item.name}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
 
-        {/* Auth Buttons */}
-        <div className="navbar-auth desktop-nav">
+        {/* Language Selector & Auth Buttons */}
+        <div className="navbar-right desktop-nav">
+          <div className="language-selector">
+            <button 
+              className="language-btn"
+              onClick={() => setLanguageDropdown(!languageDropdown)}
+            >
+              🌐 {currentLanguage} ▼
+            </button>
+            {languageDropdown && (
+              <motion.div 
+                className="language-dropdown"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    className="language-option"
+                    onClick={() => {
+                      setCurrentLanguage(lang.code);
+                      setLanguageDropdown(false);
+                    }}
+                  >
+                    {lang.name}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </div>
           <a href="#signin" className="btn-secondary">Sign In</a>
           <a href="#signup" className="btn-primary">Get Started</a>
         </div>
@@ -74,14 +116,14 @@ const Navbar = () => {
           transition={{ duration: 0.3 }}
         >
           {navItems.map((item) => (
-            <a 
+            <Link 
               key={item.name}
-              href={item.href} 
+              to={item.href} 
               className="mobile-nav-link"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {item.name}
-            </a>
+            </Link>
           ))}
           <div className="mobile-auth">
             <a href="#signin" className="btn-secondary">Sign In</a>

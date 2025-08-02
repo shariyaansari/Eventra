@@ -9,6 +9,10 @@ import Community from './components/Community';
 import Footer from './components/Footer';
 import EventCreation from './components/common/EventCreation';
 import AboutPage from './components/AboutPage';
+import EventsSection from './components/EventsSection';
+import HackathonHub from './components/HackathonHub';
+import ProjectGallery from './components/ProjectGallery';
+import Leaderboard from './components/Leaderboard';
 import createScrollToTopButton from './components/scrolltotopButton';
 import './App.css';
 
@@ -36,6 +40,10 @@ function App() {
                 </>
               }
             />
+            <Route path="/events" element={<EventsSection />} />
+            <Route path="/hackathons" element={<HackathonHub />} />
+            <Route path="/projects" element={<ProjectGallery />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/create-event" element={<EventCreation />} />
             <Route path="/about" element={<AboutPage />} />
           </Routes>

@@ -45,23 +45,46 @@ const Hero = () => {
           animate={inView ? "visible" : "hidden"}
         >
           <motion.h1 variants={itemVariants} className="hero-title">
-            Modern Event Management
+            The All-in-One Event Platform
             <br />
-            <span className="text-gradient">for Communities</span>
+            <span className="text-gradient">for Tech Communities</span>
           </motion.h1>
 
           <motion.p variants={itemVariants} className="hero-subtitle">
-            Create, manage, and track events with ease. A comprehensive open-source platform
-            designed for communities, colleges, and organizations worldwide.
+            Host and manage tech events, hackathons, and collaborative projects. 
+            Join our thriving community of developers, showcase your projects, 
+            and connect with fellow innovators in one comprehensive platform.
           </motion.p>
 
+          <motion.div variants={itemVariants} className="hero-features">
+            <div className="feature-highlight">
+              <span className="feature-icon">🎯</span>
+              <span>Tech Events & Conferences</span>
+            </div>
+            <div className="feature-highlight">
+              <span className="feature-icon">🏆</span>
+              <span>Virtual & Physical Hackathons</span>
+            </div>
+            <div className="feature-highlight">
+              <span className="feature-icon">🚀</span>
+              <span>Project Showcase & Collaboration</span>
+            </div>
+            <div className="feature-highlight">
+              <span className="feature-icon">🏅</span>
+              <span>Contributor Leaderboard</span>
+            </div>
+          </motion.div>
+
           <motion.div variants={itemVariants} className="hero-actions">
-           <Link to="/create-event" className="btn-primary hero-btn">
-              Create Event  
+           <Link to="/events" className="btn-primary hero-btn">
+              Explore Events  
             </Link>
-            <a href="#learn-more" className="btn-secondary hero-btn">
-              View Demo
-            </a>
+            <Link to="/hackathons" className="btn-secondary hero-btn">
+              Join Hackathons
+            </Link>
+            <Link to="/projects" className="btn-outline hero-btn">
+              Browse Projects
+            </Link>
           </motion.div>
         </motion.div>
 
