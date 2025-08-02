@@ -7,3 +7,21 @@ main {
   position: relative;
   z-index: 1;
 }
+.social-links a {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0.5rem;
+  
+  transition: transform 0.2s ease;
+}
+
+.social-links a:visited,
+.social-links a:active {
+  color: white;
+}
+
+.social-links a:hover {
+  transform: scale(1.1);
+}
