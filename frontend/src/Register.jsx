@@ -31,21 +31,23 @@ function RegisterPage() {
 
     return (
         <form onSubmit={handleSubmit}>
+            <label>Enter your Email</label>
             <input
                 name="username"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-            />
+            /><br/>
+            <label>Enter your password</label>
             <input
                 name="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-            />
-            <button type="submit">Register</button>
+            /><br/>
+            <button type="submit" className="btn-secondary">Register</button>
         </form>
     );
 

@@ -1,19 +1,21 @@
 import axios from 'axios';
 import {useEffect} from "react";
 
+export default function Logout() {
+    useEffect(() => {
+        const logout = async () => {
+            try {
+                await axios.post("http://localhost:8080/logout", null, {
+                    withCredentials: true,
+                });
+                window.location.href = "/login";
+            } catch (error) {
+                console.error("Logout error:", error);
+            }
+        };
 
-function Logout() {
-    useEffect(async () => {
-
-        await axios.post("http://localhost:8080/logout", null, {
-            withCredentials: true
-        })
-            .catch(error => console.error(error));
-
-        window.location.href = "/login";
-
-
+        logout();
     }, []);
-}
 
-export default Logout;
+    return <p>Logging you out...</p>;
+}

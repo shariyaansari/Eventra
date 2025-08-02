@@ -32,6 +32,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserDto userDto, HttpServletResponse response) {
+
         try {
             Authentication auth = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword()));
@@ -49,7 +50,7 @@ public class LoginController {
                 return ResponseEntity.ok("Logged in successfully");
             }
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login Error");
+            return ResponseEntity.ok("User not Found");
         }
         return ResponseEntity.ok("Wrong email or password");
     }

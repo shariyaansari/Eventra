@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {createBrowserRouter ,RouterProvider,} from "react-router-dom";
 import LoginPage from "./Login";
 import RegisterPage from "./Register";
 import ProtectedRoute from "./ProtectedRoute";
@@ -7,19 +7,20 @@ import OAuthLogin from "./OAuthLogin";
 import Logout from "./Logout";
 import App from "./App";
 
-function AppRouter() {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/login" element={<LoginPage/>}/>
-                <Route path="/register" element={<RegisterPage/>}/>
-                <Route path="/" element={<App />}/>
-                <Route path="/oauth-login" element={<OAuthLogin/>}> </Route>
-                <Route path="/logout" element={<Logout/>}> </Route>
-            </Routes>
-        </Router>
-         // use protected route on which page you want to secure<ProtectedRoute></ProtectedRoute>
-    );
-}
+const router = createBrowserRouter([
+    { path: "/login", element: <LoginPage /> },
+    { path: "/register", element: <RegisterPage /> },
+    { path: "/", element: <App /> },
+    { path: "/oauth-login", element: <OAuthLogin /> },
+    { path: "/logout", element: <Logout /> },
+], {
+    future: {
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+    }
+});
 
-export default AppRouter;
+export default function AppRouter() {
+    // enclose anything you want to protect in <ProtectedRoute></ProtectedRoute>
+    return <RouterProvider router={router} />;
+}

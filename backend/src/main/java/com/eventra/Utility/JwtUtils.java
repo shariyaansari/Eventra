@@ -13,7 +13,9 @@ import java.util.Map;
 
 @Component
 public class JwtUtils {
-    private final String secret = "your secret key";
+
+
+    private final String secret = "as61ga1ah1a6hsgfhrb56kjttn8KydE6";
     private final long expiryDate = 1000 * 60 * 60 * 2;    //2 hours or your expiry time
     private final long currentTime = System.currentTimeMillis();
 

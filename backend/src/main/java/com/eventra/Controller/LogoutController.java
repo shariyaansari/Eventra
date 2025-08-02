@@ -46,6 +46,7 @@ public class LogoutController {
     }
 
     private String getTokenFromCookies(Cookie[] cookies) {
+        System.out.println("called getTokenFromCookies");
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if ("jwtToken".equals(cookie.getName())) {

@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import CookieAuthCheck from "./components/CookieAuthCheck";
+import CookieAuthCheck from "./components/useCookieAuthCheck";
 
 export default function OAuthLogin() {
     const {isAuthenticated, authChecked} = CookieAuthCheck();

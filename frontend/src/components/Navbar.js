@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {motion} from 'framer-motion';
 import './shared-layout.css';
+import useCookieAuthCheck from './useCookieAuthCheck';
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const {isAuthenticated, authChecked } = useCookieAuthCheck();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -20,26 +22,8 @@ const Navbar = () => {
         {name: 'Community', href: '#community'},
         {name: 'About', href: '#about'}
     ];
+    if (!authChecked) return <div>Checking auth...</div>;
 
-    isLoggedIn();
-    function isLoggedIn() {
-        const logoutBtn = document.getElementById("logoutBtn");
-        const signInBtn = document.getElementById("signInBtn");
-        const signUpBtn = document.getElementById("signUpBtn");
-        const cookies = document.cookie.split(';').map(cookie => cookie.trim());
-        const tokenCookie = cookies.find(cookie => cookie.startsWith("jwtToken="));
-
-        if (tokenCookie) {
-            signInBtn.style.display = "none";
-            signUpBtn.style.display = "none";
-            logoutBtn.style.display = "block";
-        } else {
-            signUpBtn.style.display = "block";
-            signInBtn.style.display = "block";
-            logoutBtn.style.display = "none";
-        }
-
-    }
 
     return (
         <motion.nav
@@ -65,11 +49,17 @@ const Navbar = () => {
                 </ul>
 
                 {/* Auth Buttons */}
-                <div className="navbar-auth desktop-nav">
-                    <a id="signInBtn" href="/login" className="btn-secondary">Sign In</a>
-                    <a id="signUpBtn" href="/register" className="btn-primary">Get Started</a>
+
+                {isAuthenticated ? (
+                    <div>
                     <a id="logoutBtn" href="/logout" className="btn-secondary">Logout</a>
-                </div>
+                    </div>
+                ) : (
+                    <div>
+                        <a id="signInBtn" href="/login" className="btn-secondary">Sign In</a>
+                        <a id="signUpBtn" href="/register" className="btn-primary">Get Started</a>
+                    </div>
+                )}
 
                 {/* Mobile Menu Button */}
                 <button
@@ -101,8 +91,8 @@ const Navbar = () => {
                         </a>
                     ))}
                     <div className="mobile-auth">
-                        <a href="#signin" className="btn-secondary">Sign In</a>
-                        <a href="#signup" className="btn-primary">Get Started</a>
+                        <a id="signInBtn" href="/login" className="btn-secondary">Sign In</a>
+                        <a id="signUpBtn" href="/register" className="btn-primary">Get Started</a>
                     </div>
                 </motion.div>
             )}

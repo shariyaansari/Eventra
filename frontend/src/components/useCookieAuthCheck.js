@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 
 
-export default function CookieAuthCheck() {
+export default function useCookieAuthCheck() {
        const [isAuthenticated, setIsAuthenticated] = useState(false);
         const [authChecked, setAuthChecked] = useState(false);
 
@@ -15,6 +15,5 @@ export default function CookieAuthCheck() {
                 .catch((err) => console.error(err))
                 .finally(() => setAuthChecked(true));
         }, []);
-
         return {isAuthenticated, authChecked};
     }

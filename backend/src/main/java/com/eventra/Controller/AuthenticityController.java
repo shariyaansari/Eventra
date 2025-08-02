@@ -25,7 +25,6 @@ public class AuthenticityController {
             for (Cookie c : cookie) {
                 if (c.getName().equals("jwtToken")) {
                     String jwtToken = c.getValue();
-                    System.out.println("jwtToken: " + jwtToken);
                     if (jwtToken != null && jwtUtils.isTokenValid(jwtToken)) {
                         return ResponseEntity.ok(true);
                     }
