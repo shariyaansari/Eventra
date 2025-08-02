@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import './Community.css';
+import './components.css';
 
 const Community = () => {
   const [ref, inView] = useInView({
