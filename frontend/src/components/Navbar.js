@@ -6,8 +6,6 @@ import './shared-layout.css';
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [languageDropdown, setLanguageDropdown] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState('EN');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,16 +19,7 @@ const Navbar = () => {
     { name: 'Events', href: '/events' },
     { name: 'Hackathons', href: '/hackathons' },
     { name: 'Projects', href: '/projects' },
-    { name: 'Leaderboard', href: '/leaderboard' },
     { name: 'About', href: '/about' }
-  ];
-
-  const languages = [
-    { code: 'EN', name: 'English' },
-    { code: 'ES', name: 'Español' },
-    { code: 'FR', name: 'Français' },
-    { code: 'DE', name: 'Deutsch' },
-    { code: 'HI', name: 'हिंदी' }
   ];
 
   return (
@@ -61,37 +50,8 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* Language Selector & Auth Buttons */}
+        {/* Auth Buttons */}
         <div className="navbar-right desktop-nav">
-          <div className="language-selector">
-            <button 
-              className="language-btn"
-              onClick={() => setLanguageDropdown(!languageDropdown)}
-            >
-              🌐 {currentLanguage} ▼
-            </button>
-            {languageDropdown && (
-              <motion.div 
-                className="language-dropdown"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    className="language-option"
-                    onClick={() => {
-                      setCurrentLanguage(lang.code);
-                      setLanguageDropdown(false);
-                    }}
-                  >
-                    {lang.name}
-                  </button>
-                ))}
-              </motion.div>
-            )}
-          </div>
           <a href="#signin" className="btn-secondary">Sign In</a>
           <a href="#signup" className="btn-primary">Get Started</a>
         </div>

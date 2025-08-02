@@ -4,7 +4,6 @@ import { useInView } from 'react-intersection-observer';
 import './components.css';
 import { Link } from 'react-router-dom';
 
-
 const Hero = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -27,14 +26,14 @@ const Hero = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.8, ease: "easeOut" }
+      transition: { duration: 0.8, ease: 'easeOut' }
     }
   };
 
   return (
-    <section className="hero" ref={ref}>
+    <section className="hero" ref={ref} aria-labelledby="hero-title">
       <div className="hero-background">
-        <div className="hero-gradient"></div>
+        <div className="hero-gradient" />
       </div>
 
       <div className="container">
@@ -42,79 +41,52 @@ const Hero = () => {
           className="hero-content"
           variants={containerVariants}
           initial="hidden"
-          animate={inView ? "visible" : "hidden"}
+          animate={inView ? 'visible' : 'hidden'}
         >
-          <motion.h1 variants={itemVariants} className="hero-title">
-            The All-in-One Event Platform
+          <motion.h1 variants={itemVariants} className="hero-title" id="hero-title">
+            <span className="brand-name text-gradient">Eventra</span>
             <br />
-            <span className="text-gradient">for Tech Communities</span>
+            <span className="">Your Tech Event Superhub</span>
           </motion.h1>
 
           <motion.p variants={itemVariants} className="hero-subtitle">
-            Host and manage tech events, hackathons, and collaborative projects. 
-            Join our thriving community of developers, showcase your projects, 
-            and connect with fellow innovators in one comprehensive platform.
+            <strong>Eventra</strong> is the go-to platform for tech enthusiasts, developers,
+            and innovators. Discover and host <strong>tech meetups</strong>, participate in
+            <strong> hackathons</strong>, collaborate on <strong>real-world projects</strong>,
+            and grow your footprint in the open source space — all in one place.
           </motion.p>
 
-          <motion.div variants={itemVariants} className="hero-features">
-            <div className="feature-highlight">
-              <span className="feature-icon">🎯</span>
-              <span>Tech Events & Conferences</span>
+          {/* <motion.div variants={itemVariants} className="hero-features" role="list">
+            <div className="feature-highlight" role="listitem">
+              <span className="feature-icon" aria-hidden="true">🎯</span>
+              <span>Discover Tech Events & Meetups</span>
             </div>
-            <div className="feature-highlight">
-              <span className="feature-icon">🏆</span>
-              <span>Virtual & Physical Hackathons</span>
+            <div className="feature-highlight" role="listitem">
+              <span className="feature-icon" aria-hidden="true">🏆</span>
+              <span>Participate in Global Hackathons</span>
             </div>
-            <div className="feature-highlight">
-              <span className="feature-icon">🚀</span>
-              <span>Project Showcase & Collaboration</span>
+            <div className="feature-highlight" role="listitem">
+              <span className="feature-icon" aria-hidden="true">🚀</span>
+              <span>Showcase & Collaborate on Projects</span>
             </div>
-            <div className="feature-highlight">
-              <span className="feature-icon">🏅</span>
-              <span>Contributor Leaderboard</span>
+            <div className="feature-highlight" role="listitem">
+              <span className="feature-icon" aria-hidden="true">🤝</span>
+              <span>Contribute to Open Source</span>
             </div>
-          </motion.div>
+          </motion.div> */}
 
           <motion.div variants={itemVariants} className="hero-actions">
-           <Link to="/events" className="btn-primary hero-btn">
-              Explore Events  
+            <Link to="/events" className="btn-primary hero-btn" aria-label="Explore tech events">
+              Explore Events
             </Link>
-            <Link to="/hackathons" className="btn-secondary hero-btn">
+            <Link to="/hackathons" className="btn-secondary hero-btn" aria-label="Join hackathons">
               Join Hackathons
             </Link>
-            <Link to="/projects" className="btn-outline hero-btn">
+            <Link to="/projects" className="btn-outline hero-btn" aria-label="Browse community projects">
               Browse Projects
             </Link>
           </motion.div>
         </motion.div>
-
-        {/* <motion.div 
-          className="hero-visual"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-          transition={{ duration: 1, delay: 0.5 }}
-        >
-          <div className="floating-cards">
-            <div className="card card-1">
-              <div className="card-header">
-                <div className="card-icon">💡</div>
-                <span>Innovation</span>
-              </div>
-            </div>
-            <div className="card card-2">
-              <div className="card-header">
-                <div className="card-icon">🚀</div>
-                <span>Launch</span>
-              </div>
-            </div>
-            <div className="card card-3">
-              <div className="card-header">
-                <div className="card-icon">🏆</div>
-                <span>Victory</span>
-              </div>
-            </div>
-          </div>
-        </motion.div> */}
       </div>
     </section>
   );

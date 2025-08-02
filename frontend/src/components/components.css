@@ -28,6 +28,14 @@
   background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
 }
 
+.brand-name {
+  font-weight: 800;
+  font-size: 1.2em;
+  letter-spacing: 0.5px;
+  color: var(--brand-color, #5b4df4);
+}
+
+
 .hero-background::before {
   content: '';
   position: absolute;
@@ -58,6 +66,7 @@
   margin: 0 auto;
   position: relative;
   z-index: 2;
+  width: 100%;
 }
 
 .hero-title {
@@ -80,9 +89,12 @@
 
 .hero-actions {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.2rem;
   justify-content: center;
-  margin-bottom: 4rem;
+  align-items: center;
+  margin: 0 auto 4rem auto;
+  width: fit-content;
+  text-align: center;
 }
 
 .hero-btn {
@@ -93,6 +105,8 @@
   text-decoration: none;
   transition: all 0.3s ease;
   display: inline-block;
+  margin: 0;
+  text-align: center;
 }
 
 @keyframes float {
@@ -677,6 +691,7 @@
   .hero-actions {
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
   }
   
   .features-title,
