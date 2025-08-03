@@ -13,6 +13,7 @@ import EventsSection from './components/EventsSection';
 import HackathonHub from './components/HackathonHub';
 import ProjectGallery from './components/ProjectGallery';
 import createScrollToTopButton from './components/scrolltotopButton';
+import NotFound from './components/NotFound';
 import './App.css';
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
             <Route path="/projects" element={<ProjectGallery />} />
             <Route path="/create-event" element={<EventCreation />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/*" element={<NotFound />} />
           </Routes>
         </main>
 
