@@ -33,8 +33,10 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/health", "/api/auth/**", "/status").permitAll()  // Public endpoints
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")  // Admin endpoints
-                .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")  // User endpoints
+                .requestMatchers("/api/status/**").permitAll()  // Status endpoints
+                .requestMatchers("/api/admin/**").hasAuthority("ADMIN_DASHBOARD")  // Admin endpoints
+                .requestMatchers("/api/user/**").hasAnyAuthority("VIEW_USER", "ADMIN_DASHBOARD")  // User endpoints
+                .requestMatchers("/api/events/**").hasAnyAuthority("VIEW_EVENT", "CREATE_EVENT", "ADMIN_DASHBOARD")  // Event endpoints
                 .anyRequest().authenticated()  // All other requests need auth
             )
             .sessionManagement(session -> session

@@ -52,12 +52,35 @@ public class AuthService {
             user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
             user.setEnabled(true);
             
-            // Assign default USER role - temporarily disabled
-            // Role userRole = roleRepository.findByName(Role.RoleName.USER)
-            //     .orElseThrow(() -> new RuntimeException("Default role not found"));
-            // Set<Role> roles = new HashSet<>();
-            // roles.add(userRole);
-            // user.setRoles(roles);
+            // Assign role based on selection or default to USER
+            Role.RoleName selectedRole = Role.RoleName.USER; // Default to USER role
+            
+            // If role is provided in signup request, validate and use it
+            if (signupRequest.getRole() != null && !signupRequest.getRole().isEmpty()) {
+                try {
+                    selectedRole = Role.RoleName.valueOf(signupRequest.getRole().toUpperCase());
+                    // Only allow ADMIN and USER roles for signup
+                    if (selectedRole != Role.RoleName.ADMIN && selectedRole != Role.RoleName.USER) {
+                        selectedRole = Role.RoleName.USER; // Fall back to USER if invalid role
+                        log.warn("Invalid role '{}' provided, defaulting to USER role", signupRequest.getRole());
+                    }
+                } catch (IllegalArgumentException e) {
+                    selectedRole = Role.RoleName.USER; // Fall back to USER if invalid role
+                    log.warn("Invalid role '{}' provided, defaulting to USER role", signupRequest.getRole());
+                }
+            }
+            
+            // Try to assign role, but don't fail if role system isn't fully set up yet
+            try {
+                Role role = roleRepository.findByName(selectedRole)
+                    .orElseThrow(() -> new RuntimeException("Selected role not found"));
+                Set<Role> roles = new HashSet<>();
+                roles.add(role);
+                user.setRoles(roles);
+            } catch (Exception e) {
+                log.warn("Role assignment failed, proceeding without roles: {}", e.getMessage());
+                // Continue without roles if role system isn't fully set up
+            }
 
             userRepository.save(user);
             log.info("User registered successfully: {}", signupRequest.getEmail());
@@ -66,6 +89,29 @@ public class AuthService {
             log.error("Error during user registration: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to register user. Please try again.");
         }
+    }
+    
+    public MessageResponse createAdminUser(String email, String password, String firstName, String lastName) {
+        if (userRepository.existsByEmail(email)) {
+            throw new RuntimeException("Email already exists!");
+        }
+
+        User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setEnabled(true);
+        
+        // Assign ADMIN role
+        Role adminRole = roleRepository.findByName(Role.RoleName.ADMIN)
+            .orElseThrow(() -> new RuntimeException("Admin role not found"));
+        Set<Role> roles = new HashSet<>();
+        roles.add(adminRole);
+        user.setRoles(roles);
+
+        userRepository.save(user);
+        return new MessageResponse("Admin user created successfully!");
     }
 
     public AuthResponse login(LoginRequest loginRequest) {
@@ -85,15 +131,25 @@ public class AuthService {
             User user = userRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-            // Extract roles and permissions - temporarily return empty sets
-            Set<String> roles = new HashSet<>(); // user.getRoles().stream()
-                // .map(role -> role.getName().name())
-                // .collect(java.util.stream.Collectors.toSet());
-                
-            Set<String> permissions = new HashSet<>(); // user.getRoles().stream()
-                // .flatMap(role -> role.getPermissions().stream())
-                // .map(permission -> permission.getName().name())
-                // .collect(java.util.stream.Collectors.toSet());
+            // Extract roles and permissions with fallback for incomplete role system
+            Set<String> roles = new HashSet<>();
+            Set<String> permissions = new HashSet<>();
+            
+            try {
+                if (user.getRoles() != null && !user.getRoles().isEmpty()) {
+                    roles = user.getRoles().stream()
+                        .map(role -> role.getName().name())
+                        .collect(java.util.stream.Collectors.toSet());
+                        
+                    permissions = user.getRoles().stream()
+                        .flatMap(role -> role.getPermissions().stream())
+                        .map(permission -> permission.getName().name())
+                        .collect(java.util.stream.Collectors.toSet());
+                }
+            } catch (Exception e) {
+                log.warn("Failed to extract roles/permissions, using empty sets: {}", e.getMessage());
+                // roles and permissions already initialized as empty sets
+            }
 
             log.info("User logged in successfully: {}", loginRequest.getEmail());
             return new AuthResponse(jwt, user.getEmail(), user.getFirstName(), user.getLastName(), 
