@@ -5,10 +5,12 @@ import com.eventra.dto.LoginRequest;
 import com.eventra.dto.MessageResponse;
 import com.eventra.dto.SignupRequest;
 import com.eventra.entity.User;
+import com.eventra.entity.Role;
 import com.eventra.exception.InvalidCredentialsException;
 import com.eventra.exception.UserAlreadyExistsException;
 import com.eventra.exception.UserNotFoundException;
 import com.eventra.repository.UserRepository;
+import com.eventra.repository.RoleRepository;
 import com.eventra.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,12 +22,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
@@ -45,6 +51,13 @@ public class AuthService {
             user.setEmail(signupRequest.getEmail());
             user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
             user.setEnabled(true);
+            
+            // Assign default USER role - temporarily disabled
+            // Role userRole = roleRepository.findByName(Role.RoleName.USER)
+            //     .orElseThrow(() -> new RuntimeException("Default role not found"));
+            // Set<Role> roles = new HashSet<>();
+            // roles.add(userRole);
+            // user.setRoles(roles);
 
             userRepository.save(user);
             log.info("User registered successfully: {}", signupRequest.getEmail());
@@ -72,8 +85,19 @@ public class AuthService {
             User user = userRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
+            // Extract roles and permissions - temporarily return empty sets
+            Set<String> roles = new HashSet<>(); // user.getRoles().stream()
+                // .map(role -> role.getName().name())
+                // .collect(java.util.stream.Collectors.toSet());
+                
+            Set<String> permissions = new HashSet<>(); // user.getRoles().stream()
+                // .flatMap(role -> role.getPermissions().stream())
+                // .map(permission -> permission.getName().name())
+                // .collect(java.util.stream.Collectors.toSet());
+
             log.info("User logged in successfully: {}", loginRequest.getEmail());
-            return new AuthResponse(jwt, user.getEmail(), user.getFirstName(), user.getLastName());
+            return new AuthResponse(jwt, user.getEmail(), user.getFirstName(), user.getLastName(), 
+                                   user.getId(), roles, permissions);
             
         } catch (BadCredentialsException e) {
             log.warn("Login failed for user {}: Invalid credentials", loginRequest.getEmail());

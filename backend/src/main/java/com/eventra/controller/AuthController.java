@@ -31,7 +31,13 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         log.info("Received login request for email: {}", loginRequest.getEmail());
-        AuthResponse response = authService.login(loginRequest);
-        return ResponseEntity.ok(response);
+        try {
+            AuthResponse response = authService.login(loginRequest);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            log.error("Login failed for email: {}", loginRequest.getEmail(), e);
+            return ResponseEntity.badRequest()
+                .body(new AuthResponse());
+        }
     }
 }
