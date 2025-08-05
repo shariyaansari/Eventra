@@ -61,6 +61,7 @@ code {
 }
 
 .btn-primary {
+  /* add text color */
   background: linear-gradient(135deg, #667eea 0%, #fbf7ffff 100%);
   color: white;
   padding: 12px 32px;
