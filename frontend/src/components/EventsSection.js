@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import '../components/styles/EventSection.css'; 
 
 const EventsSection = () => {
   const [events, setEvents] = useState([]);
@@ -20,7 +21,7 @@ const EventsSection = () => {
         description: "Join us for the biggest React conference of the year featuring latest updates and best practices.",
         attendees: 250,
         maxAttendees: 300,
-        image: "/api/placeholder/400/200",
+        image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=200&fit=crop",
         tags: ["React", "Frontend", "JavaScript"]
       },
       {
@@ -34,7 +35,7 @@ const EventsSection = () => {
         description: "Hands-on workshop covering latest AI techniques and practical machine learning implementations.",
         attendees: 120,
         maxAttendees: 150,
-        image: "/api/placeholder/400/200",
+        image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=200&fit=crop",
         tags: ["AI", "ML", "Python"]
       },
       {
@@ -48,7 +49,7 @@ const EventsSection = () => {
         description: "Comprehensive summit on modern DevOps practices and cloud technologies.",
         attendees: 400,
         maxAttendees: 400,
-        image: "/api/placeholder/400/200",
+        image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=200&fit=crop",
         tags: ["DevOps", "Cloud", "Infrastructure"]
       },
       {
@@ -62,8 +63,36 @@ const EventsSection = () => {
         description: "Intensive bootcamp covering blockchain development and cryptocurrency technologies.",
         attendees: 80,
         maxAttendees: 100,
-        image: "/api/placeholder/400/200",
+        image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?w=400&h=200&fit=crop",
         tags: ["Blockchain", "Web3", "Solidity"]
+      },
+      {
+        id: 5,
+        title: "UX Design Masterclass",
+        date: "2025-05-08",
+        time: "3:00 PM",
+        location: "Los Angeles, CA",
+        type: "workshop",
+        status: "upcoming",
+        description: "Master the art of user experience design with industry experts and hands-on projects.",
+        attendees: 65,
+        maxAttendees: 80,
+        image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=200&fit=crop",
+        tags: ["UX", "Design", "UI"]
+      },
+      {
+        id: 6,
+        title: "Cybersecurity Conference",
+        date: "2025-06-12",
+        time: "9:30 AM",
+        location: "Seattle, WA",
+        type: "conference",
+        status: "upcoming",
+        description: "Learn about the latest cybersecurity threats and protection strategies from industry leaders.",
+        attendees: 180,
+        maxAttendees: 200,
+        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=200&fit=crop",
+        tags: ["Security", "Privacy", "Protection"]
       }
     ];
     setEvents(mockEvents);
@@ -76,33 +105,112 @@ const EventsSection = () => {
     return event.type === filterType;
   });
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.9 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: {
+        type: "spring",
+        damping: 25,
+        stiffness: 500
+      }
+    }
+  };
+
   const EventCard = ({ event }) => (
     <motion.div
       className="event-card"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      whileHover={{ y: -5 }}
+      variants={cardVariants}
+      whileHover={{ 
+        y: -8,
+        scale: 1.02,
+        transition: { type: "spring", stiffness: 400, damping: 10 }
+      }}
+      whileTap={{ scale: 0.98 }}
     >
       <div className="event-image">
-        <img src={event.image} alt={event.title} />
-        <div className="event-status">
-          <span className={`status-badge ${event.status}`}>{event.status}</span>
+        <motion.img 
+          src={event.image} 
+          alt={event.title}
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.3 }}
+        />
+        <div className="event-overlay">
+          <motion.div 
+            className={`status-badge ${event.status}`}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            {event.status}
+          </motion.div>
+          <div className="attendance-indicator">
+            <div className="progress-bar">
+              <motion.div 
+                className="progress-fill"
+                initial={{ width: 0 }}
+                animate={{ width: `${(event.attendees / event.maxAttendees) * 100}%` }}
+                transition={{ duration: 1, delay: 0.8 }}
+              ></motion.div>
+            </div>
+          </div>
         </div>
       </div>
       
       <div className="event-content">
         <div className="event-header">
-          <h3>{event.title}</h3>
-          <div className="event-type">{event.type}</div>
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            {event.title}
+          </motion.h3>
+          <motion.div 
+            className="event-type"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4, type: "spring" }}
+          >
+            {event.type}
+          </motion.div>
         </div>
         
-        <p className="event-description">{event.description}</p>
+        <motion.p 
+          className="event-description"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          {event.description}
+        </motion.p>
         
-        <div className="event-details">
+        <motion.div 
+          className="event-details"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+        >
           <div className="detail">
             <span className="icon">📅</span>
-            <span>{event.date}</span>
+            <span>{new Date(event.date).toLocaleDateString('en-US', { 
+              weekday: 'short', 
+              month: 'short', 
+              day: 'numeric' 
+            })}</span>
           </div>
           <div className="detail">
             <span className="icon">🕐</span>
@@ -114,106 +222,212 @@ const EventsSection = () => {
           </div>
           <div className="detail">
             <span className="icon">👥</span>
-            <span>{event.attendees}/{event.maxAttendees} attendees</span>
+            <span>{event.attendees}/{event.maxAttendees}</span>
           </div>
-        </div>
+        </motion.div>
         
-        <div className="event-tags">
+        <motion.div 
+          className="event-tags"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+        >
           {event.tags.map((tag, index) => (
-            <span key={index} className="tag">{tag}</span>
+            <motion.span 
+              key={index} 
+              className="tag"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.8 + index * 0.1 }}
+              whileHover={{ scale: 1.1 }}
+            >
+              {tag}
+            </motion.span>
           ))}
-        </div>
+        </motion.div>
         
-        <div className="event-actions">
+        <motion.div 
+          className="event-actions"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9 }}
+        >
           {event.status === 'upcoming' ? (
-            <button className="btn-primary">Register Now</button>
+            <motion.button 
+              className="btn-primary"
+              whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(0,0,0,0.2)" }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Register Now
+            </motion.button>
           ) : (
-            <button className="btn-secondary">View Details</button>
+            <motion.button 
+              className="btn-secondary"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              View Details
+            </motion.button>
           )}
-          <button className="btn-outline">Share</button>
-        </div>
+          <motion.button 
+            className="btn-outline"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Share
+          </motion.button>
+        </motion.div>
       </div>
     </motion.div>
   );
 
   return (
     <div className="events-section">
+      <div className="background-gradient"></div>
+      <div className="floating-elements">
+        <motion.div 
+          className="floating-shape shape-1"
+          animate={{ 
+            rotate: 360,
+            y: [-20, 20, -20],
+          }}
+          transition={{ 
+            duration: 8,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        ></motion.div>
+        <motion.div 
+          className="floating-shape shape-2"
+          animate={{ 
+            rotate: -360,
+            x: [-15, 15, -15],
+          }}
+          transition={{ 
+            duration: 10,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        ></motion.div>
+      </div>
+      
       <div className="container">
         <motion.div
           className="section-header"
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
         >
-          <h1>Tech Events</h1>
-          <p>Discover and join amazing tech events, workshops, and conferences</p>
+          <motion.h1
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.6, type: "spring" }}
+          >
+            Tech Events
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            Discover and join amazing tech events, workshops, and conferences
+          </motion.p>
         </motion.div>
 
-        <div className="events-controls">
+        <motion.div 
+          className="events-controls"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+        >
           <div className="filter-controls">
-            <button
-              className={filterType === 'all' ? 'active' : ''}
-              onClick={() => setFilterType('all')}
-            >
-              All Events
-            </button>
-            <button
-              className={filterType === 'upcoming' ? 'active' : ''}
-              onClick={() => setFilterType('upcoming')}
-            >
-              Upcoming
-            </button>
-            <button
-              className={filterType === 'past' ? 'active' : ''}
-              onClick={() => setFilterType('past')}
-            >
-              Past Events
-            </button>
-            <button
-              className={filterType === 'conference' ? 'active' : ''}
-              onClick={() => setFilterType('conference')}
-            >
-              Conferences
-            </button>
-            <button
-              className={filterType === 'workshop' ? 'active' : ''}
-              onClick={() => setFilterType('workshop')}
-            >
-              Workshops
-            </button>
+            {[
+              { key: 'all', label: 'All Events' },
+              { key: 'upcoming', label: 'Upcoming' },
+              { key: 'past', label: 'Past Events' },
+              { key: 'conference', label: 'Conferences' },
+              { key: 'workshop', label: 'Workshops' }
+            ].map((filter, index) => (
+              <motion.button
+                key={filter.key}
+                className={filterType === filter.key ? 'active' : ''}
+                onClick={() => setFilterType(filter.key)}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 + index * 0.1 }}
+              >
+                {filter.label}
+              </motion.button>
+            ))}
           </div>
 
           <div className="view-controls">
-            <button
+            <motion.button
               className={viewMode === 'grid' ? 'active' : ''}
               onClick={() => setViewMode('grid')}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
             >
-              Grid View
-            </button>
-            <button
+              <span className="view-icon">⊞</span>
+            </motion.button>
+            <motion.button
               className={viewMode === 'list' ? 'active' : ''}
               onClick={() => setViewMode('list')}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
             >
-              List View
-            </button>
+              <span className="view-icon">☰</span>
+            </motion.button>
           </div>
-        </div>
-
-        <motion.div
-          className={`events-grid ${viewMode}`}
-          layout
-        >
-          {filteredEvents.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
         </motion.div>
 
-        {filteredEvents.length === 0 && (
-          <div className="no-events">
-            <h3>No events found</h3>
-            <p>Try adjusting your filters or check back later for new events.</p>
-          </div>
-        )}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={filterType + viewMode}
+            className={`events-grid ${viewMode}`}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.5 }}
+          >
+            {filteredEvents.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {filteredEvents.length === 0 && (
+            <motion.div 
+              className="no-events"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.5 }}
+            >
+              <motion.div
+                className="no-events-icon"
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                🔍
+              </motion.div>
+              <h3>No events found</h3>
+              <p>Try adjusting your filters or check back later for new events.</p>
+              <motion.button
+                className="btn-primary"
+                onClick={() => setFilterType('all')}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Show All Events
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
