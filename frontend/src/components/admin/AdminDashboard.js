@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { API_ENDPOINTS, apiUtils } from '../../config/api';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
@@ -25,18 +26,11 @@ const AdminDashboard = () => {
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
-      // Simulated API calls - replace with actual API endpoints
-      const usersResponse = await fetch('http://localhost:8080/api/admin/users', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      const token = localStorage.getItem('token');
       
-      const eventsResponse = await fetch('http://localhost:8080/api/admin/events', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      // Fetch users and events data
+      const usersResponse = await apiUtils.get(API_ENDPOINTS.ADMIN.USERS, token);
+      const eventsResponse = await apiUtils.get(API_ENDPOINTS.ADMIN.EVENTS, token);
 
       if (usersResponse.ok) {
         const usersData = await usersResponse.json();

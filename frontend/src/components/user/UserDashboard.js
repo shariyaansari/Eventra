@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
+import { API_ENDPOINTS, apiUtils } from '../../config/api';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
@@ -17,18 +18,11 @@ const UserDashboard = () => {
   const fetchUserData = async () => {
     try {
       setLoading(true);
-      // Simulated API calls - replace with actual API endpoints
-      const userEventsResponse = await fetch('http://localhost:8080/api/user/events', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      const token = localStorage.getItem('token');
       
-      const availableEventsResponse = await fetch('http://localhost:8080/api/events', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      // Fetch user events and available events
+      const userEventsResponse = await apiUtils.get(API_ENDPOINTS.USER.EVENTS, token);
+      const availableEventsResponse = await apiUtils.get(API_ENDPOINTS.EVENTS.LIST, token);
 
       if (userEventsResponse.ok) {
         const userEventsData = await userEventsResponse.json();
@@ -49,12 +43,8 @@ const UserDashboard = () => {
 
   const joinEvent = async (eventId) => {
     try {
-      const response = await fetch(`/api/events/${eventId}/join`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      const token = localStorage.getItem('token');
+      const response = await apiUtils.post(API_ENDPOINTS.EVENTS.JOIN(eventId), {}, token);
 
       if (response.ok) {
         // Refresh data after joining

@@ -162,8 +162,14 @@ src/
 ### Environment Variables
 Create a `.env` file in the frontend root:
 ```env
-REACT_APP_API_URL=http://localhost:8080
-REACT_APP_API_VERSION=v1
+REACT_APP_API_URL=https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net/api
+REACT_APP_APP_NAME=Eventra
+REACT_APP_VERSION=1.0.0
+```
+
+For local development, you can use:
+```env
+REACT_APP_API_URL=http://localhost:8080/api
 ```
 
 ---

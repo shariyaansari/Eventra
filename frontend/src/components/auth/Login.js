@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { API_ENDPOINTS, apiUtils } from '../../config/api';
 import './Auth.css';
 
 const Login = () => {
@@ -29,14 +30,7 @@ const Login = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
+      const response = await apiUtils.post(API_ENDPOINTS.AUTH.LOGIN, formData);
       const data = await response.json();
 
       if (response.ok && data.token) {

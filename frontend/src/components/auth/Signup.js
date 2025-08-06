@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { API_ENDPOINTS, apiUtils } from '../../config/api';
 import './Auth.css';
 
 const Signup = () => {
@@ -31,14 +32,7 @@ const Signup = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
+      const response = await apiUtils.post(API_ENDPOINTS.AUTH.REGISTER, formData);
       const data = await response.json();
 
       if (response.ok) {

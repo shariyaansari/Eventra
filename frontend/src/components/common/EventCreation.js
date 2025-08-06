@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_ENDPOINTS, apiUtils } from '../../config/api';
 import './EventCreation.css'; 
 
 const EventCreation = () => {
@@ -294,14 +295,7 @@ const EventCreation = () => {
       
       console.log('Sending event data:', eventData); 
       
-      const response = await fetch('/api/events', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(eventData)
-      });
+      const response = await apiUtils.post(API_ENDPOINTS.EVENTS.CREATE, eventData, token);
 
       
       let result;
