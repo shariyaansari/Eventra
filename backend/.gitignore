@@ -6,6 +6,11 @@ target/
 
 ### Application Properties ###
 application.properties
+*.hidden
+.env
+.env.local
+.env.production
+.env.azure
 
 ### STS ###
 .apt_generated
@@ -34,5 +39,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-

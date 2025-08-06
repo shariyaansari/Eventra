@@ -27,6 +27,7 @@ public class DataInitializer {
     private final PasswordEncoder passwordEncoder;
     
     @PostConstruct
+    @Transactional
     public void initializeData() {
         try {
             System.out.println("Starting data initialization...");
@@ -42,6 +43,7 @@ public class DataInitializer {
         }
     }
     
+    @Transactional
     private void initializePermissions() {
         Arrays.stream(Permission.PermissionName.values()).forEach(permissionName -> {
             if (!permissionRepository.existsByName(permissionName)) {
@@ -53,6 +55,7 @@ public class DataInitializer {
         });
     }
     
+    @Transactional
     private void initializeRoles() {
         System.out.println("Initializing roles...");
         // First create all roles without permissions
@@ -85,6 +88,7 @@ public class DataInitializer {
         });
     }
     
+    @Transactional
     private Set<Permission> getPermissionsForRole(Role.RoleName roleName) {
         Set<Permission> permissions = new HashSet<>();
         switch (roleName) {
@@ -131,6 +135,7 @@ public class DataInitializer {
         return permissions;
     }
     
+    @Transactional
     private void addPermissions(Set<Permission> permissions, Permission.PermissionName... permissionNames) {
         Arrays.stream(permissionNames).forEach(permissionName -> 
             permissions.add(permissionRepository.findByName(permissionName)
@@ -138,6 +143,7 @@ public class DataInitializer {
         );
     }
     
+    @Transactional
     private void initializeDefaultAdmin() {
         // Create default admin user if none exists
         String adminEmail = "admin@eventra.com";

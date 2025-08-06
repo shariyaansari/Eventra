@@ -155,8 +155,31 @@ public class GlobalExceptionHandler {
     }
 
     private String getRequestPath(WebRequest request) {
-        if (request instanceof HttpServletRequest) {
-            return ((HttpServletRequest) request).getRequestURI();
+        try {
+            // First try to get from ServletWebRequest which is most common
+            if (request instanceof org.springframework.web.context.request.ServletWebRequest) {
+                org.springframework.web.context.request.ServletWebRequest servletRequest =
+                    (org.springframework.web.context.request.ServletWebRequest) request;
+                HttpServletRequest httpRequest = servletRequest.getRequest();
+                return httpRequest.getRequestURI();
+            }
+
+            // Fallback to description parsing
+            String description = request.getDescription(false);
+            if (description != null && description.startsWith("uri=")) {
+                return description.substring(4); // Remove "uri=" prefix
+            }
+
+            // Additional fallback for native web request
+            if (description != null && description.contains("URI=")) {
+                int uriIndex = description.indexOf("URI=");
+                String uriPart = description.substring(uriIndex + 4);
+                int endIndex = uriPart.indexOf(';');
+                return endIndex > 0 ? uriPart.substring(0, endIndex) : uriPart;
+            }
+
+        } catch (Exception e) {
+            log.warn("Could not extract request path from {}: {}", request.getClass().getSimpleName(), e.getMessage());
         }
         return "unknown";
     }

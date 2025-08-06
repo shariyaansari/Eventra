@@ -95,6 +95,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+		<!-- OpenAPI 3 (Swagger) Documentation -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+		<!-- For JWT security documentation -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+			<version>2.2.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -121,9 +133,107 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+					<finalName>app</finalName>
+				</configuration>
+			</plugin>
+			<!-- Azure Web App Maven Plugin -->
+			<plugin>
+				<groupId>com.microsoft.azure</groupId>
+				<artifactId>azure-webapp-maven-plugin</artifactId>
+				<version>2.12.0</version>
+				<configuration>
+					<schemaVersion>v2</schemaVersion>
+					<subscriptionId>${AZURE_SUBSCRIPTION_ID}</subscriptionId>
+					<resourceGroup>${AZURE_RESOURCE_GROUP}</resourceGroup>
+					<appName>${AZURE_APP_NAME}</appName>
+					<pricingTier>B1</pricingTier>
+					<region>East US</region>
+					<runtime>
+						<os>Linux</os>
+						<javaVersion>Java 17</javaVersion>
+						<webContainer>Java SE</webContainer>
+					</runtime>
+					<deployment>
+						<resources>
+							<resource>
+								<directory>${project.basedir}/target</directory>
+								<includes>
+									<include>app.jar</include>
+								</includes>
+							</resource>
+						</resources>
+					</deployment>
+					<appSettings>
+						<property>
+							<name>SPRING_PROFILES_ACTIVE</name>
+							<value>azure</value>
+						</property>
+						<property>
+							<name>JAVA_OPTS</name>
+							<value>-Dspring.profiles.active=azure -Xmx1024m</value>
+						</property>
+					</appSettings>
+				</configuration>
+			</plugin>
+			<!-- OpenAPI 3 Documentation Generator -->
+			<plugin>
+				<groupId>org.springdoc</groupId>
+				<artifactId>springdoc-openapi-maven-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<apiDocsUrl>http://localhost:8080/api-docs</apiDocsUrl>
+					<outputFileName>openapi.json</outputFileName>
+					<outputDir>${project.basedir}</outputDir>
+					<skip>false</skip>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+
+	<!-- Profiles for different environments -->
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>dev</spring.profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>azure</id>
+			<properties>
+				<spring.profiles.active>azure</spring.profiles.active>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>repackage</goal>
+								</goals>
+								<configuration>
+									<classifier>exec</classifier>
+									<finalName>app</finalName>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>
