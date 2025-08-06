@@ -347,11 +347,13 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  display:inline-block;
+  color:#333;
 }
 
 .event-status.registration-open {
-  background: rgba(34, 197, 94, 0.2);
-  color: #22c55e;
+  background:  rgba(34, 197, 94, 0.1);
+  color: #15803d;
   border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
