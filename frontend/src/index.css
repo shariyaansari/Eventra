@@ -82,7 +82,7 @@ code {
 
 .btn-secondary {
   background: transparent;
-  color: #1a1a1a;
+  color: #ffffffff;
   padding: 12px 32px;
   border: 2px solid #e1e5e9;
   border-radius: 8px;
@@ -98,6 +98,7 @@ code {
   border-color: #667eea;
   color: #ffffffff;
   transform: translateY(-2px);
+  
 }
 
 .fade-in {
