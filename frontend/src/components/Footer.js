@@ -204,7 +204,8 @@ const Footer = () => {
             </p>
           </div>
           <div className="footer-copyright">
-            <p>© {currentYear}, Eventra - Created by Sandeep Vashishtha</p>
+            <p>© {currentYear}, Eventra - Crafted with 💜 by <span className="creator-name">Sandeep Vashishtha</span> & the amazing <span className="community-name">open-source community</span> 🚀</p>
+            <p className="contributors-note">Special thanks to all contributors on <span className="github-highlight">GitHub</span> who make this platform better every day! 🌟</p>
           </div>
         </div>
       </div>
