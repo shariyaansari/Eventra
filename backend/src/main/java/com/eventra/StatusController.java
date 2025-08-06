@@ -23,11 +23,6 @@ public class StatusController {
     private final PermissionRepository permissionRepository;
     private final UserRepository userRepository;
 
-    @GetMapping("/status")
-    public String status() {
-        return "hey i am up";
-    }
-
     @GetMapping("/api/status/database")
     public Map<String, Object> getDatabaseStatus() {
         Map<String, Object> status = new HashMap<>();
@@ -54,4 +49,3 @@ public class StatusController {
         return health;
     }
 }
-
