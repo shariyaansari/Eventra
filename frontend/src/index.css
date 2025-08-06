@@ -61,7 +61,8 @@ code {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* add text color */
+  background: linear-gradient(135deg, #667eea 0%, #fbf7ffff 100%);
   color: white;
   padding: 12px 32px;
   border: none;
@@ -77,7 +78,7 @@ code {
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-}
+  color:#FFFFFF}
 
 .btn-secondary {
   background: transparent;
@@ -95,7 +96,7 @@ code {
 
 .btn-secondary:hover {
   border-color: #667eea;
-  color: #667eea;
+  color: #ffffffff;
   transform: translateY(-2px);
 }
 

@@ -1,137 +1,179 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import './shared-layout.css';
+/* === Navbar === */
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  z-index: 1000;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+}
 
-const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user, logout, isAuthenticated } = useAuth();
-  const navigate = useNavigate();
+.navbar-scrolled {
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+.navbar-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  const navItems = [
-    { name: 'Events', href: '/events' },
-    { name: 'Hackathons', href: '/hackathons' },
-    { name: 'Projects', href: '/projects' },
-    { name: 'About', href: '/about' }
-  ];
+.navbar-brand h2 {
+  font-weight: 800;
+  font-size: 1.6rem;
+  margin: 0;
+}
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-    setIsMobileMenuOpen(false);
-  };
+.text-gradient {
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-  return (
-   <motion.nav 
-  className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
-      <div className="navbar-container">
-        
-        <Link 
-          to="/"
-          className="nav-link navbar-brand"
-          style={{ cursor: 'pointer', textDecoration: 'none' }}
-        >
-          <h2 className="text-gradient">Eventra</h2>
-        </Link>
+/* === Navigation Links === */
+.navbar-nav {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
 
-        {/* Desktop Navigation */}
-        <ul className="navbar-nav desktop-nav">
-          {navItems.map((item) => (
-            <li key={item.name}>
-              <Link to={item.href} className="nav-link">
-                {item.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  position: relative;
+}
 
-        {/* Auth Buttons */}
-        <div className="navbar-right desktop-nav">
-          {isAuthenticated() ? (
-            <>
-              <span className="user-greeting">Hi, {user?.firstName || user?.email}!</span>
-              <Link to="/dashboard" className="btn-secondary">Dashboard</Link>
-              <button onClick={handleLogout} className="btn-secondary">
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="btn-secondary">Sign In</Link>
-              <Link to="/signup" className="btn-primary">Get Started</Link>
-            </>
-          )}
-        </div>
+.nav-link:hover {
+  color: #5b21b6;
+}
 
-        {/* Mobile Menu Button */}
-        <button 
-          className="mobile-menu-button"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
-     
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <motion.div 
-          className="mobile-menu"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          transition={{ duration: 0.3 }}
-        >
-          {navItems.map((item) => (
-            <Link 
-              key={item.name}
-              to={item.href} 
-              className="mobile-nav-link"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {item.name}
-            </Link>
-          ))}
-          <div className="mobile-auth">
-            {isAuthenticated() ? (
-              <>
-                <span className="user-greeting">Hi, {user?.firstName || user?.email}!</span>
-                <Link to="/dashboard" className="btn-secondary" onClick={() => setIsMobileMenuOpen(false)}>
-                  Dashboard
-                </Link>
-                <button onClick={handleLogout} className="btn-secondary">
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <Link to="/login" className="btn-secondary" onClick={() => setIsMobileMenuOpen(false)}>
-                  Sign In
-                </Link>
-                <Link to="/signup" className="btn-primary" onClick={() => setIsMobileMenuOpen(false)}>
-                  Get Started
-                </Link>
-              </>
-            )}
-          </div>
-        </motion.div>
-      )}
-    </motion.nav>
-  );
-};
+.nav-link.active,
+.nav-link:focus {
+  border-bottom: 2px solid #5b21b6;
+}
 
-export default Navbar;
+/* === Buttons === */
+.btn.nav-btn {
+  padding: 0.6rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.signin-btn {
+  color: #5b21b6;
+  border: 2px solid #5b21b6;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.signin-btn:hover {
+  background-color: #5b21b6;
+  color: white;
+}
+
+.getstarted-btn {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+.getstarted-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* === Auth/User/Theme Right Section === */
+.navbar-right {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.user-greeting {
+  color: #1a1a1a;
+  font-weight: 500;
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+.navbar.dark-theme .user-greeting {
+  color: #f9fafb;
+}
+
+.theme-toggle {
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* === Mobile === */
+.mobile-menu-button {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.mobile-menu-button span {
+  height: 2px;
+  width: 100%;
+  background-color: #333;
+  border-radius: 1px;
+}
+
+.mobile-menu {
+  background-color: white;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mobile-nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.mobile-auth {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+/* === Responsive === */
+@media screen and (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: flex;
+  }
+}
