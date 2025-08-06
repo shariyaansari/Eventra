@@ -72,13 +72,18 @@ public class AuthService {
             
             // Try to assign role, but don't fail if role system isn't fully set up yet
             try {
-                Role role = roleRepository.findByName(selectedRole)
-                    .orElseThrow(() -> new RuntimeException("Selected role not found"));
-                Set<Role> roles = new HashSet<>();
-                roles.add(role);
-                user.setRoles(roles);
+                log.info("Attempting to assign role: {}", selectedRole);
+                Role role = roleRepository.findByName(selectedRole).orElse(null);
+                if (role != null) {
+                    Set<Role> roles = new HashSet<>();
+                    roles.add(role);
+                    user.setRoles(roles);
+                    log.info("Successfully assigned role {} to user {}", selectedRole, user.getEmail());
+                } else {
+                    log.warn("Role {} not found in database, user will have no roles", selectedRole);
+                }
             } catch (Exception e) {
-                log.warn("Role assignment failed, proceeding without roles: {}", e.getMessage());
+                log.warn("Role assignment failed, proceeding without roles: {}", e.getMessage(), e);
                 // Continue without roles if role system isn't fully set up
             }
 

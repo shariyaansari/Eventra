@@ -47,7 +47,13 @@ const Signup = () => {
           navigate('/login');
         }, 2000);
       } else {
-        setError(data.message || 'Registration failed. Please try again.');
+        // Handle validation errors
+        if (data.validationErrors && data.validationErrors.length > 0) {
+          const errorMessages = data.validationErrors.map(err => err.message).join(', ');
+          setError(errorMessages);
+        } else {
+          setError(data.message || 'Registration failed. Please try again.');
+        }
       }
     } catch (error) {
       setError('Network error. Please check your connection and try again.');
@@ -119,7 +125,7 @@ const Signup = () => {
               required
               disabled={loading}
               minLength="6"
-              placeholder="Create a password (min. 6 characters)"
+              placeholder="Password: 6+ chars with at least one letter and one number"
             />
           </div>
 
