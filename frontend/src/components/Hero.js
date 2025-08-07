@@ -46,14 +46,14 @@ const Hero = () => {
           <motion.h1 variants={itemVariants} className="hero-title" id="hero-title">
             <span className="brand-name text-gradient">Eventra</span>
             <br />
-            <span className="">Your Tech Event Superhub</span>
+            <span className="subheading">Your Tech Event Superhub</span>
           </motion.h1>
 
           <motion.p variants={itemVariants} className="hero-subtitle">
             <strong>Eventra</strong> is the go-to platform for tech enthusiasts, developers,
             and innovators. Discover and host <strong>tech meetups</strong>, participate in
             <strong> hackathons</strong>, collaborate on <strong>real-world projects</strong>,
-            and grow your footprint in the open source space — all in one place.
+            and grow your footprint in the open source space all in one place.
           </motion.p>
 
           {/* <motion.div variants={itemVariants} className="hero-features" role="list">
