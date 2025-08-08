@@ -6,6 +6,7 @@ import WhatsHappening from './components/WhatsHappening';
 import Features from './components/Features';
 import Testimonials from './components/Testimonials';
 import Community from './components/Community';
+import Contributors from './components/Contributors';
 import Footer from './components/Footer';
 import EventCreation from './components/common/EventCreation';
 import AboutPage from './components/AboutPage';
@@ -49,6 +50,7 @@ function App() {
                     <WhatsHappening />
                     <Features />
                     <Testimonials />
+                    <Contributors />
                     <Community />
                   </>
                 }
@@ -56,6 +58,7 @@ function App() {
               <Route path="/events" element={<EventsSection />} />
               <Route path="/hackathons" element={<HackathonHub />} />
               <Route path="/projects" element={<ProjectGallery />} />
+              <Route path="/contributors" element={<Contributors />} />
               
               {/* Protected route for event creation */}
               <Route 

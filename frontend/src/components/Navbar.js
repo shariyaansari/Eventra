@@ -21,6 +21,7 @@ const Navbar = () => {
     { name: 'Events', href: '/events' },
     { name: 'Hackathons', href: '/hackathons' },
     { name: 'Projects', href: '/projects' },
+    { name: 'Contributors', href: '/contributors' },
     { name: 'About', href: '/about' }
   ];
 
