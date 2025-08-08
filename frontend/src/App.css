@@ -270,15 +270,15 @@ main {
 }
 
 .btn-outline {
-  background: rgb(122, 122, 175);
+  background: rgb(120, 120, 174);
   border: 2px solid rgba(255, 255, 255, 0.5);
-  color: white;
+  color: rgb(227, 227, 227);
   /* box-shadow: 0 3px 8px rgba(122, 122, 175, 0.6); subtle purple shadow */
   transition: all 0.3s ease;
 }
 
 .btn-outline:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgb(79, 79, 236);
   transform: translateY(-2px);
   /* box-shadow: 0 6px 20px rgba(122, 122, 175, 0.8); stronger shadow on hover */
 }
