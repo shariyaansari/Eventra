@@ -92,45 +92,42 @@ const Features = () => {
           className="features-header"
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 1}}
         >
           <h2 className="features-title">
-            Everything you need to host <span className="text-gradient">amazing events</span>
+            Everything you need to host is <br /><span className="text-gradient">amazing events</span>
           </h2>
           <p className="features-subtitle">
             From intimate workshops to large conferences, Eventra provides the tools that modern event organizers trust
           </p>
         </motion.div>
 
-        <motion.div 
-          className="features-grid"
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
+     <div className="marquee-container">
+  <div className="marquee-track">
+    {features.map((feature, index) => (
+      <div 
+        key={index}
+        className={`feature-card marquee-card ${feature.highlight ? 'feature-highlight' : ''}`}
+      >
+        <div className="feature-icon">{feature.icon}</div>
+        <div className="feature-header">
+          <h3 className="feature-title">{feature.title}</h3>
+          <span className="feature-stat">{feature.stats}</span>
+        </div>
+        <p className="feature-description">{feature.description}</p>
+        <button 
+          className="feature-cta"
+          onClick={feature.action ? feature.action : () => {}} 
+          disabled={!feature.action}
         >
-          {features.map((feature, index) => (
-            <motion.div 
-              key={index}
-              className={`feature-card ${feature.highlight ? 'feature-highlight' : ''}`}
-              variants={itemVariants}
-            >
-              <div className="feature-icon">{feature.icon}</div>
-              <div className="feature-header">
-                <h3 className="feature-title">{feature.title}</h3>
-                <span className="feature-stat">{feature.stats}</span>
-              </div>
-               <p className="feature-description">{feature.description}</p>
-              <button 
-                className="feature-cta"
-                onClick={feature.action ? feature.action : () => {}} 
-                disabled={!feature.action}
-              >
-                {feature.cta}
-                <span className="cta-arrow">→</span>
-              </button>
-            </motion.div>
-          ))}
-        </motion.div>
+          {feature.cta}
+          <span className="cta-arrow">→</span>
+        </button>
+      </div>
+    ))}
+  </div>
+</div>
+
       </div>
     </section>
   );

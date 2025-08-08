@@ -239,6 +239,7 @@ main {
   border: none;
   cursor: pointer;
   font-weight: 500;
+  background-color: #74b9ff;
   transition: all 0.3s ease;
   text-decoration: none;
   display: inline-block;
@@ -246,35 +247,42 @@ main {
 }
 
 .btn-primary {
-  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+  background: linear-gradient(45deg, #ff6b6b, #efb399);
   color: white;
+  /* box-shadow: 0 4px 15px rgba(255, 107, 107, 0.6); soft red shadow */
+  transition: box-shadow 0.3s ease;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(238, 90, 36, 0.4);
+  box-shadow: 0 6px 25px rgba(255, 107, 107, 0.8); /* stronger shadow on hover */
 }
 
+
 .btn-secondary {
-  background: linear-gradient(45deg, #74b9ff, #0984e3);
+  background: linear-gradient(45deg, #47a1fb, #a7d7fc);
   color: white;
+   /* box-shadow: 0 10px 20px rgba(9, 132, 227, 0.4); */
 }
 
 .btn-secondary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(9, 132, 227, 0.4);
+ 
 }
 
 .btn-outline {
-  background: transparent;
+  background: rgb(122, 122, 175);
   border: 2px solid rgba(255, 255, 255, 0.5);
   color: white;
+  /* box-shadow: 0 3px 8px rgba(122, 122, 175, 0.6); subtle purple shadow */
+  transition: all 0.3s ease;
 }
 
 .btn-outline:hover {
   background: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
+  /* box-shadow: 0 6px 20px rgba(122, 122, 175, 0.8); stronger shadow on hover */
 }
+
 
 .no-events {
   text-align: center;

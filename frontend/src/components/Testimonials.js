@@ -14,19 +14,19 @@ const Testimonials = () => {
       quote: "Eventra transformed how we manage our college tech fest. The QR check-in system and real-time analytics made everything seamless for our 2000+ attendees.",
       author: "Sarah Chen",
       role: "Event Coordinator, MIT Tech Society",
-      avatar: "👥"
+      avatar: ""
     },
     {
       quote: "As a startup, organizing multiple community events was challenging. Eventra's open-source platform gave us enterprise-level features without the cost.",
       author: "Marcus Johnson",
       role: "Community Manager, DevHub",
-      avatar: "🚀"
+      avatar: ""
     },
     {
       quote: "The waiting list automation and RSVP management saved us countless hours. Eventra handles the complexity so we can focus on creating great experiences.",
       author: "Priya Sharma",
       role: "Operations Lead, TechMeetup Bangalore",
-      avatar: "💡"
+      avatar: ""
     }
   ];
 

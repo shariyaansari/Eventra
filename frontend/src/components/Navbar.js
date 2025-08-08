@@ -1,7 +1,9 @@
+// src/components/Navbar.js
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import './shared-layout.css'; // Only import CSS here
+import './shared-layout.css';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,17 +25,24 @@ const Navbar = () => {
   ];
 
   return (
-    <motion.nav 
+    <motion.nav
       className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
     >
       <div className="navbar-container">
-        <Link to="/" className="nav-link navbar-brand">
+        
+        {/* Left: Brand */}
+        <Link
+          to="/"
+          className="nav-link navbar-brand"
+          style={{ cursor: 'pointer', textDecoration: 'none' }}
+        >
           <h2 className="text-gradient">Eventra</h2>
         </Link>
 
+        {/* Center: Navigation - Desktop only */}
         <ul className="navbar-nav desktop-nav">
           {navItems.map((item) => (
             <li key={item.name}>
@@ -44,12 +53,14 @@ const Navbar = () => {
           ))}
         </ul>
 
-        <div className="navbar-right desktop-nav">
-          <Link to="/signin" className="btn nav-btn signin-btn">Sign In</Link>
-          <Link to="/signup" className="btn nav-btn getstarted-btn">Get Started</Link>
+        {/* Right: Auth buttons */}
+        <div className="navbar-auth desktop-nav">
+          <a href="#signin" className="btn-secondary">Sign In</a>
+          <a href="#signup" className="btn-primary">Get Started</a>
         </div>
 
-        <button 
+        {/* Mobile Hamburger */}
+        <button
           className="mobile-menu-button"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
@@ -58,18 +69,19 @@ const Navbar = () => {
           <span></span>
         </button>
       </div>
-      
+
+      {/* Mobile Dropdown */}
       {isMobileMenuOpen && (
-        <motion.div 
+        <motion.div
           className="mobile-menu"
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           transition={{ duration: 0.3 }}
         >
           {navItems.map((item) => (
-            <Link 
+            <Link
               key={item.name}
-              to={item.href} 
+              to={item.href}
               className="mobile-nav-link"
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -77,8 +89,8 @@ const Navbar = () => {
             </Link>
           ))}
           <div className="mobile-auth">
-            <Link to="/signin" className="btn nav-btn signin-btn">Sign In</Link>
-            <Link to="/signup" className="btn nav-btn getstarted-btn">Get Started</Link>
+            <a href="#signin" className="btn-secondary">Sign In</a>
+            <a href="#signup" className="btn-primary">Get Started</a>
           </div>
         </motion.div>
       )}

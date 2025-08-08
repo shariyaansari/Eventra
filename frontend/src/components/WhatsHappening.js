@@ -64,7 +64,7 @@ const WhatsHappening = () => {
 
   return (
     <section className="whats-happening section-padding" ref={ref}>
-      <div className="container">
+      <div className="container ">
         <motion.div 
           className="section-header"
           initial={{ opacity: 0, y: 30 }}
@@ -72,7 +72,7 @@ const WhatsHappening = () => {
           transition={{ duration: 0.8 }}
         >
           <h2 className="section-title">
-            What's <span className="text-gradient">Happening</span> Now
+            What's Happening Now
           </h2>
           <p className="section-subtitle">
             Stay updated with upcoming events, community programs, and opportunities to contribute to Eventra
@@ -89,7 +89,7 @@ const WhatsHappening = () => {
             <motion.div 
               key={event.id}
               variants={itemVariants}
-              className={`event-card ${event.featured ? 'featured' : ''}`}
+              className={`events-card ${event.featured ? 'featured' : ''}`}
             >
               <div className="event-header">
                 <span className={`event-status ${event.status.toLowerCase().replace(' ', '-')}`}>
@@ -125,7 +125,7 @@ const WhatsHappening = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
         >
           <div className="highlight-content">
-            <h3>🚀 Eventra is participating in GirlScript Summer of Code 2025!</h3>
+            <h3> Eventra is participating in GirlScript Summer of Code 2025!</h3>
             <p>
               We're excited to mentor contributors and welcome new developers to our open-source community. 
               Join us in building the future of event management!
