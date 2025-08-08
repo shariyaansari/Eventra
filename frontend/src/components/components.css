@@ -79,7 +79,7 @@
 
 .hero-subtitle {
   font-size: 1.3rem;
-  color: #4b5563; /* Slightly darker gray for better contrast */
+  color: #42536af8; /* Slightly darker gray for better contrast */
   margin-bottom: 3rem;
   line-height: 1.8; /* Increased line height for easier reading */
   max-width: 640px; /* Slightly wider for better flow */
@@ -156,8 +156,8 @@
 
 .hero-btn:hover,
 .hero-btn:focus {
-  background-color: #2563eb;      /* Slightly darker blue on hover */
-  box-shadow: 0 12px 20px rgba(37, 99, 235, 0.4);
+  background-color: #5d85dd;      /* Slightly darker blue on hover */
+  box-shadow: 0 12px 20px rgba(223, 223, 223, 0.4);
   transform: translateY(-2px);
   outline: none;
 }
