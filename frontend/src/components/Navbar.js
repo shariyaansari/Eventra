@@ -56,8 +56,8 @@ const Navbar = () => {
 
         {/* Right: Auth buttons */}
         <div className="navbar-auth desktop-nav">
-          <a href="#signin" className="btn-secondary">Sign In</a>
-          <a href="#signup" className="btn-primary">Get Started</a>
+          <Link to="/login" className="btn-secondary">Sign In</Link>
+          <Link to="/signup" className="btn-primary">Get Started</Link>
         </div>
 
         {/* Mobile Hamburger */}
@@ -90,8 +90,8 @@ const Navbar = () => {
             </Link>
           ))}
           <div className="mobile-auth">
-            <a href="#signin" className="btn-secondary">Sign In</a>
-            <a href="#signup" className="btn-primary">Get Started</a>
+            <Link to="/login" className="btn-secondary">Sign In</Link>
+            <Link to="/signup" className="btn-primary">Get Started</Link>
           </div>
         </motion.div>
       )}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { Link } from 'react-router-dom';
 import './components.css';
 
 const Community = () => {
@@ -59,9 +60,9 @@ const Community = () => {
               Join hundreds of organizations using Eventra for their events
             </p>
             <div className="cta-actions">
-              <a href="#signup" className="btn-primary cta-btn">
+              <Link to="/signup" className="btn-primary cta-btn">
                 Create your profile
-              </a>
+              </Link>
               <a href="#browse" className="btn-secondary cta-btn">
                 Browse hackathons
               </a>
