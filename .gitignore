@@ -3,3 +3,12 @@
 
 node_modules
 
+# Secret Files - DO NOT COMMIT
+*.SECRETS.*
+*secrets*
+*.secret
+*.key
+.env
+.env.local
+.env.production
+

@@ -12,6 +12,13 @@ application.properties
 .env.production
 .env.azure
 
+### Secret Files - DO NOT COMMIT ###
+*.SECRETS.*
+*secrets*
+azure-environment-variables.SECRETS.json
+*.secret
+*.key
+
 ### STS ###
 .apt_generated
 .classpath
