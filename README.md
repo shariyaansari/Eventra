@@ -46,7 +46,7 @@ Eventra is a comprehensive event management system that empowers organizers to c
 ### Backend
 - **Framework**: Spring Boot 3.3.1
 - **Language**: Java 17
-- **Database**: JPA with configurable database support
+- **Database**: MySQL (Aiven) with JPA/Hibernate
 - **Security**: Spring Security with JWT authentication
 - **Build Tool**: Maven
 - **Documentation**: OpenAPI 3.0
@@ -218,10 +218,12 @@ Comprehensive API documentation is available in the `/docs` directory:
 
 #### Database Configuration
 ```properties
-# application.properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/eventra
-spring.datasource.username=your_username
-spring.datasource.password=your_password
+# application.properties - Aiven MySQL
+spring.datasource.url=jdbc:mysql://your-aiven-host:port/database_name?useSSL=true&requireSSL=true&verifyServerCertificate=false
+spring.datasource.username=your_aiven_username
+spring.datasource.password=your_aiven_password
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
 spring.jpa.hibernate.ddl-auto=update
 ```
 
