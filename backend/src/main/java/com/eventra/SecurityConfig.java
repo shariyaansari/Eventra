@@ -5,6 +5,7 @@ import com.eventra.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -37,6 +38,11 @@ public class SecurityConfig {
                 .requestMatchers("/", "/health", "/status", "/api/auth/**").permitAll()  // Public endpoints
                 .requestMatchers("/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()  // OpenAPI/Swagger endpoints
                 .requestMatchers("/h2-console/**").permitAll()  // H2 Console for development
+                .requestMatchers(HttpMethod.GET, "/api/projects/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/projects/submit").authenticated()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/**").authenticated()
+
                 .requestMatchers("/api/**").authenticated()  // All API endpoints require auth
                 .anyRequest().permitAll()  // Allow other requests for health checks
             )

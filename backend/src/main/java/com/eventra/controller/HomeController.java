@@ -32,7 +32,7 @@ public class HomeController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/health")
+    @GetMapping("/home/health")
     public ResponseEntity<Map<String, String>> health() {
         log.info("Health check endpoint accessed");
         

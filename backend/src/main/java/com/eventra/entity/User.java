@@ -3,7 +3,11 @@ package com.eventra.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,16 +20,20 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User implements UserDetails {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
     
     @Column(unique = true, nullable = false)
+    @EqualsAndHashCode.Include
     private String email;
     
     @Column(nullable = false)
@@ -59,11 +67,27 @@ public class User implements UserDetails {
     // UserDetails implementation
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream()
-            .flatMap(role -> role.getPermissions().stream())
-            .map(permission -> new SimpleGrantedAuthority(permission.getName().name()))
-            .collect(Collectors.toSet());
+        // Combine roles (with ROLE_ prefix) and permissions as GrantedAuthorities
+        Set<GrantedAuthority> authorities = new HashSet<>();
+
+        // Add roles as authorities with prefix ROLE_
+        authorities.addAll(
+            roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().name()))
+                .collect(Collectors.toSet())
+        );
+
+        // Add permissions as authorities
+        authorities.addAll(
+            roles.stream()
+                .flatMap(role -> role.getPermissions().stream())
+                .map(permission -> new SimpleGrantedAuthority(permission.getName().name()))
+                .collect(Collectors.toSet())
+        );
+
+        return authorities;
     }
+
     
     // Helper methods for role checking
     public boolean hasRole(Role.RoleName roleName) {
