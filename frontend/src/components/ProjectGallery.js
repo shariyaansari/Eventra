@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
+// This is the main ProjectGallery component which manages state and renders the cards.
 const ProjectGallery = () => {
   const [projects, setProjects] = useState([]);
   const [filterCategory, setFilterCategory] = useState('all');
   const [sortBy, setSortBy] = useState('recent');
 
+  // Using useEffect to simulate fetching project data on component mount.
   useEffect(() => {
     const mockProjects = [
       {
@@ -20,7 +22,7 @@ const ProjectGallery = () => {
         techStack: ["React", "Python", "TensorFlow", "Node.js"],
         githubUrl: "https://github.com/sarahchen/ai-task-manager",
         liveDemo: "https://ai-taskmanager-demo.com",
-        image: "/api/placeholder/400/200",
+        image: "https://placehold.co/400x200/5C6BC0/FFFFFF?text=AI+Task+Manager",
         createdAt: "2025-01-15",
         lastUpdated: "2025-01-28",
         status: "Active",
@@ -40,7 +42,7 @@ const ProjectGallery = () => {
         techStack: ["Solidity", "React", "Web3.js", "Hardhat"],
         githubUrl: "https://github.com/davidkim/blockchain-voting",
         liveDemo: "https://blockchain-vote-demo.com",
-        image: "/api/placeholder/400/200",
+        image: "https://placehold.co/400x200/42A5F5/FFFFFF?text=Blockchain+Voting",
         createdAt: "2024-12-20",
         lastUpdated: "2025-01-25",
         status: "Active",
@@ -60,7 +62,7 @@ const ProjectGallery = () => {
         techStack: ["Python", "D3.js", "Django", "PostgreSQL"],
         githubUrl: "https://github.com/emmathompson/climate-viz",
         liveDemo: "https://climate-data-viz.com",
-        image: "/api/placeholder/400/200",
+        image: "https://placehold.co/400x200/66BB6A/FFFFFF?text=Climate+Data+Viz",
         createdAt: "2024-11-10",
         lastUpdated: "2025-01-20",
         status: "Active",
@@ -80,7 +82,7 @@ const ProjectGallery = () => {
         techStack: ["Socket.io", "React", "Node.js", "MongoDB"],
         githubUrl: "https://github.com/alexrodriguez/realtime-chat",
         liveDemo: "https://secure-chat-demo.com",
-        image: "/api/placeholder/400/200",
+        image: "https://placehold.co/400x200/9575CD/FFFFFF?text=Chat+App",
         createdAt: "2024-10-05",
         lastUpdated: "2025-01-30",
         status: "Active",
@@ -100,7 +102,7 @@ const ProjectGallery = () => {
         techStack: ["Arduino", "React Native", "Firebase", "C++"],
         githubUrl: "https://github.com/robertosilva/smart-garden",
         liveDemo: null,
-        image: "/api/placeholder/400/200",
+        image: "https://placehold.co/400x200/E57373/FFFFFF?text=IoT+Garden",
         createdAt: "2024-09-15",
         lastUpdated: "2024-12-10",
         status: "Maintenance",
@@ -114,6 +116,7 @@ const ProjectGallery = () => {
 
   const categories = ['all', 'AI/ML', 'Blockchain', 'Web Development', 'Data Science', 'IoT', 'Mobile'];
 
+  // Filters and sorts the projects based on the current state.
   const filteredAndSortedProjects = projects
     .filter(project => filterCategory === 'all' || project.category === filterCategory)
     .sort((a, b) => {
@@ -129,101 +132,122 @@ const ProjectGallery = () => {
       }
     });
 
-  const ProjectCard = ({ project }) => (
-    <motion.div
-      className="project-card"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      whileHover={{ y: -5 }}
-    >
-      <div className="project-image">
-        <img src={project.image} alt={project.title} />
-        <div className="project-status">
-          <span className={`status-badge ${project.status.toLowerCase()}`}>
-            {project.status}
-          </span>
-        </div>
-      </div>
+  // This is the ProjectCard component, now with the original class names but enhanced structure.
+  const ProjectCard = ({ project }) => {
+    // Bug fix: Filter out the author from the contributors list to avoid duplication.
+    const uniqueContributors = project.contributors.filter(
+      (contributor) => contributor !== project.author
+    );
 
-      <div className="project-content">
-        <div className="project-header">
-          <h3>{project.title}</h3>
-          <div className="project-stats">
-            <div className="stat">
-              <span className="icon">⭐</span>
-              <span>{project.stars}</span>
-            </div>
-            <div className="stat">
-              <span className="icon">🍴</span>
-              <span>{project.forks}</span>
-            </div>
-          </div>
-        </div>
-
-        <p className="project-description">{project.description}</p>
-
-        <div className="project-meta">
-          <div className="author">
-            <span className="label">By:</span>
-            <span className="author-name">{project.author}</span>
-          </div>
-          <div className="category">
-            <span className="category-tag">{project.category}</span>
-          </div>
-          <div className="difficulty">
-            <span className={`difficulty-badge ${project.difficulty.toLowerCase()}`}>
-              {project.difficulty}
+    return (
+      <motion.div
+        className="project-card"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        whileHover={{ y: -5 }}
+      >
+        <div className="project-image">
+          <img
+            src={project.image}
+            alt={project.title}
+          />
+          <div className="project-status">
+            <span className={`status-badge ${project.status.toLowerCase()}`}>
+              {project.status}
             </span>
           </div>
         </div>
 
-        <div className="tech-stack">
-          {project.techStack.map((tech, index) => (
-            <span key={index} className="tech-tag">{tech}</span>
-          ))}
-        </div>
+        <div className="project-content">
+          <div className="project-header">
+            <h3>{project.title}</h3>
+            <div className="project-stats">
+              <div className="stat">
+                <span className="icon">⭐</span>
+                <span>{project.stars}</span>
+              </div>
+              <div className="stat">
+                <span className="icon">🍴</span>
+                <span>{project.forks}</span>
+              </div>
+            </div>
+          </div>
 
-        <div className="contributors">
-          <span className="contributors-label">Contributors:</span>
-          <div className="contributor-list">
-            <span className="contributor main">{project.author}</span>
-            {project.contributors.map((contributor, index) => (
-              <span key={index} className="contributor">{contributor}</span>
+          <p className="project-description">{project.description}</p>
+
+          {/* This section is a structural enhancement, using existing classes. */}
+          <div className="project-meta-badges">
+            <span className="category-tag">{project.category}</span>
+            <span className={`difficulty-badge ${project.difficulty.toLowerCase()}`}>
+              {project.difficulty}
+            </span>
+          </div>
+
+          <div className="project-meta">
+            <div className="author">
+              <span className="label">By:</span>
+              <span className="author-name">{project.author}</span>
+            </div>
+          </div>
+
+          <div className="tech-stack">
+            {project.techStack.map((tech, index) => (
+              <span key={index} className="tech-tag">{tech}</span>
             ))}
           </div>
-        </div>
 
-        <div className="project-activity">
-          <div className="activity-item">
-            <span className="icon">🔄</span>
-            <span>Updated {project.lastUpdated}</span>
+          <div className="contributors">
+            <span className="contributors-label">Contributors:</span>
+            <div className="contributor-list">
+              {/* Use the filtered uniqueContributors array */}
+              {uniqueContributors.length > 0 ? (
+                uniqueContributors.map((contributor, index) => (
+                  <span key={index} className="contributor">{contributor}</span>
+                ))
+              ) : (
+                <span className="contributor">No other contributors yet</span>
+              )}
+            </div>
           </div>
-          <div className="activity-item">
-            <span className="icon">🐛</span>
-            <span>{project.openIssues} open issues</span>
-          </div>
-          <div className="activity-item">
-            <span className="icon">📥</span>
-            <span>{project.pullRequests} pull requests</span>
-          </div>
-        </div>
 
-        <div className="project-actions">
-          <button className="btn-primary" onClick={() => window.open(project.githubUrl, '_blank')}>
-            View on GitHub
-          </button>
-          {project.liveDemo && (
-            <button className="btn-secondary" onClick={() => window.open(project.liveDemo, '_blank')}>
-              Live Demo
+          <div className="project-activity">
+            <div className="activity-item">
+              <span className="icon">🔄</span>
+              <span>Updated {project.lastUpdated}</span>
+            </div>
+            <div className="activity-item">
+              <span className="icon">🐛</span>
+              <span>{project.openIssues} open issues</span>
+            </div>
+            <div className="activity-item">
+              <span className="icon">📥</span>
+              <span>{project.pullRequests} pull requests</span>
+            </div>
+          </div>
+
+          <div className="project-actions">
+            <button
+              className="btn-primary"
+              onClick={() => window.open(project.githubUrl, '_blank')}
+            >
+              View on GitHub
             </button>
-          )}
-          <button className="btn-outline">⭐ Star</button>
-          <button className="btn-outline">🍴 Fork</button>
+            {project.liveDemo && (
+              <button
+                className="btn-secondary"
+                onClick={() => window.open(project.liveDemo, '_blank')}
+              >
+                Live Demo
+              </button>
+            )}
+            <button className="btn-outline">⭐ Star</button>
+            <button className="btn-outline">🍴 Fork</button>
+          </div>
         </div>
-      </div>
-    </motion.div>
-  );
+      </motion.div>
+    );
+  };
 
   return (
     <div className="project-gallery">
@@ -241,8 +265,8 @@ const ProjectGallery = () => {
         <div className="gallery-controls">
           <div className="filter-section">
             <label>Filter by Category:</label>
-            <select 
-              value={filterCategory} 
+            <select
+              value={filterCategory}
               onChange={(e) => setFilterCategory(e.target.value)}
               className="filter-select"
             >
@@ -256,8 +280,8 @@ const ProjectGallery = () => {
 
           <div className="sort-section">
             <label>Sort by:</label>
-            <select 
-              value={sortBy} 
+            <select
+              value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               className="sort-select"
             >
