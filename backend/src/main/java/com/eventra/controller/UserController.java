@@ -20,7 +20,7 @@ import java.util.Map;
 public class UserController {
 
     @GetMapping("/profile")
-    public ResponseEntity<Map<String, String>> getUserProfile() {
+    public ResponseEntity<UserProfileResponse> getUserProfile() {
         log.info("Received request to get user profile");
         
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -34,9 +34,17 @@ public class UserController {
         String email = authentication.getName();
         log.info("Retrieved profile for user: {}", email);
         
-        Map<String, String> response = new HashMap<>();
-        response.put("email", email);
-        response.put("message", "User profile retrieved successfully");
+        // Create the response with user profile data
+        UserProfileResponse response = new UserProfileResponse();
+        response.setEmail(email);
+        
+        // TODO: Fetch actual user data from database using UserService
+        // For now, using placeholder data - you should replace this with actual database lookup
+        response.setFirstName("John"); // Replace with actual data from database
+        response.setLastName("Doe");   // Replace with actual data from database
+        response.setProfilePicture(null); // Will be null initially until user uploads
+        response.setRoles(new String[]{"USER"}); // Add user roles
+        response.setPermissions(new String[]{"CREATE_EVENT"}); // Add user permissions
         
         return ResponseEntity.ok(response);
     }
@@ -51,7 +59,88 @@ public class UserController {
         return ResponseEntity.ok(events);
     }
 
-    // Inner class for user event info
+    // User Profile Response DTO
+    public static class UserProfileResponse {
+        private String email;
+        private String firstName;
+        private String lastName;
+        private String profilePicture;
+        private String[] roles;
+        private String[] permissions;
+        
+        // Default constructor
+        public UserProfileResponse() {}
+        
+        // Constructor with all fields
+        public UserProfileResponse(String email, String firstName, String lastName, 
+                                 String profilePicture, String[] roles, String[] permissions) {
+            this.email = email;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.profilePicture = profilePicture;
+            this.roles = roles;
+            this.permissions = permissions;
+        }
+        
+        // Getters and Setters
+        public String getEmail() {
+            return email;
+        }
+        
+        public void setEmail(String email) {
+            this.email = email;
+        }
+        
+        public String getFirstName() {
+            return firstName;
+        }
+        
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+        
+        public String getLastName() {
+            return lastName;
+        }
+        
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+        
+        public String getProfilePicture() {
+            return profilePicture;
+        }
+        
+        public void setProfilePicture(String profilePicture) {
+            this.profilePicture = profilePicture;
+        }
+        
+        public String[] getRoles() {
+            return roles;
+        }
+        
+        public void setRoles(String[] roles) {
+            this.roles = roles;
+        }
+        
+        public String[] getPermissions() {
+            return permissions;
+        }
+        
+        public void setPermissions(String[] permissions) {
+            this.permissions = permissions;
+        }
+        
+        // Helper method to get full name
+        public String getFullName() {
+            if (firstName != null && lastName != null) {
+                return firstName + " " + lastName;
+            }
+            return email;
+        }
+    }
+
+    // Inner class for user event info (keeping your existing implementation)
     public static class UserEventInfo {
         public Long id;
         public String title;
