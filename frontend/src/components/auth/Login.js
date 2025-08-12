@@ -30,19 +30,52 @@ const Login = () => {
     setError('');
 
     try {
+      // Step 1: Authenticate and get token
       const response = await apiUtils.post(API_ENDPOINTS.AUTH.LOGIN, formData);
       const data = await response.json();
 
       if (response.ok && data.token) {
-        // Use the enhanced login method from AuthContext
-        login(data);
-        
-        // Redirect to dashboard or home page
-        navigate('/dashboard');
+        try {
+          // Step 2: Fetch user profile data using the token
+          const profileResponse = await apiUtils.get(API_ENDPOINTS.USER.PROFILE, data.token);
+          
+          if (profileResponse.ok) {
+            const profileData = await profileResponse.json();
+            
+            // Step 3: Combine token with profile data for AuthContext
+            const authData = {
+              token: data.token,
+              ...profileData  // This spreads firstName, lastName, email, profilePicture, roles, permissions
+            };
+            
+            // Step 4: Update AuthContext with complete user data
+            login(authData);
+            
+            // Step 5: Redirect to dashboard
+            navigate('/dashboard');
+          } else {
+            // If profile fetch fails, still login with basic data
+            console.warn('Failed to fetch user profile, logging in with basic data');
+            login({
+              token: data.token,
+              email: formData.email
+            });
+            navigate('/dashboard');
+          }
+        } catch (profileError) {
+          console.error('Error fetching user profile:', profileError);
+          // Fallback: login with basic data if profile fetch fails
+          login({
+            token: data.token,
+            email: formData.email
+          });
+          navigate('/dashboard');
+        }
       } else {
         setError(data.message || 'Invalid email or password. Please try again.');
       }
     } catch (error) {
+      console.error('Login error:', error);
       setError('Network error. Please check your connection and try again.');
     } finally {
       setLoading(false);
