@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import { API_ENDPOINTS, apiUtils } from '../../config/api';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
-  const { user, hasPermission } = useAuth();
+  const { user, hasPermission, logout } = useAuth();
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,6 +20,11 @@ const AdminDashboard = () => {
     location: '',
     maxParticipants: ''
   });
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   useEffect(() => {
     fetchDashboardData();
@@ -62,6 +69,9 @@ const AdminDashboard = () => {
       <div className="dashboard-header">
         <h1>Admin Dashboard</h1>
         <p>Welcome back, {user?.firstName} {user?.lastName}</p>
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
 
       <div className="dashboard-tabs">
