@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { API_ENDPOINTS, apiUtils } from '../../config/api';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
-  const { user, hasPermission } = useAuth();
+  const { user, hasPermission, logout } = useAuth();
+  const navigate = useNavigate();
   const [userEvents, setUserEvents] = useState([]);
   const [availableEvents, setAvailableEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   useEffect(() => {
     fetchUserData();
@@ -70,6 +76,9 @@ const UserDashboard = () => {
       <div className="dashboard-header">
         <h1>My Dashboard</h1>
         <p>Welcome back, {user?.firstName} {user?.lastName}</p>
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
 
       {error && <div className="error-message">{error}</div>}
