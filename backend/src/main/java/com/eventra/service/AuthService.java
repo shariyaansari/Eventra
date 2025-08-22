@@ -12,6 +12,7 @@ import com.eventra.exception.UserNotFoundException;
 import com.eventra.repository.UserRepository;
 import com.eventra.repository.RoleRepository;
 import com.eventra.util.JwtUtil;
+import com.eventra.util.ValidationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,6 +43,12 @@ public class AuthService {
         if (userRepository.existsByEmail(signupRequest.getEmail())) {
             log.warn("Registration failed: Email {} already exists", signupRequest.getEmail());
             throw new UserAlreadyExistsException("Email already exists!");
+        }
+
+        // Additional password complexity validation
+        if (!ValidationUtil.isValidPassword(signupRequest.getPassword())) {
+            log.warn("Registration failed: Password does not meet complexity requirements for email: {}", signupRequest.getEmail());
+            throw new RuntimeException("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)");
         }
 
         try {

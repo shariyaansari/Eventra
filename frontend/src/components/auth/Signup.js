@@ -13,14 +13,48 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [passwordStrength, setPasswordStrength] = useState({
+    score: 0,
+    feedback: ''
+  });
   
   const navigate = useNavigate();
 
+  const checkPasswordStrength = (password) => {
+    let score = 0;
+    let feedback = [];
+    
+    if (password.length >= 8) score += 1;
+    else feedback.push('at least 8 characters');
+    
+    if (/[a-z]/.test(password)) score += 1;
+    else feedback.push('one lowercase letter');
+    
+    if (/[A-Z]/.test(password)) score += 1;
+    else feedback.push('one uppercase letter');
+    
+    if (/[0-9]/.test(password)) score += 1;
+    else feedback.push('one number');
+    
+    if (/[@$!%*?&]/.test(password)) score += 1;
+    else feedback.push('one special character (@$!%*?&)');
+    
+    return { score, feedback: feedback.length > 0 ? `Needs: ${feedback.join(', ')}` : 'Strong password!' };
+  };
+
   const handleChange = (e) => {
-    setFormData({
+    const newFormData = {
       ...formData,
       [e.target.name]: e.target.value
-    });
+    };
+    setFormData(newFormData);
+    
+    // Check password strength in real-time
+    if (e.target.name === 'password') {
+      const strength = checkPasswordStrength(e.target.value);
+      setPasswordStrength(strength);
+    }
+    
     // Clear error when user starts typing
     if (error) setError('');
   };
@@ -133,10 +167,37 @@ const Signup = () => {
               onChange={handleChange}
               required
               disabled={loading}
-              minLength="6"
-              placeholder="Password: 6+ chars with at least one letter and one number"
+              minLength="8"
+              placeholder="Password: 8+ chars with uppercase, lowercase, number, and special character"
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed"
             />
+            {formData.password && (
+              <div className="mt-1">
+                <div className="flex items-center justify-between text-xs text-gray-600">
+                  <span>Password strength:</span>
+                  <span className={passwordStrength.score >= 4 ? 'text-green-600 font-medium' : 'text-yellow-600'}>
+                    {passwordStrength.score}/5
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
+                  <div 
+                    className={`h-1.5 rounded-full ${
+                      passwordStrength.score === 0 ? 'bg-red-500 w-0' :
+                      passwordStrength.score === 1 ? 'bg-red-500 w-1/5' :
+                      passwordStrength.score === 2 ? 'bg-orange-500 w-2/5' :
+                      passwordStrength.score === 3 ? 'bg-yellow-500 w-3/5' :
+                      passwordStrength.score === 4 ? 'bg-blue-500 w-4/5' :
+                      'bg-green-500 w-full'
+                    }`}
+                  />
+                </div>
+                <p className={`text-xs mt-1 ${
+                  passwordStrength.score >= 4 ? 'text-green-600' : 'text-yellow-600'
+                }`}>
+                  {passwordStrength.feedback}
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="space-y-2">
