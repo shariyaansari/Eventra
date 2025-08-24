@@ -93,6 +93,9 @@ const Login = () => {
               placeholder="Enter your password"
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed"
             />
+            <Link to="/password-reset" className="text-blue-600 hover:underline font-medium text-sm block text-right">
+              Forgot Password?
+            </Link>
           </div>
 
           {error && (
