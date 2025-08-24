@@ -27,7 +27,7 @@ const Community = () => {
               Join our community of event organizers, share best practices, and get support for your events.
             </p>
             <div className="community-actions">
-              <a href="https://t.me/eventra" className="btn-primary">
+              <a target="_blank" rel="noopener noreferrer" href="https://t.me/eventra" className="btn-primary">
                 Join our Telegram group
               </a>
               <a href="#discord" className="btn-secondary">
