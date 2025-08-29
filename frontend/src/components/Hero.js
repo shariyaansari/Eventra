@@ -47,7 +47,7 @@ const Hero = () => {
 
   return (
     <section
-      className="relative overflow-hidden bg-gradient-to-br from-indigo-50 to-white py-20 sm:py-28"
+      className="relative overflow-hidden bg-indigo-50/80 py-20 sm:py-28"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -61,7 +61,7 @@ const Hero = () => {
             className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6"
           >
             <span className="block">Discover & Join</span>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+            <span className="text-transparent bg-clip-text bg-indigo-600">
               Amazing Tech Events
             </span>
           </motion.h1>
@@ -127,7 +127,7 @@ const Hero = () => {
 
       {/* Decorative elements */}
       <div
-        className="hidden lg:block absolute top-0 right-0 -mr-48 -mt-8 opacity-70"
+        className="hidden lg:block absolute top-24 right-0 -mr-48 -mt-8 opacity-70"
       >
         <svg
           className="h-96 w-96 text-indigo-100"
