@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -16,13 +16,6 @@ const Navbar = () => {
     setShowProfileDropdown(false);
     setIsMobileMenuOpen(false);
     document.body.style.overflow = '';
-  };
-
-  // Toggle mobile menu with body scroll lock
-  const toggleMobileMenu = () => {
-    const willOpen = !isMobileMenuOpen;
-    setIsMobileMenuOpen(willOpen);
-    document.body.style.overflow = willOpen ? 'hidden' : '';
   };
 
   const navItems = [
