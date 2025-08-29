@@ -56,25 +56,6 @@ const Hero = () => {
             and grow your footprint in the open source space all in one place.
           </motion.p>
 
-          {/* <motion.div variants={itemVariants} className="hero-features" role="list">
-            <div className="feature-highlight" role="listitem">
-              <span className="feature-icon" aria-hidden="true">🎯</span>
-              <span>Discover Tech Events & Meetups</span>
-            </div>
-            <div className="feature-highlight" role="listitem">
-              <span className="feature-icon" aria-hidden="true">🏆</span>
-              <span>Participate in Global Hackathons</span>
-            </div>
-            <div className="feature-highlight" role="listitem">
-              <span className="feature-icon" aria-hidden="true">🚀</span>
-              <span>Showcase & Collaborate on Projects</span>
-            </div>
-            <div className="feature-highlight" role="listitem">
-              <span className="feature-icon" aria-hidden="true">🤝</span>
-              <span>Contribute to Open Source</span>
-            </div>
-          </motion.div> */}
-
           <motion.div variants={itemVariants} className="hero-actions">
             <Link to="/events" className="btn-primary hero-btn" aria-label="Explore tech events">
               Explore Events
