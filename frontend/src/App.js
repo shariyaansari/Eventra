@@ -31,7 +31,7 @@ import AdminDashboard from './components/admin/AdminDashboard';
 
 function App() {
   useEffect(() => {
-    createScrollToTopButton(); 
+    createScrollToTopButton();
   }, []);
 
   return (
@@ -40,7 +40,7 @@ function App() {
         <div className="App">
           <Navbar />
 
-          <main>
+          <main className='min-h-screen'>
             <Routes>
               <Route
                 path="/"
@@ -59,37 +59,37 @@ function App() {
               <Route path="/hackathons" element={<HackathonHub />} />
               <Route path="/projects" element={<ProjectGallery />} />
               <Route path="/contributors" element={<Contributors />} />
-              
+
               {/* Protected route for event creation */}
-              <Route 
-                path="/create-event" 
+              <Route
+                path="/create-event"
                 element={
                   <ProtectedRoute requiredPermissions={['CREATE_EVENT']}>
                     <EventCreation />
                   </ProtectedRoute>
-                } 
+                }
               />
-              
+
               {/* Dashboard routes */}
-              <Route 
-                path="/admin" 
+              <Route
+                path="/admin"
                 element={
                   <ProtectedRoute requiredRoles={['ADMIN']}>
                     <AdminDashboard />
                   </ProtectedRoute>
-                } 
+                }
               />
-              <Route 
-                path="/dashboard" 
+              <Route
+                path="/dashboard"
                 element={
                   <ProtectedRoute>
                     <Dashboard />
                   </ProtectedRoute>
-                } 
+                }
               />
-              
+
               <Route path="/about" element={<AboutPage />} />
-              
+
               {/* Auth routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
