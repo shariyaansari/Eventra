@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { FaGithub, FaTwitter, FaLinkedin, FaDiscord, FaTelegram } from 'react-icons/fa';
 
 const Footer = () => {

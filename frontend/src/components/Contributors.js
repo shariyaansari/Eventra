@@ -105,7 +105,6 @@ const Contributors = () => {
   const [contributors, setContributors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [usingCachedData, setUsingCachedData] = useState(false);
 
 
   // Function to fetch additional GitHub profile data with better error handling
@@ -147,14 +146,12 @@ const Contributors = () => {
   const fetchContributors = useCallback(async () => {
     setLoading(true);
     setError(null);
-    setUsingCachedData(false);
 
     // Check for cached data first
     const cachedData = getCachedContributors();
     if (cachedData) {
       setContributors(cachedData);
       setLoading(false);
-      setUsingCachedData(true);
       return;
     }
 
