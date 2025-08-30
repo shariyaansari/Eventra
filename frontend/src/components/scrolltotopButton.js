@@ -1,24 +1,43 @@
-import './scrolltotopButton.css';
+import React, { useEffect, useState } from "react";
 
-export default function createScrollToTopButton() {
-    if (document.getElementById("scrollToTopBtn")) return; // Prevent duplicates
-  
-    const button = document.createElement("button");
-    button.id = "scrollToTopBtn";
-    button.textContent = "↑";
-    document.body.appendChild(button);
-  
-    // Show/hide button based on scroll position
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 300) {
-          button.classList.add("show");
-        } else {
-          button.classList.remove("show");
-        }
-      });
-  
-    // Scroll to top smoothly
-    button.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+const ScrollToTopButton = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.scrollY > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener("scroll", toggleVisibility);
+
+    return () => {
+      window.removeEventListener("scroll", toggleVisibility);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
     });
-  }
+  };
+
+  return (
+    <button
+      onClick={scrollToTop}
+      className={`fixed bottom-6 right-6 z-50 p-3 rounded-full shadow-lg transition-all duration-300
+        bg-indigo-600 text-white text-xl font-bold 
+        hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500
+        ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}
+      aria-label="Scroll to top"
+    >
+      ↑
+    </button>
+  );
+};
+
+export default ScrollToTopButton;

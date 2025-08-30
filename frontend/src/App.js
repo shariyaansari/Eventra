@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import Navbar from './components/Layout/Navbar';
 import Hero from './components/Hero';
 import WhatsHappening from './components/WhatsHappening';
 import Features from './components/Features';
 import Testimonials from './components/Testimonials';
 import Community from './components/Community';
 import Contributors from './components/Contributors';
-import Footer from './components/Footer';
+import Footer from './components/Layout/Footer';
 import EventCreation from './components/common/EventCreation';
 import AboutPage from './components/AboutPage';
 import EventsSection from './components/EventsSection';
 import HackathonHub from './components/HackathonHub';
 import ProjectGallery from './components/ProjectGallery';
-import createScrollToTopButton from './components/scrolltotopButton';
+import ScrollToTopButton from './components/scrolltotopButton';
 import NotFound from './components/NotFound';
 import './App.css';
 
@@ -30,9 +30,6 @@ import AdminDashboard from './components/admin/AdminDashboard';
 
 
 function App() {
-  useEffect(() => {
-    createScrollToTopButton();
-  }, []);
 
   return (
     <AuthProvider>
@@ -99,6 +96,7 @@ function App() {
             </Routes>
           </main>
 
+          <ScrollToTopButton />
           <Footer />
         </div>
       </Router>
