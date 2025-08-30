@@ -1,17 +1,11 @@
-import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Layout/Navbar';
-import Hero from './components/Hero';
-import WhatsHappening from './components/WhatsHappening';
-import Features from './components/Features';
-import Testimonials from './components/Testimonials';
-import Community from './components/Community';
 import Contributors from './components/Contributors';
 import Footer from './components/Layout/Footer';
 import EventCreation from './components/common/EventCreation';
 import AboutPage from './components/AboutPage';
-import EventsSection from './components/EventsSection';
-import HackathonHub from './components/HackathonHub';
+import EventsPage from './Pages/Events/EventsPage';
+import HackathonPage from './Pages/Hackathons/HackathonPage';
 import ProjectGallery from './components/ProjectGallery';
 import ScrollToTopButton from './components/scrolltotopButton';
 import NotFound from './components/NotFound';
@@ -27,6 +21,7 @@ import { AuthProvider } from './context/AuthContext';
 // Import Dashboard components
 import Dashboard from './components/Dashboard';
 import AdminDashboard from './components/admin/AdminDashboard';
+import HomePage from './Pages/Home/HomePage';
 
 
 function App() {
@@ -39,21 +34,9 @@ function App() {
 
           <main className='min-h-screen'>
             <Routes>
-              <Route
-                path="/"
-                element={
-                  <>
-                    <Hero />
-                    <WhatsHappening />
-                    <Features />
-                    <Testimonials />
-                    <Contributors />
-                    <Community />
-                  </>
-                }
-              />
-              <Route path="/events" element={<EventsSection />} />
-              <Route path="/hackathons" element={<HackathonHub />} />
+              <Route path="/" element={<HomePage />} />
+              <Route path="/events" element={<EventsPage />} />
+              <Route path="/hackathons" element={<HackathonPage />} />
               <Route path="/projects" element={<ProjectGallery />} />
               <Route path="/contributors" element={<Contributors />} />
 
