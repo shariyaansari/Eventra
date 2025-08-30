@@ -68,10 +68,44 @@ const getRoleByGitHubActivity = (contributor) => {
   return 'New Contributor';
 };
 
+// Local storage keys
+const STORAGE_KEY = 'github_contributors';
+const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
+
+// Helper function to get data from local storage
+const getCachedContributors = () => {
+  try {
+    const cachedData = localStorage.getItem(STORAGE_KEY);
+    if (!cachedData) return null;
+    
+    const { data, timestamp } = JSON.parse(cachedData);
+    const isExpired = Date.now() - timestamp > CACHE_DURATION;
+    
+    return isExpired ? null : data;
+  } catch (error) {
+    console.error('Error reading from local storage:', error);
+    return null;
+  }
+};
+
+// Helper function to save data to local storage
+const cacheContributors = (data) => {
+  try {
+    const cacheData = {
+      data,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(cacheData));
+  } catch (error) {
+    console.error('Error saving to local storage:', error);
+  }
+};
+
 const Contributors = () => {
   const [contributors, setContributors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [usingCachedData, setUsingCachedData] = useState(false);
 
 
   // Function to fetch additional GitHub profile data with better error handling
@@ -113,6 +147,16 @@ const Contributors = () => {
   const fetchContributors = useCallback(async () => {
     setLoading(true);
     setError(null);
+    setUsingCachedData(false);
+
+    // Check for cached data first
+    const cachedData = getCachedContributors();
+    if (cachedData) {
+      setContributors(cachedData);
+      setLoading(false);
+      setUsingCachedData(true);
+      return;
+    }
 
     try {
       const response = await fetch(
@@ -147,6 +191,7 @@ const Contributors = () => {
       );
 
       setContributors(enhancedContributors);
+      cacheContributors(enhancedContributors);
     } catch (err) {
       console.error('Using mock data due to:', err);
       setError('GitHub API rate limit exceeded. Showing sample data.');
