@@ -1,18 +1,81 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import mockProjectsData from './mockProjectsData.json'
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiGithub, FiExternalLink, FiStar, FiGitBranch, FiAlertCircle, FiGitPullRequest, FiClock, FiFilter, FiSearch } from 'react-icons/fi';
+import mockProjectsData from './mockProjectsData.json';
+
+// Skeleton Loader Component
+const SkeletonCard = () => (
+  <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden animate-pulse">
+    <div className="h-40 bg-gray-100"></div>
+    <div className="p-6">
+      <div className="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
+      <div className="h-4 bg-gray-100 rounded w-full mb-2"></div>
+      <div className="h-4 bg-gray-100 rounded w-5/6 mb-4"></div>
+      
+      <div className="flex flex-wrap gap-2 mb-4">
+        <div className="h-6 bg-gray-100 rounded-full w-16"></div>
+        <div className="h-6 bg-gray-100 rounded-full w-24"></div>
+      </div>
+      
+      <div className="flex items-center justify-between mb-4">
+        <div className="h-8 w-8 rounded-full bg-gray-200"></div>
+        <div className="h-4 bg-gray-100 rounded w-1/3"></div>
+      </div>
+      
+      <div className="flex flex-wrap gap-2 mb-4">
+        {[1, 2, 3].map(i => (
+          <div key={i} className="h-6 bg-gray-100 rounded-full w-16"></div>
+        ))}
+      </div>
+      
+      <div className="flex items-center justify-between mt-4">
+        <div className="h-10 bg-gray-200 rounded-lg w-1/3"></div>
+        <div className="h-10 bg-gray-200 rounded-lg w-1/3"></div>
+      </div>
+    </div>
+  </div>
+);
 
 // This is the main ProjectGallery component which manages state and renders the cards.
 const ProjectGallery = () => {
-  const [projects, setProjects] = useState(mockProjectsData);
+  const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [filterCategory, setFilterCategory] = useState('all');
   const [sortBy, setSortBy] = useState('recent');
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  // Extract unique categories from projects
+  const categories = ['all', ...new Set(mockProjectsData.map(project => project.category))];
+  
+  // Simulate API call
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setProjects(mockProjectsData);
+      setIsLoading(false);
+    }, 1000);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
-  const categories = ['all', 'AI/ML', 'Blockchain', 'Web Development', 'Data Science', 'IoT', 'Mobile'];
-
-  // Filters and sorts the projects based on the current state.
+  // Filters, searches, and sorts the projects based on the current state
   const filteredAndSortedProjects = projects
-    .filter(project => filterCategory === 'all' || project.category === filterCategory)
+    .filter(project => {
+      // Category filter
+      if (filterCategory !== 'all' && project.category !== filterCategory) return false;
+      
+      // Search query filter
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        return (
+          project.title.toLowerCase().includes(query) ||
+          project.description.toLowerCase().includes(query) ||
+          project.techStack.some(tech => tech.toLowerCase().includes(query)) ||
+          project.category.toLowerCase().includes(query)
+        );
+      }
+      
+      return true;
+    })
     .sort((a, b) => {
       switch (sortBy) {
         case 'recent':
@@ -21,122 +84,163 @@ const ProjectGallery = () => {
           return b.stars - a.stars;
         case 'forks':
           return b.forks - a.forks;
+        case 'issues':
+          return b.openIssues - a.openIssues;
         default:
           return 0;
       }
     });
+    
+  // Get unique tech stack for filtering
+  const allTechStack = [...new Set(projects.flatMap(project => project.techStack))];
 
-  // This is the ProjectCard component, now with the original class names but enhanced structure.
+  // ProjectCard component with improved UI
   const ProjectCard = ({ project }) => {
-    // Bug fix: Filter out the author from the contributors list to avoid duplication.
     const uniqueContributors = project.contributors.filter(
       (contributor) => contributor !== project.author
     );
+    
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    };
+    
+    const getStatusColor = (status) => {
+      switch(status.toLowerCase()) {
+        case 'active': return 'bg-green-100 text-green-800';
+        case 'maintenance': return 'bg-yellow-100 text-yellow-800';
+        case 'archived': return 'bg-gray-100 text-gray-800';
+        default: return 'bg-blue-100 text-blue-800';
+      }
+    };
+    
+    const getDifficultyColor = (difficulty) => {
+      switch(difficulty.toLowerCase()) {
+        case 'beginner': return 'bg-blue-50 text-blue-700 border-blue-200';
+        case 'intermediate': return 'bg-purple-50 text-purple-700 border-purple-200';
+        case 'advanced': return 'bg-pink-50 text-pink-700 border-pink-200';
+        default: return 'bg-gray-50 text-gray-700 border-gray-200';
+      }
+    };
 
     return (
       <motion.div
-        className="project-card"
+        className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-md"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        whileHover={{ y: -5 }}
+        whileHover={{ y: -4 }}
       >
-        <div className="project-image">
+        {/* Project Image with Status */}
+        <div className="relative h-40 bg-gray-100 overflow-hidden">
           <img
             src={project.image}
             alt={project.title}
+            className="w-full h-full object-cover"
           />
-          <div className="project-status">
-            <span className={`status-badge ${project.status.toLowerCase()}`}>
-              {project.status}
-            </span>
-          </div>
+          <span className={`absolute top-3 right-3 text-xs font-medium px-2.5 py-1 rounded-full ${getStatusColor(project.status)}`}>
+            {project.status}
+          </span>
         </div>
 
-        <div className="project-content">
-          <div className="project-header">
-            <h3>{project.title}</h3>
-            <div className="project-stats">
-              <div className="stat">
-                <span className="icon">⭐</span>
+        {/* Project Content */}
+        <div className="p-6">
+          {/* Header with Title and Stats */}
+          <div className="flex justify-between items-start mb-3">
+            <h3 className="text-lg font-bold text-gray-900 line-clamp-1">{project.title}</h3>
+            <div className="flex items-center space-x-3">
+              <div className="flex items-center text-sm text-gray-600">
+                <FiStar className="mr-1 text-yellow-500" />
                 <span>{project.stars}</span>
               </div>
-              <div className="stat">
-                <span className="icon">🍴</span>
+              <div className="flex items-center text-sm text-gray-600">
+                <FiGitBranch className="mr-1 text-gray-500" />
                 <span>{project.forks}</span>
               </div>
             </div>
           </div>
-
-          <p className="project-description">{project.description}</p>
-
-          {/* This section is a structural enhancement, using existing classes. */}
-          <div className="project-meta-badges">
-            <span className="category-tag">{project.category}</span>
-            <span className={`difficulty-badge ${project.difficulty.toLowerCase()}`}>
+          
+          {/* Description */}
+          <p className="text-gray-600 text-sm mb-4 line-clamp-2">{project.description}</p>
+          
+          {/* Category and Difficulty */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            <span className="px-2.5 py-1 text-xs font-medium bg-indigo-50 text-indigo-700 rounded-full">
+              {project.category}
+            </span>
+            <span className={`px-2.5 py-1 text-xs font-medium border rounded-full ${getDifficultyColor(project.difficulty)}`}>
               {project.difficulty}
             </span>
           </div>
-
-          <div className="project-meta">
-            <div className="author">
-              <span className="label">By:</span>
-              <span className="author-name">{project.author}</span>
+          
+          {/* Author */}
+          <div className="flex items-center mb-4">
+            <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium text-gray-700 mr-2">
+              {project.author.charAt(0)}
             </div>
+            <span className="text-sm text-gray-700">{project.author}</span>
           </div>
-
-          <div className="tech-stack">
-            {project.techStack.map((tech, index) => (
-              <span key={index} className="tech-tag">{tech}</span>
+          
+          {/* Tech Stack */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {project.techStack.slice(0, 3).map((tech, index) => (
+              <span key={index} className="px-2.5 py-1 text-xs font-medium bg-gray-50 text-gray-700 rounded-full">
+                {tech}
+              </span>
             ))}
-          </div>
-
-          <div className="contributors">
-            <span className="contributors-label">Contributors:</span>
-            <div className="contributor-list">
-              {/* Use the filtered uniqueContributors array */}
-              {uniqueContributors.length > 0 ? (
-                uniqueContributors.map((contributor, index) => (
-                  <span key={index} className="contributor">{contributor}</span>
-                ))
-              ) : (
-                <span className="contributor">No other contributors yet</span>
-              )}
-            </div>
-          </div>
-
-          <div className="project-activity">
-            <div className="activity-item">
-              <span className="icon">🔄</span>
-              <span>Updated {project.lastUpdated}</span>
-            </div>
-            <div className="activity-item">
-              <span className="icon">🐛</span>
-              <span>{project.openIssues} open issues</span>
-            </div>
-            <div className="activity-item">
-              <span className="icon">📥</span>
-              <span>{project.pullRequests} pull requests</span>
-            </div>
-          </div>
-
-          <div className="project-actions">
-            <button
-              className="btn-primary"
-              onClick={() => window.open(project.githubUrl, '_blank')}
-            >
-              View on GitHub
-            </button>
-            {project.liveDemo && (
-              <button
-                className="btn-secondary"
-                onClick={() => window.open(project.liveDemo, '_blank')}
-              >
-                Live Demo
-              </button>
+            {project.techStack.length > 3 && (
+              <span className="px-2.5 py-1 text-xs font-medium bg-gray-50 text-gray-500 rounded-full">
+                +{project.techStack.length - 3} more
+              </span>
             )}
-            <button className="btn-outline">⭐ Star</button>
-            <button className="btn-outline">🍴 Fork</button>
+          </div>
+          
+          {/* Project Stats */}
+          <div className="grid grid-cols-3 gap-2 text-center text-xs text-gray-500 mb-4">
+            <div className="flex flex-col items-center">
+              <div className="flex items-center">
+                <FiAlertCircle className="mr-1" />
+                <span className="font-medium text-gray-700">{project.openIssues}</span>
+              </div>
+              <span>Issues</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="flex items-center">
+                <FiGitPullRequest className="mr-1" />
+                <span className="font-medium text-gray-700">{project.pullRequests}</span>
+              </div>
+              <span>PRs</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="flex items-center">
+                <FiClock className="mr-1" />
+                <span className="font-medium text-gray-700">{formatDate(project.lastUpdated)}</span>
+              </div>
+              <span>Updated</span>
+            </div>
+          </div>
+          
+          {/* Actions */}
+          <div className="flex flex-col sm:flex-row gap-2">
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+            >
+              <FiGithub className="mr-2" />
+              GitHub
+            </a>
+            {project.liveDemo && (
+              <a
+                href={project.liveDemo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                <FiExternalLink className="mr-2" />
+                Live Demo
+              </a>
+            )}
           </div>
         </div>
       </motion.div>
@@ -144,80 +248,186 @@ const ProjectGallery = () => {
   };
 
   return (
-    <div className="project-gallery">
-      <div className="container">
-        <motion.div
-          className="section-header"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h1>Project Gallery</h1>
-          <p>Discover, contribute to, and showcase amazing open-source projects</p>
-        </motion.div>
-
-        <div className="gallery-controls">
-          <div className="filter-section">
-            <label>Filter by Category:</label>
-            <select
-              value={filterCategory}
-              onChange={(e) => setFilterCategory(e.target.value)}
-              className="filter-select"
-            >
-              {categories.map(category => (
-                <option key={category} value={category}>
-                  {category === 'all' ? 'All Categories' : category}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="sort-section">
-            <label>Sort by:</label>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="sort-select"
-            >
-              <option value="recent">Recently Updated</option>
-              <option value="stars">Most Stars</option>
-              <option value="forks">Most Forks</option>
-            </select>
-          </div>
-
-          <button className="btn-primary submit-project">
-            Submit Your Project
-          </button>
-        </div>
-
-        <div className="projects-grid">
-          {filteredAndSortedProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-
-        {filteredAndSortedProjects.length === 0 && (
-          <div className="no-projects">
-            <h3>No projects found</h3>
-            <p>Try adjusting your filters or be the first to submit a project in this category!</p>
-          </div>
-        )}
-
-        <div className="contribution-cta">
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <div className="bg-indigo-600 text-white py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            className="cta-card"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-center"
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
+            transition={{ duration: 0.6 }}
           >
-            <h3>Ready to contribute?</h3>
-            <p>Join our community of developers and start contributing to open-source projects today!</p>
-            <div className="cta-actions">
-              <button className="btn-primary">Submit Project</button>
-              <button className="btn-secondary">Browse Issues</button>
-            </div>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4">Project Gallery</h1>
+            <p className="text-lg sm:text-xl text-indigo-100 max-w-3xl mx-auto">
+              Discover, contribute to, and showcase amazing open-source projects
+            </p>
           </motion.div>
         </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Search and Filter Bar */}
+        <motion.div 
+          className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="relative flex-1">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FiSearch className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search projects by name, tech stack, or category..."
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-3">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FiFilter className="h-4 w-4 text-gray-400" />
+                </div>
+                <select
+                  value={filterCategory}
+                  onChange={(e) => setFilterCategory(e.target.value)}
+                  className="pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                >
+                  <option value="all">All Categories</option>
+                  {categories.filter(cat => cat !== 'all').map(category => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+              >
+                <option value="recent">Recently Updated</option>
+                <option value="stars">Most Stars</option>
+                <option value="forks">Most Forks</option>
+                <option value="issues">Most Issues</option>
+              </select>
+              
+              <button 
+                className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+                onClick={() => {
+                  setFilterCategory('all');
+                  setSearchQuery('');
+                  setSortBy('recent');
+                }}
+              >
+                Clear Filters
+              </button>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Projects Grid */}
+        <AnimatePresence mode="wait">
+          {isLoading ? (
+            <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <SkeletonCard key={`skeleton-${i}`} />
+              ))}
+            </div>
+          ) : filteredAndSortedProjects.length > 0 ? (
+            <motion.div
+              className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+              initial="hidden"
+              animate="show"
+              variants={{
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.1
+                  }
+                }
+              }}
+            >
+              {filteredAndSortedProjects.map((project) => (
+                <ProjectCard key={project.id} project={project} />
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div 
+              className="bg-white rounded-xl shadow-sm p-8 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <div className="mx-auto max-w-md">
+                <svg
+                  className="mx-auto h-12 w-12 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    vectorEffect="non-scaling-stroke"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <h3 className="mt-2 text-lg font-medium text-gray-900">No projects found</h3>
+                <p className="mt-1 text-sm text-gray-500">
+                  {searchQuery || filterCategory !== 'all'
+                    ? 'No projects match your current filters. Try adjusting your search or filters.'
+                    : 'Check back later for exciting new projects!'}
+                </p>
+                <div className="mt-6">
+                  <button
+                    onClick={() => {
+                      setFilterCategory('all');
+                      setSearchQuery('');
+                      setSortBy('recent');
+                    }}
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Clear all filters
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        
+        {/* CTA Section */}
+        {!isLoading && filteredAndSortedProjects.length > 0 && (
+          <motion.div 
+            className="mt-12 bg-white rounded-xl shadow-sm p-8 text-center border border-gray-100"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3 className="text-xl font-bold text-gray-900 mb-3">Ready to contribute?</h3>
+            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+              Join our community of developers and start contributing to open-source projects today!
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-3">
+              <button className="px-6 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors">
+                Submit Project
+              </button>
+              <button className="px-6 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">
+                Browse Issues
+              </button>
+            </div>
+          </motion.div>
+        )}
       </div>
     </div>
   );
