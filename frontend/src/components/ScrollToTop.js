@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const ScrollToTopButton = () => {
+const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -40,4 +40,4 @@ const ScrollToTopButton = () => {
   );
 };
 
-export default ScrollToTopButton;
+export default ScrollToTop;

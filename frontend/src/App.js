@@ -4,12 +4,12 @@ import './App.css';
 // --------------- LAYOUT
 import Navbar from './components/Layout/Navbar';
 import Footer from './components/Layout/Footer';
-import ScrollToTopButton from './components/scrolltotopButton';
+import ScrollToTop from './components/ScrollToTop';
 
 // --------------- PAGES
 import Contributors from './components/Contributors';
 import EventCreation from './components/common/EventCreation';
-import AboutPage from './components/AboutPage';
+import AboutPage from './Pages/About/AboutPage';
 import EventsPage from './Pages/Events/EventsPage';
 import HackathonPage from './Pages/Hackathons/HackathonPage';
 import ProjectsPage from './Pages/Projects/ProjectsPage';
@@ -84,7 +84,7 @@ function App() {
             </Routes>
           </main>
 
-          <ScrollToTopButton />
+          <ScrollToTop />
           <Footer />
         </div>
       </Router>
