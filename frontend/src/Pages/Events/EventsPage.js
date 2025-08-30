@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import '../../components/styles/EventSection.css'; 
+import mockEvents from './eventsMockData.json';
 
 const EventsSection = () => {
   const [events, setEvents] = useState([]);
@@ -9,92 +9,6 @@ const EventsSection = () => {
 
   // Mock data for events
   useEffect(() => {
-    const mockEvents = [
-      {
-        id: 1,
-        title: "React Conference 2025",
-        date: "2025-03-15",
-        time: "10:00 AM",
-        location: "San Francisco, CA",
-        type: "conference",
-        status: "upcoming",
-        description: "Join us for the biggest React conference of the year featuring latest updates and best practices.",
-        attendees: 250,
-        maxAttendees: 300,
-        image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=200&fit=crop",
-        tags: ["React", "Frontend", "JavaScript"]
-      },
-      {
-        id: 2,
-        title: "AI & Machine Learning Workshop",
-        date: "2025-02-28",
-        time: "2:00 PM",
-        location: "Online",
-        type: "workshop",
-        status: "upcoming",
-        description: "Hands-on workshop covering latest AI techniques and practical machine learning implementations.",
-        attendees: 120,
-        maxAttendees: 150,
-        image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=200&fit=crop",
-        tags: ["AI", "ML", "Python"]
-      },
-      {
-        id: 3,
-        title: "DevOps Summit 2024",
-        date: "2024-12-10",
-        time: "9:00 AM",
-        location: "New York, NY",
-        type: "summit",
-        status: "past",
-        description: "Comprehensive summit on modern DevOps practices and cloud technologies.",
-        attendees: 400,
-        maxAttendees: 400,
-        image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=200&fit=crop",
-        tags: ["DevOps", "Cloud", "Infrastructure"]
-      },
-      {
-        id: 4,
-        title: "Blockchain Bootcamp",
-        date: "2025-04-22",
-        time: "1:00 PM",
-        location: "Austin, TX",
-        type: "bootcamp",
-        status: "upcoming",
-        description: "Intensive bootcamp covering blockchain development and cryptocurrency technologies.",
-        attendees: 80,
-        maxAttendees: 100,
-        image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?w=400&h=200&fit=crop",
-        tags: ["Blockchain", "Web3", "Solidity"]
-      },
-      {
-        id: 5,
-        title: "UX Design Masterclass",
-        date: "2025-05-08",
-        time: "3:00 PM",
-        location: "Los Angeles, CA",
-        type: "workshop",
-        status: "upcoming",
-        description: "Master the art of user experience design with industry experts and hands-on projects.",
-        attendees: 65,
-        maxAttendees: 80,
-        image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=200&fit=crop",
-        tags: ["UX", "Design", "UI"]
-      },
-      {
-        id: 6,
-        title: "Cybersecurity Conference",
-        date: "2025-06-12",
-        time: "9:30 AM",
-        location: "Seattle, WA",
-        type: "conference",
-        status: "upcoming",
-        description: "Learn about the latest cybersecurity threats and protection strategies from industry leaders.",
-        attendees: 180,
-        maxAttendees: 200,
-        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=200&fit=crop",
-        tags: ["Security", "Privacy", "Protection"]
-      }
-    ];
     setEvents(mockEvents);
   }, []);
 
@@ -118,9 +32,9 @@ const EventsSection = () => {
 
   const cardVariants = {
     hidden: { opacity: 0, y: 50, scale: 0.9 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
+    visible: {
+      opacity: 1,
+      y: 0,
       scale: 1,
       transition: {
         type: "spring",
@@ -134,7 +48,7 @@ const EventsSection = () => {
     <motion.div
       className="event-card"
       variants={cardVariants}
-      whileHover={{ 
+      whileHover={{
         y: -8,
         scale: 1.02,
         transition: { type: "spring", stiffness: 400, damping: 10 }
@@ -142,14 +56,14 @@ const EventsSection = () => {
       whileTap={{ scale: 0.98 }}
     >
       <div className="event-image">
-        <motion.img 
-          src={event.image} 
+        <motion.img
+          src={event.image}
           alt={event.title}
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}
         />
         <div className="event-overlay">
-          <motion.div 
+          <motion.div
             className={`status-badge ${event.status}`}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -159,7 +73,7 @@ const EventsSection = () => {
           </motion.div>
           <div className="attendance-indicator">
             <div className="progress-bar">
-              <motion.div 
+              <motion.div
                 className="progress-fill"
                 initial={{ width: 0 }}
                 animate={{ width: `${(event.attendees / event.maxAttendees) * 100}%` }}
@@ -169,7 +83,7 @@ const EventsSection = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="event-content">
         <div className="event-header">
           <motion.h3
@@ -179,7 +93,7 @@ const EventsSection = () => {
           >
             {event.title}
           </motion.h3>
-          <motion.div 
+          <motion.div
             className="event-type"
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -188,8 +102,8 @@ const EventsSection = () => {
             {event.type}
           </motion.div>
         </div>
-        
-        <motion.p 
+
+        <motion.p
           className="event-description"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -197,8 +111,8 @@ const EventsSection = () => {
         >
           {event.description}
         </motion.p>
-        
-        <motion.div 
+
+        <motion.div
           className="event-details"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -206,10 +120,10 @@ const EventsSection = () => {
         >
           <div className="detail">
             <span className="icon">📅</span>
-            <span>{new Date(event.date).toLocaleDateString('en-US', { 
-              weekday: 'short', 
-              month: 'short', 
-              day: 'numeric' 
+            <span>{new Date(event.date).toLocaleDateString('en-US', {
+              weekday: 'short',
+              month: 'short',
+              day: 'numeric'
             })}</span>
           </div>
           <div className="detail">
@@ -225,16 +139,16 @@ const EventsSection = () => {
             <span>{event.attendees}/{event.maxAttendees}</span>
           </div>
         </motion.div>
-        
-        <motion.div 
+
+        <motion.div
           className="event-tags"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
         >
           {event.tags.map((tag, index) => (
-            <motion.span 
-              key={index} 
+            <motion.span
+              key={index}
               className="tag"
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -245,15 +159,15 @@ const EventsSection = () => {
             </motion.span>
           ))}
         </motion.div>
-        
-        <motion.div 
+
+        <motion.div
           className="event-actions"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9 }}
         >
           {event.status === 'upcoming' ? (
-            <motion.button 
+            <motion.button
               className="btn-primary"
               whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(0,0,0,0.2)" }}
               whileTap={{ scale: 0.95 }}
@@ -261,7 +175,7 @@ const EventsSection = () => {
               Register Now
             </motion.button>
           ) : (
-            <motion.button 
+            <motion.button
               className="btn-secondary"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -269,7 +183,7 @@ const EventsSection = () => {
               View Details
             </motion.button>
           )}
-          <motion.button 
+          <motion.button
             className="btn-outline"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -285,32 +199,32 @@ const EventsSection = () => {
     <div className="events-section">
       <div className="background-gradient"></div>
       <div className="floating-elements">
-        <motion.div 
+        <motion.div
           className="floating-shape shape-1"
-          animate={{ 
+          animate={{
             rotate: 360,
             y: [-20, 20, -20],
           }}
-          transition={{ 
+          transition={{
             duration: 8,
             repeat: Infinity,
             ease: "linear"
           }}
         ></motion.div>
-        <motion.div 
+        <motion.div
           className="floating-shape shape-2"
-          animate={{ 
+          animate={{
             rotate: -360,
             x: [-15, 15, -15],
           }}
-          transition={{ 
+          transition={{
             duration: 10,
             repeat: Infinity,
             ease: "linear"
           }}
         ></motion.div>
       </div>
-      
+
       <div className="container">
         <motion.div
           className="section-header"
@@ -334,7 +248,7 @@ const EventsSection = () => {
           </motion.p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="events-controls"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -401,7 +315,7 @@ const EventsSection = () => {
 
         <AnimatePresence>
           {filteredEvents.length === 0 && (
-            <motion.div 
+            <motion.div
               className="no-events"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
