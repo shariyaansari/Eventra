@@ -1,11 +1,73 @@
 import { useEffect, useState } from "react";
+import { motion, useAnimation } from 'framer-motion';
 import { FaGithub, FaStar, FaCodeBranch, FaExclamationCircle, FaCode, FaUsers, FaClock, FaExternalLinkAlt } from "react-icons/fa";
 
 // GitHub username and repo
 const GITHUB_USER = "SandeepVashishtha";
 const GITHUB_REPO = "Eventra";
 
+// Local storage keys
+const GITHUB_STATS_STORAGE_KEY = "github_stats";
+const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
+
+// Helper function to get data from local storage
+const getCachedStats = () => {
+  try {
+    const cachedData = localStorage.getItem(GITHUB_STATS_STORAGE_KEY);
+    if (!cachedData) return null;
+
+    const { data, timestamp } = JSON.parse(cachedData);
+    const isExpired = Date.now() - timestamp > CACHE_DURATION;
+
+    return isExpired ? null : data;
+  } catch (error) {
+    console.error("Error reading from local storage:", error);
+    return null;
+  }
+};
+
+// Helper function to save data to local storage
+const cacheStats = (data) => {
+  try {
+    const cacheData = {
+      data,
+      timestamp: Date.now(),
+    };
+    localStorage.setItem(GITHUB_STATS_STORAGE_KEY, JSON.stringify(cacheData));
+  } catch (error) {
+    console.error("Error saving to local storage:", error);
+  }
+};
+
+// Animation variants
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+      when: "beforeChildren"
+    }
+  }
+};
+
+const item = {
+  hidden: { y: 20, opacity: 0 },
+  show: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.16, 1, 0.3, 1]
+    }
+  }
+};
+
 export default function GitHubStats() {
+  const controls = useAnimation();
+  const [inView, setInView] = useState(false);
+  
   // Store repo stats in local state
   const [stats, setStats] = useState({
     stars: 0,
@@ -17,10 +79,25 @@ export default function GitHubStats() {
   });
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    if (inView) {
+      controls.start('show');
+    }
+  }, [controls, inView]);
+
   // Fetch GitHub stats when component mounts
   useEffect(() => {
     async function fetchGitHubStats() {
       setLoading(true);
+      
+      // Check for cached data first
+      const cachedStats = getCachedStats();
+      if (cachedStats) {
+        setStats(cachedStats);
+        setLoading(false);
+        return;
+      }
+
       try {
         const token = process.env.REACT_APP_GITHUB_TOKEN;
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
@@ -30,8 +107,9 @@ export default function GitHubStats() {
           `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}`,
           { headers }
         );
+        if (!repoRes.ok) throw new Error("Failed to fetch repo data");
+        
         const repoData = await repoRes.json();
-        console.log("Repo Data:", repoData); // Debugging: log fetched repo data
 
         // 👥 Fetch contributor count
         // per_page=100 ensures we fetch up to 100 contributors at once
@@ -40,6 +118,7 @@ export default function GitHubStats() {
           { headers }
         );
         const contributorsData = await contributorsRes.json();
+        if (!contributorsRes.ok) throw new Error("Failed to fetch contributors");
 
         // Format last commit date
         const formatDate = (dateString) => {
@@ -47,16 +126,24 @@ export default function GitHubStats() {
           return new Date(dateString).toLocaleDateString(undefined, options);
         };
 
-        setStats({
+        const statsData = {
           stars: repoData.stargazers_count || 0,
           forks: repoData.forks_count || 0,
           issues: repoData.open_issues_count || 0,
-          contributors: contributorsData.length || 0,
+          contributors: Array.isArray(contributorsData) ? contributorsData.length : 0,
           lastCommit: repoData.pushed_at ? formatDate(repoData.pushed_at) : "N/A",
           size: repoData.size || 0,
-        });
+        };
+
+        setStats(statsData);
+        cacheStats(statsData);
       } catch (err) {
         console.error("Error fetching GitHub stats:", err);
+        // If there's an error, try to use cached data if available
+        const cachedStats = getCachedStats();
+        if (cachedStats) {
+          setStats(cachedStats);
+        }
       } finally {
         setLoading(false);
       }
@@ -113,20 +200,41 @@ export default function GitHubStats() {
 
   return (
     <section className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      <motion.div 
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        onViewportEnter={() => setInView(true)}
+        viewport={{ once: true, margin: "-100px" }}
+      >
+        <motion.div 
+          variants={container}
+          initial="hidden"
+          animate={controls}
+          className="text-center mb-12"
+        >
+          <motion.h2 
+            variants={item}
+            className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
+          >
             Project Statistics
-          </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          </motion.h2>
+          <motion.p 
+            variants={item}
+            className="text-lg text-gray-600 max-w-3xl mx-auto"
+          >
             Our journey in numbers. See how our open-source community is growing and evolving.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div 
+          variants={container}
+          initial="hidden"
+          animate={controls}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {statCards.map(({ label, value, icon, link, border }) => (
-            <div
+            <motion.div
               key={label}
+              variants={item}
               className={`bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border-2 ${border} hover:border-indigo-100`}
             >
               <a
@@ -152,10 +260,10 @@ export default function GitHubStats() {
                   <FaExternalLinkAlt className="text-gray-400" />
                 </div>
               </a>
-            </div>
+            </motion.div>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
