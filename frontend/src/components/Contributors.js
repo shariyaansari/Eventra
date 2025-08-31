@@ -5,7 +5,6 @@ import {
   FaCodeBranch,
   FaExclamationCircle,
 } from "react-icons/fa";
-import GitHubStats from "./GitHubStats";
 
 // Mock contributors data
 const mockContributors = [
@@ -269,10 +268,6 @@ const Contributors = () => {
         </div>
 
         {error && <ErrorState message={error} />}
-
-        <div className="my-12 px-4">
-          <GitHubStats />
-        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {loading
