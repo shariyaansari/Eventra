@@ -1,5 +1,4 @@
 import { FaTwitter, FaLinkedin, FaDiscord, FaTelegram } from "react-icons/fa";
-import { useState, useEffect } from "react";
 import {
   FaInfoCircle,
   FaGithub,
@@ -19,44 +18,6 @@ import {
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const [bulbs, setBulbs] = useState([]);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-
-    {
-      const colors = [
-        "#35001bff",
-        "#006effff",
-        "#ed3b3bff",
-        "#930114ff",
-        "#00ffa2ff",
-        "#11ff00ff",
-        "#00ccffff",
-        "#ff0000ff",
-        "#00e5ffff",
-        "#0037ffff",
-        "#abffa5ff",
-        "#ff00ddff",
-      ];
-      const newBulbs = [];
-      for (let i = 0; i < 15; i++) {
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        const size = `${50 + Math.random() * 100}px`;
-        const top = `${Math.random() * 100}%`;
-        const left = `${Math.random() * 100}%`;
-        const blur = `${20 + Math.random() * 20}px`;
-        const opacity = 0.1 + Math.random() * 0.1;
-        newBulbs.push({ color, size, top, left, blur, opacity });
-      }
-      setBulbs(newBulbs);
-    }
-  }, []);
 
   const footerLinks = {
     community: [
@@ -105,89 +66,60 @@ const Footer = () => {
     {
       name: "GitHub",
       href: "https://github.com/sandeepvashishtha/Eventra",
-      icon: <FaGithub size={20} />,
+      icon: <FaGithub className="size-10 p-2 rounded-full text-indigo-500 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100" size={20} />,
     },
     {
       name: "Twitter",
       href: "https://twitter.com/#",
-      icon: <FaTwitter size={20} />,
+      icon: <FaTwitter className="size-10 p-2 rounded-full text-indigo-500 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100" size={20} />,
     },
     {
       name: "LinkedIn",
       href: "https://www.linkedin.com/in/sandeepvashishtha/",
-      icon: <FaLinkedin size={20} />,
+      icon: <FaLinkedin className="size-10 p-2 rounded-full text-indigo-500 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100" size={20} />,
     },
     {
       name: "Discord",
       href: "#discord",
-      icon: <FaDiscord size={20} />,
+      icon: <FaDiscord className="size-10 p-2 rounded-full text-indigo-500 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100" size={20} />,
     },
     {
       name: "Telegram",
       href: "https://t.me/eventra",
-      icon: <FaTelegram size={20} />,
+      icon: <FaTelegram className="size-10 p-2 rounded-full text-indigo-500 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100" size={20} />,
     },
   ];
 
   return (
-    <footer className="relative overflow-hidden bg-indigo-50">
-      {/* Bulbs Layer */}
-      {bulbs.map((b, i) => (
-        <span
-          key={i}
-          className="absolute rounded-full"
-          style={{
-            width: b.size,
-            height: b.size,
-            top: b.top,
-            left: b.left,
-            backgroundColor: b.color,
-            filter: `blur(${b.blur})`,
-            opacity: b.opacity,
-            zIndex: 0, // behind glass
-          }}
-        />
-      ))}
-
-      {/* Glass Container */}
-      <div className="relative z-10 mx-auto max-w-7xl px-6 py-16 rounded-3xl bg-white/20 backdrop-blur-12xl shadow-xl">
-        {/* Footer Content */}
+    <footer className="bg-indigo-50 border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand Section */}
           <div className="space-y-4">
-            <h2 className="text-4xl md:text-5xl font-extrabold mt-20 bg-gradient-to-r from-pink-700 via-purple-500 to-indigo-700 text-transparent bg-clip-text drop-shadow-lg">
+            <h2 className="text-3xl font-bold text-indigo-600">
               Eventra
             </h2>
-            <p className="text-gray-600 text-base">
+            <p className="text-gray-600 text-sm">
               Open-source event management for communities worldwide.
             </p>
           </div>
-
-          {/* Links */}
           {Object.entries(footerLinks).map(([key, links]) => (
-            <div key={key} className="space-y-4 ml-20">
-              <h4 className="text-lg font-semibold text-black uppercase tracking-wider mb-3">
-                {key}
+            <div key={key} className="space-y-3">
+              <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
+                {key.replace('_', ' ')}
               </h4>
-              <ul className="space-y-4">
+              <ul className="space-y-2">
                 {links.map((link) => (
-                  <li key={link.name} className="flex items-center gap-2">
+                  <li key={link.name}>
                     <a
                       href={link.href}
-                      className="flex items-center gap-2 group text-gray-800 text-sm transition-colors hover:text-indigo-900"
+                      className="text-sm text-gray-600 hover:text-indigo-600 flex items-center gap-2 transition-colors"
                     >
-                      {/* Icon with hover animation */}
                       {link.icon && (
-                        <span className="text-blue-700 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-125">
+                        <span className="text-indigo-500">
                           {link.icon}
                         </span>
                       )}
-
-                      {/* Text with underline on hover */}
-                      <span className="relative">
-                        {link.name}
-                        <span className="absolute left-0 -bottom-1 h-[2px] w-full bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 scale-x-0 transition-transform duration-500 origin-left group-hover:scale-x-100 rounded"></span>
-                      </span>
+                      {link.name}
                     </a>
                   </li>
                 ))}
@@ -196,34 +128,21 @@ const Footer = () => {
           ))}
         </div>
 
-        {/* Bottom */}
-        <div className="border-t border-gray-400 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between px-6">
-          {/* Left side: Text */}
-          <p className="text-gray-800 text-sm flex flex-col md:flex-row md:items-center gap-1 md:gap-2">
-            <span>© {currentYear} Eventra - Made with ❤️ by</span>
-            <a
-              href="https://github.com/sandeepvashishtha"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 font-medium relative group hover:text-indigo-900"
-            >
-              Sandeep Vashishtha
-              <span className="absolute left-0 -bottom-1 h-[2px] w-full bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 scale-x-0 transition-transform duration-500 origin-left group-hover:scale-x-100 rounded"></span>
-            </a>
-            <span>& contributors</span>
+        <div className="border-t border-gray-400 mt-10 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm text-gray-500">
+            © {currentYear} Eventra. All rights reserved.
           </p>
-
-          {/* Right side: Social icons */}
-          <div className="flex space-x-3 mt-3 md:mt-0 mr-20">
+          <div className="flex space-x-4 mt-4 md:mt-0">
             {socialLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                title={link.name}
-                className="p-3 rounded-full bg-white/80 shadow-md text-indigo-600 transition-all duration-300 transform hover:scale-110 hover:rotate-12 hover:text-pink-500 hover:shadow-lg"
+                className="text-gray-400 hover:text-indigo-600 transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={link.name}
               >
+                <span className="sr-only">{link.name}</span>
                 {link.icon}
               </a>
             ))}
