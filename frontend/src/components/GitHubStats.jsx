@@ -50,8 +50,8 @@ export default function GitHubStats() {
           issues: repoData.open_issues_count || 0,
           contributors: contributorsData.length || 0, // Counts total contributors
           lastCommit: repoData.pushed_at
-            ? new Date(repoData.pushed_at).toLocaleDateString()
-            : "N/A", // Fallback if no commits
+            ? formatLastCommitDate(repoData.pushed_at)
+            : "N/A",
           size: repoData.size || 0, // Repo size in KB
         });
       } catch (err) {
@@ -64,6 +64,36 @@ export default function GitHubStats() {
     // 🔹 Trigger the fetch function
     fetchGitHubStats();
   }, []); // Empty dependency array ensures this runs only once
+
+  function formatLastCommitDate(isoDate) {
+    const commitDate = new Date(isoDate);
+    const today = new Date();
+
+    // Format as DD/MM/YY
+    const formatDate = (d) =>
+      d.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "2-digit",
+      });
+
+    const commitDateStr = formatDate(commitDate);
+    const todayStr = formatDate(today);
+
+    // Check if yesterday
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    const yesterdayStr = formatDate(yesterday);
+
+    if (commitDateStr === todayStr) {
+      return `Today (${commitDateStr})`;
+    } else if (commitDateStr === yesterdayStr) {
+      return `Yesterday (${commitDateStr})`;
+    } else {
+      return commitDateStr;
+    }
+  }
+
 
   // 🔹 Define all stat cards with labels, values, icons & GitHub links
   // Array makes it easy to map and render dynamically
