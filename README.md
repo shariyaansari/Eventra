@@ -15,6 +15,33 @@ Eventra is a comprehensive event management system that empowers organizers to c
 - **Backend API**: [https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net](https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net)
 - **API Documentation**: [Backend Swagger UI](https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net/swagger-ui.html)
 
+
+<h2 id="project-insights">📊 Project Insights</h2>
+
+<table align="center">
+    <thead align="center">
+        <tr>
+            <td><b>🌟 Stars</b></td>
+            <td><b>🍴 Forks</b></td>
+            <td><b>🐛 Issues</b></td>
+            <td><b>🔔 Open PRs</b></td>
+            <td><b>🔕 Closed PRs</b></td>
+            <td><b>🛠️ Languages</b></td>
+            <td><b>👥 Contributors</b></td>
+        </tr>
+     </thead>
+    <tbody>
+         <tr>
+            <td><img alt="Stars" src="https://img.shields.io/github/stars/SandeepVashishtha/Eventra?style=flat&logo=github"/></td>
+            <td><img alt="Forks" src="https://img.shields.io/github/forks/SandeepVashishtha/Eventra?style=flat&logo=github"/></td>
+            <td><img alt="Issues" src="https://img.shields.io/github/issues/SandeepVashishtha/Eventra?style=flat&logo=github"/></td>
+            <td><img alt="Open PRs" src="https://img.shields.io/github/issues-pr/SandeepVashishtha/Eventra?style=flat&logo=github"/></td>
+            <td><img alt="Closed PRs" src="https://img.shields.io/github/issues-pr-closed/SandeepVashishtha/Eventra?style=flat&color=critical&logo=github"/></td>
+            <td><img alt="Languages Count" src="https://img.shields.io/github/languages/count/SandeepVashishtha/Eventra?style=flat&color=green&logo=github"></td>
+            <td><img alt="Contributors Count" src="https://img.shields.io/github/contributors/SandeepVashishtha/Eventra?style=flat&color=blue&logo=github"/></td>
+        </tr>
+    </tbody>
+</table>
 ## 📋 Table of Contents
 
 - [Features](#-features)
@@ -652,13 +679,24 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 - **Issues**: [https://github.com/SandeepVashishtha/Eventra/issues](https://github.com/SandeepVashishtha/Eventra/issues)
 - **Discussions**: [https://github.com/SandeepVashishtha/Eventra/discussions](https://github.com/SandeepVashishtha/Eventra/discussions)
 
-## 👥 Contributors
+<h2 id="contribution-guidelines">🤝👤 Contributers</h2>
 
-Thanks to all the amazing people who have contributed to Eventra! 
+We love our contributors! If you'd like to help, please check out our [`CONTRIBUTE.md`](https://github.com/SandeepVashishtha/Eventra/blob/master/CONTRIBUTING.md) file for guidelines.
 
-<a href="https://github.com/SandeepVashishtha/Eventra/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=SandeepVashishtha/Eventra&t=${Math.floor(Date.now() / (1000 * 60 * 60 * 24))}" alt="Contributors" />
-</a>
+>Thank you once again to all our contributors who has contributed to **AlgoVisualizer!** Your efforts are truly appreciated. 💖👏
+
+<!-- Contributors badge (auto-updating) -->
+
+[![Contributors](https://img.shields.io/github/contributors/SandeepVashishtha/Eventra?style=for-the-badge)](https://github.com/SandeepVashishtha/Eventra/graphs/contributors)
+
+<!-- Contributors avatars (auto-updating) -->
+<p align="left">
+  <a href="https://github.com/SandeepVashishtha/Eventra/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=SandeepVashishtha/Eventra" alt="Contributors" />
+  </a>
+</p>
+
+See the full list of contributors and their contributions on the [`GitHub Contributors Graph`](https://github.com/SandeepVashishtha/Eventra/graphs/contributors).
 
 *Contributor updates automatically every 24 hours*
 
