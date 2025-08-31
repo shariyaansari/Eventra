@@ -27,6 +27,7 @@ import { AuthProvider } from './context/AuthContext';
 // Import Dashboard components
 import Dashboard from './components/Dashboard';
 import AdminDashboard from './components/admin/AdminDashboard';
+import LeaderBoard from "./components/Leaderboard.jsx"; // capital B
 
 
 function App() {
@@ -89,6 +90,7 @@ function App() {
               />
 
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/leaderboard" element={<LeaderBoard />} />
 
               {/* Auth routes */}
               <Route path="/login" element={<Login />} />
