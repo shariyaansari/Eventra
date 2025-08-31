@@ -166,7 +166,7 @@ const EventsPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-indigo-600 text-white py-12 sm:py-20">
+      <div className="bg-indigo-100 text-gray-900 py-12 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={containerVariants}
@@ -179,11 +179,11 @@ const EventsPage = () => {
               className="text-4xl sm:text-5xl font-bold mb-4"
             >
               Discover Amazing
-              <span className="block text-indigo-200">Tech Events</span>
+              <span className="block text-indigo-600">Tech Events</span>
             </motion.h1>
             <motion.p
               variants={item}
-              className="text-lg sm:text-xl text-indigo-100 max-w-3xl mx-auto mb-8"
+              className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-8"
             >
               Find and join the most exciting tech events, conferences, and workshops
             </motion.p>
@@ -343,22 +343,22 @@ const EventsPage = () => {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-indigo-700 text-white py-16">
+      <div className="bg-indigo-100 text-gray-900 py-16 border-t border-gray-200">
         <div className="max-w-3xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold mb-4">Host your own event</h2>
-          <p className="text-lg text-indigo-100 mb-8">
+          <p className="text-lg text-gray-600 mb-8">
             Want to organize a tech event? Join our community of event organizers and reach thousands of developers.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
               to="/create-event"
-              className="px-6 py-3 bg-white text-indigo-700 font-medium rounded-lg hover:bg-indigo-50 transition-colors"
+              className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors"
             >
               Create an Event
             </Link>
             <Link
               to="/contact"
-              className="px-6 py-3 border-2 border-white text-white font-medium rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors"
+              className="px-6 py-3 border-2 border-indigo-600 text-indigo-600 font-medium rounded-lg hover:bg-indigo-50 transition-colors"
             >
               Contact Us
             </Link>
