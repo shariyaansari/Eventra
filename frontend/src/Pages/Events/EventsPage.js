@@ -73,6 +73,13 @@ const EventsPage = () => {
     }
   };
 
+  useEffect(()=>{
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  },[])
+
   const EventCard = ({ event }) => (
     <motion.div
       className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"

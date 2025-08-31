@@ -143,6 +143,13 @@ const AboutPage = () => {
     controls.start('show');
   }, [controls]);
 
+  useEffect(()=>{
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  },[])
+
   return (
     <div className="bg-indigo-50/80">
       {/* Hero Section */}

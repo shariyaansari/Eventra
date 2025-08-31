@@ -45,6 +45,13 @@ const Hero = () => {
     controls.start('show');
   }, [controls]);
 
+  useEffect(()=>{
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  },[])
+
   return (
     <section
       className="relative overflow-hidden bg-indigo-50/80 py-20 sm:py-28"
