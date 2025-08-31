@@ -243,7 +243,7 @@ const HackathonHub = () => {
   const locations = [...new Set(hackathons.map(h => h.location))];
 
   return (
-    <div className="min-h-screen bg-gray-50 relative">
+    <div className="min-h-screen bg-white relative">
       {/* Floating Action Button */}
       <motion.div
         className="fixed bottom-6 right-6 z-50"
@@ -261,7 +261,7 @@ const HackathonHub = () => {
         </Link>
       </motion.div>
       {/* Hero Section */}
-      <div className="bg-indigo-600 text-white py-12 sm:py-20">
+      <div className="bg-indigo-50 text-gray-900 py-16 border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={containerVariants}
@@ -273,16 +273,15 @@ const HackathonHub = () => {
               variants={item}
               className="text-4xl sm:text-5xl font-bold mb-4"
             >
-              Hackathon Hub
-              <span className="block text-indigo-100">Code. Build. Innovate.</span>
+              Discover Amazing
+              <span className="block text-indigo-600">Hackathons</span>
             </motion.h1>
             <motion.p
               variants={item}
-              className="text-lg sm:text-xl text-indigo-100 max-w-3xl mx-auto mb-8"
+              className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-8"
             >
-              Join virtual and physical hackathons, compete with the best, and win amazing prizes
+              Find and join the most exciting hackathons, compete with the best, and win amazing prizes
             </motion.p>
-
             <motion.div
               variants={item}
               className="w-full max-w-2xl mx-auto"
@@ -299,8 +298,8 @@ const HackathonHub = () => {
                 </div>
                 <input
                   type="text"
-                  placeholder="Search hackathons by name, tech stack, or location..."
-                  className="block w-full pl-12 pr-12 py-3.5 text-base text-gray-900 placeholder-gray-500 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 shadow-sm"
+                  placeholder="Search hackathons by name, location, or tags..."
+                  className="block w-full pl-12 pr-12 py-3.5 text-base text-gray-900 placeholder-gray-500 bg-white border border-gray-300 rounded-xl focus:outline-none focus:border-indigo-500 transition-all duration-200 shadow-sm"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -316,10 +315,10 @@ const HackathonHub = () => {
                 )}
               </div>
               <div className="mt-2 flex items-center justify-between px-2">
-                <span className="text-xs text-indigo-100">
+                <span className="text-xs text-indigo-100 opacity-80">
                   Try: "AI", "blockchain", "remote"
                 </span>
-                <span className="text-xs text-indigo-200">
+                <span className="text-xs text-indigo-100 opacity-60">
                   {filteredHackathons.length} {filteredHackathons.length === 1 ? 'hackathon' : 'hackathons'} found
                 </span>
               </div>
@@ -330,7 +329,7 @@ const HackathonHub = () => {
 
       {/* Featured Hackathons */}
       {!isLoading && featuredHackathons.length > 0 && (
-        <div className="bg-gray-50 py-8 border-b border-gray-200">
+        <div className="bg-white py-8 border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-gray-900">Featured Hackathons</h2>

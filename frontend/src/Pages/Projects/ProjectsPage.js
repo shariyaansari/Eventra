@@ -11,23 +11,23 @@ const SkeletonCard = () => (
       <div className="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
       <div className="h-4 bg-gray-100 rounded w-full mb-2"></div>
       <div className="h-4 bg-gray-100 rounded w-5/6 mb-4"></div>
-      
+
       <div className="flex flex-wrap gap-2 mb-4">
         <div className="h-6 bg-gray-100 rounded-full w-16"></div>
         <div className="h-6 bg-gray-100 rounded-full w-24"></div>
       </div>
-      
+
       <div className="flex items-center justify-between mb-4">
         <div className="h-8 w-8 rounded-full bg-gray-200"></div>
         <div className="h-4 bg-gray-100 rounded w-1/3"></div>
       </div>
-      
+
       <div className="flex flex-wrap gap-2 mb-4">
         {[1, 2, 3].map(i => (
           <div key={i} className="h-6 bg-gray-100 rounded-full w-16"></div>
         ))}
       </div>
-      
+
       <div className="flex items-center justify-between mt-4">
         <div className="h-10 bg-gray-200 rounded-lg w-1/3"></div>
         <div className="h-10 bg-gray-200 rounded-lg w-1/3"></div>
@@ -43,17 +43,17 @@ const ProjectGallery = () => {
   const [filterCategory, setFilterCategory] = useState('all');
   const [sortBy, setSortBy] = useState('recent');
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   // Extract unique categories from projects
   const categories = ['all', ...new Set(mockProjectsData.map(project => project.category))];
-  
+
   // Simulate API call
   useEffect(() => {
     const timer = setTimeout(() => {
       setProjects(mockProjectsData);
       setIsLoading(false);
     }, 1000);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -62,7 +62,7 @@ const ProjectGallery = () => {
     .filter(project => {
       // Category filter
       if (filterCategory !== 'all' && project.category !== filterCategory) return false;
-      
+
       // Search query filter
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
@@ -73,7 +73,7 @@ const ProjectGallery = () => {
           project.category.toLowerCase().includes(query)
         );
       }
-      
+
       return true;
     })
     .sort((a, b) => {
@@ -90,7 +90,7 @@ const ProjectGallery = () => {
           return 0;
       }
     });
-    
+
   // Get unique tech stack for filtering
   const allTechStack = [...new Set(projects.flatMap(project => project.techStack))];
 
@@ -99,23 +99,23 @@ const ProjectGallery = () => {
     const uniqueContributors = project.contributors.filter(
       (contributor) => contributor !== project.author
     );
-    
+
     const formatDate = (dateString) => {
       const date = new Date(dateString);
       return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
     };
-    
+
     const getStatusColor = (status) => {
-      switch(status.toLowerCase()) {
+      switch (status.toLowerCase()) {
         case 'active': return 'bg-green-100 text-green-800';
         case 'maintenance': return 'bg-yellow-100 text-yellow-800';
         case 'archived': return 'bg-gray-100 text-gray-800';
         default: return 'bg-blue-100 text-blue-800';
       }
     };
-    
+
     const getDifficultyColor = (difficulty) => {
-      switch(difficulty.toLowerCase()) {
+      switch (difficulty.toLowerCase()) {
         case 'beginner': return 'bg-blue-50 text-blue-700 border-blue-200';
         case 'intermediate': return 'bg-purple-50 text-purple-700 border-purple-200';
         case 'advanced': return 'bg-pink-50 text-pink-700 border-pink-200';
@@ -158,10 +158,10 @@ const ProjectGallery = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Description */}
           <p className="text-gray-600 text-sm mb-4 line-clamp-2">{project.description}</p>
-          
+
           {/* Category and Difficulty */}
           <div className="flex flex-wrap gap-2 mb-4">
             <span className="px-2.5 py-1 text-xs font-medium bg-indigo-50 text-indigo-700 rounded-full">
@@ -171,7 +171,7 @@ const ProjectGallery = () => {
               {project.difficulty}
             </span>
           </div>
-          
+
           {/* Author */}
           <div className="flex items-center mb-4">
             <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium text-gray-700 mr-2">
@@ -179,7 +179,7 @@ const ProjectGallery = () => {
             </div>
             <span className="text-sm text-gray-700">{project.author}</span>
           </div>
-          
+
           {/* Tech Stack */}
           <div className="flex flex-wrap gap-2 mb-4">
             {project.techStack.slice(0, 3).map((tech, index) => (
@@ -193,7 +193,7 @@ const ProjectGallery = () => {
               </span>
             )}
           </div>
-          
+
           {/* Project Stats */}
           <div className="grid grid-cols-3 gap-2 text-center text-xs text-gray-500 mb-4">
             <div className="flex flex-col items-center">
@@ -218,7 +218,7 @@ const ProjectGallery = () => {
               <span>Updated</span>
             </div>
           </div>
-          
+
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-2">
             <a
@@ -250,7 +250,7 @@ const ProjectGallery = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-indigo-600 text-white py-12 sm:py-16">
+      <div className="bg-indigo-50 py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center"
@@ -258,8 +258,8 @@ const ProjectGallery = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4">Project Gallery</h1>
-            <p className="text-lg sm:text-xl text-indigo-100 max-w-3xl mx-auto">
+            <h1 className="text-4xl sm:text-5xl font-bold mb-4">Project <span className="text-indigo-600">Gallery</span></h1>
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
               Discover, contribute to, and showcase amazing open-source projects
             </p>
           </motion.div>
@@ -269,7 +269,7 @@ const ProjectGallery = () => {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search and Filter Bar */}
-        <motion.div 
+        <motion.div
           className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -288,7 +288,7 @@ const ProjectGallery = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-3">
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -307,7 +307,7 @@ const ProjectGallery = () => {
                   ))}
                 </select>
               </div>
-              
+
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
@@ -318,8 +318,8 @@ const ProjectGallery = () => {
                 <option value="forks">Most Forks</option>
                 <option value="issues">Most Issues</option>
               </select>
-              
-              <button 
+
+              <button
                 className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
                 onClick={() => {
                   setFilterCategory('all');
@@ -361,7 +361,7 @@ const ProjectGallery = () => {
               ))}
             </motion.div>
           ) : (
-            <motion.div 
+            <motion.div
               className="bg-white rounded-xl shadow-sm p-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -404,10 +404,10 @@ const ProjectGallery = () => {
             </motion.div>
           )}
         </AnimatePresence>
-        
+
         {/* CTA Section */}
         {!isLoading && filteredAndSortedProjects.length > 0 && (
-          <motion.div 
+          <motion.div
             className="mt-12 bg-white rounded-xl shadow-sm p-8 text-center border border-gray-100"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
