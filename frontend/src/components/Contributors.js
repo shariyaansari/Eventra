@@ -209,6 +209,13 @@ const Contributors = () => {
     fetchContributors();
   }, [fetchContributors]);
 
+  useEffect(()=>{
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  },[])
+
   // Skeleton loader component
   const SkeletonCard = () => (
     <div className="bg-white rounded-xl shadow-sm overflow-hidden border-2 border-gray-100">

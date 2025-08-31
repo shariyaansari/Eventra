@@ -242,6 +242,13 @@ const HackathonHub = () => {
   const difficulties = [...new Set(hackathons.map(h => h.difficulty))];
   const locations = [...new Set(hackathons.map(h => h.location))];
 
+  useEffect(()=>{
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  },[])
+
   return (
     <div className="min-h-screen bg-white relative">
       {/* Floating Action Button */}
