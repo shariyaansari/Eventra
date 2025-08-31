@@ -66,32 +66,32 @@ const Footer = () => {
     {
       name: "GitHub",
       href: "https://github.com/sandeepvashishtha/Eventra",
-      icon: <FaGithub className="size-10 p-2 rounded-full text-indigo-500 bg-gray-100" size={20} />,
+      icon: <FaGithub className="size-10 p-2 rounded-full text-indigo-500 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100" size={20} />,
     },
     {
       name: "Twitter",
       href: "https://twitter.com/#",
-      icon: <FaTwitter className="size-10 p-2 rounded-full text-indigo-500 bg-gray-100" size={20} />,
+      icon: <FaTwitter className="size-10 p-2 rounded-full text-indigo-500 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100" size={20} />,
     },
     {
       name: "LinkedIn",
       href: "https://www.linkedin.com/in/sandeepvashishtha/",
-      icon: <FaLinkedin className="size-10 p-2 rounded-full text-indigo-500 bg-gray-100" size={20} />,
+      icon: <FaLinkedin className="size-10 p-2 rounded-full text-indigo-500 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100" size={20} />,
     },
     {
       name: "Discord",
       href: "#discord",
-      icon: <FaDiscord className="size-10 p-2 rounded-full text-indigo-500 bg-gray-100" size={20} />,
+      icon: <FaDiscord className="size-10 p-2 rounded-full text-indigo-500 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100" size={20} />,
     },
     {
       name: "Telegram",
       href: "https://t.me/eventra",
-      icon: <FaTelegram className="size-10 p-2 rounded-full text-indigo-500 bg-gray-100" size={20} />,
+      icon: <FaTelegram className="size-10 p-2 rounded-full text-indigo-500 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100" size={20} />,
     },
   ];
 
   return (
-    <footer className="bg-white border-t border-gray-100">
+    <footer className="bg-indigo-50 border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
@@ -128,7 +128,7 @@ const Footer = () => {
           ))}
         </div>
 
-        <div className="border-t border-gray-200 mt-10 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-gray-400 mt-10 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-gray-500">
             © {currentYear} Eventra. All rights reserved.
           </p>
