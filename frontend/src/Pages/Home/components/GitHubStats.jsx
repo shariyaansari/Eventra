@@ -199,7 +199,7 @@ export default function GitHubStats() {
   ];
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-indigo-50">
       <motion.div 
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         onViewportEnter={() => setInView(true)}
