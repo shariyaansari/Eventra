@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiGithub, FiExternalLink, FiStar, FiGitBranch, FiAlertCircle, FiGitPullRequest, FiClock, FiFilter, FiSearch } from 'react-icons/fi';
+import { FiGithub, FiExternalLink, FiStar, FiGitBranch, FiAlertCircle, FiGitPullRequest, FiClock, FiFilter, FiSearch, FiPlus } from 'react-icons/fi';
 import { API_ENDPOINTS, apiUtils } from '../../config/api';
+import ProjectSubmission from '../../components/common/ProjectSubmission';
 
 // Skeleton Loader Component
 const SkeletonCard = () => (
@@ -45,6 +46,7 @@ const ProjectGallery = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCategories] = useState(['all']);
   const [error, setError] = useState('');
+  const [showSubmissionModal, setShowSubmissionModal] = useState(false);
 
   // Fetch projects from API
   useEffect(() => {
@@ -293,6 +295,16 @@ const ProjectGallery = () => {
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
               Discover, contribute to, and showcase amazing open-source projects
             </p>
+            
+            {/* Submit Project Button */}
+            <motion.button
+              onClick={() => setShowSubmissionModal(true)}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2 mx-auto"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FiPlus /> Submit Your Project
+            </motion.button>
           </motion.div>
         </div>
       </div>
@@ -470,7 +482,10 @@ const ProjectGallery = () => {
               Join our community of developers and start contributing to open-source projects today!
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-3">
-              <button className="px-6 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors">
+              <button 
+                onClick={() => setShowSubmissionModal(true)}
+                className="px-6 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+              >
                 Submit Project
               </button>
               <button className="px-6 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">
@@ -479,6 +494,20 @@ const ProjectGallery = () => {
             </div>
           </motion.div>
         )}
+
+        {/* Project Submission Modal */}
+        <AnimatePresence>
+          {showSubmissionModal && (
+            <ProjectSubmission
+              onClose={() => setShowSubmissionModal(false)}
+              onSubmit={(result) => {
+                console.log('Project submitted:', result);
+                // Optionally refresh the projects list
+                // fetchProjects();
+              }}
+            />
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
