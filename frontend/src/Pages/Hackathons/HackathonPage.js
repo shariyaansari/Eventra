@@ -322,7 +322,7 @@ const HackathonHub = () => {
                 )}
               </div>
               <div className="mt-2 flex items-center justify-between px-2">
-                <span className="text-xs text-indigo-100 opacity-80">
+                <span className="text-xs text-gray-500 opacity-80">
                   Try: "AI", "blockchain", "remote"
                 </span>
                 <span className="text-xs text-indigo-100 opacity-60">
