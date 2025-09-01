@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiGithub, FiExternalLink, FiStar, FiGitBranch, FiAlertCircle, FiGitPullRequest, FiClock, FiFilter, FiSearch } from 'react-icons/fi';
-import mockProjectsData from './mockProjectsData.json';
+import { API_ENDPOINTS, apiUtils } from '../../config/api';
 
 // Skeleton Loader Component
 const SkeletonCard = () => (
@@ -43,18 +43,41 @@ const ProjectGallery = () => {
   const [filterCategory, setFilterCategory] = useState('all');
   const [sortBy, setSortBy] = useState('recent');
   const [searchQuery, setSearchQuery] = useState('');
+  const [categories, setCategories] = useState(['all']);
+  const [error, setError] = useState('');
 
-  // Extract unique categories from projects
-  const categories = ['all', ...new Set(mockProjectsData.map(project => project.category))];
-
-  // Simulate API call
+  // Fetch projects from API
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setProjects(mockProjectsData);
-      setIsLoading(false);
-    }, 1000);
+    const fetchProjects = async () => {
+      try {
+        setIsLoading(true);
+        setError('');
+        
+        // Fetch projects
+        const response = await apiUtils.get(API_ENDPOINTS.PROJECTS.LIST);
+        if (response.ok) {
+          const projectsData = await response.json();
+          setProjects(projectsData);
+        } else {
+          throw new Error('Failed to fetch projects');
+        }
 
-    return () => clearTimeout(timer);
+        // Fetch categories
+        const categoriesResponse = await apiUtils.get(API_ENDPOINTS.PROJECTS.CATEGORIES);
+        if (categoriesResponse.ok) {
+          const categoriesData = await categoriesResponse.json();
+          setCategories(['all', ...categoriesData]);
+        }
+        
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+        setError('Failed to load projects. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProjects();
   }, []);
 
   // Filters, searches, and sorts the projects based on the current state
@@ -70,7 +93,8 @@ const ProjectGallery = () => {
           project.title.toLowerCase().includes(query) ||
           project.description.toLowerCase().includes(query) ||
           project.techStack.some(tech => tech.toLowerCase().includes(query)) ||
-          project.category.toLowerCase().includes(query)
+          project.category.toLowerCase().includes(query) ||
+          project.author.toLowerCase().includes(query)
         );
       }
 
@@ -81,11 +105,11 @@ const ProjectGallery = () => {
         case 'recent':
           return new Date(b.lastUpdated) - new Date(a.lastUpdated);
         case 'stars':
-          return b.stars - a.stars;
+          return (b.stars || 0) - (a.stars || 0);
         case 'forks':
-          return b.forks - a.forks;
+          return (b.forks || 0) - (a.forks || 0);
         case 'issues':
-          return b.openIssues - a.openIssues;
+          return (b.openIssues || 0) - (a.openIssues || 0);
         default:
           return 0;
       }
@@ -348,6 +372,26 @@ const ProjectGallery = () => {
                 <SkeletonCard key={`skeleton-${i}`} />
               ))}
             </div>
+          ) : error ? (
+            <motion.div
+              className="bg-red-50 border border-red-200 rounded-xl p-8 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <div className="mx-auto max-w-md">
+                <FiAlertCircle className="mx-auto h-12 w-12 text-red-400" />
+                <h3 className="mt-2 text-lg font-medium text-red-900">Error loading projects</h3>
+                <p className="mt-1 text-sm text-red-700">{error}</p>
+                <div className="mt-6">
+                  <button
+                    onClick={() => window.location.reload()}
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  >
+                    Try Again
+                  </button>
+                </div>
+              </div>
+            </motion.div>
           ) : filteredAndSortedProjects.length > 0 ? (
             <motion.div
               className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
