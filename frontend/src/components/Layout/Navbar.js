@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+// Navbar.jsx
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -10,26 +11,26 @@ const Navbar = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
-
   // Close dropdown when clicking outside or on overlay
   const closeAllMenus = () => {
     setShowProfileDropdown(false);
     setIsMobileMenuOpen(false);
-    document.body.style.overflow = '';
+    document.body.style.overflow = "";
   };
 
   const navItems = [
-    { name: 'Events', href: '/events' },
-    { name: 'Hackathons', href: '/hackathons' },
-    { name: 'Projects', href: '/projects' },
-    { name: 'Contributors', href: '/contributors' },
-    { name: 'About', href: '/about' }
+    { name: "Events", href: "/events" },
+    { name: "Hackathons", href: "/hackathons" },
+    { name: "Projects", href: "/projects" },
+    { name: "Contributors", href: "/contributors" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" }, // Added Contact link
   ];
 
   const handleLogout = async () => {
     logout();
     setShowProfileDropdown(false);
-    navigate('/');
+    navigate("/");
   };
 
   const renderAuthSection = () => {
@@ -45,18 +46,26 @@ const Navbar = () => {
               }}
             >
               <img
-                src={user?.profilePicture || '/default-avatar.png'}
+                src={user?.profilePicture || "/default-avatar.png"}
                 alt="Profile"
                 className="w-10 h-10 rounded-full object-cover border-2 border-white"
                 onError={(e) => {
-                  e.target.src = '/default-avatar.png';
+                  e.target.src = "/default-avatar.png";
                 }}
               />
               <span className="text-gray-800 font-medium">
-                {user?.firstName || user?.email?.split('@')[0] || 'User'}
+                {user?.firstName || user?.email?.split("@")[0] || "User"}
               </span>
-              <svg className="w-5 h-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              <svg
+                className="w-5 h-5 text-gray-600"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
               </svg>
             </button>
 
@@ -65,7 +74,7 @@ const Navbar = () => {
                 <div className="px-4 py-3 border-b border-gray-100">
                   <div className="flex items-center space-x-3">
                     <img
-                      src={user?.profilePicture || '/default-avatar.png'}
+                      src={user?.profilePicture || "/default-avatar.png"}
                       alt="Profile"
                       className="w-10 h-10 rounded-full object-cover"
                     />
@@ -79,15 +88,33 @@ const Navbar = () => {
                     </div>
                   </div>
                 </div>
-                <Link to="/dashboard" className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50">
-                  <svg className="w-5 h-5 mr-3 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                <Link
+                  to="/dashboard"
+                  className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50"
+                >
+                  <svg
+                    className="w-5 h-5 mr-3 text-gray-500"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v极速6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
                   </svg>
                   Dashboard
                 </Link>
-                <Link to="/profile" className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50">
-                  <svg className="w-5 h-5 mr-3 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                <Link
+                  to="/profile"
+                  className="flex items-center px-4 py-3 text-gray-700 hover:bg极速-gray-50"
+                >
+                  <svg
+                    className="w-5 h-5 mr-3 text-gray-500"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 9a3 3 0 100-6 3 极速3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   Edit Profile
                 </Link>
@@ -95,8 +122,16 @@ const Navbar = () => {
                   onClick={handleLogout}
                   className="w-full text-left px-4 py-3 text-red-600 hover:bg-gray-50 flex items-center"
                 >
-                  <svg className="w-5 h-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
+                  <svg
+                    className="w-5 h-5 mr-3"
+                    viewBox="极速0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   Logout
                 </button>
@@ -132,13 +167,13 @@ const Navbar = () => {
           <div className="px-4 py-3 space-y-2">
             <div className="flex items-center space-x-3 px-2 py-2">
               <img
-                src={user?.profilePicture || '/default-avatar.png'}
+                src={user?.profilePicture || "/default-avatar.png"}
                 alt="Profile"
                 className="w-9 h-9 rounded-full object-cover"
               />
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 truncate">
-                  {user?.firstName || user?.email?.split('@')[0] || 'User'}
+                <p className="极速text-sm font-medium text-gray-900 truncate">
+                  {user?.firstName || user?.email?.split("@")[0] || "User"}
                 </p>
                 <p className="text-xs text-gray-500 truncate">{user?.email}</p>
               </div>
@@ -148,8 +183,12 @@ const Navbar = () => {
               className="flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg mx-1"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <svg className="w-5 h-5 mr-3 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+              <svg
+                className="w-5 h-5 mr-3 text-gray-500"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path d="M3 4a1 1 极速0 011-1h12a1 1 0 011 1极速v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2极速z" />
               </svg>
               Dashboard
             </Link>
@@ -158,8 +197,16 @@ const Navbar = () => {
               className="flex items-center px-4 py-2.5 text-gray-700 hover:bg-gray-50 rounded-lg mx-1"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <svg className="w-5 h-5 mr-3 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+              <svg
+                className="w-5 h-5 mr-3 text-gray-500"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clipRule="evenodd"
+                />
               </svg>
               Edit Profile
             </Link>
@@ -170,8 +217,16 @@ const Navbar = () => {
               }}
               className="w-full flex items-center px-4 py-2.5 text-left text-red-600 hover:bg-gray-50 rounded-lg mx-1"
             >
-              <svg className="w-5 h-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
+              <svg
+                className="w-5 h-5 mr-3"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414极速l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 极速0 100 2h7.586l-1.293 1.293极速z"
+                  clipRule="evenodd"
+                />
               </svg>
               Logout
             </button>
@@ -181,7 +236,9 @@ const Navbar = () => {
     } else {
       return (
         <div className="mt-auto border-t border-gray-200 p-4 bg-gray-50">
-          <p className="text-sm text-gray-500 mb-3 text-center">Sign in to access more features</p>
+          <p className="text-sm text-gray-500 mb-3 text-center">
+            Sign in to access more features
+          </p>
           <div className="space-y-3">
             <Link
               to="/login"
@@ -207,8 +264,11 @@ const Navbar = () => {
     <>
       {/* Overlay with smooth transition */}
       <div
-        className={`fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300 ${isMobileMenuOpen || showProfileDropdown ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}
+        className={`fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300 ${
+          isMobileMenuOpen || showProfileDropdown
+            ? "opacity-100"
+            : "opacity-0 pointer-events-none"
+        }`}
         onClick={closeAllMenus}
         aria-hidden="true"
       />
@@ -246,7 +306,7 @@ const Navbar = () => {
                 }}
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-indigo-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 z-50 transition-colors duration-200"
                 aria-expanded={isMobileMenuOpen}
-                aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
               >
                 <span className="sr-only">Open main menu</span>
                 <svg
@@ -261,7 +321,7 @@ const Navbar = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
+                    d="M4 极速6h16M4 12h16M4 18h16"
                   />
                 </svg>
               </button>
@@ -271,8 +331,9 @@ const Navbar = () => {
 
         {/* Mobile menu with slide-in animation */}
         <div
-          className={`fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-            }`}
+          className={`fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
+            isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
         >
           <div className="flex items-center justify-between p-4 border-b border-gray-200">
             <h3 className="text-lg font-semibold text-gray-800">Menu</h3>
@@ -281,8 +342,18 @@ const Navbar = () => {
               className="p-1.5 rounded-full text-gray-500 hover:bg-gray-100 transition-colors"
               aria-label="Close menu"
             >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="h-6 w-6极速"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
@@ -310,4 +381,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
