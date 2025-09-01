@@ -25,6 +25,16 @@ export const API_ENDPOINTS = {
     LEAVE: (eventId) => `${API_BASE_URL}/events/${eventId}/leave`,
     DETAILS: (eventId) => `${API_BASE_URL}/events/${eventId}`
   },
+  PROJECTS: {
+    LIST: `${API_BASE_URL}/projects/public`,
+    PAGINATED: `${API_BASE_URL}/projects/public/paginated`,
+    DETAILS: (projectId) => `${API_BASE_URL}/projects/public/${projectId}`,
+    CATEGORIES: `${API_BASE_URL}/projects/categories`,
+    TOP: `${API_BASE_URL}/projects/public/top`,
+    RECENT: `${API_BASE_URL}/projects/public/recent`,
+    SUBMIT: `${API_BASE_URL}/projects/submit`,
+    MY_PROJECTS: `${API_BASE_URL}/projects/mine`
+  },
   ADMIN: {
     DASHBOARD: `${API_BASE_URL}/admin/dashboard`,
     USERS: `${API_BASE_URL}/admin/users`,

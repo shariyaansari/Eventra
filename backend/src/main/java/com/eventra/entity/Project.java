@@ -51,6 +51,12 @@ public class Project {
 	@NotBlank(message="Author is required")
 	private String author;
 	
+	// Contributors list
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="project_contributors", joinColumns=@JoinColumn(name="project_id"))
+	@Column(name="contributor")
+	private List<String> contributors;
+	
 	//User who submitted the project
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="submitted_by_user_id")
@@ -86,8 +92,16 @@ public class Project {
 	
 	@Size(max=50)
 	private String difficulty;
-	private Integer openIssues;
-	private Integer pullRequests;
-	private Integer stars;
-	private Integer forks;
+	
+	@Builder.Default
+	private Integer openIssues = 0;
+	
+	@Builder.Default
+	private Integer pullRequests = 0;
+	
+	@Builder.Default
+	private Integer stars = 0;
+	
+	@Builder.Default
+	private Integer forks = 0;
 }
