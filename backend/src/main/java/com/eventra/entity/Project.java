@@ -17,7 +17,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -45,7 +44,7 @@ public class Project {
 	@Size(max=255)
 	private String title;
 	
-	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String description;
 	
 	@NotBlank(message="Author is required")
