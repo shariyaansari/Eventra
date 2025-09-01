@@ -14,6 +14,7 @@ import EventsPage from "./Pages/Events/EventsPage";
 import HackathonPage from "./Pages/Hackathons/HackathonPage";
 import ProjectsPage from "./Pages/Projects/ProjectsPage";
 import ContactUs from "./Pages/Contact/ContactUs"; // Import ContactUs page
+import LeaderBoard from "./components/Leaderboard";
 import NotFound from "./components/NotFound";
 
 // --------------- AUTH PAGES
@@ -42,6 +43,7 @@ function App() {
               <Route path="/hackathons" element={<HackathonPage />} />
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/contributors" element={<Contributors />} />
+              <Route path="/leaderBoard" element={<LeaderBoard />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/contact" element={<ContactUs />} />{" "}
               {/* Add ContactUs route */}
