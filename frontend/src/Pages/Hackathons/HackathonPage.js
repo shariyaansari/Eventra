@@ -360,7 +360,7 @@ const HackathonHub = () => {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
             <h2 className="text-2xl font-bold text-gray-900">All Hackathons</h2>
             <div className="flex items-center gap-3">
-              <button 
+              <button
                 onClick={() => setShowFilters(!showFilters)}
                 className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50"
               >
@@ -370,7 +370,7 @@ const HackathonHub = () => {
                 {showFilters ? 'Hide Filters' : 'Show Filters'}
               </button>
               {(filters.difficulty || filters.prize || filters.location) && (
-                <button 
+                <button
                   onClick={resetFilters}
                   className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
                 >
@@ -382,7 +382,7 @@ const HackathonHub = () => {
 
           {/* Filters Panel */}
           {showFilters && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
@@ -393,8 +393,10 @@ const HackathonHub = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">Difficulty</label>
                   <select
                     value={filters.difficulty}
-                    onChange={(e) => setFilters({...filters, difficulty: e.target.value})}
-                    className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    onChange={(e) =>
+                      setFilters({ ...filters, difficulty: e.target.value })
+                    }
+                    className="w-full rounded-xl border border-gray-300 bg-white py-3 px-4 pr-10 text-base font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200"
                   >
                     <option value="">All Levels</option>
                     {difficulties.map((level) => (
@@ -405,11 +407,15 @@ const HackathonHub = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Prize Pool</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Prize Pool
+                  </label>
                   <select
                     value={filters.prize}
-                    onChange={(e) => setFilters({...filters, prize: e.target.value})}
-                    className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    onChange={(e) =>
+                      setFilters({ ...filters, prize: e.target.value })
+                    }
+                    className="w-full rounded-xl border border-gray-300 bg-white py-3 px-4 pr-10 text-base font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200"
                   >
                     <option value="">Any Prize</option>
                     <option value="$">Under $1,000</option>
@@ -418,11 +424,15 @@ const HackathonHub = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Location
+                  </label>
                   <select
                     value={filters.location}
-                    onChange={(e) => setFilters({...filters, location: e.target.value})}
-                    className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    onChange={(e) =>
+                      setFilters({ ...filters, location: e.target.value })
+                    }
+                    className="w-full rounded-xl border border-gray-300 bg-white py-3 px-4 pr-10 text-base font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200"
                   >
                     <option value="">All Locations</option>
                     {locations.map((location) => (
