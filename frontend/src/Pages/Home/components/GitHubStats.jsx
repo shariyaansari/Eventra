@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
-import { motion, useAnimation } from 'framer-motion';
-import { FaGithub, FaStar, FaCodeBranch, FaExclamationCircle, FaCode, FaUsers, FaClock, FaExternalLinkAlt } from "react-icons/fa";
+import { motion, useAnimation } from "framer-motion";
+import {
+  FaGithub,
+  FaStar,
+  FaCodeBranch,
+  FaExclamationCircle,
+  FaCode,
+  FaUsers,
+  FaClock,
+  FaExternalLinkAlt,
+} from "react-icons/fa";
 
 // GitHub username and repo
 const GITHUB_USER = "SandeepVashishtha";
@@ -47,9 +56,9 @@ const container = {
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0.2,
-      when: "beforeChildren"
-    }
-  }
+      when: "beforeChildren",
+    },
+  },
 };
 
 const item = {
@@ -59,15 +68,15 @@ const item = {
     opacity: 1,
     transition: {
       duration: 0.5,
-      ease: [0.16, 1, 0.3, 1]
-    }
-  }
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
 };
 
 export default function GitHubStats() {
   const controls = useAnimation();
   const [inView, setInView] = useState(false);
-  
+
   // Store repo stats in local state
   const [stats, setStats] = useState({
     stars: 0,
@@ -81,7 +90,7 @@ export default function GitHubStats() {
 
   useEffect(() => {
     if (inView) {
-      controls.start('show');
+      controls.start("show");
     }
   }, [controls, inView]);
 
@@ -89,7 +98,7 @@ export default function GitHubStats() {
   useEffect(() => {
     async function fetchGitHubStats() {
       setLoading(true);
-      
+
       // Check for cached data first
       const cachedStats = getCachedStats();
       if (cachedStats) {
@@ -108,7 +117,7 @@ export default function GitHubStats() {
           { headers }
         );
         if (!repoRes.ok) throw new Error("Failed to fetch repo data");
-        
+
         const repoData = await repoRes.json();
 
         // 👥 Fetch contributor count
@@ -118,20 +127,49 @@ export default function GitHubStats() {
           { headers }
         );
         const contributorsData = await contributorsRes.json();
-        if (!contributorsRes.ok) throw new Error("Failed to fetch contributors");
+        if (!contributorsRes.ok)
+          throw new Error("Failed to fetch contributors");
 
         // Format last commit date
-        const formatDate = (dateString) => {
-          const options = { year: 'numeric', month: 'short', day: 'numeric' };
-          return new Date(dateString).toLocaleDateString(undefined, options);
-        };
+        function formatLastCommitDate(isoDate) {
+          const commitDate = new Date(isoDate);
+          const today = new Date();
 
+          // Format as DD/MM/YY
+          const formatDate = (d) =>
+            d.toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "2-digit",
+            });
+
+          const commitDateStr = formatDate(commitDate);
+          const todayStr = formatDate(today);
+
+          // Check if yesterday
+          const yesterday = new Date(today);
+          yesterday.setDate(today.getDate() - 1);
+          const yesterdayStr = formatDate(yesterday);
+
+          if (commitDateStr === todayStr) {
+            return `Today (${commitDateStr})`;
+          } else if (commitDateStr === yesterdayStr) {
+            return `Yesterday (${commitDateStr})`;
+          } else {
+            return commitDateStr;
+          }
+        }
+        
         const statsData = {
           stars: repoData.stargazers_count || 0,
           forks: repoData.forks_count || 0,
           issues: repoData.open_issues_count || 0,
-          contributors: Array.isArray(contributorsData) ? contributorsData.length : 0,
-          lastCommit: repoData.pushed_at ? formatDate(repoData.pushed_at) : "N/A",
+          contributors: Array.isArray(contributorsData)
+            ? contributorsData.length
+            : 0,
+          lastCommit: repoData.pushed_at
+            ? formatLastCommitDate(repoData.pushed_at)
+            : "N/A",
           size: repoData.size || 0,
         };
 
@@ -159,73 +197,74 @@ export default function GitHubStats() {
       value: stats.stars,
       icon: <FaStar className="text-yellow-500" />,
       link: `https://github.com/${GITHUB_USER}/${GITHUB_REPO}/stargazers`,
-      border: "border-yellow-100"
+      border: "border-yellow-100",
     },
     {
       label: "Forks",
       value: stats.forks,
       icon: <FaCodeBranch className="text-blue-500" />,
       link: `https://github.com/${GITHUB_USER}/${GITHUB_REPO}/network/members`,
-      border: "border-blue-100"
+      border: "border-blue-100",
     },
     {
       label: "Open Issues",
       value: stats.issues,
       icon: <FaExclamationCircle className="text-red-500" />,
       link: `https://github.com/${GITHUB_USER}/${GITHUB_REPO}/issues`,
-      border: "border-red-100"
+      border: "border-red-100",
     },
     {
       label: "Contributors",
       value: stats.contributors,
       icon: <FaUsers className="text-indigo-500" />,
       link: `https://github.com/${GITHUB_USER}/${GITHUB_REPO}/graphs/contributors`,
-      border: "border-indigo-100"
+      border: "border-indigo-100",
     },
     {
       label: "Last Update",
       value: stats.lastCommit,
       icon: <FaClock className="text-purple-500" />,
       link: `https://github.com/${GITHUB_USER}/${GITHUB_REPO}/commits`,
-      border: "border-purple-100"
+      border: "border-purple-100",
     },
     {
       label: "Code",
       value: `${(stats.size / 1024).toFixed(1)} MB`,
       icon: <FaCode className="text-green-500" />,
       link: `https://github.com/${GITHUB_USER}/${GITHUB_REPO}`,
-      border: "border-green-100"
+      border: "border-green-100",
     },
   ];
 
   return (
     <section className="py-16 bg-indigo-50">
-      <motion.div 
+      <motion.div
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         onViewportEnter={() => setInView(true)}
         viewport={{ once: true, margin: "-100px" }}
       >
-        <motion.div 
+        <motion.div
           variants={container}
           initial="hidden"
           animate={controls}
           className="text-center mb-12"
         >
-          <motion.h2 
+          <motion.h2
             variants={item}
             className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
           >
             Project Statistics
           </motion.h2>
-          <motion.p 
+          <motion.p
             variants={item}
             className="text-lg text-gray-600 max-w-3xl mx-auto"
           >
-            Our journey in numbers. See how our open-source community is growing and evolving.
+            Our journey in numbers. See how our open-source community is growing
+            and evolving.
           </motion.p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           variants={container}
           initial="hidden"
           animate={controls}
@@ -246,12 +285,12 @@ export default function GitHubStats() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <div className="p-3 rounded-lg bg-gray-50">
-                      <div className="text-2xl">
-                        {icon}
-                      </div>
+                      <div className="text-2xl">{icon}</div>
                     </div>
                     <div>
-                      <p className="text-2xl font-bold text-gray-900">{value}</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        {value}
+                      </p>
                       <p className="text-sm font-medium text-gray-600">
                         {label}
                       </p>
