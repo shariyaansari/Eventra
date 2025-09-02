@@ -2,69 +2,135 @@
 
 A modern React.js frontend for the Eventra event management platform. This application provides a responsive, animated user interface for managing events, user authentication, and community features.
 
+## 📋 Overview
+
+### Frontend Architecture
+
+The Eventra frontend follows a component-based architecture built with React.js, utilizing modern development practices and tools for optimal performance and maintainability.
+
+**Key Architectural Principles:**
+- **Component-Based Design**: Modular, reusable components for consistent UI
+- **Client-Side Routing**: Single-page application with React Router for seamless navigation
+- **Responsive Design**: Mobile-first approach with adaptive layouts
+- **Animation-Driven UX**: Smooth transitions and interactions using Framer Motion
+- **API Integration**: RESTful communication with Spring Boot backend
+
+### Technologies Used
+
+- **React** 18.2.0 - Modern UI library with hooks and functional components
+- **React Router DOM** 6.8.0 - Declarative routing for React applications
+- **Framer Motion** 8.5.2 - Production-ready motion library for React
+- **React Intersection Observer** 9.4.1 - React implementation of the Intersection Observer API
+- **Heroicons** 2.0.16 - Beautiful hand-crafted SVG icons
+- **Create React App** - Build setup and development server
+- **CSS Modules** - Component-scoped styling approach
+
 ---
 
 ## 🚀 Quick Start
 
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn package manager
+- Git
+
+### Local Development Setup
+
 ```bash
-# Clone the repository
+# 1. Clone the repository
 git clone https://github.com/SandeepVashishtha/Eventra.git
 cd Eventra/frontend
 
-# Install dependencies
+# 2. Install dependencies
 npm install
 
-# Start development server
+# 3. Set up environment variables (optional for local development)
+# Create .env file with:
+# REACT_APP_API_URL=http://localhost:8080/api
+# REACT_APP_APP_NAME=Eventra
+
+# 4. Start development server
 npm start
 
+# 5. Open browser and navigate to http://localhost:3000
+
 # Build for production
-npm build
+npm run build
 ```
 
----
-
-## 🛠️ Tech Stack
-
-- **React** 18.2.0 - Modern UI library with hooks
-- **React Router DOM** 6.8.0 - Client-side routing
-- **Framer Motion** 8.5.2 - Smooth animations and transitions
-- **React Intersection Observer** 9.4.1 - Scroll-based animations
-- **Heroicons** 2.0.16 - Beautiful SVG icons
+### Development Workflow
+1. **Install Dependencies**: Run `npm install` to install all required packages
+2. **Environment Setup**: Configure API endpoints in `.env` file
+3. **Start Development Server**: Use `npm start` for hot-reloading development
+4. **Build for Production**: Run `npm run build` to create optimized production build
+5. **Test Application**: Run `npm test` to execute test suite
 
 ---
 
 ## 📁 Project Structure
 
 ```
-src/
-├── components/              # Reusable UI components
-│   ├── common/             # Shared components
-│   │   ├── ErrorMessage.js # Error handling component
-│   │   ├── Loading.js      # Loading state component
-│   │   ├── Layout.js       # Main layout wrapper
-│   │   ├── Navbar.js       # Navigation component
-│   │   └── PublicLayout.js # Public pages layout
-│   ├── Community.js        # Community section component
-│   ├── Features.js         # Features showcase
-│   ├── Footer.js           # Footer component
-│   ├── Hero.js             # Landing page hero section
-│   ├── Navbar.js           # Main navigation
-│   ├── Testimonials.js     # User testimonials
-│   └── WhatsHappening.js   # Events preview section
-├── pages/                  # Page-level components
-│   ├── CreateEvent.css     # Create event page styles
-│   ├── Dashboard.css       # Dashboard styles
-│   ├── DevfolioHomePage.js # Devfolio integration page
-│   ├── Events.css          # Events page styles
-│   ├── Feedback.css        # Feedback page styles
-│   ├── Home.js             # Main landing page
-│   ├── Login.js            # Authentication page
-│   ├── Profile.css         # User profile styles
-│   └── Register.css        # Registration styles
-├── App.js                  # Main application component
-├── App.css                 # Global application styles
-├── index.js                # Application entry point
-└── index.css               # Global CSS styles
+frontend/
+├── public/                 # Static assets
+│   ├── favicon.ico        # App favicon
+│   ├── index.html         # Main HTML template
+│   └── manifest.json      # Web app manifest
+├── src/                   # Source code
+│   ├── components/        # Reusable UI components
+│   │   ├── admin/        # Admin-specific components
+│   │   │   ├── AdminDashboard.css
+│   │   │   └── AdminDashboard.js
+│   │   ├── auth/         # Authentication components
+│   │   │   ├── Auth.css
+│   │   │   ├── Login.js
+│   │   │   ├── PasswordReset.js
+│   │   │   ├── ProtectedRoute.js
+│   │   │   └── Signup.js
+│   │   ├── common/       # Shared/common components
+│   │   │   ├── common-components.css
+│   │   │   ├── ErrorMessage.js
+│   │   │   ├── EventCreation.css
+│   │   │   ├── EventCreation.js
+│   │   │   ├── Loading.js
+│   │   │   └── Unauthorized.js
+│   │   ├── styles/       # Shared styling components
+│   │   │   └── EventSection.css
+│   │   ├── user/         # User-specific components
+│   │   │   ├── UserDashboard.css
+│   │   │   └── UserDashboard.js
+│   │   ├── AboutPage.js
+│   │   ├── CollaborationHub.js
+│   │   ├── Community.js
+│   │   ├── components.css
+│   │   ├── Contributors.css
+│   │   ├── Contributors.js
+│   │   ├── Dashboard.js
+│   │   ├── EventsSection.js
+│   │   ├── Features.js
+│   │   ├── Footer.js
+│   │   ├── HackathonHub.js
+│   │   ├── Hero.js
+│   │   ├── Leaderboard.js
+│   │   ├── Navbar.js
+│   │   ├── NotFound.js
+│   │   ├── ProjectGallery.js
+│   │   ├── scrolltotopButton.css
+│   │   ├── scrolltotopButton.js
+│   │   ├── SearchFilter.js
+│   │   ├── shared-layout.css
+│   │   ├── Testimonials.js
+│   │   └── WhatsHappening.js
+│   ├── config/           # Configuration files
+│   │   └── api.js       # API configuration
+│   ├── context/         # React Context providers
+│   │   └── AuthContext.js # Authentication context
+│   ├── App.css          # Main app styles
+│   ├── App.js           # Root React component
+│   ├── index.css        # Global styles
+│   └── index.js         # App entry point
+├── package.json         # Dependencies and scripts
+├── package-lock.json    # Lockfile for exact dependency versions
+└── README.md           # This file
 ```
 
 ---
@@ -269,18 +335,88 @@ The build folder contains static files ready for deployment to any static hostin
 
 ## 🤝 Contributing
 
-### Development Workflow
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
+### Frontend Development Workflow
 
-### Code Standards
-- **ESLint**: Code linting and formatting
-- **Prettier**: Code formatting
-- **React Hooks**: Functional components preferred
-- **Accessibility**: WCAG 2.1 compliance
+#### Getting Started with Development
+1. **Set up your development environment** following the setup instructions above
+2. **Fork** the repository on GitHub
+3. **Clone** your fork locally: `git clone https://github.com/your-username/Eventra.git`
+4. **Create** a feature branch: `git checkout -b feature/your-feature-name`
+5. **Install dependencies**: `cd frontend && npm install`
+6. **Start development server**: `npm start`
+
+#### Development Best Practices
+
+##### Component Development
+- **Component Structure**: Create components in appropriate subdirectories (`admin/`, `auth/`, `common/`, `user/`)
+- **File Naming**: Use PascalCase for component files (e.g., `UserDashboard.js`)
+- **CSS Naming**: Use kebab-case for CSS files (e.g., `user-dashboard.css`)
+- **Component Organization**: Group related components and their styles together
+
+##### Code Standards
+- **ESLint**: Follow ESLint rules for code quality
+- **React Hooks**: Prefer functional components with hooks over class components
+- **PropTypes**: Use PropTypes for component prop validation
+- **Accessibility**: Ensure WCAG 2.1 compliance with proper ARIA labels and keyboard navigation
+
+##### Styling Guidelines
+- **CSS Modules**: Use component-scoped CSS to avoid style conflicts
+- **BEM Methodology**: Follow BEM naming convention for CSS classes
+- **Responsive Design**: Implement mobile-first responsive design
+- **Consistent Spacing**: Use the established spacing scale from `shared-layout.css`
+
+##### State Management
+- **React Context**: Use React Context for global state management
+- **Local State**: Use `useState` for component-specific state
+- **Custom Hooks**: Create reusable hooks for common functionality
+
+#### Making Changes
+
+1. **Write clear, focused commits**:
+   ```bash
+   git commit -m "feat: add user profile component"
+   git commit -m "fix: resolve mobile layout issue in navbar"
+   git commit -m "style: update button hover effects"
+   ```
+
+2. **Test your changes**:
+   - Run the development server: `npm start`
+   - Test on different screen sizes
+   - Verify accessibility with screen readers
+   - Check console for errors
+
+3. **Update documentation** if you add new components or change existing functionality
+
+#### Pull Request Process
+
+1. **Push** your changes: `git push origin feature/your-feature-name`
+2. **Create** a Pull Request on GitHub
+3. **Provide** a clear description of your changes
+4. **Reference** any related issues
+5. **Request review** from frontend maintainers
+
+#### Pull Request Checklist
+- [ ] Code follows the established patterns and conventions
+- [ ] Component is properly tested (manual testing)
+- [ ] Responsive design works on mobile and desktop
+- [ ] No console errors or warnings
+- [ ] Accessibility features are implemented
+- [ ] Documentation is updated if needed
+- [ ] Commit messages are clear and descriptive
+
+#### Areas for Contribution
+- **New Components**: Create reusable UI components
+- **Feature Enhancements**: Improve existing functionality
+- **Bug Fixes**: Resolve UI/UX issues
+- **Performance Optimization**: Improve loading times and user experience
+- **Accessibility Improvements**: Enhance screen reader support and keyboard navigation
+- **Mobile Responsiveness**: Ensure optimal experience across all devices
+
+#### Getting Help
+- Check existing issues and pull requests for similar work
+- Review the component documentation in this README
+- Ask questions in GitHub discussions or issues
+- Join our community channels for real-time help
 
 ---
 
