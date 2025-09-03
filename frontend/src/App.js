@@ -14,7 +14,7 @@ import EventsPage from "./Pages/Events/EventsPage";
 import HackathonPage from "./Pages/Hackathons/HackathonPage";
 import ProjectsPage from "./Pages/Projects/ProjectsPage";
 import ContactUs from "./Pages/Contact/ContactUs"; // Import ContactUs page
-import LeaderBoard from "./components/Leaderboard";
+import LeaderBoard from "./Pages/Leaderboard/Leaderboard";
 import NotFound from "./components/NotFound";
 
 // --------------- AUTH PAGES
