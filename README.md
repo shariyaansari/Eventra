@@ -179,6 +179,9 @@ Eventra/
 │   │   │   │   ├── EventCreation.js
 │   │   │   │   ├── EventCreation.css
 │   │   │   │   └── Loading.js
+│   │   │   │   └── ProjectSubmission.js
+│   │   │   │   └── ProjectSubmission.css
+
 │   │   │   ├── Layout/        # Layout components
 │   │   │   │   ├── Footer.js
 │   │   │   │   └── Navbar.js
@@ -187,7 +190,10 @@ Eventra/
 │   │   │   │   ├── Contributors.css
 │   │   │   │   ├── notFound.css
 │   │   │   │   └── scrolltotopButton.css
+│   │   │   │   └──shared-layout.css
 │   │   │   ├── user/          # User-specific components
+│   │   │   │   └──UserDashboard.css
+│   │   │   │   └──UserDashBoard.js
 │   │   │   ├── CollaborationHub.js       # Collaboration features
 │   │   │   ├── Contributors.js           # Contributors display
 │   │   │   ├── Dashboard.js              # Main dashboard
@@ -438,46 +444,106 @@ The backend provides a comprehensive REST API documented with OpenAPI 3.0:
 1. Verify database environment variables in Azure
 2. Check database connectivity and credentials
 3. Ensure database server allows connections from Azure IP ranges
+# Eventra
 
-#### 4. Build Failures
-**Problem**: Vercel build fails with schema validation errors
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Contributors](https://img.shields.io/badge/contributors-✨-yellow)
 
+## 📖 Project Overview
+
+Eventra is a full-stack event management platform that allows users to create, manage, and participate in events. It provides a seamless interface for both organizers and attendees and integrates backend APIs with a React frontend for a smooth user experience.
+
+**Purpose**:  
+- Simplify event creation and management  
+- Enable real-time updates and notifications  
+- Provide an intuitive and responsive interface  
+
+## ⚙️ Setup Instructions
+
+Follow these steps to set up the project locally:
+
+### Prerequisites
+- Node.js >= 18.x
+- Java >= 17
+- npm or yarn
+- H2 Database (for local development)
+
+### Backend Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/eventra.git
+   cd eventra
+
+2. Configure environment variables in .env:
+DATABASE_URL=...
+JWT_SECRET=...
+SHOW_SQL=true
+
+3. Install dependencies:
+npm install
+
+4. Start the backend server:
+npm run start:backend
+
+## Frontend Setup
+
+1. Navigate to the frontend folder:
+   cd frontend
+
+2. Install dependencies:
+   npm install
+
+3. Start the frontend server:
+   npm start
+
+
+## 🛠 Development Tips
+
+- **Local Database**: Use H2 for quick setup
+- **Debugging**: Enable SQL logs with `SHOW_SQL=true`
+- **Frontend Development**: Start backend first, then frontend
+
+### Common Build Failures
+
+**Problem**: Vercel build fails with schema validation errors  
 **Solution**:
 1. Check `vercel.json` configuration
 2. Ensure all required environment variables are set
 3. Verify `package.json` dependencies
 
-### Development Tips
-
-1. **Local Development**: Use H2 database for quick setup
-2. **API Testing**: Use the built-in Swagger UI for testing endpoints
-3. **Debugging**: Enable SQL logging with `SHOW_SQL=true`
-4. **Frontend Development**: Start backend first, then frontend
-
 ### Getting Help
 
-1. Check the [Deployment Troubleshooting Guide](DEPLOYMENT_TROUBLESHOOTING.md)
-2. Review browser console for specific error messages
-3. Check Azure App Service logs for backend errors
-4. Verify environment variables in both Vercel and Azure
+- Check the [Deployment Troubleshooting Guide](DEPLOYMENT_TROUBLESHOOTING.md)
+- Review browser console for errors
+- Check Azure App Service logs for backend issues
+- Verify environment variables in both Vercel and Azure
 
 ## 🤝 Contributing
 
-We welcome contributions to Eventra! Please follow these steps:
+We welcome contributions! To get started:
 
 1. **Fork the repository**
-2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
-3. **Commit your changes**: `git commit -m 'Add some amazing feature'`
-4. **Push to the branch**: `git push origin feature/amazing-feature`
+2. **Create a feature branch**:
+   ```
+   git checkout -b feature/amazing-feature
+   ```
+3. **Commit your changes**:
+
+```git commit -m "Add some amazing feature"```
+
+4. **Push to your branch**:
+```git push origin feature/amazing-feature```
+
 5. **Open a Pull Request**
 
-### Development Guidelines
+## Development Guidelines
 
-- Follow Java coding conventions for backend development
-- Use React best practices for frontend development
-- Write meaningful commit messages
-- Update documentation for any new features
-- Test thoroughly before submitting PRs
+1. Follow Java coding conventions for backend
+2. Follow React best practices for frontend
+3. Write meaningful commit messages
+4. Update documentation for new features
+5. Test thoroughly before submitting PRs
 
 ### Code Structure
 
@@ -709,4 +775,4 @@ We'd love your help! Check out our [Contributing Guidelines](CONTRIBUTING.md) to
 
 ---
 
-Built with ❤️ for the community. Happy event organizing! 🎉
+Crafted with ❤️ for our amazing community. Let the events begin and the celebrations flow! 🎉
