@@ -9,7 +9,7 @@ const WhatsHappening = () => {
   });
 
   const [current, setCurrent] = useState(0);
-  const [direction, setDirection] = useState(1); // +1 = right, -1 = left
+  const [direction, setDirection] = useState(1);
 
   const upcomingEvents = [
     {
@@ -63,44 +63,43 @@ const WhatsHappening = () => {
     setCurrent((prev) => (prev === 0 ? upcomingEvents.length - 1 : prev - 1));
   };
 
-  // Animate based on direction
   const cardVariants = {
     enter: (dir) => ({
       opacity: 0,
-      x: dir > 0 ? 100 : -100, // if going right, start from right; else from left
+      x: dir > 0 ? 100 : -100,
     }),
     center: { opacity: 1, x: 0 },
     exit: (dir) => ({
       opacity: 0,
-      x: dir > 0 ? -100 : 100, // if going right, exit left; else exit right
+      x: dir > 0 ? -100 : 100,
     }),
   };
 
   return (
-    <section ref={ref} className="py-16 sm:py-20 bg-white">
+    <section ref={ref} className="py-12 sm:py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
             What's Happening Now
           </h2>
-          <p className="mt-3 max-w-2xl mx-auto text-lg text-gray-500">
+          <p className="mt-2 sm:mt-3 max-w-xl mx-auto text-sm sm:text-lg text-gray-500">
             Stay updated with upcoming events, community programs, and
             opportunities to contribute to Eventra
           </p>
         </motion.div>
 
         {/* Carousel */}
-        <div className="relative max-w-xl mx-auto flex items-center">
+        <div className="relative max-w-md sm:max-w-xl mx-auto flex items-center">
           {/* Prev Button */}
           <button
             onClick={prevSlide}
-            className="absolute -left-12 p-2 rounded-full bg-white shadow hover:bg-gray-100 z-10"
+            className="absolute -left-6 sm:-left-12 p-2 rounded-full bg-white shadow hover:bg-gray-100 z-10 text-sm sm:text-base"
           >
             ◀
           </button>
@@ -122,31 +121,31 @@ const WhatsHappening = () => {
                     : "border border-gray-100"
                 }`}
               >
-                <div className="p-6 flex-1 flex flex-col">
-                  <div className="flex items-center justify-between mb-4">
+                <div className="p-4 sm:p-6 flex-1 flex flex-col">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4 gap-2 sm:gap-0">
                     <span
-                      className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
+                      className={`inline-flex items-center px-2 py-1 rounded-full text-xs sm:text-sm font-medium ${
                         statusColors[upcomingEvents[current].status] ||
                         "bg-gray-100 text-gray-800"
                       }`}
                     >
                       {upcomingEvents[current].status}
                     </span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-xs sm:text-sm text-gray-500">
                       {upcomingEvents[current].type}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
                     {upcomingEvents[current].title}
                   </h3>
-                  <p className="text-gray-600 flex-1 mb-4">
+                  <p className="text-gray-600 flex-1 mb-3 sm:mb-4 text-sm sm:text-base">
                     {upcomingEvents[current].description}
                   </p>
 
-                  <div className="flex items-center text-sm text-gray-500 mt-4">
+                  <div className="flex items-center text-xs sm:text-sm text-gray-500 mt-2 sm:mt-4">
                     <svg
-                      className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                      className="flex-shrink-0 mr-1.5 h-4 w-4 sm:h-5 sm:w-5 text-gray-400"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -163,10 +162,10 @@ const WhatsHappening = () => {
                   </div>
                 </div>
 
-                <div className="bg-gray-50 px-6 py-4">
+                <div className="bg-gray-50 px-4 sm:px-6 py-3 sm:py-4">
                   <a
                     href={upcomingEvents[current].link}
-                    className={`w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium ${
+                    className={`w-full inline-flex items-center justify-center px-3 sm:px-4 py-2 sm:py-2.5 border border-transparent rounded-md shadow-sm text-xs sm:text-sm font-medium ${
                       upcomingEvents[current].featured
                         ? "bg-indigo-600 text-white hover:bg-indigo-700"
                         : "text-indigo-600 bg-white border-indigo-100 hover:bg-indigo-50"
@@ -186,7 +185,7 @@ const WhatsHappening = () => {
                       ? "Join Now"
                       : "Learn More"}
                     <svg
-                      className="ml-2 -mr-1 w-4 h-4"
+                      className="ml-1 sm:ml-2 -mr-1 w-3 h-3 sm:w-4 sm:h-4"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -209,7 +208,7 @@ const WhatsHappening = () => {
           {/* Next Button */}
           <button
             onClick={nextSlide}
-            className="absolute -right-12 p-2 rounded-full bg-white shadow hover:bg-gray-100 z-10"
+            className="absolute -right-6 sm:-right-12 p-2 rounded-full bg-white shadow hover:bg-gray-100 z-10 text-sm sm:text-base"
           >
             ▶
           </button>
@@ -221,15 +220,53 @@ const WhatsHappening = () => {
             <button
               key={i}
               onClick={() => {
-                setDirection(i > current ? 1 : -1); // set direction based on click
+                setDirection(i > current ? 1 : -1);
                 setCurrent(i);
               }}
-              className={`w-3 h-3 rounded-full ${
+              className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full ${
                 current === i ? "bg-indigo-600" : "bg-gray-300"
               }`}
             />
           ))}
         </div>
+
+        {/* Info Section */}
+        <motion.div
+          className="mt-12 sm:mt-16 bg-indigo-50 rounded-xl p-6 sm:p-10"
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <div className="md:flex md:items-center md:justify-between">
+            <div className="md:flex-1 md:pr-8">
+              <h3 className="text-lg sm:text-2xl font-bold text-gray-900">
+                Eventra is participating in GirlScript Summer of Code 2025!
+              </h3>
+              <p className="mt-2 sm:mt-3 text-sm sm:text-base text-gray-600">
+                We're excited to mentor contributors and welcome new developers to our open-source community. 
+                Join us in building the future of event management!
+              </p>
+            </div>
+            <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row sm:space-x-4 gap-2 sm:gap-0">
+              <a
+                href="https://gssoc.girlscript.tech/"
+                className="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 border border-transparent text-sm sm:text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Apply to GSSOC
+              </a>
+              <a
+                href="https://github.com/sandeepvashishtha/Eventra/issues"
+                className="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 border border-gray-300 text-sm sm:text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Issues
+              </a>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
