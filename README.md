@@ -472,7 +472,7 @@ Follow these steps to set up the project locally:
 ### Backend Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/eventra.git
+   git clone https://github.com/sandeepvashishtha/eventra.git
    cd eventra
 
 2. Configure environment variables in .env:
