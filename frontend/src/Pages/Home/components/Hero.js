@@ -1,148 +1,233 @@
-import { motion, useAnimation } from 'framer-motion';
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { motion, useAnimation, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
+  const phrases = [
+    "Amazing Tech Events",
+    "Exciting Hackathons Today",
+    "Innovative Dev Workshops",
+    "Cutting-Edge Tech Meetups",
+  ];
+
+  const [index, setIndex] = useState(0);
+
+  // Change phrase every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % phrases.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
   const controls = useAnimation();
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
-  };
-
-  const item = {
-    hidden: { y: 20, opacity: 0 },
-    show: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.16, 1, 0.3, 1]
-      }
-    }
-  };
-
-  const buttonItem = {
-    hidden: { y: 20, opacity: 0 },
-    show: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.16, 1, 0.3, 1],
-        delay: 0.3
-      }
-    }
-  };
-
   useEffect(() => {
-    controls.start('show');
+    controls.start("show");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [controls]);
 
-  useEffect(()=>{
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  },[])
+  const container = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.15 } },
+  };
+
+  const fadeUp = {
+    hidden: { y: 40, opacity: 0 },
+    show: { y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
+  const floatShape = (i) => ({
+    y: [0, -20 - i * 5, 0],
+    x: [0, 20 + i * 5, 0],
+    rotate: [0, 15, -15, 0],
+    transition: { duration: 6 + i, repeat: Infinity, ease: "easeInOut" },
+  });
+
+  const shapes = [
+    {
+      size: 60,
+      pos: { top: "5%", left: "10%" },
+      color: "from-indigo-400 to-blue-400",
+    },
+    {
+      size: 80,
+      pos: { top: "15%", right: "15%" },
+      color: "from-purple-400 to-pink-400",
+    },
+    {
+      size: 100,
+      pos: { bottom: "5%", left: "20%" },
+      color: "from-blue-300 to-indigo-300",
+    },
+    {
+      size: 70,
+      pos: { bottom: "10%", right: "10%" },
+      color: "from-pink-300 to-purple-300",
+    },
+    {
+      size: 50,
+      pos: { top: "50%", left: "2%" },
+      color: "from-indigo-300 to-blue-200",
+    },
+  ];
+
+  const stats = [
+    { value: "1500+", label: "Developers Joined", color: "text-indigo-500" },
+    { value: "75", label: "Events Organized", color: "text-pink-500" },
+    { value: "30+", label: "Partners & Sponsors", color: "text-purple-500" },
+  ];
 
   return (
-    <section
-      className="relative overflow-hidden bg-indigo-50/80 py-20 sm:py-28"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-indigo-50 via-indigo-100 to-white py-24 lg:py-32">
+      {/* Floating Gradient Shapes */}
+      {shapes.map((shape, i) => (
         <motion.div
+          key={i}
+          animate={floatShape(i)}
+          className={`absolute rounded-full bg-gradient-to-tr ${shape.color} opacity-30`}
+          style={{
+            width: `${shape.size}px`,
+            height: `${shape.size}px`,
+            ...shape.pos,
+          }}
+        />
+      ))}
+
+      {/* Hero Content */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <motion.div
+          className="text-center"
           variants={container}
           initial="hidden"
           animate={controls}
-          className="text-center"
         >
-          <motion.h1
-            variants={item}
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6"
-          >
-            <span className="block">Discover & Join</span>
-            <span className="text-transparent bg-clip-text bg-indigo-600">
-              Amazing Tech Events
-            </span>
+          {/* Headline */}
+          <motion.h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-snug">
+            <motion.span
+              className="block text-gray-900"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              Discover & Join
+            </motion.span>
+
+            <div className="relative h-16 sm:h-20 md:h-24 lg:h-28 overflow-hidden flex justify-center items-center">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={index}
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-800 via-blue-500 to-purple-700 mb-4"
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.8, ease: "easeOut" },
+                  }}
+                  exit={{
+                    opacity: 0,
+                    y: -40,
+                    transition: { duration: 0.5, ease: "easeIn" },
+                  }}
+                >
+                  {phrases[index]}
+                </motion.span>
+              </AnimatePresence>
+            </div>
           </motion.h1>
 
+          {/* Subtext */}
           <motion.p
-            variants={item}
-            className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-10"
-          >
-            Connect with developers, learn new skills, and grow your network at the best tech events,
-            hackathons, and workshops in your area.
-          </motion.p>
+  variants={fadeUp}
+  className="text-base sm:text-lg text-gray-700 max-w-3xl mx-auto mt-2 mb-12"
+>
+  "Connect with developers, learn new skills, and grow your network at
+  the best tech events, hackathons, and workshops in your area."
+</motion.p>
 
+
+          {/* Buttons */}
           <motion.div
             variants={container}
-            className="flex flex-col sm:flex-row justify-center gap-4"
+            className="flex flex-col sm:flex-row justify-center gap-6 mb-16"
           >
-            <motion.div variants={buttonItem}>
+            {/* Primary Button - Explore Events */}
+            <motion.div variants={fadeUp}>
               <Link
                 to="/events"
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+                className="relative inline-flex items-center px-8 py-4 rounded-full bg-gradient-to-r from-indigo-600 to-blue-500 text-white font-bold shadow-lg overflow-hidden group transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
               >
-                Explore Events
-                <svg className="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
+                <span className="relative z-10 flex items-center">
+                  Explore Events
+                  <svg
+                    className="ml-3 w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-2"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </span>
+                {/* Glow effect */}
+                <span className="absolute inset-0 bg-white/10 rounded-full opacity-0 group-hover:opacity-30 transition-opacity"></span>
               </Link>
             </motion.div>
-            <motion.div variants={buttonItem}>
+
+            {/* Secondary Button - Join Hackathons */}
+            <motion.div variants={fadeUp}>
               <Link
                 to="/hackathons"
-                className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+                className="relative inline-flex items-center px-8 py-4 rounded-full border border-gray-300 bg-white text-gray-700 font-semibold shadow hover:shadow-lg hover:scale-105 transition-all duration-300"
               >
                 Join Hackathons
               </Link>
             </motion.div>
+
+            {/* Optional Tertiary Button - Learn More */}
+            <motion.div variants={fadeUp}>
+              <Link
+                to="/about"
+                className="relative inline-flex items-center px-8 py-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              >
+                Learn More
+                <svg
+                  className="ml-3 w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-2"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </Link>
+            </motion.div>
           </motion.div>
 
+          {/* Animated Stats Cards */}
           <motion.div
-            variants={item}
-            className="mt-12"
+            variants={fadeUp}
+            className="grid grid-cols-1 sm:grid-cols-3 gap-6"
           >
-            <div className="flex items-center justify-center space-x-6">
-              <div className="flex -space-x-2">
-                {[1, 2, 3, 4].map((i) => (
-                  <img
-                    key={i}
-                    className="inline-block h-10 w-10 rounded-full ring-2 ring-white"
-                    src={`https://randomuser.me/api/portraits/${i % 2 === 0 ? 'men' : 'women'}/${i + 20}.jpg`}
-                    alt="User avatar"
-                  />
-                ))}
-              </div>
-              <div className="text-left">
-                <p className="text-sm text-gray-600">
-                  Join <span className="font-medium text-indigo-600">1000+</span> developers
+            {stats.map((stat, i) => (
+              <motion.div
+                key={i}
+                variants={fadeUp}
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="bg-white/30 backdrop-blur-md rounded-2xl p-6 text-center shadow-lg"
+              >
+                <p className={`text-3xl font-bold mb-2 ${stat.color}`}>
+                  {stat.value}
                 </p>
-                <p className="text-xs text-gray-500">Already registered for our events</p>
-              </div>
-            </div>
+                <p className="text-gray-700 text-sm">{stat.label}</p>
+              </motion.div>
+            ))}
           </motion.div>
         </motion.div>
-      </div>
-
-      {/* Decorative elements */}
-      <div
-        className="hidden lg:block absolute top-24 right-0 -mr-48 -mt-8 opacity-70"
-      >
-        <svg
-          className="h-96 w-96 text-indigo-100"
-          fill="currentColor"
-          viewBox="0 0 200 200"
-        >
-          <path d="M100,20c44.2,0,80,35.8,80,80s-35.8,80-80,80s-80-35.8-80-80S55.8,20,100,20z M100,30c-38.7,0-70,31.3-70,70s31.3,70,70,70s70-31.3,70-70S138.7,30,100,30z" />
-        </svg>
       </div>
     </section>
   );
