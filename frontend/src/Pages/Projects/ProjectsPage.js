@@ -1,8 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiGithub, FiExternalLink, FiStar, FiGitBranch, FiAlertCircle, FiGitPullRequest, FiClock, FiFilter, FiSearch, FiPlus } from 'react-icons/fi';
-import { API_ENDPOINTS, apiUtils } from '../../config/api';
-import ProjectSubmission from '../../components/common/ProjectSubmission';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  FiGithub,
+  FiExternalLink,
+  FiStar,
+  FiGitBranch,
+  FiAlertCircle,
+  FiGitPullRequest,
+  FiClock,
+  FiFilter,
+  FiSearch,
+  FiPlus,
+} from "react-icons/fi";
+import { API_ENDPOINTS, apiUtils } from "../../config/api";
+import ProjectSubmission from "../../components/common/ProjectSubmission";
 
 // Skeleton Loader Component
 const SkeletonCard = () => (
@@ -24,7 +35,7 @@ const SkeletonCard = () => (
       </div>
 
       <div className="flex flex-wrap gap-2 mb-4">
-        {[1, 2, 3].map(i => (
+        {[1, 2, 3].map((i) => (
           <div key={i} className="h-6 bg-gray-100 rounded-full w-16"></div>
         ))}
       </div>
@@ -41,11 +52,11 @@ const SkeletonCard = () => (
 const ProjectGallery = () => {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [filterCategory, setFilterCategory] = useState('all');
-  const [sortBy, setSortBy] = useState('recent');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [categories, setCategories] = useState(['all']);
-  const [error, setError] = useState('');
+  const [filterCategory, setFilterCategory] = useState("all");
+  const [sortBy, setSortBy] = useState("recent");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [categories, setCategories] = useState(["all"]);
+  const [error, setError] = useState("");
   const [showSubmissionModal, setShowSubmissionModal] = useState(false);
 
   // Fetch projects from API
@@ -53,27 +64,28 @@ const ProjectGallery = () => {
     const fetchProjects = async () => {
       try {
         setIsLoading(true);
-        setError('');
-        
+        setError("");
+
         // Fetch projects
         const response = await apiUtils.get(API_ENDPOINTS.PROJECTS.LIST);
         if (response.ok) {
           const projectsData = await response.json();
           setProjects(projectsData);
         } else {
-          throw new Error('Failed to fetch projects');
+          throw new Error("Failed to fetch projects");
         }
 
         // Fetch categories
-        const categoriesResponse = await apiUtils.get(API_ENDPOINTS.PROJECTS.CATEGORIES);
+        const categoriesResponse = await apiUtils.get(
+          API_ENDPOINTS.PROJECTS.CATEGORIES
+        );
         if (categoriesResponse.ok) {
           const categoriesData = await categoriesResponse.json();
-          setCategories(['all', ...categoriesData]);
+          setCategories(["all", ...categoriesData]);
         }
-        
       } catch (error) {
-        console.error('Error fetching projects:', error);
-        setError('Failed to load projects. Please try again later.');
+        console.error("Error fetching projects:", error);
+        setError("Failed to load projects. Please try again later.");
       } finally {
         setIsLoading(false);
       }
@@ -84,9 +96,10 @@ const ProjectGallery = () => {
 
   // Filters, searches, and sorts the projects based on the current state
   const filteredAndSortedProjects = projects
-    .filter(project => {
+    .filter((project) => {
       // Category filter
-      if (filterCategory !== 'all' && project.category !== filterCategory) return false;
+      if (filterCategory !== "all" && project.category !== filterCategory)
+        return false;
 
       // Search query filter
       if (searchQuery) {
@@ -94,7 +107,9 @@ const ProjectGallery = () => {
         return (
           project.title.toLowerCase().includes(query) ||
           project.description.toLowerCase().includes(query) ||
-          project.techStack.some(tech => tech.toLowerCase().includes(query)) ||
+          project.techStack.some((tech) =>
+            tech.toLowerCase().includes(query)
+          ) ||
           project.category.toLowerCase().includes(query) ||
           project.author.toLowerCase().includes(query)
         );
@@ -104,13 +119,13 @@ const ProjectGallery = () => {
     })
     .sort((a, b) => {
       switch (sortBy) {
-        case 'recent':
+        case "recent":
           return new Date(b.lastUpdated) - new Date(a.lastUpdated);
-        case 'stars':
+        case "stars":
           return (b.stars || 0) - (a.stars || 0);
-        case 'forks':
+        case "forks":
           return (b.forks || 0) - (a.forks || 0);
-        case 'issues':
+        case "issues":
           return (b.openIssues || 0) - (a.openIssues || 0);
         default:
           return 0;
@@ -118,7 +133,9 @@ const ProjectGallery = () => {
     });
 
   // Get unique tech stack for filtering
-  const allTechStack = [...new Set(projects.flatMap(project => project.techStack))];
+  const allTechStack = [
+    ...new Set(projects.flatMap((project) => project.techStack)),
+  ];
 
   // ProjectCard component with improved UI
   const ProjectCard = ({ project }) => {
@@ -128,33 +145,46 @@ const ProjectGallery = () => {
 
     const formatDate = (dateString) => {
       const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+      return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
     };
 
     const getStatusColor = (status) => {
       switch (status.toLowerCase()) {
-        case 'active': return 'bg-green-100 text-green-800';
-        case 'maintenance': return 'bg-yellow-100 text-yellow-800';
-        case 'archived': return 'bg-gray-100 text-gray-800';
-        default: return 'bg-blue-100 text-blue-800';
+        case "active":
+          return "bg-green-100 text-green-800";
+        case "maintenance":
+          return "bg-yellow-100 text-yellow-800";
+        case "archived":
+          return "bg-gray-100 text-gray-800";
+        default:
+          return "bg-blue-100 text-blue-800";
       }
     };
 
     const getDifficultyColor = (difficulty) => {
       switch (difficulty.toLowerCase()) {
-        case 'beginner': return 'bg-blue-50 text-blue-700 border-blue-200';
-        case 'intermediate': return 'bg-purple-50 text-purple-700 border-purple-200';
-        case 'advanced': return 'bg-pink-50 text-pink-700 border-pink-200';
-        default: return 'bg-gray-50 text-gray-700 border-gray-200';
+        case "beginner":
+          return "bg-blue-50 text-blue-700 border-blue-200";
+        case "intermediate":
+          return "bg-purple-50 text-purple-700 border-purple-200";
+        case "advanced":
+          return "bg-pink-50 text-pink-700 border-pink-200";
+        default:
+          return "bg-gray-50 text-gray-700 border-gray-200";
       }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
       window.scrollTo({
         top: 0,
-        behavior: "smooth"
+        behavior: "smooth",
       });
-    },[])
+    }, []);
+    const [isLoaded, setIsLoaded] = useState(false); // local blur-up state
 
     return (
       <motion.div
@@ -164,13 +194,27 @@ const ProjectGallery = () => {
         whileHover={{ y: -4 }}
       >
         {/* Project Image with Status */}
-        <div className="relative h-40 bg-gray-100 overflow-hidden">
+        <div className="relative aspect-[16/9] bg-gray-100 overflow-hidden">
+          <img
+            src={project.lowResImage || project.image}
+            alt={project.title}
+            className={`absolute inset-0 w-full h-full object-cover blur-lg scale-105 transition-opacity duration-500 ${
+              isLoaded ? "opacity-0" : "opacity-100"
+            }`}
+            aria-hidden="true"
+          />
           <img
             src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover"
+            loading="lazy"
+            onLoad={() => setIsLoaded(true)}
+            className="relative w-full h-full object-cover transition-transform duration-300"
           />
-          <span className={`absolute top-3 right-3 text-xs font-medium px-2.5 py-1 rounded-full ${getStatusColor(project.status)}`}>
+          <span
+            className={`absolute top-3 right-3 text-xs font-medium px-2.5 py-1 rounded-full ${getStatusColor(
+              project.status
+            )}`}
+          >
             {project.status}
           </span>
         </div>
@@ -179,7 +223,9 @@ const ProjectGallery = () => {
         <div className="p-6">
           {/* Header with Title and Stats */}
           <div className="flex justify-between items-start mb-3">
-            <h3 className="text-lg font-bold text-gray-900 line-clamp-1">{project.title}</h3>
+            <h3 className="text-lg font-bold text-gray-900 line-clamp-1">
+              {project.title}
+            </h3>
             <div className="flex items-center space-x-3">
               <div className="flex items-center text-sm text-gray-600">
                 <FiStar className="mr-1 text-yellow-500" />
@@ -193,14 +239,20 @@ const ProjectGallery = () => {
           </div>
 
           {/* Description */}
-          <p className="text-gray-600 text-sm mb-4 line-clamp-2">{project.description}</p>
+          <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+            {project.description}
+          </p>
 
           {/* Category and Difficulty */}
           <div className="flex flex-wrap gap-2 mb-4">
             <span className="px-2.5 py-1 text-xs font-medium bg-indigo-50 text-indigo-700 rounded-full">
               {project.category}
             </span>
-            <span className={`px-2.5 py-1 text-xs font-medium border rounded-full ${getDifficultyColor(project.difficulty)}`}>
+            <span
+              className={`px-2.5 py-1 text-xs font-medium border rounded-full ${getDifficultyColor(
+                project.difficulty
+              )}`}
+            >
               {project.difficulty}
             </span>
           </div>
@@ -216,7 +268,10 @@ const ProjectGallery = () => {
           {/* Tech Stack */}
           <div className="flex flex-wrap gap-2 mb-4">
             {project.techStack.slice(0, 3).map((tech, index) => (
-              <span key={index} className="px-2.5 py-1 text-xs font-medium bg-gray-50 text-gray-700 rounded-full">
+              <span
+                key={index}
+                className="px-2.5 py-1 text-xs font-medium bg-gray-50 text-gray-700 rounded-full"
+              >
                 {tech}
               </span>
             ))}
@@ -232,21 +287,27 @@ const ProjectGallery = () => {
             <div className="flex flex-col items-center">
               <div className="flex items-center">
                 <FiAlertCircle className="mr-1" />
-                <span className="font-medium text-gray-700">{project.openIssues}</span>
+                <span className="font-medium text-gray-700">
+                  {project.openIssues}
+                </span>
               </div>
               <span>Issues</span>
             </div>
             <div className="flex flex-col items-center">
               <div className="flex items-center">
                 <FiGitPullRequest className="mr-1" />
-                <span className="font-medium text-gray-700">{project.pullRequests}</span>
+                <span className="font-medium text-gray-700">
+                  {project.pullRequests}
+                </span>
               </div>
               <span>PRs</span>
             </div>
             <div className="flex flex-col items-center">
               <div className="flex items-center">
                 <FiClock className="mr-1" />
-                <span className="font-medium text-gray-700">{formatDate(project.lastUpdated)}</span>
+                <span className="font-medium text-gray-700">
+                  {formatDate(project.lastUpdated)}
+                </span>
               </div>
               <span>Updated</span>
             </div>
@@ -291,11 +352,13 @@ const ProjectGallery = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4">Project <span className="text-indigo-600">Gallery</span></h1>
+            <h1 className="text-4xl sm:text-5xl font-bold mb-4">
+              Project <span className="text-indigo-600">Gallery</span>
+            </h1>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
               Discover, contribute to, and showcase amazing open-source projects
             </p>
-            
+
             {/* Submit Project Button */}
             <motion.button
               onClick={() => setShowSubmissionModal(true)}
@@ -343,11 +406,13 @@ const ProjectGallery = () => {
                   className="pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
                 >
                   <option value="all">All Categories</option>
-                  {categories.filter(cat => cat !== 'all').map(category => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
+                  {categories
+                    .filter((cat) => cat !== "all")
+                    .map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
                 </select>
               </div>
 
@@ -365,9 +430,9 @@ const ProjectGallery = () => {
               <button
                 className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
                 onClick={() => {
-                  setFilterCategory('all');
-                  setSearchQuery('');
-                  setSortBy('recent');
+                  setFilterCategory("all");
+                  setSearchQuery("");
+                  setSortBy("recent");
                 }}
               >
                 Clear Filters
@@ -392,7 +457,9 @@ const ProjectGallery = () => {
             >
               <div className="mx-auto max-w-md">
                 <FiAlertCircle className="mx-auto h-12 w-12 text-red-400" />
-                <h3 className="mt-2 text-lg font-medium text-red-900">Error loading projects</h3>
+                <h3 className="mt-2 text-lg font-medium text-red-900">
+                  Error loading projects
+                </h3>
                 <p className="mt-1 text-sm text-red-700">{error}</p>
                 <div className="mt-6">
                   <button
@@ -414,9 +481,9 @@ const ProjectGallery = () => {
                 show: {
                   opacity: 1,
                   transition: {
-                    staggerChildren: 0.1
-                  }
-                }
+                    staggerChildren: 0.1,
+                  },
+                },
               }}
             >
               {filteredAndSortedProjects.map((project) => (
@@ -445,18 +512,20 @@ const ProjectGallery = () => {
                     d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <h3 className="mt-2 text-lg font-medium text-gray-900">No projects found</h3>
+                <h3 className="mt-2 text-lg font-medium text-gray-900">
+                  No projects found
+                </h3>
                 <p className="mt-1 text-sm text-gray-500">
-                  {searchQuery || filterCategory !== 'all'
-                    ? 'No projects match your current filters. Try adjusting your search or filters.'
-                    : 'Check back later for exciting new projects!'}
+                  {searchQuery || filterCategory !== "all"
+                    ? "No projects match your current filters. Try adjusting your search or filters."
+                    : "Check back later for exciting new projects!"}
                 </p>
                 <div className="mt-6">
                   <button
                     onClick={() => {
-                      setFilterCategory('all');
-                      setSearchQuery('');
-                      setSortBy('recent');
+                      setFilterCategory("all");
+                      setSearchQuery("");
+                      setSortBy("recent");
                     }}
                     className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
@@ -477,12 +546,15 @@ const ProjectGallery = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h3 className="text-xl font-bold text-gray-900 mb-3">Ready to contribute?</h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">
+              Ready to contribute?
+            </h3>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Join our community of developers and start contributing to open-source projects today!
+              Join our community of developers and start contributing to
+              open-source projects today!
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-3">
-              <button 
+              <button
                 onClick={() => setShowSubmissionModal(true)}
                 className="px-6 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
               >
@@ -501,7 +573,7 @@ const ProjectGallery = () => {
             <ProjectSubmission
               onClose={() => setShowSubmissionModal(false)}
               onSubmit={(result) => {
-                console.log('Project submitted:', result);
+                console.log("Project submitted:", result);
                 // Optionally refresh the projects list
                 // fetchProjects();
               }}
