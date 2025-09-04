@@ -23,6 +23,8 @@ export default function LeaderBoard() {
   const [loading, setLoading] = useState(true);
   // 🔹 Last updated timestamp
   const [lastUpdated, setLastUpdated] = useState('');
+  // 🔹 Search state
+  const [search, setSearch] = useState('');
 
   // 🔹 Function to load data from cache or fetch fresh
   const loadLeaderboardData = async () => {
@@ -199,6 +201,17 @@ export default function LeaderBoard() {
           </p>
         </div>
 
+        {/* Search input */}
+        <div className="mb-6 flex justify-center">
+          <input
+            type="text"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Search contributors..."
+            className="w-full max-w-xs px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+          />
+        </div>
+
         <div className="bg-gray-50 rounded-2xl shadow-lg overflow-hidden">
           {loading ? (
             <div className="overflow-x-auto">
@@ -267,7 +280,16 @@ export default function LeaderBoard() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-100">
-                  {contributors.map((c, index) => (
+                  {contributors
+                    .filter(c => {
+                      const q = search.trim().toLowerCase();
+                      if (!q) return true;
+                      return (
+                        c.username.toLowerCase().includes(q) ||
+                        (c.name && c.name.toLowerCase().includes(q))
+                      );
+                    })
+                    .map((c, index) => (
                     <tr key={c.username} className="hover:bg-gray-50 transition-colors duration-150 border-b border-gray-100">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
