@@ -23,6 +23,7 @@ import Signup from "./components/auth/Signup";
 import Unauthorized from "./components/auth/Unauthorized";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
+import PasswordReset from "./components/auth/PasswordReset";
 
 // --------------- DASHBOARD PAGES
 import Dashboard from "./components/Dashboard";
@@ -77,6 +78,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/unauthorized" element={<Unauthorized />} />
+              <Route path="/password-reset" element={<PasswordReset />} />
               <Route path="/*" element={<NotFound />} />
             </Routes>
           </main>
