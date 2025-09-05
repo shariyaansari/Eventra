@@ -11,9 +11,11 @@ import {
   FiFilter,
   FiSearch,
   FiPlus,
+  FiX,
 } from "react-icons/fi";
 import { API_ENDPOINTS, apiUtils } from "../../config/api";
 import ProjectSubmission from "../../components/common/ProjectSubmission";
+import ProjectHero from "./ProjectHero";
 
 // Skeleton Loader Component
 const SkeletonCard = () => (
@@ -342,68 +344,53 @@ const ProjectGallery = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="bg-indigo-50 py-12 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4">
-              Project <span className="text-indigo-600">Gallery</span>
-            </h1>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Discover, contribute to, and showcase amazing open-source projects
-            </p>
-
-            {/* Submit Project Button */}
-            <motion.button
-              onClick={() => setShowSubmissionModal(true)}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2 mx-auto"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <FiPlus /> Submit Your Project
-            </motion.button>
-          </motion.div>
-        </div>
-      </div>
+      <ProjectHero setShowSubmissionModal={setShowSubmissionModal} />
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search and Filter Bar */}
+
         <motion.div
-          className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-8"
+          className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 mb-8"
+          style={{ boxShadow: "0 10px 25px rgba(59, 130, 246, 0.2)" }} // subtle blue shadow
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex flex-col md:flex-row gap-4 md:items-center">
+            {/* Search Input */}
             <div className="relative flex-1">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <motion.div
+                whileHover={{ scale: 1.2, rotate: 10 }}
+                className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              >
                 <FiSearch className="h-5 w-5 text-gray-400" />
-              </div>
+              </motion.div>
               <input
                 type="text"
                 placeholder="Search projects by name, tech stack, or category..."
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                className="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700 placeholder-gray-400 shadow-sm transition-all duration-300"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3">
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FiFilter className="h-4 w-4 text-gray-400" />
-                </div>
+            {/* Filters & Sorting */}
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full md:w-auto">
+              {/* Category Filter */}
+              <div className="relative flex-1 sm:flex-none">
+                <motion.div
+                  whileHover={{ scale: 1.2, rotate: 10 }}
+                  className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                  <FiFilter className="h-5 w-5 text-gray-400" />
+                </motion.div>
                 <select
                   value={filterCategory}
                   onChange={(e) => setFilterCategory(e.target.value)}
-                  className="pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                  className="w-full sm:w-auto pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700 text-sm shadow-sm transition-all duration-300"
                 >
                   <option value="all">All Categories</option>
                   {categories
@@ -416,10 +403,11 @@ const ProjectGallery = () => {
                 </select>
               </div>
 
+              {/* Sorting */}
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700 text-sm shadow-sm transition-all duration-300"
               >
                 <option value="recent">Recently Updated</option>
                 <option value="stars">Most Stars</option>
@@ -427,16 +415,19 @@ const ProjectGallery = () => {
                 <option value="issues">Most Issues</option>
               </select>
 
-              <button
-                className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+              {/* Clear Filters Button */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                className="px-4 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-sm font-semibold rounded-xl flex items-center gap-2 hover:from-blue-500 hover:to-cyan-500 transition-all shadow-lg"
                 onClick={() => {
                   setFilterCategory("all");
                   setSearchQuery("");
                   setSortBy("recent");
                 }}
               >
+                <FiX className="w-4 h-4 animate-pulse" />
                 Clear Filters
-              </button>
+              </motion.button>
             </div>
           </div>
         </motion.div>
