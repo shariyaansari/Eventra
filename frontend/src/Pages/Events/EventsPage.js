@@ -9,6 +9,7 @@ const EventsPage = () => {
   const [viewMode, setViewMode] = useState('grid');
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredEvents, setFilteredEvents] = useState([]);
+   const [isLoaded, setIsLoaded] = useState(false);
 
   // Mock data for events
   useEffect(() => {
@@ -81,18 +82,28 @@ const EventsPage = () => {
   },[])
 
   const EventCard = ({ event }) => (
-    <motion.div
+     <motion.div
       className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
       variants={item}
       whileHover={{ y: -4 }}
     >
-      <div className="relative h-48 overflow-hidden">
+      <div className="relative aspect-[16/9] overflow-hidden">
+        {/* Low-res blurred placeholder */}
+        <motion.img
+          src={event.lowResImage || event.image}
+          alt={event.title}
+          className={`absolute inset-0 w-full h-full object-cover blur-lg scale-105 transition-opacity duration-500 ${
+            isLoaded ? "opacity-0" : "opacity-100"
+          }`}
+          aria-hidden="true"
+        />
         <motion.img
           src={event.image}
           alt={event.title}
-          className="w-full h-full object-cover"
+          loading="lazy"
+          onLoad={() => setIsLoaded(true)}
+          className="relative w-full h-full object-cover transition-transform duration-300"
           whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.3 }}
         />
         <div className="absolute top-3 left-3">
           <span className={`px-2 py-1 text-xs font-semibold rounded-full ${event.status === 'upcoming'
