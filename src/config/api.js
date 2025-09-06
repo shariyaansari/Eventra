@@ -1,52 +1,50 @@
-// API Configuration - Direct backend URL
-const API_BASE_URL = 'https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net';
+// API Configuration - Same-origin base path.
+// In development, CRA will proxy /api to the backend (see package.json "proxy").
+// In production (Vercel), rewrites will proxy /api to the backend (see vercel.json).
+const API_BASE_PATH = '/api';
 
 // API endpoints
 export const API_ENDPOINTS = {
   AUTH: {
-    LOGIN: `${API_BASE_URL}/api/auth/login`,
-    REGISTER: `${API_BASE_URL}/api/auth/signup`,
-    LOGOUT: `${API_BASE_URL}/api/auth/logout`,
-    REFRESH: `${API_BASE_URL}/api/auth/refresh`,
-    VERIFY: `${API_BASE_URL}/api/auth/verify`
+  LOGIN: `${API_BASE_PATH}/auth/login`,
+  REGISTER: `${API_BASE_PATH}/auth/signup`,
+  LOGOUT: `${API_BASE_PATH}/auth/logout`,
+  REFRESH: `${API_BASE_PATH}/auth/refresh`,
+  VERIFY: `${API_BASE_PATH}/auth/verify`
   },
   USER: {
-    PROFILE: `${API_BASE_URL}/api/user/profile`,
-    EVENTS: `${API_BASE_URL}/api/user/events`,
-    UPDATE: `${API_BASE_URL}/api/user/update`
+  PROFILE: `${API_BASE_PATH}/user/profile`,
+  EVENTS: `${API_BASE_PATH}/user/events`,
+  UPDATE: `${API_BASE_PATH}/user/update`
   },
   EVENTS: {
-    LIST: `${API_BASE_URL}/api/events`,
-    CREATE: `${API_BASE_URL}/api/events`,
-    JOIN: (eventId) => `${API_BASE_URL}/api/events/${eventId}/join`,
-    LEAVE: (eventId) => `${API_BASE_URL}/api/events/${eventId}/leave`,
-    DETAILS: (eventId) => `${API_BASE_URL}/api/events/${eventId}`
+  LIST: `${API_BASE_PATH}/events`,
+  CREATE: `${API_BASE_PATH}/events`,
+  JOIN: (eventId) => `${API_BASE_PATH}/events/${eventId}/join`,
+  LEAVE: (eventId) => `${API_BASE_PATH}/events/${eventId}/leave`,
+  DETAILS: (eventId) => `${API_BASE_PATH}/events/${eventId}`
   },
   PROJECTS: {
-    LIST: `${API_BASE_URL}/api/projects/public`,
-    PAGINATED: `${API_BASE_URL}/api/projects/public/paginated`,
-    DETAILS: (projectId) => `${API_BASE_URL}/api/projects/public/${projectId}`,
-    CATEGORIES: `${API_BASE_URL}/api/projects/categories`,
-    TOP: `${API_BASE_URL}/api/projects/public/top`,
-    RECENT: `${API_BASE_URL}/api/projects/public/recent`,
-    SUBMIT: `${API_BASE_URL}/api/projects/submit`,
-    MY_PROJECTS: `${API_BASE_URL}/api/projects/mine`
+  LIST: `${API_BASE_PATH}/projects/public`,
+  PAGINATED: `${API_BASE_PATH}/projects/public/paginated`,
+  DETAILS: (projectId) => `${API_BASE_PATH}/projects/public/${projectId}`,
+  CATEGORIES: `${API_BASE_PATH}/projects/categories`,
+  TOP: `${API_BASE_PATH}/projects/public/top`,
+  RECENT: `${API_BASE_PATH}/projects/public/recent`,
+  SUBMIT: `${API_BASE_PATH}/projects/submit`,
+  MY_PROJECTS: `${API_BASE_PATH}/projects/mine`
   },
   ADMIN: {
-    DASHBOARD: `${API_BASE_URL}/api/admin/dashboard`,
-    USERS: `${API_BASE_URL}/api/admin/users`,
-    EVENTS: `${API_BASE_URL}/api/admin/events`
+  DASHBOARD: `${API_BASE_PATH}/admin/dashboard`,
+  USERS: `${API_BASE_PATH}/admin/users`,
+  EVENTS: `${API_BASE_PATH}/admin/events`
   }
 };
 
 // Helper function to get authorization headers
 export const getAuthHeaders = (token) => {
-  const headers = {
-    'Content-Type': 'application/json'
-  };
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
   return headers;
 };
 
@@ -112,4 +110,4 @@ export const apiUtils = {
   }
 };
 
-export default API_BASE_URL;
+export default API_BASE_PATH;

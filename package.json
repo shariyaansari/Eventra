@@ -39,5 +39,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net"
 }
