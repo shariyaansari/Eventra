@@ -49,9 +49,7 @@ Eventra is a comprehensive event management system that empowers organizers to c
 - [Architecture](#-architecture)
 - [Quick Start](#-quick-start)
 - [Installation](#-installation)
-- [Environment Configuration](#-environment-configuration)
 - [Deployment](#-deployment)
-- [API Documentation](#-api-documentation)
 - [Frontend Components](#-frontend-components)
 - [Contributing](#-contributing)
 - [License](#-license)
@@ -61,8 +59,6 @@ Eventra is a comprehensive event management system that empowers organizers to c
 ### 🎯 Core Functionality
 - **Event Creation & Management** - Create and customize events with rich details
 - **User Authentication & Authorization** - Secure JWT-based authentication system
-- **RSVP Management** - Handle attendee registrations and responses
-- **QR Code Check-ins** - Streamlined event check-in process
 - **Real-time Analytics** - Track event performance and attendee engagement
 - **Admin Dashboard** - Comprehensive administrative controls
 - **User Dashboard** - Personalized user experience and event tracking
@@ -84,7 +80,7 @@ Eventra is a comprehensive event management system that empowers organizers to c
 - **Security**: Spring Security with JWT authentication
 - **Build Tool**: Maven
 - **Documentation**: OpenAPI 3.0 with Springdoc
-- **Key Dependencies**: 
+- **Key Dependencies**:
   - Spring Data JPA
   - Spring Web
   - Spring Security
@@ -103,10 +99,11 @@ Eventra is a comprehensive event management system that empowers organizers to c
 - **Styling**: CSS with modern responsive design
 - **Build Tool**: Create React App
 
+
 ### DevOps & Infrastructure
 - **Environment Profiles**: Development, Production, Azure
-- **API Documentation**: OpenAPI/Swagger specification
 - **Version Control**: Git with comprehensive documentation
+- **Deployment**: Vercel for frontend hosting
 
 ## 🏗️ Architecture
 
@@ -202,90 +199,13 @@ Eventra/
 ├── README.md                  # Project documentation
 └── vercel.json                # Vercel deployment configuration
 ```
-│   ├── azure-cors-variables.json        # Azure CORS environment variables
-│   ├── azure-environment-variables.json # Azure deployment variables
-│   ├── update-azure-cors.sh             # Azure CORS update script
-│   ├── mvnw / mvnw.cmd                   # Maven wrapper
-│   └── pom.xml                          # Maven configuration
-├── frontend/                  # React Web Application
-│   ├── public/                # Static assets
-│   │   ├── favicon.ico
-│   │   ├── index.html
-│   │   └── manifest.json
-│   ├── src/
-│   │   ├── components/        # React components
-│   │   │   ├── admin/         # Admin dashboard components
-│   │   │   │   ├── AdminDashboard.js
-│   │   │   │   └── AdminDashboard.css
-│   │   │   ├── auth/          # Authentication components
-│   │   │   │   ├── Auth.css
-│   │   │   │   ├── Login.js
-│   │   │   │   ├── PasswordReset.js
-│   │   │   │   ├── ProtectedRoute.js
-│   │   │   │   ├── Signup.js
-│   │   │   │   └── Unauthorized.js
-│   │   │   ├── common/        # Shared components
-│   │   │   │   ├── common-components.css
-│   │   │   │   ├── ErrorMessage.js
-│   │   │   │   ├── EventCreation.js
-│   │   │   │   ├── EventCreation.css
-│   │   │   │   └── Loading.js
-│   │   │   │   └── ProjectSubmission.js
-│   │   │   │   └── ProjectSubmission.css
-
-│   │   │   ├── Layout/        # Layout components
-│   │   │   │   ├── Footer.js
-│   │   │   │   └── Navbar.js
-│   │   │   ├── styles/        # Component-specific styles
-│   │   │   │   ├── components.css
-│   │   │   │   ├── Contributors.css
-│   │   │   │   ├── notFound.css
-│   │   │   │   └── scrolltotopButton.css
-│   │   │   │   └──shared-layout.css
-│   │   │   ├── user/          # User-specific components
-│   │   │   │   └──UserDashboard.css
-│   │   │   │   └──UserDashBoard.js
-│   │   │   ├── CollaborationHub.js       # Collaboration features
-│   │   │   ├── Contributors.js           # Contributors display
-│   │   │   ├── Dashboard.js              # Main dashboard
-│   │   │   ├── GitHubStats.jsx           # GitHub statistics
-│   │   │   ├── Leaderboard.js            # User leaderboard
-│   │   │   ├── NotFound.js               # 404 page
-│   │   │   ├── ScrollToTop.js            # Scroll to top button
-│   │   │   └── SearchFilter.js           # Search and filter
-│   │   ├── config/            # Configuration files
-│   │   │   └── api.js                    # API endpoints and utilities
-│   │   ├── context/           # React context providers
-│   │   │   └── AuthContext.js            # Authentication context
-│   │   ├── Pages/             # Page components
-│   │   │   ├── About/                    # About page
-│   │   │   ├── Events/                   # Events pages
-│   │   │   ├── Hackathons/               # Hackathons section
-│   │   │   ├── Home/                     # Home page
-│   │   │   └── Projects/                 # Projects section
-│   │   ├── App.js             # Main App component
-│   │   ├── App.css            # Global app styles
-│   │   ├── index.js           # React entry point
-│   │   └── index.css          # Global CSS styles
-│   ├── .env.example           # Environment variables template
-│   ├── package.json           # npm dependencies
-│   └── README.md              # Frontend documentation
-├── .gitignore                 # Git ignore rules
-├── LICENSE                    # Apache 2.0 license
-├── package.json               # Root package configuration
-├── package-lock.json          # npm lock file
-├── README.md                  # Main project documentation
-└── vercel.json                # Vercel deployment configuration
-```
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- **Java 17** or higher
 - **Node.js 16** or higher
 - **npm** or **yarn**
 - **Git**
-- **MySQL** (for production) or use built-in H2 database for development
 
 ### Clone the Repository
 ```bash
@@ -293,107 +213,31 @@ git clone https://github.com/SandeepVashishtha/Eventra.git
 cd Eventra
 ```
 
-### Backend Setup
-```bash
-# Navigate to backend directory
-cd backend
-
-# Install dependencies and run (Windows)
-.\mvnw.cmd spring-boot:run
-
-# Install dependencies and run (Linux/Mac)
-./mvnw spring-boot:run
-
-# Or build and run the JAR
-.\mvnw.cmd clean package
-java -jar target/backend-0.0.1-SNAPSHOT.jar
-```
-
-The backend will start on http://localhost:8080 with:
-- H2 in-memory database for development
-- H2 Console available at http://localhost:8080/h2-console
-- Swagger UI available at http://localhost:8080/swagger-ui.html
-- API endpoints available at http://localhost:8080/api
-
 ### Frontend Setup
 ```bash
-# Navigate to frontend directory
-cd frontend
-
 # Install dependencies
 npm install
 
-# Start development server
+# Start the development server
 npm start
 ```
 
-The frontend will start on http://localhost:3000 and automatically connect to the backend API.
-
-### Access the Application
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8080
-- **API Documentation**: http://localhost:8080/swagger-ui.html
-- **H2 Database Console**: http://localhost:8080/h2-console (JDBC URL: jdbc:h2:mem:eventra)
+The application will be available at `http://localhost:3000`
 
 ## 🔧 Environment Configuration
 
-### Backend Environment Variables
-
-For production deployment, configure these environment variables:
-
-```bash
-# Database Configuration (Aiven MySQL)
-AIVEN_DATABASE_URL=jdbc:mysql://your-host:port/database?useSSL=true
-AIVEN_DATABASE_USERNAME=your_username
-AIVEN_DATABASE_PASSWORD=your_password
-DATABASE_DRIVER=com.mysql.cj.jdbc.Driver
-DATABASE_DIALECT=org.hibernate.dialect.MySQL8Dialect
-DDL_AUTO=update
-
-# Security Configuration
-JWT_SECRET=your_secure_jwt_secret_key_here
-JWT_EXPIRATION=86400000
-
-# CORS Configuration
-CORS_ALLOWED_ORIGINS=https://eventra-psi.vercel.app
-CORS_ALLOWED_METHODS=GET,POST,PUT,DELETE,OPTIONS,PATCH
-CORS_ALLOWED_HEADERS=*
-CORS_ALLOW_CREDENTIALS=true
-
-# Application Settings
-SHOW_SQL=false
-LOG_LEVEL=INFO
-```
-
 ### Frontend Environment Variables
 
-Create `.env.production` in the frontend directory:
+Create `.env` in the project root:
 
 ```bash
-# Production API Configuration
-REACT_APP_API_URL=https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net/api
+# API Configuration
+REACT_APP_API_URL=http://localhost:3000/api
 REACT_APP_APP_NAME=Eventra
 REACT_APP_VERSION=1.0.0
-GENERATE_SOURCEMAP=false
 ```
 
 ## 🚀 Deployment
-
-### Backend Deployment (Azure App Service)
-
-1. **Build the application**:
-   ```bash
-   cd backend
-   ./mvnw clean package -DskipTests
-   ```
-
-2. **Deploy to Azure**:
-   - Upload the JAR file from `target/` directory
-   - Configure environment variables in Azure App Service
-   - Set the startup command: `java -jar /home/site/wwwroot/backend-0.0.1-SNAPSHOT.jar`
-
-3. **Environment Variables in Azure**:
-   Use the JSON format from `backend/azure-cors-variables.json` to configure CORS settings.
 
 ### Frontend Deployment (Vercel)
 
@@ -401,155 +245,37 @@ GENERATE_SOURCEMAP=false
    - Import your GitHub repository to Vercel
    - Set build command: `npm run build`
    - Set output directory: `build`
+2. **Set Environment Variables** in Vercel dashboard:
+   - `REACT_APP_API_URL`: URL of your backend API
 
-2. **Environment Variables in Vercel**:
-   ```
-   REACT_APP_API_URL = https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net/api
-   ```
+## 📱 Frontend Components
 
-## 📚 API Documentation
+### Key Components
 
-### Available Endpoints
-
-The backend provides a comprehensive REST API documented with OpenAPI 3.0:
-
-- **Live API Documentation**: [Swagger UI](https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net/swagger-ui.html)
-- **OpenAPI Specification**: [API Docs](https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net/api-docs)
-
-### Key API Endpoints
+#### Pages
+- **HomePage** - Landing page with hero section and features
+- **AboutPage** - Information about the platform and mission
+- **EventsPage** - Browse and manage events
+- **HackathonPage** - Specialized hackathon management
+- **ProjectsPage** - Project gallery and submissions
+- **ContactUs** - Contact form and information
+- **Leaderboard** - User rankings and achievements
 
 #### Authentication
-- `POST /api/auth/login` - User login
-- `POST /api/auth/signup` - User registration
-- `POST /api/auth/logout` - User logout
-- `GET /api/auth/verify` - Token verification
+- **Login/Signup** - User authentication system
+- **ProtectedRoute** - Route protection for authenticated users
+- **AuthContext** - React context for authentication state
 
-#### Events
-- `GET /api/events` - List all events
-- `POST /api/events` - Create new event
-- `GET /api/events/{id}` - Get event details
-- `PUT /api/events/{id}` - Update event
-- `DELETE /api/events/{id}` - Delete event
-- `POST /api/events/{id}/join` - Join event
-- `DELETE /api/events/{id}/leave` - Leave event
+#### Dashboard Components
+- **UserDashboard** - Personalized user interface
+- **AdminDashboard** - Administrative controls and analytics
 
-#### User Management
-- `GET /api/user/profile` - Get user profile
-- `PUT /api/user/update` - Update user profile
-- `GET /api/user/events` - Get user's events
-
-#### Admin
-- `GET /api/admin/dashboard` - Admin dashboard data
-- `GET /api/admin/users` - Manage users
-- `GET /api/admin/events` - Manage events
-
-## 🛠️ Troubleshooting
-
-### Common Issues
-
-#### 1. Network Error During Login
-**Problem**: "Network error. Please check your connection and try again."
-
-**Solution**:
-1. Verify backend is running: Visit [backend health endpoint](https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net/api/health)
-2. Check CORS configuration in Azure App Service
-3. Verify `REACT_APP_API_URL` environment variable in Vercel
-
-#### 2. CORS Issues
-**Problem**: Browser console shows CORS errors
-
-**Solution**:
-1. Add these environment variables to Azure App Service:
-   ```
-   CORS_ALLOWED_ORIGINS = *
-   CORS_ALLOWED_METHODS = GET,POST,PUT,DELETE,OPTIONS,PATCH
-   CORS_ALLOWED_HEADERS = *
-   CORS_ALLOW_CREDENTIALS = true
-   ```
-2. Restart the Azure App Service
-3. Clear browser cache
-
-#### 3. Database Connection Issues
-**Problem**: Backend fails to start or connect to database
-
-**Solution**:
-1. Verify database environment variables in Azure
-2. Check database connectivity and credentials
-3. Ensure database server allows connections from Azure IP ranges
-# Eventra
-
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![License](https://img.shields.io/badge/license-MIT-blue)
-![Contributors](https://img.shields.io/badge/contributors-✨-yellow)
-
-## 📖 Project Overview
-
-Eventra is a full-stack event management platform that allows users to create, manage, and participate in events. It provides a seamless interface for both organizers and attendees and integrates backend APIs with a React frontend for a smooth user experience.
-
-**Purpose**:  
-- Simplify event creation and management  
-- Enable real-time updates and notifications  
-- Provide an intuitive and responsive interface  
-
-## ⚙️ Setup Instructions
-
-Follow these steps to set up the project locally:
-
-### Prerequisites
-- Node.js >= 18.x
-- Java >= 17
-- npm or yarn
-- H2 Database (for local development)
-
-### Backend Setup
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/sandeepvashishtha/eventra.git
-   cd eventra
-
-2. Configure environment variables in .env:
-DATABASE_URL=...
-JWT_SECRET=...
-SHOW_SQL=true
-
-3. Install dependencies:
-npm install
-
-4. Start the backend server:
-npm run start:backend
-
-## Frontend Setup
-
-1. Navigate to the frontend folder:
-   cd frontend
-
-2. Install dependencies:
-   npm install
-
-3. Start the frontend server:
-   npm start
-
-
-## 🛠 Development Tips
-
-- **Local Database**: Use H2 for quick setup
-- **Debugging**: Enable SQL logs with `SHOW_SQL=true`
-- **Frontend Development**: Start backend first, then frontend
-
-### Common Build Failures
-
-**Problem**: Vercel build fails with schema validation errors  
-**Solution**:
-1. Check `vercel.json` configuration
-2. Ensure all required environment variables are set
-3. Verify `package.json` dependencies
-
-### Getting Help
-
-- Check the [Deployment Troubleshooting Guide](DEPLOYMENT_TROUBLESHOOTING.md)
-- Review browser console for errors
-- Check Azure App Service logs for backend issues
-- Verify environment variables in both Vercel and Azure
+#### Common Components
+- **Navbar** - Navigation header
+- **Footer** - Site footer
+- **Loading** - Loading indicators
+- **ErrorMessage** - Error display component
+- **ScrollToTop** - Scroll to top functionality
 
 ## 🤝 Contributing
 
@@ -654,16 +380,10 @@ Comprehensive API documentation is available through multiple channels:
 - **[API Overview](docs/README.md)** - Complete API guide
 - **[Authentication](docs/authentication.md)** - User auth and JWT
 - **[Events](docs/events.md)** - Event management endpoints
-- **[RSVP & Attendees](docs/rsvp-attendees.md)** - Registration management
-- **[Check-in](docs/checkin.md)** - QR code and check-in system
 - **[Dashboards](docs/dashboards.md)** - Analytics and reporting
 - **[Feedback](docs/feedback.md)** - Survey and feedback system
 - **[Admin](docs/admin.md)** - Administrative operations
 - **[OpenAPI Spec](docs/openapi.yaml)** - Machine-readable API spec
-
-### API Base URLs
-- **Development**: `http://localhost:8080/api`
-- **Production**: `https://api.eventra.com/api`
 
 ## 🎨 Frontend Components
 
@@ -693,40 +413,6 @@ Comprehensive API documentation is available through multiple channels:
 - **SearchFilter** - Reusable search and filter component
 
 ## ⚙️ Configuration
-
-### Backend Configuration
-
-#### Database Configuration (Development - H2)
-```properties
-spring.datasource.url=jdbc:h2:mem:eventra
-spring.datasource.driverClassName=org.h2.Driver
-spring.datasource.username=sa
-spring.datasource.password=
-spring.h2.console.enabled=true
-spring.jpa.show-sql=true
-```
-
-#### Database Configuration (Production - MySQL)
-```properties
-spring.datasource.url=jdbc:mysql://your-aiven-host:port/database_name?useSSL=true&requireSSL=true&verifyServerCertificate=false
-spring.datasource.username=your_aiven_username
-spring.datasource.password=your_aiven_password
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
-```
-
-#### Security Configuration
-```properties
-# JWT Configuration
-jwt.secret=your-secure-jwt-secret-key
-jwt.expiration=86400000
-
-# CORS Configuration
-cors.allowed-origins=http://localhost:3000
-cors.allowed-methods=GET,POST,PUT,DELETE,OPTIONS,PATCH
-cors.allowed-headers=Origin,Content-Type,Accept,Authorization,Cache-Control,X-Requested-With
-cors.allow-credentials=true
-```
 
 ### Frontend Configuration
 
