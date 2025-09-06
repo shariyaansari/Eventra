@@ -13,3 +13,4 @@ node_modules
 .env.production
 
 /.metadata/
+backend/azure-environment-variables.json

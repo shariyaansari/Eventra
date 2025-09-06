@@ -53,7 +53,6 @@ Eventra is a comprehensive event management system that empowers organizers to c
 - [Deployment](#-deployment)
 - [API Documentation](#-api-documentation)
 - [Frontend Components](#-frontend-components)
-- [Troubleshooting](#-troubleshooting)
 - [Contributing](#-contributing)
 - [License](#-license)
 
@@ -114,45 +113,97 @@ Eventra is a comprehensive event management system that empowers organizers to c
 ```
 Eventra/
 ├── .github/                   # GitHub workflows and templates
-├── .vscode/                   # VS Code settings
-├── backend/                   # Spring Boot API Server
-│   ├── src/main/java/com/eventra/
-│   │   ├── config/            # Configuration classes
-│   │   │   ├── CorsConfig.java           # CORS configuration
-│   │   │   └── OpenApiConfig.java        # Swagger/OpenAPI setup
-│   │   ├── controller/        # REST API controllers
-│   │   │   ├── AdminController.java      # Admin management
-│   │   │   ├── AuthController.java       # Authentication endpoints
-│   │   │   ├── EventController.java      # Event management
-│   │   │   ├── HealthController.java     # Health check endpoint
-│   │   │   ├── HomeController.java       # Home page endpoint
-│   │   │   └── UserController.java       # User management
-│   │   ├── dto/               # Data Transfer Objects
-│   │   ├── entity/            # JPA entities
-│   │   │   ├── User.java                 # User entity
-│   │   │   ├── Event.java                # Event entity
-│   │   │   └── Project.java              # Project entity
-│   │   ├── exception/         # Custom exceptions
-│   │   ├── filter/            # Security filters
-│   │   ├── repository/        # Data access layer (JPA repositories)
-│   │   ├── service/           # Business logic services
-│   │   ├── util/              # Utility classes (JWT, validation)
-│   │   ├── BackendApplication.java       # Main Spring Boot application
-│   │   ├── SecurityConfig.java          # Security configuration
-│   │   └── StatusController.java        # Status endpoint
-│   ├── src/main/resources/    # Configuration files
-│   │   ├── application.properties        # Main configuration
-│   │   ├── application-dev.properties    # Development settings
-│   │   ├── application-mysql.properties  # MySQL configuration
-│   │   ├── application-prod.properties   # Production settings
-│   │   └── application-azure.properties  # Azure deployment config
-│   ├── src/test/java/         # Test files
-│   ├── target/                # Build output
+├── public/                    # Static assets
+│   ├── favicon.ico
+│   ├── index.html
+│   └── manifest.json
+├── src/                       # React source code
+│   ├── components/            # React components
+│   │   ├── admin/             # Admin dashboard components
+│   │   │   ├── AdminDashboard.js
+│   │   │   └── AdminDashboard.css
+│   │   ├── auth/              # Authentication components
+│   │   │   ├── Auth.css
+│   │   │   ├── Login.js
+│   │   │   ├── PasswordReset.js
+│   │   │   ├── ProtectedRoute.js
+│   │   │   ├── Signup.js
+│   │   │   └── Unauthorized.js
+│   │   ├── common/            # Shared components
+│   │   │   ├── common-components.css
+│   │   │   ├── ErrorMessage.js
+│   │   │   ├── EventCreation.js
+│   │   │   ├── EventCreation.css
+│   │   │   ├── Loading.js
+│   │   │   ├── ProjectSubmission.js
+│   │   │   └── ProjectSubmission.css
+│   │   ├── Layout/            # Layout components
+│   │   │   ├── Footer.js
+│   │   │   └── Navbar.js
+│   │   ├── styles/            # Component-specific styles
+│   │   │   ├── components.css
+│   │   │   ├── Contributors.css
+│   │   │   ├── notFound.css
+│   │   │   ├── scrolltotopButton.css
+│   │   │   └── shared-layout.css
+│   │   ├── user/              # User-specific components
+│   │   │   ├── UserDashboard.css
+│   │   │   └── UserDashboard.js
+│   │   ├── CollaborationHub.js       # Collaboration features
+│   │   ├── Contributors.js           # Contributors display
+│   │   ├── Dashboard.js              # Main dashboard
+│   │   ├── NotFound.js               # 404 page
+│   │   ├── ScrollToTop.js            # Scroll to top button
+│   │   └── SearchFilter.js           # Search and filter
+│   ├── config/                # Configuration files
+│   │   └── api.js                    # API endpoints and utilities
+│   ├── context/               # React context providers
+│   │   └── AuthContext.js            # Authentication context
+│   ├── Pages/                 # Page components
+│   │   ├── About/             # About page components
+│   │   │   ├── AboutPage.js
+│   │   │   ├── Features.js
+│   │   │   ├── MissionVision.js
+│   │   │   └── ModernAbout.js
+│   │   ├── Contact/           # Contact page
+│   │   │   └── ContactUs.js
+│   │   ├── Events/            # Events pages
+│   │   │   ├── eventsMockData.json
+│   │   │   └── EventsPage.js
+│   │   ├── Hackathons/        # Hackathons section
+│   │   │   ├── HackathonHero.js
+│   │   │   ├── hackathonMockData.json
+│   │   │   └── HackathonPage.js
+│   │   ├── Home/              # Home page
+│   │   │   ├── HomePage.jsx
+│   │   │   └── components/
+│   │   │       ├── Community.js
+│   │   │       ├── Features.js
+│   │   │       ├── GitHubStats.jsx
+│   │   │       ├── Hero.js
+│   │   │       ├── Testimonials.js
+│   │   │       └── WhatsHappening.js
+│   │   ├── Leaderboard/       # Leaderboard page
+│   │   │   └── Leaderboard.jsx
+│   │   └── Projects/          # Projects section
+│   │       ├── mockProjectsData.json
+│   │       ├── ProjectHero.js
+│   │       └── ProjectsPage.js
+│   ├── App.js                 # Main App component
+│   ├── App.css                # Global app styles
+│   ├── index.js               # React entry point
+│   └── index.css              # Global CSS styles
+├── build/                     # Production build output
+├── .env.example               # Environment variables template
+├── .gitignore                 # Git ignore rules
+├── LICENSE                    # Apache 2.0 license
+├── package.json               # npm dependencies and scripts
+├── package-lock.json          # npm lock file
+├── README.md                  # Project documentation
+└── vercel.json                # Vercel deployment configuration
+```
 │   ├── azure-cors-variables.json        # Azure CORS environment variables
 │   ├── azure-environment-variables.json # Azure deployment variables
-│   ├── CLEANUP_SUMMARY.md               # Database cleanup documentation
-│   ├── DATABASE_MIGRATION.md            # Database migration guide
-│   ├── DEPLOYMENT_GUIDE.md              # Backend deployment guide
 │   ├── update-azure-cors.sh             # Azure CORS update script
 │   ├── mvnw / mvnw.cmd                   # Maven wrapper
 │   └── pom.xml                          # Maven configuration
@@ -217,28 +268,9 @@ Eventra/
 │   │   ├── index.js           # React entry point
 │   │   └── index.css          # Global CSS styles
 │   ├── .env.example           # Environment variables template
-│   ├── .env.production        # Production environment config
-│   ├── CSS-CONSOLIDATION-SUMMARY.md     # CSS consolidation notes
 │   ├── package.json           # npm dependencies
 │   └── README.md              # Frontend documentation
-├── docs/                      # Project documentation
-│   ├── admin.md               # Admin functionality docs
-│   ├── authentication.md     # Authentication documentation
-│   ├── CHANGELOG.md           # Version history
-│   ├── checkin.md             # Check-in process docs
-│   ├── dashboards.md          # Dashboard documentation
-│   ├── errors.md              # Error handling docs
-│   ├── events.md              # Events API documentation
-│   ├── feedback.md            # Feedback system docs
-│   ├── frontend-integration.md # Frontend integration guide
-│   ├── index.md               # Documentation index
-│   ├── openapi.yaml           # OpenAPI specification
-│   ├── README.md              # Documentation README
-│   └── rsvp-attendees.md      # RSVP and attendee management
 ├── .gitignore                 # Git ignore rules
-├── CODE_OF_CONDUCT.md         # Code of conduct
-├── CONTRIBUTING.md            # Contributing guidelines
-├── DEPLOYMENT_TROUBLESHOOTING.md # Deployment troubleshooting guide
 ├── LICENSE                    # Apache 2.0 license
 ├── package.json               # Root package configuration
 ├── package-lock.json          # npm lock file
@@ -713,7 +745,7 @@ const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+We welcome contributions! Please follow these guidelines:
 
 ### Development Workflow
 1. Fork the repository
@@ -745,11 +777,11 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 - **Issues**: [https://github.com/SandeepVashishtha/Eventra/issues](https://github.com/SandeepVashishtha/Eventra/issues)
 - **Discussions**: [https://github.com/SandeepVashishtha/Eventra/discussions](https://github.com/SandeepVashishtha/Eventra/discussions)
 
-<h2 id="contribution-guidelines">🤝👤 Contributers</h2>
+<h2 id="contribution-guidelines">🤝👤 Contributors</h2>
 
-We love our contributors! If you'd like to help, please check out our [`CONTRIBUTE.md`](https://github.com/SandeepVashishtha/Eventra/blob/master/CONTRIBUTING.md) file for guidelines.
+We love our contributors! If you'd like to help, please check out the development workflow above for guidelines.
 
->Thank you once again to all our contributors who has contributed to **AlgoVisualizer!** Your efforts are truly appreciated. 💖👏
+>Thank you once again to all our contributors who has contributed to **Eventra!** Your efforts are truly appreciated. 💖👏
 
 <!-- Contributors badge (auto-updating) -->
 
@@ -767,7 +799,7 @@ See the full list of contributors and their contributions on the [`GitHub Contri
 *Contributor updates automatically every 24 hours*
 
 ### 🚀 Want to contribute?
-We'd love your help! Check out our [Contributing Guidelines](CONTRIBUTING.md) to get started.
+We'd love your help! Follow the development workflow and code standards outlined above to get started.
 
 ## 👥 Maintainers
 
