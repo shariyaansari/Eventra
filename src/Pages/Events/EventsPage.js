@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import mockEvents from './eventsMockData.json';
+import EventHero from './EventHero';
 
 const EventsPage = () => {
   const [events, setEvents] = useState([]);
@@ -184,7 +185,7 @@ const EventsPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-indigo-100 text-gray-900 py-12 sm:py-20">
+      {/* <div className="bg-indigo-100 text-gray-900 py-12 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={containerVariants}
@@ -253,7 +254,16 @@ const EventsPage = () => {
             </motion.div>
           </motion.div>
         </div>
-      </div>
+      </div> */}
+
+       <div>
+      <EventHero
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        filteredEvents={filteredEvents}
+        handleSearch={handleSearch}
+      />
+    </div>
 
       {/* Events Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
