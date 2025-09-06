@@ -5,14 +5,14 @@ const NavbarLink = ({ navItems }) => {
   const location = useLocation(); // get current path
 
   return (
-    <div className="hidden md:flex space-x-2">
+    <div className="hidden md:flex space-x-3">
       {navItems.map((item) => {
         const isActive = location.pathname === item.href; // check if active
         return (
           <Link
             key={item.name}
             to={item.href}
-            className={`relative px-3 py-2 font-medium transition-all duration-300 rounded-lg group
+            className={`relative px-3 py-2 text-base font-medium transition-all duration-300 rounded-lg group
               ${isActive ? "text-indigo-600" : "text-gray-700"} 
               hover:text-indigo-600`}
           >

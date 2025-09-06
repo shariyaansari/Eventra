@@ -248,7 +248,7 @@ const Navbar = () => {
         onClick={closeAllMenus}
       />
 
-      <nav className="sticky top-0 w-full z-50 bg-white/30 backdrop-blur-md shadow-xl border-b border-gray-200 py-3 transition-all duration-300">
+<nav className="sticky top-0 w-full z-50 bg-white/30 backdrop-blur-md shadow-xl border-b border-gray-300 py-5 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           {/* Brand */}
           <Link to="/" className="flex-shrink-0">
