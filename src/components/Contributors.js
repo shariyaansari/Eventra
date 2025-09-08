@@ -263,10 +263,10 @@ const Contributors = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center justify-center gap-2 
-               bg-gradient-to-r from-indigo-600 to-purple-600 text-white 
-               px-5 py-2.5 rounded-full text-sm font-semibold shadow 
-               hover:from-indigo-700 hover:to-purple-700 
-               transition-all duration-300 ease-out transform hover:scale-105 relative overflow-hidden"
+                    bg-gradient-to-r from-indigo-600 to-purple-600 text-white 
+                    px-5 py-2.5 rounded-full text-sm font-semibold shadow 
+                    hover:from-indigo-700 hover:to-purple-700 
+                    transition-all duration-300 ease-out transform hover:scale-105 relative overflow-hidden"
                 >
                   {/* GitHub Icon with animation */}
                   <FaGithub className="text-lg transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110 group-hover:text-blue-200" />
@@ -283,5 +283,4 @@ const Contributors = () => {
     </section>
   );
 };
-
 export default Contributors;
