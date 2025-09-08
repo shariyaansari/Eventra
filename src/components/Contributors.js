@@ -3,373 +3,284 @@ import {
   FaGithub,
   FaExternalLinkAlt,
   FaCodeBranch,
-  FaExclamationCircle,
+  FaMapMarkerAlt,
+  FaBuilding,
+  FaUserFriends,
+  FaMedal,
 } from "react-icons/fa";
+import { motion } from "framer-motion";
 
-// Mock contributors data
-const mockContributors = [
-  {
-    id: 1,
-    login: "sandeepvashishtha",
-    name: "Sandeep Vashishtha",
-    avatar_url: "https://github.com/sandeepvashishtha.png",
-    html_url: "https://github.com/sandeepvashishtha",
-    contributions: 125,
-    role: "Project Lead & Full Stack Developer",
-    bio: "Passionate about building scalable web applications and event management systems.",
-  },
-];
+// GitHub repo
+const GITHUB_REPO = "sandeepvashishtha/Eventra";
+const TOKEN = process.env.REACT_APP_GITHUB_TOKEN || "";
 
-// Helper function to assign roles based on GitHub activity and profile
+const STORAGE_KEY = "github_contributors";
+const CACHE_DURATION = 60 * 60 * 1000; // 1 hr
+
+// Role assignment
 const getRoleByGitHubActivity = (contributor) => {
-  const {
-    contributions,
-    followers = 0,
-    public_repos = 0,
-    created_at,
-    login,
-  } = contributor;
+  const { contributions, followers = 0, public_repos = 0, login } = contributor;
+  if (login === "sandeepvashishtha") return "Project Lead";
 
-  // Special role for project owner
-  if (login === "sandeepvashishtha")
-    return "Project Lead & Full Stack Developer";
-
-  // Calculate account age in years
-  const accountAge = created_at
-    ? (new Date() - new Date(created_at)) / (1000 * 60 * 60 * 24 * 365)
-    : 0;
-
-  // Advanced role assignment based on multiple factors
-  if (contributions > 100 && followers > 50 && public_repos > 20) {
-    return "Core Maintainer";
-  }
-
-  if (contributions > 50 && (followers > 20 || public_repos > 10)) {
-    return "Senior Open Source Developer";
-  }
-
-  if (public_repos > 20 && contributions > 30) {
-    return "Open Source Advocate";
-  }
-
-  if (contributions > 50 && accountAge > 2) {
-    return "Veteran Developer";
-  }
-
-  if (contributions > 30 && followers > 10) {
-    return "Community Leader";
-  }
-
-  if (contributions > 20) {
-    return "Active Developer";
-  }
-
-  if (contributions > 10) {
-    return "Regular Contributor";
-  }
-
-  if (contributions > 5) {
-    return "Contributing Member";
-  }
-
+  if (contributions > 100 && followers > 50) return "Core Maintainer";
+  if (contributions > 50 && followers > 20) return "Senior Dev";
+  if (contributions > 20) return "Active Contributor";
+  if (contributions > 10) return "Regular Contributor";
   return "New Contributor";
 };
 
-// Local storage keys
-const STORAGE_KEY = "github_contributors";
-const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
-
-// Helper function to get data from local storage
+// Local storage helpers
 const getCachedContributors = () => {
   try {
     const cachedData = localStorage.getItem(STORAGE_KEY);
     if (!cachedData) return null;
-
     const { data, timestamp } = JSON.parse(cachedData);
-    const isExpired = Date.now() - timestamp > CACHE_DURATION;
-
-    return isExpired ? null : data;
-  } catch (error) {
-    console.error("Error reading from local storage:", error);
+    return Date.now() - timestamp > CACHE_DURATION ? null : data;
+  } catch {
     return null;
   }
 };
-
-// Helper function to save data to local storage
 const cacheContributors = (data) => {
   try {
-    const cacheData = {
-      data,
-      timestamp: Date.now(),
-    };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(cacheData));
-  } catch (error) {
-    console.error("Error saving to local storage:", error);
-  }
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ data, timestamp: Date.now() })
+    );
+  } catch {}
 };
 
 const Contributors = () => {
   const [contributors, setContributors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  // Function to fetch additional GitHub profile data with better error handling
+  // Fetch GitHub profile details
   const fetchGitHubProfile = useCallback(async (username) => {
     try {
-      const response = await fetch(`https://api.github.com/users/${username}`, {
-        headers: {
-          Accept: "application/vnd.github.v3+json",
-        },
+      const res = await fetch(`https://api.github.com/users/${username}`, {
+        headers: TOKEN ? { Authorization: `token ${TOKEN}` } : undefined,
       });
-
-      if (!response.ok) throw new Error("Profile not found");
-
-      const profile = await response.json();
+      if (!res.ok) throw new Error("Profile fetch failed");
+      const profile = await res.json();
       return {
         followers: profile.followers || 0,
         public_repos: profile.public_repos || 0,
-        created_at: profile.created_at,
         name: profile.name || username,
-        bio: profile.bio || "Open source enthusiast and contributor.",
-        company: profile.company || "Open Source",
-        location: profile.location || "Remote",
+        bio: profile.bio || "Open source contributor",
+        company: profile.company,
+        location: profile.location,
       };
-    } catch (error) {
-      console.error(`Error fetching profile for ${username}:`, error);
+    } catch {
       return {
         followers: 0,
         public_repos: 0,
-        created_at: null,
         name: username,
-        bio: "Open source enthusiast and contributor.",
-        company: "Open Source",
-        location: "Remote",
+        bio: "Open source contributor",
+        company: null,
+        location: null,
       };
     }
   }, []);
 
-  // Function to fetch contributors with better error handling and loading states
+  // Fetch contributors
   const fetchContributors = useCallback(async () => {
     setLoading(true);
-    setError(null);
-
-    // Check for cached data first
-    const cachedData = getCachedContributors();
-    if (cachedData) {
-      setContributors(cachedData);
+    const cached = getCachedContributors();
+    if (cached) {
+      setContributors(cached);
       setLoading(false);
       return;
     }
 
     try {
-      const response = await fetch(
-        "https://api.github.com/repos/sandeepvashishtha/Eventra/contributors",
-        {
-          headers: {
-            Accept: "application/vnd.github.v3+json",
-          },
+      let allContributors = [];
+      let page = 1;
+      let hasMore = true;
+      while (hasMore) {
+        const res = await fetch(
+          `https://api.github.com/repos/${GITHUB_REPO}/contributors?per_page=100&page=${page}&anon=true`,
+          {
+            headers: TOKEN ? { Authorization: `token ${TOKEN}` } : undefined,
+          }
+        );
+        const data = await res.json();
+        if (!Array.isArray(data) || data.length === 0) hasMore = false;
+        else {
+          allContributors = [...allContributors, ...data];
+          page++;
         }
-      );
+      }
 
-      if (!response.ok) throw new Error("Failed to fetch contributors");
-
-      const githubContributors = await response.json();
-
-      // Limit to first 12 contributors for better performance
-      const topContributors = githubContributors.slice(0, 12);
-
-      const enhancedContributors = await Promise.all(
-        topContributors.map(async (contributor) => {
-          const profileData = await fetchGitHubProfile(contributor.login);
+      const enhanced = await Promise.all(
+        allContributors.map(async (c) => {
+          const profile = await fetchGitHubProfile(c.login);
           return {
-            ...contributor,
-            ...profileData,
-            id: contributor.id,
-            role: getRoleByGitHubActivity({
-              ...contributor,
-              ...profileData,
-            }),
+            ...c,
+            ...profile,
+            role: getRoleByGitHubActivity({ ...c, ...profile }),
           };
         })
       );
 
-      setContributors(enhancedContributors);
-      cacheContributors(enhancedContributors);
-    } catch (err) {
-      console.error("Using mock data due to:", err);
-      setError("GitHub API rate limit exceeded. Showing sample data.");
-      setContributors(mockContributors);
+      enhanced.sort((a, b) => b.contributions - a.contributions);
+      setContributors(enhanced);
+      cacheContributors(enhanced);
+    } catch {
+      setContributors([]);
     } finally {
       setLoading(false);
     }
   }, [fetchGitHubProfile]);
 
-  // Initial fetch on component mount
   useEffect(() => {
     fetchContributors();
   }, [fetchContributors]);
 
-  useEffect(()=>{
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  },[])
-
-  // Skeleton loader component
-  const SkeletonCard = () => (
-    <div className="bg-white rounded-xl shadow-sm overflow-hidden border-2 border-gray-100">
-      <div className="p-6">
-        <div className="flex items-center space-x-4 mb-4">
-          <div className="relative">
-            <div className="h-16 w-16 rounded-full bg-gray-200 animate-pulse"></div>
-            <div className="absolute -bottom-1 -right-1 bg-gray-200 h-6 w-6 rounded-full animate-pulse"></div>
-          </div>
-          <div className="flex-1">
-            <div className="h-5 bg-gray-200 rounded w-3/4 mb-2 animate-pulse"></div>
-            <div className="h-4 bg-gray-100 rounded w-1/2 animate-pulse"></div>
-          </div>
-        </div>
-        <div className="space-y-2 mb-4">
-          <div className="h-3 bg-gray-100 rounded w-full animate-pulse"></div>
-          <div className="h-3 bg-gray-100 rounded w-5/6 animate-pulse"></div>
-          <div className="h-3 bg-gray-100 rounded w-4/6 animate-pulse"></div>
-        </div>
-        <div className="flex items-center justify-between mt-4">
-          <div className="h-4 bg-gray-100 rounded w-16 animate-pulse"></div>
-          <div className="h-4 bg-gray-100 rounded w-16 animate-pulse"></div>
-        </div>
-      </div>
-    </div>
-  );
-
-  // Error state component
-  const ErrorState = ({ message }) => (
-    <div className="bg-red-50 p-4 rounded-md mb-8">
-      <div className="flex">
-        <div className="flex-shrink-0">
-          <FaExclamationCircle
-            className="h-5 w-5 text-red-400"
-            aria-hidden="true"
-          />
-        </div>
-        <div className="ml-3">
-          <h3 className="text-sm font-medium text-red-800">{message}</h3>
-        </div>
-      </div>
-    </div>
-  );
+  if (loading)
+    return <p className="text-center py-20">Loading contributors...</p>;
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Our Amazing Contributors
-          </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Eventra is built by an incredible community of developers,
-            designers, and enthusiasts. We're grateful for every contribution,
-            big or small!
-          </p>
-        </div>
+    <section className="py-20 bg-gradient-to-br from-indigo-50 to-white">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.h2
+          className="text-5xl font-extrabold text-center mb-16 text-gray-800 tracking-tight"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          🌟 Our Amazing{" "}
+          <span
+            className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 
+                   bg-clip-text text-transparent animate-pulse"
+          >
+            Contributors
+          </span>
+        </motion.h2>
 
-        {error && <ErrorState message={error} />}
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {loading
-            ? [...Array(12)].map((_, index) => (
-                <SkeletonCard key={`skeleton-${index}`} />
-              ))
-            : contributors.map((contributor, index) => (
-                <div
-                  key={contributor.id}
-                  className={`bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border-2 border-gray-100 hover:border-indigo-100`}
-                >
-                  <div className="p-6">
-                    <div className="flex items-center space-x-4 mb-4">
-                      <div className="relative">
-                        <img
-                          className="h-16 w-16 rounded-full border-2 border-white shadow-sm"
-                          src={contributor.avatar_url}
-                          alt={contributor.name || contributor.login}
-                          onError={(e) => {
-                            e.target.src = `https://ui-avatars.com/api/?name=${
-                              contributor.name || contributor.login
-                            }&background=6366f1&color=ffffff&size=256`;
-                          }}
-                        />
-                        <div className="absolute -bottom-1 -right-1 bg-indigo-600 text-white text-xs font-medium px-2 py-0.5 rounded-full">
-                          {contributor.contributions}
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900">
-                          {contributor.name || contributor.login}
-                        </h3>
-                        <p className="text-sm text-indigo-600 font-medium">
-                          {contributor.role}
-                        </p>
-                      </div>
-                    </div>
-
-                    <p className="text-sm text-gray-600 mb-4 line-clamp-3">
-                      {contributor.bio}
-                    </p>
-
-                    <div className="flex items-center justify-between text-sm text-gray-500">
-                      <div className="flex items-center">
-                        <FaCodeBranch className="mr-1" />
-                        <span>{contributor.public_repos} repos</span>
-                      </div>
-                      <a
-                        href={contributor.html_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium"
-                      >
-                        <FaGithub className="mr-1" />
-                        <span>Profile</span>
-                        <FaExternalLinkAlt className="ml-1 text-xs" />
-                      </a>
-                    </div>
-                  </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
+          {contributors.map((c, i) => (
+            <motion.div
+              key={c.id}
+              className="relative bg-gradient-to-br from-white/90 to-indigo-50/80 backdrop-blur-xl 
+             p-6 rounded-2xl shadow-lg border border-gray-100 
+             flex flex-col items-center text-center 
+             transition-all duration-300 ease-out"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+              whileHover={{
+                scale: 1.02,
+                y: -4, // much smaller than before, prevents overlap
+                boxShadow: "0px 8px 25px rgba(99,102,241,0.25)",
+              }}
+            >
+              {/* Avatar with Glow */}
+              <div className="absolute -top-8 left-1/2 -translate-x-1/2">
+                <div className="relative">
+                  <img
+                    src={c.avatar_url}
+                    alt={c.login}
+                    className="w-20 h-20 rounded-full border-4 border-indigo-500 shadow-xl"
+                  />
+                  <div className="absolute inset-0 rounded-full animate-pulse bg-indigo-400/20 blur-md"></div>
                 </div>
-              ))}
-        </div>
+              </div>
 
-        <div className="mt-16 bg-indigo-50 rounded-2xl p-8 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-3">
-            Want to Contribute?
-          </h3>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            We welcome contributions from developers of all skill levels! Check
-            out our GitHub repository to get started.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a
-              href="https://github.com/sandeepvashishtha/Eventra"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
-            >
-              <FaGithub className="mr-2" />
-              View on GitHub
-            </a>
-            <a
-              href="https://github.com/sandeepvashishtha/Eventra/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
-            >
-              <FaExclamationCircle className="mr-2" />
-              Browse Issues
-            </a>
-          </div>
+              {/* Name + Role + Badge */}
+              <div className="mt-16">
+                <h3 className="text-lg font-bold text-gray-800">{c.name}</h3>
+                <p className="text-indigo-600 text-sm font-medium mb-3 flex items-center justify-center gap-1">
+                  <FaMedal className="text-yellow-500 animate-bounce" />{" "}
+                  {c.role}
+                </p>
+
+                {/* Contribution Badge (🥇🥈🥉) */}
+                {i === 0 && (
+                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">
+                    🥇 Top Contributor
+                  </span>
+                )}
+                {i === 1 && (
+                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gray-200 text-gray-700">
+                    🥈 Silver Contributor
+                  </span>
+                )}
+                {i === 2 && (
+                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-700">
+                    🥉 Bronze Contributor
+                  </span>
+                )}
+              </div>
+
+              {/* Stats Section (Glass style) */}
+              <div className="grid grid-cols-3 gap-3 text-sm text-gray-700 my-5 w-full">
+                <div className="flex flex-col items-center bg-white/60 backdrop-blur-md p-2 rounded-lg shadow-sm">
+                  <FaCodeBranch className="text-indigo-600 mb-1" />
+                  <span className="font-semibold">{c.public_repos}</span>
+                  <span className="text-xs text-gray-500">Repos</span>
+                </div>
+                <div className="flex flex-col items-center bg-white/60 backdrop-blur-md p-2 rounded-lg shadow-sm">
+                  <FaUserFriends className="text-indigo-600 mb-1" />
+                  <span className="font-semibold">{c.followers}</span>
+                  <span className="text-xs text-gray-500">Followers</span>
+                </div>
+                <div className="flex flex-col items-center bg-white/60 backdrop-blur-md p-2 rounded-lg shadow-sm">
+                  <span className="text-indigo-600 font-bold">🔥</span>
+                  <span className="font-semibold">{c.contributions}</span>
+                  <span className="text-xs text-gray-500">Contribs</span>
+                </div>
+              </div>
+
+              {/* Contribution Progress Bar */}
+              <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden mb-4">
+                <div
+                  className="h-2 bg-gradient-to-r from-indigo-500 to-purple-500"
+                  style={{
+                    width: `${
+                      (c.contributions / contributors[0].contributions) * 100
+                    }%`,
+                  }}
+                ></div>
+              </div>
+
+              {/* Extra Info */}
+              <div className="flex flex-col gap-1 text-xs text-gray-500 mb-4">
+                {c.company && (
+                  <span className="flex items-center gap-1 justify-center">
+                    <FaBuilding /> {c.company}
+                  </span>
+                )}
+                {c.location && (
+                  <span className="flex items-center gap-1 justify-center">
+                    <FaMapMarkerAlt /> {c.location}
+                  </span>
+                )}
+              </div>
+
+              {/* Profile Button */}
+              <div className="mt-auto w-full">
+                <a
+                  href={c.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center justify-center gap-2 
+                    bg-gradient-to-r from-indigo-600 to-purple-600 text-white 
+                    px-5 py-2.5 rounded-full text-sm font-semibold shadow 
+                    hover:from-indigo-700 hover:to-purple-700 
+                    transition-all duration-300 ease-out transform hover:scale-105 relative overflow-hidden"
+                >
+                  {/* GitHub Icon with animation */}
+                  <FaGithub className="text-lg transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110 group-hover:text-blue-200" />
+
+                  <span>Profile</span>
+
+                  <FaExternalLinkAlt className="text-xs opacity-80 transition-transform duration-300 group-hover:translate-x-1" />
+                </a>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
   );
 };
-
 export default Contributors;
