@@ -1,8 +1,22 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import NavbarLink from "./NavbarLink";
-import { LogIn, ArrowRight } from "lucide-react";
+import {
+  Home,
+  Calendar,
+  Rocket,
+  FolderKanban,
+  Users,
+  Trophy,
+  Info,
+  LayoutDashboard,
+  User as UserIcon,
+  LogOut,
+  LogIn,
+  ArrowRight,
+  ShieldUser,
+} from "lucide-react";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -10,6 +24,7 @@ const Navbar = () => {
 
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const closeAllMenus = () => {
     setShowProfileDropdown(false);
@@ -18,13 +33,29 @@ const Navbar = () => {
   };
 
   const navItems = [
-    { name: "Home", href: "/" },
-    { name: "Events", href: "/events" },
-    { name: "Hackathons", href: "/hackathons" },
-    { name: "Projects", href: "/projects" },
-    { name: "Contributors", href: "/contributors" },
-    { name: "LeaderBoard", href: "/leaderBoard" },
-    { name: "About", href: "/about" },
+    { name: "Home", href: "/", icon: <Home className="w-5 h-5" /> },
+    { name: "Events", href: "/events", icon: <Calendar className="w-5 h-5" /> },
+    {
+      name: "Hackathons",
+      href: "/hackathons",
+      icon: <Rocket className="w-5 h-5" />,
+    },
+    {
+      name: "Projects",
+      href: "/projects",
+      icon: <FolderKanban className="w-5 h-5" />,
+    },
+    {
+      name: "Contributors",
+      href: "/contributors",
+      icon: <Users className="w-5 h-5" />,
+    },
+    {
+      name: "LeaderBoard",
+      href: "/leaderBoard",
+      icon: <Trophy className="w-5 h-5" />,
+    },
+    { name: "About", href: "/about", icon: <Info className="w-5 h-5" /> },
   ];
 
   const handleLogout = () => {
@@ -44,12 +75,19 @@ const Navbar = () => {
             }}
             className="flex items-center space-x-2 bg-white p-1 rounded-full hover:shadow-md transition-shadow duration-300"
           >
-            <img
-              src={user?.profilePicture || "/default-avatar.png"}
-              alt="Profile"
-              className="w-10 h-10 rounded-full object-cover border-2 border-indigo-600"
-              onError={(e) => (e.target.src = "/default-avatar.png")}
-            />
+            {user?.profilePicture ? (
+              <img
+                src={user.profilePicture}
+                alt="Profile"
+                className="w-10 h-10 rounded-full object-cover border-2 border-indigo-600"
+                onError={(e) => (e.target.style.display = "none")}
+              />
+            ) : (
+              <div className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-indigo-600 bg-gray-100 text-gray-500">
+                <UserIcon className="w-6 h-6" />
+              </div>
+            )}
+
             <span className="text-gray-800 font-medium">
               {user?.firstName || user?.email?.split("@")[0] || "User"}
             </span>
@@ -165,76 +203,6 @@ const Navbar = () => {
       );
     }
   };
-  const renderMobileAuthSection = () => {
-    if (isAuthenticated()) {
-      return (
-        <div className="mt-auto border-t border-gray-200">
-          <div className="px-4 py-3 space-y-2">
-            <div className="flex items-center space-x-3 px-2 py-2">
-              <img
-                src={user?.profilePicture || "/default-avatar.png"}
-                alt="Profile"
-                className="w-9 h-9 rounded-full object-cover"
-              />
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 truncate">
-                  {user?.firstName || user?.email?.split("@")[0] || "User"}
-                </p>
-                <p className="text-xs text-gray-500 truncate">{user?.email}</p>
-              </div>
-            </div>
-            <Link
-              to="/dashboard"
-              className="flex items-center px-4 py-2.5 text-gray-700 hover:bg-indigo-50 rounded-lg mx-1"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Dashboard
-            </Link>
-            <Link
-              to="/profile"
-              className="flex items-center px-4 py-2.5 text-gray-700 hover:bg-indigo-50 rounded-lg mx-1"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Edit Profile
-            </Link>
-            <button
-              onClick={() => {
-                handleLogout();
-                setIsMobileMenuOpen(false);
-              }}
-              className="w-full flex items-center px-4 py-2.5 text-left text-red-600 hover:bg-red-50 rounded-lg mx-1"
-            >
-              Logout
-            </button>
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div className="mt-auto border-t border-gray-200 p-4 bg-gray-50">
-          <p className="text-sm text-gray-500 mb-3 text-center">
-            Sign in to access more features
-          </p>
-          <div className="space-y-3">
-            <Link
-              to="/login"
-              className="block w-full text-center px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-white hover:border-gray-400 transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Sign In
-            </Link>
-            <Link
-              to="/signup"
-              className="block w-full text-center px-4 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Create Account
-            </Link>
-          </div>
-        </div>
-      );
-    }
-  };
 
   return (
     <>
@@ -248,7 +216,7 @@ const Navbar = () => {
         onClick={closeAllMenus}
       />
 
-<nav className="sticky top-0 w-full z-50 bg-white/30 backdrop-blur-md shadow-xl border-b border-gray-300 py-5 transition-all duration-300">
+     <nav className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md shadow-xl border-b border-gray-300 py-5 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           {/* Brand */}
           <Link to="/" className="flex-shrink-0">
@@ -276,13 +244,17 @@ const Navbar = () => {
           </Link>
 
           {/* Nav Items Desktop */}
-          <NavbarLink navItems={navItems} />
+          <div className="hidden lg:flex items-center space-x-4">
+            <NavbarLink navItems={navItems} />
+          </div>
 
           {/* Auth Section Desktop */}
-          {renderAuthSection()}
+          <div className="hidden lg:flex items-center space-x-4">
+            {renderAuthSection()}
+          </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -309,18 +281,17 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
-            isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+          className={`fixed top-0 right-0 h-screen w-72 bg-white shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out 
+    ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
         >
-          <div className="flex items-center justify-between p-4 border-b border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-800">Menu</h3>
+          {/* Header */}
+          <div className="flex items-center justify-end px-5 py-2 border-b border-gray-200 bg-white">
             <button
               onClick={closeAllMenus}
-              className="p-1.5 rounded-full text-gray-500 hover:bg-gray-100 transition-colors"
+              className="p-2 rounded-full text-gray-500 bg-gray-100 hover:bg-gray-200 transition-colors"
             >
               <svg
-                className="h-6 w-6"
+                className="h-4 w-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -334,22 +305,133 @@ const Navbar = () => {
               </svg>
             </button>
           </div>
-
-          <div className="flex-1 overflow-y-auto py-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className="block px-6 py-3 text-gray-700 hover:bg-indigo-50 rounded-lg mx-2 transition-colors"
-                onClick={closeAllMenus}
-              >
-                {item.name}
-              </Link>
-            ))}
+          {/* Navigation Links */}
+          <div className="flex-1 overflow-y-auto py-3 px-5 space-y-1">
+            {navItems.map((item) => {
+              const isActive = location.pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  onClick={closeAllMenus}
+                  className={`flex items-center gap-3 py-3 px-3 rounded-lg font-medium transition-colors relative
+    ${
+      isActive
+        ? "text-indigo-600 bg-indigo-50"
+        : "text-gray-700 hover:text-indigo-600"
+    }
+    ${!isActive && "hover:bg-indigo-50"}
+  `}
+                >
+                  {item.icon}
+                  <span className="relative inline-block">
+                    {item.name}
+                    {isActive && (
+                      <span className="absolute left-0 -bottom-1 h-0.5 w-full rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></span>
+                    )}
+                  </span>
+                </Link>
+              );
+            })}
           </div>
+          {/* Auth Section */}
+          <div className="border-t border-gray-200">
+            {isAuthenticated() ? (
+              <div className="px-4 py-4 space-y-1">
+                {/* User Info */}
+                <div className="flex items-center space-x-3 mb-3">
+                  {user?.profilePicture ? (
+                    <img
+                      src={user.profilePicture}
+                      alt="Profile"
+                      className="w-9 h-9 rounded-full object-cover border border-indigo-500"
+                      onError={(e) => (e.target.style.display = "none")}
+                    />
+                  ) : (
+                    <div className="w-9 h-9 flex items-center justify-center rounded-full border border-indigo-500 bg-gray-100 text-gray-500">
+                      <UserIcon className="w-5 h-5" />
+                    </div>
+                  )}
 
-          {/* Auth Section Mobile */}
-          {renderMobileAuthSection()}
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">
+                      {user?.firstName || user?.email?.split("@")[0] || "User"}
+                    </p>
+                    <p className="text-xs text-gray-500">{user?.email}</p>
+                  </div>
+                </div>
+
+                {/* Links with icons + active styles */}
+                <Link
+                  to="/dashboard"
+                  onClick={closeAllMenus}
+                  className={`flex items-center gap-3 px-3 py-3 rounded-lg relative transition-colors 
+          ${
+            location.pathname === "/dashboard"
+              ? "text-indigo-600 bg-indigo-50"
+              : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
+          }`}
+                >
+                  <LayoutDashboard className="w-5 h-5" />
+                  <span className="relative inline-block">
+                    Dashboard
+                    {location.pathname === "/dashboard" && (
+                      <span className="absolute left-0 -bottom-1 h-0.5 w-full rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></span>
+                    )}
+                  </span>
+                </Link>
+
+                <Link
+                  to="/profile"
+                  onClick={closeAllMenus}
+                  className={`flex items-center gap-3 px-3 py-3 rounded-lg relative transition-colors 
+          ${
+            location.pathname === "/profile"
+              ? "text-indigo-600 bg-indigo-50"
+              : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
+          }`}
+                >
+                  <ShieldUser className="w-5 h-5" />
+                  <span className="relative inline-block">
+                    Edit Profile
+                    {location.pathname === "/profile" && (
+                      <span className="absolute left-0 -bottom-1 h-0.5 w-full rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></span>
+                    )}
+                  </span>
+                </Link>
+
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    closeAllMenus();
+                  }}
+                  className="flex items-center gap-3 w-full text-left px-3 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
+                >
+                  <LogOut className="w-5 h-5" />
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div className="px-5 py-4 space-y-3">
+                <Link
+                  to="/login"
+                  onClick={closeAllMenus}
+                  className="group flex w-full items-center justify-center px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 bg-gray-100 hover:bg-gray-50 transition-colors"
+                >
+                  <LogIn className="w-5 h-5 mr-2 text-gray-600 group-hover:text-indigo-600 transition-transform duration-300 transform group-hover:translate-x-1" />
+                  Sign In
+                </Link>
+
+                <Link
+                  to="/signup"
+                  onClick={closeAllMenus}
+                  className="block w-full text-center px-4 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                >
+                  Create Account
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </nav>
     </>
@@ -357,3 +439,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
