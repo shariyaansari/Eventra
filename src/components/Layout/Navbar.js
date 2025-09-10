@@ -105,21 +105,33 @@ const Navbar = () => {
           </button>
 
           {showProfileDropdown && (
-            <div className="absolute right-0 mt-3 w-64 bg-white rounded-xl shadow-2xl py-3 z-50 animate-fadeIn">
+            <div className="absolute top-full right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl py-3 z-50 animate-fadeIn">
               <div className="px-4 py-3 border-b border-gray-100">
                 <div className="flex items-center space-x-3">
-                  <img
-                    src={user?.profilePicture || "/default-avatar.png"}
-                    alt="Profile"
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
+                  {user?.profilePicture ? (
+                    <img
+                      src={user.profilePicture}
+                      alt="Profile"
+                      className="w-10 h-10 rounded-full object-cover border-2 border-indigo-600"
+                      onError={(e) => (e.target.style.display = "none")}
+                    />
+                  ) : (
+                    <div className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-indigo-600 bg-gray-100 text-gray-500">
+                      <UserIcon className="w-6 h-6" />
+                    </div>
+                  )}
+
                   <div>
                     <div className="font-semibold text-gray-900">
                       {user?.firstName && user?.lastName
                         ? `${user.firstName} ${user.lastName}`
-                        : user?.email}
+                        : user?.firstName
+                        ? user.firstName
+                        : user?.email || "User"}
                     </div>
-                    <div className="text-sm text-gray-500">{user?.email}</div>
+                    <div className="text-sm text-gray-500">
+                      {user?.email || "No email available"}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -216,7 +228,7 @@ const Navbar = () => {
         onClick={closeAllMenus}
       />
 
-     <nav className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md shadow-xl border-b border-gray-300 py-5 transition-all duration-300">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md shadow-xl border-b border-gray-300 py-5 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           {/* Brand */}
           <Link to="/" className="flex-shrink-0">
@@ -439,5 +451,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
