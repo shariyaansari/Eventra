@@ -329,6 +329,7 @@ const Signup = () => {
                 whileFocus={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300 }}
               />
+
               <AnimatePresence>
                 {formData.password && (
                   <motion.div 
@@ -402,6 +403,29 @@ const Signup = () => {
                 </motion.div>
               )}
             </AnimatePresence>
+
+            <motion.div 
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.8 }}
+              className="space-y-2"
+            >
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Confirm Password</label>
+              <motion.input
+                id="confirm_password"
+                name="confirm_password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                disabled={loading}
+                minLength="8"
+                placeholder="Confirm Password"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed"
+                whileFocus={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              />
+            </motion.div>
 
             <motion.button
               type="submit"
