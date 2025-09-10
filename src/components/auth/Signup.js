@@ -1,4 +1,5 @@
-import React, { use, useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { API_ENDPOINTS, apiUtils } from '../../config/api';
@@ -23,6 +24,23 @@ const Signup = () => {
   });
   
   const navigate = useNavigate();
+
+  // Test backend connectivity on component mount
+  useEffect(() => {
+    const testConnection = async () => {
+      try {
+        console.log('Testing backend connectivity...');
+        const response = await fetch(API_ENDPOINTS.AUTH.REGISTER.replace('/signup', '/health'), {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        console.log('Backend connection test result:', response.status);
+      } catch (error) {
+        console.error('Backend connectivity test failed:', error);
+      }
+    };
+    testConnection();
+  }, []);
 
   const validateEmail = (email) => {
     // simple regex for email validation
@@ -118,25 +136,54 @@ const Signup = () => {
     setError('');
 
     try {
-      const response = await apiUtils.post(API_ENDPOINTS.AUTH.REGISTER, formData);
-      const data = await response.json();
-
-      if (response.ok) {
-        setSuccess('Account created successfully! Please login to continue.');
-        setTimeout(() => {
-          navigate('/login');
-        }, 2000);
-      } else {
-        // Handle validation errors
-        if (data.validationErrors && data.validationErrors.length > 0) {
-          const errorMessages = data.validationErrors.map(err => err.message).join(', ');
-          setError(errorMessages);
-        } else {
-          setError(data.message || 'Registration failed. Please try again.');
+      // Ensure role field is included
+      const submitData = {
+        ...formData,
+        role: formData.role || 'USER' // Fallback to USER if not set
+      };
+      
+      // Debug: Log the exact data being sent
+      console.log('Submitting signup with data:', submitData);
+      console.log('API endpoint:', API_ENDPOINTS.AUTH.REGISTER);
+      
+      const response = await apiUtils.post(API_ENDPOINTS.AUTH.REGISTER, submitData);
+      
+      // Check if the response is ok
+      if (!response.ok) {
+        // Try to parse error response
+        try {
+          const errorData = await response.json();
+          if (errorData.validationErrors && errorData.validationErrors.length > 0) {
+            const errorMessages = errorData.validationErrors.map(err => err.message).join(', ');
+            setError(errorMessages);
+          } else if (errorData.message) {
+            setError(errorData.message);
+          } else {
+            setError(`Registration failed with status: ${response.status}`);
+          }
+        } catch (parseError) {
+          setError(`Registration failed with status: ${response.status}. Please try again.`);
         }
+        return;
       }
+
+      // Success case
+      const data = await response.json();
+      console.log('Registration successful:', data);
+      setSuccess('Account created successfully! Please login to continue.');
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+      
     } catch (error) {
-      setError('Network error. Please check your connection and try again.');
+      console.error('Signup error:', error);
+      if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+        setError('Unable to connect to server. Please check your internet connection and try again.');
+      } else if (error.message.includes('CORS')) {
+        setError('Connection blocked by browser security. Please try again later.');
+      } else {
+        setError('Network error. Please check your connection and try again.');
+      }
     } finally {
       setLoading(false);
     }

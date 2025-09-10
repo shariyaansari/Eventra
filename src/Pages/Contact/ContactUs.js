@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { FaTwitter, FaGithub, FaLinkedin, FaDiscord } from "react-icons/fa";
 
 // Toast Component
 const Toast = ({ message, type = "success", onClose }) => {
@@ -125,6 +126,30 @@ const FloatingInput = ({
 };
 
 // Contact Us Page Component
+
+const socialLinks = [
+  { 
+    name: "Twitter", 
+    icon: <FaTwitter className="w-5 h-5" />, 
+    href: "https://twitter.com" 
+  },
+  { 
+    name: "GitHub", 
+    icon: <FaGithub className="w-5 h-5" />, 
+    href: "https://github.com" 
+  },
+  { 
+    name: "LinkedIn", 
+    icon: <FaLinkedin className="w-5 h-5" />, 
+    href: "https://linkedin.com/in" 
+  },
+  { 
+    name: "Discord", 
+    icon: <FaDiscord className="w-5 h-5" />, 
+    href: "https://discord.gg/" 
+  },
+];
+
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -336,26 +361,18 @@ const ContactUs = () => {
               <div className="mt-10">
                 <h3 className="font-medium mb-4">Follow Us</h3>
                 <div className="flex space-x-4">
-                  {["twitter", "github", "linkedin", "discord"].map(
-                    (platform) => (
+                  {socialLinks.map(
+                    ({name , icon , href}) => (
                       <motion.a
-                        key={platform}
-                        href="#"
+                        key={name}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         whileHover={{ y: -3 }}
                         className="bg-white bg-opacity-20 p-2 rounded-full"
                       >
-                        <span className="sr-only">{platform}</span>
-                        <div className="w-5 h-5">
-                          {/* In a real app, you would use proper icons for each platform */}
-                          <svg
-                            className="w-5 h-5"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z" />
-                          </svg>
-                        </div>
+                        <span className="sr-only">{name}</span>
+                        {icon}
                       </motion.a>
                     )
                   )}

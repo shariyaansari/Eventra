@@ -6,45 +6,61 @@ import { API_ENDPOINTS, apiUtils } from '../../config/api';
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: ""
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   
   const navigate = useNavigate();
   const { login } = useAuth();
 
+  // Email regex for validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const handleChange = (e) => {
+    const {name , value} = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value 
     });
-    // Clear error when user starts typing
-    if (error) setError('');
+
+    setError((prev) => ({...prev , [name]: ""}));
   };
 
+  // Validation function
+  const validate = () => {
+    let newErrors = {};
+
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Enter a valid email";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (formData.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters";
+    }
+
+    setError(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Handle Form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validate()) return;
+
     setLoading(true);
-    setError('');
-
     try {
-      const response = await apiUtils.post(API_ENDPOINTS.AUTH.LOGIN, formData);
-      const data = await response.json();
-
-      if (response.ok && data.token) {
-        // Use the enhanced login method from AuthContext
-        login(data);
-        
-        // Redirect to dashboard or home page
-        navigate('/dashboard');
-      } else {
-        setError(data.message || 'Invalid email or password. Please try again.');
-      }
-    } catch (error) {
-      setError('Network error. Please check your connection and try again.');
+      await login(formData.email, formData.password); // assuming your auth hook
+      navigate("/dashboard");
+    } catch (err) {
+      setError({ general: "Invalid email or password" });
     } finally {
       setLoading(false);
     }
@@ -144,6 +160,7 @@ const Login = () => {
                   placeholder="Enter your email address"
                   className="w-full pl-10 pr-4 py-3 bg-white/50 border border-gray-200 rounded-xl shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white disabled:bg-gray-50/50 disabled:cursor-not-allowed transition-all duration-200 hover:shadow-md"
                 />
+                {error.email && <p style={{color: "red"}}>{error.email}</p>}
               </div>
             </motion.div>
 
@@ -210,11 +227,13 @@ const Login = () => {
                   </AnimatePresence>
                 </motion.button>
               </div>
+              {error.password && <p style={{color: "red"}}>{error.password}</p>}
               <div className="flex justify-end">
                 <Link 
                   to="/password-reset" 
                   className="text-blue-600 hover:text-blue-700 font-semibold text-sm hover:underline transition-colors"
                 >
+                  
                   Forgot Password?
                 </Link>
               </div>
@@ -222,7 +241,7 @@ const Login = () => {
 
             {/* Error message */}
             <AnimatePresence>
-              {error && (
+              {error.general && (
                 <motion.div 
                   initial={{ opacity: 0, y: -10, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -241,7 +260,7 @@ const Login = () => {
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </motion.svg>
-                  <span>{error}</span>
+                  <span>{error.general}</span>
                 </motion.div>
               )}
             </AnimatePresence>

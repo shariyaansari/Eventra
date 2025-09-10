@@ -3,9 +3,13 @@
   "outputDirectory": "build",
   "framework": "create-react-app",
   "env": {
-    "REACT_APP_API_URL": "https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net/api"
+    "REACT_APP_API_URL": "https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net"
   },
   "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net/api/:path*"
+    },
     {
       "source": "/((?!api/.*).*)",
       "destination": "/index.html"
