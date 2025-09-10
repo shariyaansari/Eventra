@@ -9,10 +9,14 @@ const Signup = () => {
     lastName: '',
     email: '',
     password: '',
+    confirm_password: '',
+    countryCode: '+91',
+    phone: '',
     role: 'USER' // Default to USER role
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [phoneError , setPhoneError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [success, setSuccess] = useState('');
   const [passwordStrength, setPasswordStrength] = useState({
@@ -269,6 +273,58 @@ const Signup = () => {
                     transition={{ duration: 0.2 }}
                   >
                     {emailError}
+                  </motion.p>
+                )}
+              </AnimatePresence>
+            </motion.div>
+
+            <motion.div 
+              initial={{ x: 20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.7 }}
+              className="space-y-2"
+            >
+
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Contact Number </label>
+
+              <div className='flex gap-2'>
+                <select 
+                name='countryCode'
+                value={formData.countryCode}
+                onChange={handleChange}
+                disabled={loading}
+                className='px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'>
+                  <option value="+1">🇺🇸 +1</option>
+                  <option value="+91">🇮🇳 +91</option>
+                  <option value="+44">🇬🇧 +44</option>
+                  <option value="+61">🇦🇺 +61</option>
+                </select>
+
+              <motion.input
+                id="phone"
+                name="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+                disabled={loading}
+                placeholder="Enter your Contact Number"
+                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed ${phoneError ? "border-red-500" : "border-gray-300"}`}
+                whileFocus={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              />
+              </div> 
+              
+              <AnimatePresence>
+                {phoneError && (
+                  <motion.p 
+                    className="text-xs text-red-600 mt-1"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {phoneError}
                   </motion.p>
                 )}
               </AnimatePresence>
