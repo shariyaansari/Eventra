@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { API_ENDPOINTS, apiUtils } from '../../config/api';
@@ -12,6 +12,8 @@ const Signup = () => {
     role: 'USER' // Default to USER role
   });
   const [loading, setLoading] = useState(false);
+  const [firstNameError , setFirstNameError] = useState('');
+  const [lastNameError , setLastNameError] = useState('');
   const [error, setError] = useState('');
   const [emailError, setEmailError] = useState("");
   const [success, setSuccess] = useState('');
@@ -50,6 +52,11 @@ const Signup = () => {
     return { score, feedback: feedback.length > 0 ? `Needs: ${feedback.join(', ')}` : 'Strong password!' };
   };
 
+  // const handleChange = (e) => {
+  //   const {name , value} = e.target;
+  //   setFormData({...formData , [name]: value});
+  // };
+
   const handleChange = (e) => {
     const newFormData = {
       ...formData,
@@ -68,6 +75,30 @@ const Signup = () => {
         setEmailError("Please enter a valid email address");
       } else {
         setEmailError("");
+      }
+    }
+
+    if (e.target.name === "firstName") {
+      if (!e.target.value.trim()) {
+        setFirstNameError("First name is required");
+      } else if (e.target.value.length < 3) {
+        setFirstNameError("First name must be at least 3 characters long");
+      } else if (e.target.value.length > 20) {
+        setFirstNameError("First name must be less than 20 characters");
+      } else {
+        setFirstNameError("");
+      }
+    }
+
+    if (e.target.name === "lastName") {
+      if (!e.target.value.trim()) {
+        setLastNameError("Last name is required");
+      } else if (e.target.value.length < 3) {
+        setLastNameError("Last name must be at least 3 characters long");
+      } else if (e.target.value.length > 20) {
+        setLastNameError("Last name must be less than 20 characters");
+      } else {
+        setLastNameError("");
       }
     }
     
@@ -174,6 +205,7 @@ const Signup = () => {
                   whileFocus={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 />
+                {firstNameError && <p style={{color: "red" , fontSize: "10px"}}>{firstNameError}</p>}
               </div>
               <div className="space-y-2">
                 <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last name</label>
@@ -190,6 +222,7 @@ const Signup = () => {
                   whileFocus={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 />
+                {lastNameError && <p style={{color: "red" , fontSize: "10px"}}>{lastNameError}</p>}
               </div>
             </motion.div>
 
