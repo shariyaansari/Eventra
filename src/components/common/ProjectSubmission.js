@@ -1,77 +1,77 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FiGithub, FiExternalLink, FiPlus, FiX } from 'react-icons/fi';
-import { useAuth } from '../../context/AuthContext';
-import { API_ENDPOINTS, apiUtils } from '../../config/api';
-import './ProjectSubmission.css';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { FiGithub, FiExternalLink, FiPlus, FiX } from "react-icons/fi";
+import { useAuth } from "../../context/AuthContext";
+import { API_ENDPOINTS, apiUtils } from "../../config/api";
+import "./ProjectSubmission.css";
 
 const ProjectSubmission = ({ onClose, onSubmit }) => {
   const { user, token } = useAuth();
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    author: user?.firstName + ' ' + user?.lastName || '',
-    category: '',
+    title: "",
+    description: "",
+    author: user?.firstName + " " + user?.lastName || "",
+    category: "",
     techStack: [],
-    githubUrl: '',
-    liveDemo: '',
-    image: '',
-    difficulty: 'Beginner',
+    githubUrl: "",
+    liveDemo: "",
+    image: "",
+    difficulty: "Beginner",
     openIssues: 0,
     pullRequests: 0,
     stars: 0,
-    forks: 0
+    forks: 0,
   });
-  const [techInput, setTechInput] = useState('');
+  const [techInput, setTechInput] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const categories = [
-    'Web Development',
-    'Mobile Development',
-    'Data Science',
-    'Machine Learning',
-    'DevOps',
-    'Game Development',
-    'Desktop Application',
-    'API/Backend',
-    'Open Source',
-    'E-commerce',
-    'Educational',
-    'Portfolio',
-    'Other'
+    "Web Development",
+    "Mobile Development",
+    "Data Science",
+    "Machine Learning",
+    "DevOps",
+    "Game Development",
+    "Desktop Application",
+    "API/Backend",
+    "Open Source",
+    "E-commerce",
+    "Educational",
+    "Portfolio",
+    "Other",
   ];
 
-  const difficulties = ['Beginner', 'Intermediate', 'Advanced'];
+  const difficulties = ["Beginner", "Intermediate", "Advanced"];
 
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'number' ? parseInt(value) || 0 : value
+      [name]: type === "number" ? parseInt(value) || 0 : value,
     }));
   };
 
   const handleTechStackAdd = () => {
     if (techInput.trim() && !formData.techStack.includes(techInput.trim())) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        techStack: [...prev.techStack, techInput.trim()]
+        techStack: [...prev.techStack, techInput.trim()],
       }));
-      setTechInput('');
+      setTechInput("");
     }
   };
 
   const handleTechStackRemove = (tech) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      techStack: prev.techStack.filter(t => t !== tech)
+      techStack: prev.techStack.filter((t) => t !== tech),
     }));
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       handleTechStackAdd();
     }
@@ -80,8 +80,8 @@ const ProjectSubmission = ({ onClose, onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
     try {
       const response = await apiUtils.post(
@@ -92,17 +92,19 @@ const ProjectSubmission = ({ onClose, onSubmit }) => {
 
       if (response.ok) {
         const result = await response.json();
-        setSuccess('Project submitted successfully! It will be reviewed by administrators.');
+        setSuccess(
+          "Project submitted successfully! It will be reviewed by administrators."
+        );
         onSubmit && onSubmit(result);
         setTimeout(() => {
           onClose && onClose();
         }, 2000);
       } else {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to submit project');
+        throw new Error(errorData.message || "Failed to submit project");
       }
     } catch (err) {
-      setError(err.message || 'An error occurred while submitting the project');
+      setError(err.message || "An error occurred while submitting the project");
     } finally {
       setIsSubmitting(false);
     }
@@ -110,13 +112,20 @@ const ProjectSubmission = ({ onClose, onSubmit }) => {
 
   if (!user) {
     return (
-      <div className="project-submission-modal">
-        <div className="project-submission-content">
-          <div className="text-center">
-            <h2>Please Login</h2>
-            <p>You need to be logged in to submit a project.</p>
-            <button onClick={onClose} className="btn-primary">Close</button>
-          </div>
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div className="bg-white rounded-2xl shadow-2xl w-11/12 max-w-md p-8 text-center animate-fadeIn">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+            Please Login
+          </h2>
+          <p className="text-gray-600 mb-6">
+            You need to be logged in to submit a project.
+          </p>
+          <button
+            onClick={onClose}
+            className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-medium py-2.5 px-6 rounded-lg shadow-md transition-transform duration-200 hover:-translate-y-0.5"
+          >
+            Close
+          </button>
         </div>
       </div>
     );
@@ -137,17 +146,9 @@ const ProjectSubmission = ({ onClose, onSubmit }) => {
           </button>
         </div>
 
-        {error && (
-          <div className="alert alert-error">
-            {error}
-          </div>
-        )}
+        {error && <div className="alert alert-error">{error}</div>}
 
-        {success && (
-          <div className="alert alert-success">
-            {success}
-          </div>
-        )}
+        {success && <div className="alert alert-success">{success}</div>}
 
         <form onSubmit={handleSubmit} className="submission-form">
           <div className="form-group">
@@ -200,8 +201,10 @@ const ProjectSubmission = ({ onClose, onSubmit }) => {
                 required
               >
                 <option value="">Select a category</option>
-                {categories.map(cat => (
-                  <option key={cat} value={cat}>{cat}</option>
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
                 ))}
               </select>
             </div>
@@ -217,15 +220,22 @@ const ProjectSubmission = ({ onClose, onSubmit }) => {
                 onKeyPress={handleKeyPress}
                 placeholder="Add technology (press Enter)"
               />
-              <button type="button" onClick={handleTechStackAdd} className="add-tech-btn">
+              <button
+                type="button"
+                onClick={handleTechStackAdd}
+                className="add-tech-btn"
+              >
                 <FiPlus />
               </button>
             </div>
             <div className="tech-stack-list">
-              {formData.techStack.map(tech => (
+              {formData.techStack.map((tech) => (
                 <span key={tech} className="tech-tag">
                   {tech}
-                  <button type="button" onClick={() => handleTechStackRemove(tech)}>
+                  <button
+                    type="button"
+                    onClick={() => handleTechStackRemove(tech)}
+                  >
                     <FiX />
                   </button>
                 </span>
@@ -286,8 +296,10 @@ const ProjectSubmission = ({ onClose, onSubmit }) => {
                 value={formData.difficulty}
                 onChange={handleInputChange}
               >
-                {difficulties.map(diff => (
-                  <option key={diff} value={diff}>{diff}</option>
+                {difficulties.map((diff) => (
+                  <option key={diff} value={diff}>
+                    {diff}
+                  </option>
                 ))}
               </select>
             </div>
@@ -347,8 +359,12 @@ const ProjectSubmission = ({ onClose, onSubmit }) => {
             <button type="button" onClick={onClose} className="btn-secondary">
               Cancel
             </button>
-            <button type="submit" disabled={isSubmitting} className="btn-primary">
-              {isSubmitting ? 'Submitting...' : 'Submit Project'}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn-primary"
+            >
+              {isSubmitting ? "Submitting..." : "Submit Project"}
             </button>
           </div>
         </form>
