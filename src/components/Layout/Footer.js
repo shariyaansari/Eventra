@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaTwitter, FaLinkedin, FaDiscord, FaTelegram } from "react-icons/fa";
+import { SiX } from "react-icons/si";
 import {
   FaInfoCircle,
   FaGithub,
@@ -15,6 +16,11 @@ import {
   FaUsers,
   FaBook,
   FaServer,
+  FaHome,
+  FaCalendarAlt,
+  FaRocket,
+  FaFolder,
+  FaTrophy,
 } from "react-icons/fa";
 
 // Toast Component
@@ -83,6 +89,15 @@ const Footer = () => {
   };
 
   const footerLinks = {
+    quick_links: [
+      { name: "Home", href: "/", icon: <FaHome size={14} /> },
+      { name: "Events", href: "/events", icon: <FaCalendarAlt size={14} /> },
+      { name: "Hackathons", href: "/hackathons", icon: <FaRocket size={14} /> },
+      { name: "Projects", href: "/projects", icon: <FaFolder size={14} /> },
+      { name: "About", href: "/about", icon: <FaInfoCircle size={14} /> },
+      { name: "Privacy", href: "/privacy", icon: <FaShieldAlt size={14} /> },
+      { name: "Terms", href: "/terms", icon: <FaFileContract size={14} /> },
+    ],
     community: [
       {
         name: "Create Event",
@@ -100,18 +115,8 @@ const Footer = () => {
         icon: <FaUsers size={14} />,
       },
       { name: "Documentation", href: "#docs", icon: <FaBook size={14} /> },
-    ],
-    quick_links: [
-      { name: "About", href: "/about", icon: <FaInfoCircle size={14} /> },
-      { name: "Open Source", href: "#opensource", icon: <FaCode size={14} /> },
-      {
-        name: "GitHub",
-        href: "https://github.com/sandeepvashishtha/Eventra",
-        icon: <FaGithub size={14} />,
-      },
-      { name: "Changelog", href: "#changelog", icon: <FaFileAlt size={14} /> },
-      { name: "Privacy", href: "/privacy", icon: <FaShieldAlt size={14} /> },
-      { name: "Terms", href: "/terms", icon: <FaFileContract size={14} /> },
+      { name: "Contributors", href: "/contributors", icon: <FaUsers size={14} /> },
+      { name: "LeaderBoard", href: "/leaderBoard", icon: <FaTrophy size={14} /> },
     ],
     support: [
       {
@@ -137,10 +142,10 @@ const Footer = () => {
       ),
     },
     {
-      name: "Twitter",
-      href: "https://twitter.com/#",
+      name: "X (formerly Twitter)",
+      href: "https://x.com/#",
       icon: (
-        <FaTwitter
+        <SiX
           className="size-10 p-2 rounded-full text-indigo-500 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100"
           size={20}
         />
@@ -181,7 +186,7 @@ const Footer = () => {
   return (
     <>
       <footer className="bg-indigo-50 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-4">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             <div className="space-y-4 md:col-span-2">
               <h2 className="text-3xl font-bold text-indigo-600">Eventra</h2>
@@ -190,11 +195,11 @@ const Footer = () => {
               </p>
 
               {/* Newsletter Subscription Form */}
-              <div className="mt-6">
-                <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">
+              <div className="mt-4">
+                <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-2">
                   Subscribe to our newsletter
                 </h4>
-                <p className="text-gray-600 text-sm mb-3">
+                <p className="text-gray-600 text-sm mb-2">
                   Get the latest updates, event tips, and community news.
                 </p>
                 <form
@@ -217,7 +222,7 @@ const Footer = () => {
                     {isSubmitting ? "Subscribing..." : "Subscribe"}
                   </button>
                 </form>
-                <p className="text-xs text-gray-500 mt-2">
+                <p className="text-xs text-gray-500 mt-1">
                   We respect your privacy. Unsubscribe at any time.
                 </p>
               </div>
@@ -247,11 +252,9 @@ const Footer = () => {
             ))}
           </div>
 
-          <div className="border-t border-gray-400 mt-10 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-gray-500">
-              © {currentYear} Eventra. All rights reserved.
-            </p>
-            <div className="flex space-x-4 mt-4 md:mt-0">
+          {/* Social Media Icons - Above the line, right side */}
+          <div className="mt-3 pt-2 flex justify-end">
+            <div className="flex space-x-4">
               {socialLinks.map((link) => (
                 <a
                   key={link.name}
@@ -266,6 +269,13 @@ const Footer = () => {
                 </a>
               ))}
             </div>
+          </div>
+
+          {/* Copyright - Below the line, centered */}
+          <div className="border-t border-gray-400 mt-4 pt-3 pb-2 flex justify-center">
+            <p className="text-sm text-gray-500">
+              © {currentYear} Eventra. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
