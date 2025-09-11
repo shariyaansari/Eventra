@@ -110,7 +110,7 @@ const Footer = () => {
         icon: <FaGithub size={14} />,
       },
       { name: "Changelog", href: "#changelog", icon: <FaFileAlt size={14} /> },
-      { name: "Privacy", href: "#privacy", icon: <FaShieldAlt size={14} /> },
+      { name: "Privacy", href: "/privacy", icon: <FaShieldAlt size={14} /> },
       { name: "Terms", href: "/terms", icon: <FaFileContract size={14} /> },
     ],
     support: [
