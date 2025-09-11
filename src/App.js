@@ -30,6 +30,7 @@ import Dashboard from "./components/Dashboard";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import HomePage from "./Pages/Home/HomePage";
 import Terms from "./Pages/Terms";
+import { Privacy } from "./Pages/Privacy";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
               <Route path="/leaderBoard" element={<LeaderBoard />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<Privacy />} />
               <Route path="/contact" element={<ContactUs />} />{" "}
               {/* Add ContactUs route */}
               {/* Protected route for event creation */}
