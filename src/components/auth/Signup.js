@@ -1,46 +1,48 @@
-
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { API_ENDPOINTS, apiUtils } from '../../config/api';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { API_ENDPOINTS, apiUtils } from "../../config/api";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirm_password: '',
-    countryCode: '+91',
-    phone: '',
-    role: 'USER' // Default to USER role
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+    countryCode: "+91",
+    phone: "",
+    role: "USER", // Default to USER role
   });
   const [loading, setLoading] = useState(false);
-  const [firstNameError , setFirstNameError] = useState('');
-  const [lastNameError , setLastNameError] = useState('');
-  const [error, setError] = useState('');
-  const [phoneError , setPhoneError] = useState("");
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
+  const [error, setError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [success, setSuccess] = useState('');
+  const [success, setSuccess] = useState("");
   const [passwordStrength, setPasswordStrength] = useState({
     score: 0,
-    feedback: ''
+    feedback: "",
   });
-  
+
   const navigate = useNavigate();
 
   // Test backend connectivity on component mount
   useEffect(() => {
     const testConnection = async () => {
       try {
-        console.log('Testing backend connectivity...');
-        const response = await fetch(API_ENDPOINTS.AUTH.REGISTER.replace('/signup', '/health'), {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
-        });
-        console.log('Backend connection test result:', response.status);
+        console.log("Testing backend connectivity...");
+        const response = await fetch(
+          API_ENDPOINTS.AUTH.REGISTER.replace("/signup", "/health"),
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        console.log("Backend connection test result:", response.status);
       } catch (error) {
-        console.error('Backend connectivity test failed:', error);
+        console.error("Backend connectivity test failed:", error);
       }
     };
     testConnection();
@@ -55,23 +57,29 @@ const Signup = () => {
   const checkPasswordStrength = (password) => {
     let score = 0;
     let feedback = [];
-    
+
     if (password.length >= 8) score += 1;
-    else feedback.push('at least 8 characters');
-    
+    else feedback.push("at least 8 characters");
+
     if (/[a-z]/.test(password)) score += 1;
-    else feedback.push('one lowercase letter');
-    
+    else feedback.push("one lowercase letter");
+
     if (/[A-Z]/.test(password)) score += 1;
-    else feedback.push('one uppercase letter');
-    
+    else feedback.push("one uppercase letter");
+
     if (/[0-9]/.test(password)) score += 1;
-    else feedback.push('one number');
-    
+    else feedback.push("one number");
+
     if (/[@$!%*?&]/.test(password)) score += 1;
-    else feedback.push('one special character (@$!%*?&)');
-    
-    return { score, feedback: feedback.length > 0 ? `Needs: ${feedback.join(', ')}` : 'Strong password!' };
+    else feedback.push("one special character (@$!%*?&)");
+
+    return {
+      score,
+      feedback:
+        feedback.length > 0
+          ? `Needs: ${feedback.join(", ")}`
+          : "Strong password!",
+    };
   };
 
   // const handleChange = (e) => {
@@ -82,12 +90,12 @@ const Signup = () => {
   const handleChange = (e) => {
     const newFormData = {
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     };
     setFormData(newFormData);
-    
+
     // Check password strength in real-time
-    if (e.target.name === 'password') {
+    if (e.target.name === "password") {
       const strength = checkPasswordStrength(e.target.value);
       setPasswordStrength(strength);
     }
@@ -123,42 +131,50 @@ const Signup = () => {
         setLastNameError("");
       }
     }
-    
+
     // Clear error when user starts typing
-    if (error) setError('');
+    if (error) setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateEmail(formData.email)) {
-      setEmailError('Invalid email format');
+      setEmailError("Invalid email format");
       return;
     }
 
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
       // Ensure role field is included
       const submitData = {
         ...formData,
-        role: formData.role || 'USER' // Fallback to USER if not set
+        role: formData.role || "USER", // Fallback to USER if not set
       };
-      
+
       // Debug: Log the exact data being sent
-      console.log('Submitting signup with data:', submitData);
-      console.log('API endpoint:', API_ENDPOINTS.AUTH.REGISTER);
-      
-      const response = await apiUtils.post(API_ENDPOINTS.AUTH.REGISTER, submitData);
-      
+      console.log("Submitting signup with data:", submitData);
+      console.log("API endpoint:", API_ENDPOINTS.AUTH.REGISTER);
+
+      const response = await apiUtils.post(
+        API_ENDPOINTS.AUTH.REGISTER,
+        submitData
+      );
+
       // Check if the response is ok
       if (!response.ok) {
         // Try to parse error response
         try {
           const errorData = await response.json();
-          if (errorData.validationErrors && errorData.validationErrors.length > 0) {
-            const errorMessages = errorData.validationErrors.map(err => err.message).join(', ');
+          if (
+            errorData.validationErrors &&
+            errorData.validationErrors.length > 0
+          ) {
+            const errorMessages = errorData.validationErrors
+              .map((err) => err.message)
+              .join(", ");
             setError(errorMessages);
           } else if (errorData.message) {
             setError(errorData.message);
@@ -166,27 +182,35 @@ const Signup = () => {
             setError(`Registration failed with status: ${response.status}`);
           }
         } catch (parseError) {
-          setError(`Registration failed with status: ${response.status}. Please try again.`);
+          setError(
+            `Registration failed with status: ${response.status}. Please try again.`
+          );
         }
         return;
       }
 
       // Success case
       const data = await response.json();
-      console.log('Registration successful:', data);
-      setSuccess('Account created successfully! Please login to continue.');
+      console.log("Registration successful:", data);
+      setSuccess("Account created successfully! Please login to continue.");
       setTimeout(() => {
-        navigate('/login');
+        navigate("/login");
       }, 2000);
-      
     } catch (error) {
-      console.error('Signup error:', error);
-      if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
-        setError('Unable to connect to server. Please check your internet connection and try again.');
-      } else if (error.message.includes('CORS')) {
-        setError('Connection blocked by browser security. Please try again later.');
+      console.error("Signup error:", error);
+      if (
+        error.message.includes("Failed to fetch") ||
+        error.message.includes("NetworkError")
+      ) {
+        setError(
+          "Unable to connect to server. Please check your internet connection and try again."
+        );
+      } else if (error.message.includes("CORS")) {
+        setError(
+          "Connection blocked by browser security. Please try again later."
+        );
       } else {
-        setError('Network error. Please check your connection and try again.');
+        setError("Network error. Please check your connection and try again.");
       }
     } finally {
       setLoading(false);
@@ -194,29 +218,34 @@ const Signup = () => {
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
       className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8"
     >
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4, delay: 0.1 }}
         className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5"
       ></motion.div>
       <div className="relative w-full max-w-md">
-        <motion.div 
+        <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="space-y-6 bg-white border border-gray-200 p-8 rounded-lg shadow-lg backdrop-blur-xl"
         >
-          <motion.div 
+          <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.3, type: "spring", stiffness: 200 }}
+            transition={{
+              duration: 0.5,
+              delay: 0.3,
+              type: "spring",
+              stiffness: 200,
+            }}
             className="space-y-2 text-center"
           >
             <h1 className="text-2xl font-semibold text-gray-900">
@@ -227,22 +256,27 @@ const Signup = () => {
             </p>
           </motion.div>
 
-          <motion.form 
+          <motion.form
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            onSubmit={handleSubmit} 
+            onSubmit={handleSubmit}
             className="space-y-4"
           >
             {/* Name Fields Row */}
-            <motion.div 
+            <motion.div
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.6 }}
               className="grid grid-cols-2 gap-4"
             >
               <div className="space-y-2">
-                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First name</label>
+                <label
+                  htmlFor="firstName"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  First name
+                </label>
                 <motion.input
                   id="firstName"
                   name="firstName"
@@ -256,10 +290,19 @@ const Signup = () => {
                   whileFocus={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 />
-                {firstNameError && <p style={{color: "red" , fontSize: "10px"}}>{firstNameError}</p>}
+                {firstNameError && (
+                  <p style={{ color: "red", fontSize: "10px" }}>
+                    {firstNameError}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
-                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last name</label>
+                <label
+                  htmlFor="lastName"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Last name
+                </label>
                 <motion.input
                   id="lastName"
                   name="lastName"
@@ -273,17 +316,26 @@ const Signup = () => {
                   whileFocus={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 />
-                {lastNameError && <p style={{color: "red" , fontSize: "10px"}}>{lastNameError}</p>}
+                {lastNameError && (
+                  <p style={{ color: "red", fontSize: "10px" }}>
+                    {lastNameError}
+                  </p>
+                )}
               </div>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ x: 20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.7 }}
               className="space-y-2"
             >
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email address</label>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email address
+              </label>
               <motion.input
                 id="email"
                 name="email"
@@ -293,13 +345,15 @@ const Signup = () => {
                 required
                 disabled={loading}
                 placeholder="Enter your email address"
-                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed ${emailError ? "border-red-500" : "border-gray-300"}`}
+                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed ${
+                  emailError ? "border-red-500" : "border-gray-300"
+                }`}
                 whileFocus={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300 }}
               />
               <AnimatePresence>
                 {emailError && (
-                  <motion.p 
+                  <motion.p
                     className="text-xs text-red-600 mt-1"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -312,46 +366,53 @@ const Signup = () => {
               </AnimatePresence>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ x: 20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.7 }}
               className="space-y-2"
             >
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Contact Number{" "}
+              </label>
 
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Contact Number </label>
-
-              <div className='flex gap-2'>
-                <select 
-                name='countryCode'
-                value={formData.countryCode}
-                onChange={handleChange}
-                disabled={loading}
-                className='px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'>
+              <div className="flex gap-2">
+                <select
+                  name="countryCode"
+                  value={formData.countryCode}
+                  onChange={handleChange}
+                  disabled={loading}
+                  className="px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                >
                   <option value="+1">🇺🇸 +1</option>
                   <option value="+91">🇮🇳 +91</option>
                   <option value="+44">🇬🇧 +44</option>
                   <option value="+61">🇦🇺 +61</option>
                 </select>
 
-              <motion.input
-                id="phone"
-                name="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-                disabled={loading}
-                placeholder="Enter your Contact Number"
-                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed ${phoneError ? "border-red-500" : "border-gray-300"}`}
-                whileFocus={{ scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              />
-              </div> 
-              
+                <motion.input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                  disabled={loading}
+                  placeholder="Enter your Contact Number"
+                  className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed ${
+                    phoneError ? "border-red-500" : "border-gray-300"
+                  }`}
+                  whileFocus={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                />
+              </div>
+
               <AnimatePresence>
                 {phoneError && (
-                  <motion.p 
+                  <motion.p
                     className="text-xs text-red-600 mt-1"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -364,13 +425,18 @@ const Signup = () => {
               </AnimatePresence>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.8 }}
               className="space-y-2"
             >
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
               <motion.input
                 id="password"
                 name="password"
@@ -388,7 +454,7 @@ const Signup = () => {
 
               <AnimatePresence>
                 {formData.password && (
-                  <motion.div 
+                  <motion.div
                     className="mt-1"
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
@@ -397,7 +463,15 @@ const Signup = () => {
                   >
                     <div className="flex items-center justify-between text-xs text-gray-600">
                       <span>Password strength:</span>
-                      <span className={passwordStrength.score >= 4 ? "text-green-600 font-medium" : "text-yellow-600"}>{passwordStrength.score}/5</span>
+                      <span
+                        className={
+                          passwordStrength.score >= 4
+                            ? "text-green-600 font-medium"
+                            : "text-yellow-600"
+                        }
+                      >
+                        {passwordStrength.score}/5
+                      </span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
                       <motion.div
@@ -415,12 +489,18 @@ const Signup = () => {
                             : "bg-green-500 w-full"
                         }`}
                         initial={{ width: "0%" }}
-                        animate={{ width: `${(passwordStrength.score / 5) * 100}%` }}
+                        animate={{
+                          width: `${(passwordStrength.score / 5) * 100}%`,
+                        }}
                         transition={{ duration: 0.5, ease: "easeOut" }}
                       />
                     </div>
                     <motion.p
-                      className={`text-xs mt-1 ${passwordStrength.score >= 4 ? "text-green-600" : "text-yellow-600"}`}
+                      className={`text-xs mt-1 ${
+                        passwordStrength.score >= 4
+                          ? "text-green-600"
+                          : "text-yellow-600"
+                      }`}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.2 }}
@@ -434,7 +514,7 @@ const Signup = () => {
 
             <AnimatePresence>
               {error && (
-                <motion.div 
+                <motion.div
                   className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm"
                   initial={{ opacity: 0, y: -20, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -448,7 +528,7 @@ const Signup = () => {
 
             <AnimatePresence>
               {success && (
-                <motion.div 
+                <motion.div
                   className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md text-sm"
                   initial={{ opacity: 0, y: -20, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -460,13 +540,18 @@ const Signup = () => {
               )}
             </AnimatePresence>
 
-            <motion.div 
+            <motion.div
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.8 }}
               className="space-y-2"
             >
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Confirm Password</label>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Confirm Password
+              </label>
               <motion.input
                 id="confirm_password"
                 name="confirm_password"
@@ -493,7 +578,7 @@ const Signup = () => {
             >
               <AnimatePresence mode="wait">
                 {loading ? (
-                  <motion.div 
+                  <motion.div
                     key="loading"
                     className="flex items-center"
                     initial={{ opacity: 0 }}
@@ -506,7 +591,11 @@ const Signup = () => {
                       fill="none"
                       viewBox="0 0 24 24"
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                     >
                       <circle
                         className="opacity-25"
@@ -538,36 +627,52 @@ const Signup = () => {
             </motion.button>
           </motion.form>
 
-          <motion.div 
+          <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.4, delay: 1.0 }}
             className="text-center"
           >
             <p className="text-sm text-gray-600">
-              Already have an account?{' '}
-              <Link to="/login" className="text-blue-600 hover:underline font-medium">Sign in here</Link>
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="text-blue-600 hover:underline font-medium"
+              >
+                Sign in here
+              </Link>
             </p>
           </motion.div>
 
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 1.4 }}
             className="text-xs text-center text-gray-500"
           >
-            By clicking on sign up, you agree to our{' '}
-            <a href="#" className="hover:underline text-blue-600">Terms of Service</a>{' '}and{' '}
-            <a href="#" className="hover:underline text-blue-600">Privacy Policy</a>
+            By clicking on sign up, you agree to our{" "}
+            <Link
+              to="/terms"
+              className="hover:underline text-blue-600 font-semibold transition-colors"
+            >
+              Terms of Service
+            </Link>{" "}
+            and{" "}
+            <Link
+              to="/privacy"
+              className="hover:underline text-blue-600 font-semibold transition-colors"
+            >
+              Privacy Policy
+            </Link>
           </motion.p>
         </motion.div>
-        <motion.div 
+        <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 0.2 }}
           transition={{ duration: 1, delay: 0.5 }}
           className="absolute -top-4 -left-4 w-24 h-24 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full blur-xl"
         ></motion.div>
-        <motion.div 
+        <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 0.2 }}
           transition={{ duration: 1, delay: 0.7 }}
