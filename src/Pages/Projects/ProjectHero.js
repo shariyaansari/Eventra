@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 import { SiHackaday } from "react-icons/si";
 import { HiPlus, HiArrowRight } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
 const floatingShapes = [
   { size: 40, x: 50, y: 200, color: "#6366f1", delay: 0 },
@@ -36,6 +37,8 @@ const iconList = [
 const repeatedIcons = [...iconList, ...iconList, ...iconList];
 
 export default function ProjectHero({ setShowSubmissionModal }) {
+  const navigate = useNavigate();
+
   return (
     <div className="relative min-h-screen py-24 overflow-hidden bg-gradient-to-l from-indigo-200 to-white">
       {/* Floating Shapes */}
@@ -117,7 +120,7 @@ export default function ProjectHero({ setShowSubmissionModal }) {
         <div className="flex justify-center gap-6 mb-16">
           {/* Submit Project Button */}
           <motion.button
-            onClick={() => setShowSubmissionModal(true)}
+            onClick={() => navigate("/submit-project")}
             className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white px-7 py-3 rounded-2xl font-semibold flex items-center gap-3 shadow-2xl hover:shadow-3xl transition-all duration-300"
             whileTap={{ scale: 0.95 }}
             whileHover="hover"
@@ -135,7 +138,6 @@ export default function ProjectHero({ setShowSubmissionModal }) {
             </motion.span>
             Submit Project
           </motion.button>
-
           {/* Explore Projects Button */}
           <motion.button
             className="bg-white text-indigo-600 px-6 py-3 rounded-2xl font-semibold flex items-center gap-2 shadow-md hover:shadow-xl hover:bg-indigo-50 transition-all duration-300"

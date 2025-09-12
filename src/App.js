@@ -16,7 +16,8 @@ import ProjectsPage from "./Pages/Projects/ProjectsPage";
 import ContactUs from "./Pages/Contact/ContactUs"; // Import ContactUs page
 import LeaderBoard from "./Pages/Leaderboard/Leaderboard";
 import NotFound from "./components/NotFound";
-import DocumentationPage from "./Pages/About/DocumentationPage";
+import DocumentationPage from "./Pages/About/DocumentationPage"; 
+import SubmitProject from "./Pages/Projects/SubmitProject";
 import HostHackathon from "./Pages/Hackathons/HostHackathon";
 
 // --------------- AUTH PAGES
@@ -74,7 +75,8 @@ function App() {
               />
               {/* Conatct page documentation page route */}
               <Route path="/documentation" element={<DocumentationPage />} />
-              <Route path="/host-hackathon" element={<HostHackathon />} />
+              <Route path="/submit-project" element={<SubmitProject />} />
+              <Route path="/host-hackathon" element={<HostHackathon />} /> 
               <Route
                 path="/dashboard"
                 element={
