@@ -95,15 +95,14 @@ const WhatsHappening = () => {
         </motion.div>
 
         {/* Carousel */}
-        <div className="relative max-w-md sm:max-w-xl mx-auto flex items-center">
+        <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-xl mx-auto flex items-center">
           {/* Prev Button */}
           <button
             onClick={prevSlide}
-            className="absolute -left-6 sm:-left-12 p-2 rounded-full bg-white shadow hover:bg-gray-100 z-10 text-sm sm:text-base"
+            className="absolute left-2 sm:-left-10 p-2 rounded-full bg-white shadow hover:bg-gray-100 z-10 text-sm sm:text-base"
           >
             ◀
           </button>
-
           {/* Card */}
           <div className="flex-1">
             <AnimatePresence mode="wait" custom={direction}>
@@ -208,7 +207,7 @@ const WhatsHappening = () => {
           {/* Next Button */}
           <button
             onClick={nextSlide}
-            className="absolute -right-6 sm:-right-12 p-2 rounded-full bg-white shadow hover:bg-gray-100 z-10 text-sm sm:text-base"
+            className="absolute right-2 sm:-right-10 p-2 rounded-full bg-white shadow hover:bg-gray-100 z-10 text-sm sm:text-base"
           >
             ▶
           </button>
@@ -243,8 +242,9 @@ const WhatsHappening = () => {
                 Eventra is participating in GirlScript Summer of Code 2025!
               </h3>
               <p className="mt-2 sm:mt-3 text-sm sm:text-base text-gray-600">
-                We're excited to mentor contributors and welcome new developers to our open-source community. 
-                Join us in building the future of event management!
+                We're excited to mentor contributors and welcome new developers
+                to our open-source community. Join us in building the future of
+                event management!
               </p>
             </div>
             <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row sm:space-x-4 gap-2 sm:gap-0">
