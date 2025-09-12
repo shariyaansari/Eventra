@@ -80,6 +80,7 @@ const Contributors = () => {
     };
   }, []);
 
+  // Replace your previous `useEffect` for itemsPerView with this:
   useEffect(() => {
     const updateItemsPerView = () => {
       if (window.innerWidth < 640) {
@@ -87,7 +88,7 @@ const Contributors = () => {
       } else if (window.innerWidth < 1024) {
         setItemsPerView(2); // Tablet: 2 items
       } else {
-        setItemsPerView(4); // Desktop: 4 items
+        setItemsPerView(3); // Desktop: 3 items instead of 4
       }
     };
 
@@ -237,10 +238,10 @@ const Contributors = () => {
           {/* Navigation Arrows */}
           <button
             onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10
-                     bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg
-                     hover:bg-white hover:scale-110 transition-all duration-300
-                     border border-gray-200"
+            className="absolute left-0 top-[35%] -translate-y-1/2 -translate-x-4 z-10
+           bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg
+           hover:bg-white hover:scale-110 transition-all duration-300
+           border border-gray-200"
             disabled={currentIndex === 0}
           >
             <FaChevronLeft className="text-indigo-600 text-xl" />
@@ -248,17 +249,17 @@ const Contributors = () => {
 
           <button
             onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10
-                     bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg
-                     hover:bg-white hover:scale-110 transition-all duration-300
-                     border border-gray-200"
+            className="absolute right-0 top-[35%] -translate-y-1/2 translate-x-4 z-10
+           bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg
+           hover:bg-white hover:scale-110 transition-all duration-300
+           border border-gray-200"
             disabled={currentIndex + itemsPerView >= contributors.length}
           >
             <FaChevronRight className="text-indigo-600 text-xl" />
           </button>
 
           {/* Carousel Content */}
-          <div className="overflow-hidden">
+          <div className="overflow-hidden px-10">
             <motion.div
               className="flex gap-6 items-stretch"
               animate={{ x: 0 }}
@@ -268,9 +269,8 @@ const Contributors = () => {
                 <motion.div
                   key={c.id}
                   className="relative bg-gradient-to-br from-white/90 to-indigo-50/80 backdrop-blur-xl 
-             p-4 pt-10 rounded-xl shadow-md border border-gray-100 
-             flex flex-col items-center text-center mb-6
-             transition-all duration-300 ease-out flex-shrink-0"
+     p-4 pt-10 rounded-xl shadow-md border flex flex-col items-center text-center mb-6
+     transition-all duration-300 ease-out flex-shrink-0"
                   style={{
                     flex: `0 0 calc((100% - ${
                       itemsPerView - 1
