@@ -748,7 +748,10 @@ const EventCreation = () => {
           </div>
 
           <div className="form-actions">
-            <button type="button" onClick={handleSubmit} className="preview-btn">
+            <button 
+              type="button" 
+              onClick={handleSubmit} 
+              className="preview-btn ">
               Preview Event
             </button>
           </div>

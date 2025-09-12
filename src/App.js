@@ -59,7 +59,7 @@ function App() {
                 element={
                   <ProtectedRoute requiredPermissions={["CREATE_EVENT"]}>
                     <EventCreation />
-                  </ProtectedRoute>
+                  </ProtectedRoute> 
                 }
               />
               {/* Dashboard routes */}
@@ -68,7 +68,7 @@ function App() {
                 element={
                   <ProtectedRoute requiredRoles={["ADMIN"]}>
                     <AdminDashboard />
-                  </ProtectedRoute>
+                  </ProtectedRoute> 
                 }
               />
               {/* Conatct page documentation page route */}
