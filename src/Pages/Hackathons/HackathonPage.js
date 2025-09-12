@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import mockHackathons from "./hackathonMockData.json";
 import HackathonHero from "./HackathonHero";
+import HackathonCard from "./HackathonCard";
 
 // Skeleton Loader Component
 const SkeletonCard = () => (
@@ -111,204 +112,6 @@ const HackathonHub = () => {
     .filter((h) => h.featured)
     .slice(0, 3);
 
-  const HackathonCard = ({ hackathon, isFeatured = false }) => (
-    <motion.div
-      className={`bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 ${
-        isFeatured ? "ring-2 ring-indigo-500" : ""
-      }`}
-      variants={item}
-      whileHover={{ y: -4 }}
-    >
-      {isFeatured && (
-        <div className="bg-indigo-600 text-white text-xs font-semibold px-3 py-1">
-          Featured
-        </div>
-      )}
-      <div className="p-6">
-        <div className="flex justify-between items-start mb-4">
-          <div className="flex items-center">
-            <span
-              className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
-                hackathon.status === "live"
-                  ? "bg-red-100 text-red-800"
-                  : hackathon.status === "upcoming"
-                  ? "bg-blue-100 text-blue-800"
-                  : "bg-green-100 text-green-800"
-              }`}
-            >
-              {hackathon.status.charAt(0).toUpperCase() +
-                hackathon.status.slice(1)}
-            </span>
-            <span className="ml-2 px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-800 text-xs font-medium">
-              {hackathon.difficulty}
-            </span>
-          </div>
-          <span className="bg-indigo-600 text-white text-sm font-semibold px-3 py-1 rounded-full">
-            {hackathon.prize}
-          </span>
-        </div>
-
-        <h3 className="text-xl font-bold text-gray-900 mb-2">
-          {hackathon.title}
-        </h3>
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-          {hackathon.description}
-        </p>
-
-        <div className="space-y-3 mb-4">
-          <div className="flex items-center text-sm text-gray-600">
-            <svg
-              className="w-4 h-4 mr-2 text-indigo-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
-            {new Date(hackathon.startDate).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-            })}{" "}
-            -{" "}
-            {new Date(hackathon.endDate).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-            })}
-          </div>
-          <div className="flex items-center text-sm text-gray-600">
-            <svg
-              className="w-4 h-4 mr-2 text-indigo-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
-            {hackathon.location}
-          </div>
-          {hackathon.status === "live" && (
-            <div className="flex items-center text-sm text-gray-600">
-              <svg
-                className="w-4 h-4 mr-2 text-indigo-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span className="font-medium">Time Left:</span>{" "}
-              {hackathon.timeLeft}
-            </div>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <h4 className="text-sm font-medium text-gray-700 mb-2">
-            Tech Stack:
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {hackathon.techStack.map((tech, index) => (
-              <span
-                key={index}
-                className="px-2.5 py-0.5 bg-gray-100 text-gray-800 text-xs font-medium rounded-full"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {hackathon.status === "live" && (
-          <div className="grid grid-cols-3 gap-4 mb-4 bg-gray-50 p-3 rounded-lg">
-            <div className="text-center">
-              <div className="text-lg font-bold text-indigo-600">
-                {hackathon.participants}
-              </div>
-              <div className="text-xs text-gray-500">Participants</div>
-            </div>
-            <div className="text-center">
-              <div className="text-lg font-bold text-indigo-600">
-                {hackathon.teams}
-              </div>
-              <div className="text-xs text-gray-500">Teams</div>
-            </div>
-            <div className="text-center">
-              <div className="text-lg font-bold text-indigo-600">
-                {hackathon.submissions}
-              </div>
-              <div className="text-xs text-gray-500">Submissions</div>
-            </div>
-          </div>
-        )}
-
-        {hackathon.status === "completed" && hackathon.winner && (
-          <div className="mb-4 p-3 bg-yellow-50 rounded-lg border border-yellow-100">
-            <div className="flex items-center">
-              <span className="text-yellow-500 mr-2">🏆</span>
-              <span className="text-sm font-medium">Winner: </span>
-              <span className="ml-1 text-sm text-gray-700">
-                {hackathon.winner}
-              </span>
-            </div>
-          </div>
-        )}
-
-        <div className="pt-4 border-t border-gray-100">
-          {hackathon.status === "live" ? (
-            <div className="grid grid-cols-2 gap-3">
-              <button className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors">
-                Join Now
-              </button>
-              <button className="px-4 py-2 border border-indigo-600 text-indigo-600 text-sm font-medium rounded-lg hover:bg-indigo-50 transition-colors">
-                Submit Project
-              </button>
-            </div>
-          ) : hackathon.status === "upcoming" ? (
-            <div className="grid grid-cols-2 gap-3">
-              <button className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors">
-                Register
-              </button>
-              <button className="px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">
-                Set Reminder
-              </button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-3">
-              <button className="px-4 py-2 bg-indigo-100 text-indigo-700 text-sm font-medium rounded-lg hover:bg-indigo-200 transition-colors">
-                View Results
-              </button>
-              <button className="px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">
-                Resources
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-    </motion.div>
-  );
-
   // Reset filters
   const resetFilters = () => {
     setFilters({
@@ -403,11 +206,11 @@ const HackathonHub = () => {
               </Link>
             </div>
             <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-              {featuredHackathons.map((hackathon) => (
+              {featuredHackathons.map((hackathon, index) => (
                 <HackathonCard
-                  key={`featured-${hackathon.id}`}
+                  key={index}
                   hackathon={hackathon}
-                  isFeatured={true}
+                  isFeatured={hackathon.featured}
                 />
               ))}
             </div>
@@ -458,7 +261,7 @@ const HackathonHub = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-6 overflow-hidden"
+              className="bg-white p-6 rounded-xl border border-gray-100 mb-6 overflow-hidden shadow-[0_4px_12px_rgba(59,130,246,0.2)]"
             >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
@@ -525,7 +328,7 @@ const HackathonHub = () => {
           className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0"
           variants={item}
         >
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-3">
             {[
               { key: "all", label: "All Hackathons" },
               { key: "live", label: "Live Now" },
@@ -535,10 +338,10 @@ const HackathonHub = () => {
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 transform ${
                   activeTab === tab.key
-                    ? "bg-indigo-600 text-white"
-                    : "bg-white text-gray-700 hover:bg-gray-100"
+                    ? "bg-gradient-to-r from-indigo-700 via-indigo-500 to-blue-600 text-white shadow-lg scale-105"
+                    : "bg-white text-gray-700 hover:bg-gray-100 hover:scale-105"
                 }`}
               >
                 {tab.label}
