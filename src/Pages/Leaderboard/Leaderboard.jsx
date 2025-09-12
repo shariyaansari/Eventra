@@ -1,7 +1,13 @@
-import { useEffect, useState } from "react";
-import { FaCode, FaStar } from "react-icons/fa";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import confetti from "canvas-confetti"; // 🎉 Import confetti
+import { useEffect, useState, Fragment } from "react";
+import {
+  FaCode,
+  FaStar,
+  FaChevronDown,
+  FaChevronLeft,
+  FaChevronRight,
+} from "react-icons/fa";
+import { Menu, Transition } from "@headlessui/react";
+import confetti from "canvas-confetti";
 
 const GITHUB_REPO = "SandeepVashishtha/Eventra";
 const TOKEN = process.env.REACT_APP_GITHUB_TOKEN || "";
@@ -18,19 +24,19 @@ export default function LeaderBoard() {
   const [lastUpdated, setLastUpdated] = useState("");
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy, setSortBy] = useState("points");
 
   const CONTRIBUTORS_PER_PAGE = 10;
 
-  // 🎉 Trigger confetti once on page load
+  // 🎉 Confetti on page load
   useEffect(() => {
-    // Fire a "party bomb" burst 🎉
     confetti({
-      particleCount: 150, // number of confetti pieces
-      spread: 80, // how wide they fly out
-      origin: { x: 0.5, y: 0.6 }, // center-bottom of screen
-      startVelocity: 45, // smooth upward speed
-      gravity: 0.9, // fall speed
-      scalar: 1.2, // size scaling
+      particleCount: 150,
+      spread: 80,
+      origin: { x: 0.5, y: 0.6 },
+      startVelocity: 45,
+      gravity: 0.9,
+      scalar: 1.2,
     });
   }, []);
 
@@ -42,8 +48,7 @@ export default function LeaderBoard() {
     if (cachedData) {
       try {
         const { data, timestamp } = JSON.parse(cachedData);
-        const isDataFresh = now - timestamp < 60 * 60 * 1000;
-        if (isDataFresh) {
+        if (now - timestamp < 60 * 60 * 1000) {
           setContributors(data);
           setLastUpdated(
             `Last updated: ${new Date(timestamp).toLocaleString()} (cached)`
@@ -55,7 +60,6 @@ export default function LeaderBoard() {
         console.error("Error parsing cached data:", error);
       }
     }
-
     await fetchContributors();
   };
 
@@ -71,7 +75,6 @@ export default function LeaderBoard() {
       );
 
       if (!contributorsRes.ok) throw new Error("Failed to fetch contributors");
-
       const contributorsData = await contributorsRes.json();
       const contributorsInfo = {};
 
@@ -88,7 +91,6 @@ export default function LeaderBoard() {
           `https://api.github.com/repos/${GITHUB_REPO}/pulls?state=closed&per_page=100&page=${page}`,
           { headers: TOKEN ? { Authorization: `token ${TOKEN}` } : {} }
         );
-
         const prs = await res.json();
         if (prs.length === 0) {
           hasMore = false;
@@ -137,24 +139,13 @@ export default function LeaderBoard() {
         (a, b) => b.points - a.points
       );
       setContributors(sortedContributors);
-      const timestamp = Date.now();
-      setLastUpdated(new Date(timestamp).toLocaleString());
-
+      setLastUpdated(new Date().toLocaleString());
       localStorage.setItem(
         "leaderboardData",
         JSON.stringify({ data: sortedContributors, timestamp: Date.now() })
       );
     } catch (err) {
       console.error("Error fetching contributors:", err);
-
-      const cachedData = localStorage.getItem("leaderboardData");
-      if (cachedData) {
-        const { data, timestamp } = JSON.parse(cachedData);
-        setContributors(data);
-        setLastUpdated(
-          `Last updated: ${new Date(timestamp).toLocaleString()} (cached)`
-        );
-      }
     } finally {
       setLoading(false);
     }
@@ -164,7 +155,7 @@ export default function LeaderBoard() {
     loadLeaderboardData();
   }, []);
 
-  // 🔹 Filtered contributors
+  // Filter & sort
   const filteredContributors = contributors.filter((c) => {
     const q = search.trim().toLowerCase();
     if (!q) return true;
@@ -174,22 +165,34 @@ export default function LeaderBoard() {
     );
   });
 
-  // 🔹 Pagination
+  const sortedContributors = [...filteredContributors].sort((a, b) => {
+    if (sortBy === "points") return b.points - a.points;
+    if (sortBy === "prs") return b.prs - a.prs;
+    if (sortBy === "username") return a.username.localeCompare(b.username);
+    return 0;
+  });
+
+  // Pagination
   const indexOfLast = currentPage * CONTRIBUTORS_PER_PAGE;
   const indexOfFirst = indexOfLast - CONTRIBUTORS_PER_PAGE;
-  const currentContributors = filteredContributors.slice(
+  const currentContributors = sortedContributors.slice(
     indexOfFirst,
     indexOfLast
   );
   const totalPages = Math.ceil(
-    filteredContributors.length / CONTRIBUTORS_PER_PAGE
+    sortedContributors.length / CONTRIBUTORS_PER_PAGE
   );
 
-  // 🔹 Map usernames to global ranks
   const ranksMap = {};
   contributors.forEach((c, i) => {
     ranksMap[c.username] = i + 1;
   });
+
+  const sortOptions = [
+    { label: "Points", value: "points" },
+    { label: "PRs", value: "prs" },
+    { label: "Username", value: "username" },
+  ];
 
   return (
     <div className="bg-white py-12 sm:py-16">
@@ -204,7 +207,8 @@ export default function LeaderBoard() {
           </p>
         </div>
 
-        <div className="mb-6 flex justify-center">
+        {/* Search + Modern Dropdown */}
+        <div className="flex justify-center items-center mb-6 space-x-4">
           <input
             type="text"
             value={search}
@@ -215,6 +219,40 @@ export default function LeaderBoard() {
             placeholder="Search contributors..."
             className="w-full max-w-xs px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
           />
+
+          <Menu as="div" className="relative inline-block text-left">
+            <Menu.Button className="inline-flex justify-center w-48 px-4 py-2 bg-white text-sm font-medium text-gray-700 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+              Sort by: {sortOptions.find((opt) => opt.value === sortBy)?.label}
+              <FaChevronDown className="ml-2 h-4 w-4" />
+            </Menu.Button>
+
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg focus:outline-none z-50">
+                {sortOptions.map((option) => (
+                  <Menu.Item key={option.value}>
+                    {({ active }) => (
+                      <button
+                        onClick={() => setSortBy(option.value)}
+                        className={`${
+                          active ? "bg-indigo-500 text-white" : "text-gray-700"
+                        } group flex w-full items-center px-4 py-2 text-sm`}
+                      >
+                        {option.label}
+                      </button>
+                    )}
+                  </Menu.Item>
+                ))}
+              </Menu.Items>
+            </Transition>
+          </Menu>
         </div>
 
         <div className="bg-gray-50 rounded-2xl shadow-lg overflow-hidden">
@@ -241,31 +279,26 @@ export default function LeaderBoard() {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-100">
                   {currentContributors.map((c) => {
-                    const rank = ranksMap[c.username]; // ✅ Correct global rank
+                    const rank = ranksMap[c.username];
                     return (
                       <tr
                         key={c.username}
                         className="hover:bg-gray-50 transition-colors duration-150 border-b border-gray-100"
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center">
-                              <span
-                                className={`inline-flex items-center justify-center w-8 h-8 rounded-full font-medium 
-                                ${
-                                  rank === 1
-                                    ? "bg-yellow-500 text-white"
-                                    : rank === 2
-                                    ? "bg-gray-300 text-gray-800"
-                                    : rank === 3
-                                    ? "bg-amber-500 text-white"
-                                    : "bg-indigo-50 text-indigo-700"
-                                }`}
-                              >
-                                {rank}
-                              </span>
-                            </div>
-                          </div>
+                          <span
+                            className={`inline-flex items-center justify-center w-8 h-8 rounded-full font-medium ${
+                              rank === 1
+                                ? "bg-yellow-500 text-white"
+                                : rank === 2
+                                ? "bg-gray-300 text-gray-800"
+                                : rank === 3
+                                ? "bg-amber-500 text-white"
+                                : "bg-indigo-50 text-indigo-700"
+                            }`}
+                          >
+                            {rank}
+                          </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">

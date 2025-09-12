@@ -4,6 +4,7 @@
   "description": "A modern website for Eventra - platform for builders",
   "private": true,
   "dependencies": {
+    "@headlessui/react": "^2.2.8",
     "@heroicons/react": "^2.0.16",
     "@tailwindcss/cli": "^4.1.12",
     "canvas-confetti": "^1.9.3",
