@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaCode, FaStar } from "react-icons/fa";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import confetti from "canvas-confetti"; // 🎉 Import confetti
 
 const GITHUB_REPO = "SandeepVashishtha/Eventra";
 const TOKEN = process.env.REACT_APP_GITHUB_TOKEN || "";
@@ -19,6 +20,19 @@ export default function LeaderBoard() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const CONTRIBUTORS_PER_PAGE = 10;
+
+  // 🎉 Trigger confetti once on page load
+  useEffect(() => {
+    // Fire a "party bomb" burst 🎉
+    confetti({
+      particleCount: 150, // number of confetti pieces
+      spread: 80, // how wide they fly out
+      origin: { x: 0.5, y: 0.6 }, // center-bottom of screen
+      startVelocity: 45, // smooth upward speed
+      gravity: 0.9, // fall speed
+      scalar: 1.2, // size scaling
+    });
+  }, []);
 
   const loadLeaderboardData = async () => {
     setLoading(true);

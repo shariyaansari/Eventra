@@ -6,6 +6,7 @@
   "dependencies": {
     "@heroicons/react": "^2.0.16",
     "@tailwindcss/cli": "^4.1.12",
+    "canvas-confetti": "^1.9.3",
     "framer-motion": "^8.5.2",
     "lucide-react": "^0.542.0",
     "react": "^18.2.0",
