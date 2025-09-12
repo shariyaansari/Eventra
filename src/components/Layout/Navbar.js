@@ -399,23 +399,26 @@ const Navbar = () => {
             </button>
           </div>
           {/* Navigation Links */}
-          <div className="hidden lg:flex items-center space-x-4">
+          {/* Mobile Navigation Links */}
+          <div className="flex flex-col px-5 py-4 space-y-2 lg:hidden">
             {navItems.map((item) => {
-              const isActive = location.pathname === item.href;
-
-              // If has subItems (Community dropdown)
               if (item.subItems) {
                 return (
-                  <div
-                    key={item.name}
-                    className="relative"
-                    onMouseEnter={() => setHoveredNav(item.name)}
-                    onMouseLeave={() => setHoveredNav(null)}
-                  >
-                    <button className="flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">
-                      {item.icon} {item.name}
+                  <div key={item.name} className="relative">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpenDropdown(
+                          openDropdown === item.name ? null : item.name
+                        );
+                      }}
+                      className="flex items-center justify-between w-full px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
+                    >
+                      <span className="flex items-center gap-2">
+                        {item.icon} {item.name}
+                      </span>
                       <svg
-                        className="w-4 h-4 ml-1"
+                        className="w-4 h-4"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -428,18 +431,17 @@ const Navbar = () => {
                         />
                       </svg>
                     </button>
-
-                    {hoveredNav === item.name && (
-                      <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-50">
+                    {openDropdown === item.name && (
+                      <div className="mt-1 ml-4 flex flex-col space-y-1">
                         {item.subItems.map((sub) => (
                           <Link
                             key={sub.name}
                             to={sub.href}
-                            className={`flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg ${
-                              location.pathname === sub.href
-                                ? "bg-indigo-50 text-indigo-600"
-                                : ""
-                            }`}
+                            onClick={() => {
+                              setOpenDropdown(null);
+                              setIsMobileMenuOpen(false);
+                            }}
+                            className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg"
                           >
                             {sub.icon} {sub.name}
                           </Link>
@@ -449,17 +451,12 @@ const Navbar = () => {
                   </div>
                 );
               }
-
-              // Normal nav item
               return (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`flex items-center gap-3 py-2 px-3 rounded-lg font-medium transition-colors ${
-                    isActive
-                      ? "text-indigo-600 bg-indigo-50"
-                      : "text-gray-700 hover:text-indigo-600 hover:bg-indigo-50"
-                  }`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
                 >
                   {item.icon} {item.name}
                 </Link>
