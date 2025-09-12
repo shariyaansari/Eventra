@@ -17,6 +17,7 @@ import ContactUs from "./Pages/Contact/ContactUs"; // Import ContactUs page
 import LeaderBoard from "./Pages/Leaderboard/Leaderboard";
 import NotFound from "./components/NotFound";
 import DocumentationPage from "./Pages/About/DocumentationPage";
+import HostHackathon from "./Pages/Hackathons/HostHackathon";
 
 // --------------- AUTH PAGES
 import Login from "./components/auth/Login";
@@ -59,7 +60,7 @@ function App() {
                 element={
                   <ProtectedRoute requiredPermissions={["CREATE_EVENT"]}>
                     <EventCreation />
-                  </ProtectedRoute> 
+                  </ProtectedRoute>
                 }
               />
               {/* Dashboard routes */}
@@ -68,11 +69,12 @@ function App() {
                 element={
                   <ProtectedRoute requiredRoles={["ADMIN"]}>
                     <AdminDashboard />
-                  </ProtectedRoute> 
+                  </ProtectedRoute>
                 }
               />
               {/* Conatct page documentation page route */}
               <Route path="/documentation" element={<DocumentationPage />} />
+              <Route path="/host-hackathon" element={<HostHackathon />} />
               <Route
                 path="/dashboard"
                 element={
