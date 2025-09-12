@@ -12,8 +12,8 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -24,7 +24,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -82,7 +82,8 @@ code {
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-  color:#FFFFFF}
+  color: #ffffff;
+}
 
 .btn-secondary {
   background: transparent;
@@ -102,7 +103,6 @@ code {
   border-color: #667eea;
   color: #ffffffff;
   transform: translateY(-2px);
-  
 }
 
 .fade-in {
@@ -123,14 +123,20 @@ code {
   .container {
     padding: 0 16px;
   }
-  
+
   .section-padding {
     padding: 60px 0;
   }
-  
+
   .btn-primary,
   .btn-secondary {
     padding: 10px 24px;
     font-size: 14px;
   }
+}
+input::-ms-reveal,
+input::-ms-clear,
+input::-webkit-clear-button,
+input::-webkit-password-toggle {
+  display: none !important;
 }
