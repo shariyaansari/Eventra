@@ -16,6 +16,7 @@ import ProjectsPage from "./Pages/Projects/ProjectsPage";
 import ContactUs from "./Pages/Contact/ContactUs"; // Import ContactUs page
 import LeaderBoard from "./Pages/Leaderboard/Leaderboard";
 import NotFound from "./components/NotFound";
+import DocumentationPage from "./Pages/About/DocumentationPage";
 
 // --------------- AUTH PAGES
 import Login from "./components/auth/Login";
@@ -70,6 +71,8 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              {/* Conatct page documentation page route */}
+              <Route path="/documentation" element={<DocumentationPage />} />
               <Route
                 path="/dashboard"
                 element={
