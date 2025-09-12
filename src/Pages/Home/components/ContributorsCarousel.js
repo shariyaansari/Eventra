@@ -421,6 +421,10 @@ const Contributors = () => {
               <span>View All Contributors</span>
               <FaExternalLinkAlt className="text-sm" />
             </Link>
+            <Link to="/ContributorGuide">
+  <span>Guide</span>
+</Link>
+
           </div>
         </div>
       </div>
