@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { FaCode, FaStar } from "react-icons/fa";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-
 const GITHUB_REPO = "SandeepVashishtha/Eventra";
 const TOKEN = process.env.REACT_APP_GITHUB_TOKEN || "";
 
@@ -15,31 +14,31 @@ const POINTS = {
 export default function LeaderBoard() {
   const [contributors, setContributors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [lastUpdated, setLastUpdated] = useState('');
-  const [search, setSearch] = useState('');
-  const [currentPage, setCurrentPage] = useState(1); // 🔹 New state for pagination
-  
+  const [lastUpdated, setLastUpdated] = useState("");
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const CONTRIBUTORS_PER_PAGE = 10; // 🔹 Show 10 per page
+  const CONTRIBUTORS_PER_PAGE = 10;
 
   const loadLeaderboardData = async () => {
     setLoading(true);
-    const cachedData = localStorage.getItem('leaderboardData');
+    const cachedData = localStorage.getItem("leaderboardData");
     const now = Date.now();
 
     if (cachedData) {
       try {
         const { data, timestamp } = JSON.parse(cachedData);
-        const isDataFresh = (now - timestamp) < (60 * 60 * 1000);
-
+        const isDataFresh = now - timestamp < 60 * 60 * 1000;
         if (isDataFresh) {
           setContributors(data);
-          setLastUpdated(`Last updated: ${new Date(timestamp).toLocaleString()} (cached)`);
+          setLastUpdated(
+            `Last updated: ${new Date(timestamp).toLocaleString()} (cached)`
+          );
           setLoading(false);
           return;
         }
       } catch (error) {
-        console.error('Error parsing cached data:', error);
+        console.error("Error parsing cached data:", error);
       }
     }
 
@@ -57,18 +56,16 @@ export default function LeaderBoard() {
         { headers: TOKEN ? { Authorization: `token ${TOKEN}` } : {} }
       );
 
-      if (!contributorsRes.ok) {
-        throw new Error('Failed to fetch contributors');
-      }
+      if (!contributorsRes.ok) throw new Error("Failed to fetch contributors");
 
       const contributorsData = await contributorsRes.json();
       const contributorsInfo = {};
 
-      contributorsData.forEach(contributor => {
+      contributorsData.forEach((contributor) => {
         contributorsInfo[contributor.login] = {
           name: contributor.name || contributor.login,
           avatar: contributor.avatar_url,
-          profile: contributor.html_url
+          profile: contributor.html_url,
         };
       });
 
@@ -79,7 +76,6 @@ export default function LeaderBoard() {
         );
 
         const prs = await res.json();
-
         if (prs.length === 0) {
           hasMore = false;
           break;
@@ -87,17 +83,14 @@ export default function LeaderBoard() {
 
         prs.forEach((pr) => {
           if (!pr.merged_at) return;
-
           const labels = pr.labels.map((l) => l.name.toLowerCase());
-          const hasGsocLabel = labels.some(label =>
-            label.toLowerCase().includes('gssoc') || label.toLowerCase().includes('gsoc')
+          const hasGsocLabel = labels.some(
+            (label) => label.includes("gssoc") || label.includes("gsoc")
           );
-
           if (!hasGsocLabel) return;
 
           const author = pr.user.login;
           let points = 0;
-
           labels.forEach((label) => {
             const normalized = label.replace(/\s+/g, "").toLowerCase();
             if (POINTS[normalized]) points += POINTS[normalized];
@@ -107,9 +100,8 @@ export default function LeaderBoard() {
             const contributorInfo = contributorsInfo[author] || {
               name: author,
               avatar: pr.user.avatar_url,
-              profile: pr.user.html_url
+              profile: pr.user.html_url,
             };
-
             contributorsMap[author] = {
               username: author,
               name: contributorInfo.name,
@@ -127,25 +119,27 @@ export default function LeaderBoard() {
         page++;
       }
 
-      const sortedContributors = Object.values(contributorsMap).sort((a, b) => b.points - a.points);
-
+      const sortedContributors = Object.values(contributorsMap).sort(
+        (a, b) => b.points - a.points
+      );
       setContributors(sortedContributors);
       const timestamp = Date.now();
       setLastUpdated(new Date(timestamp).toLocaleString());
 
-      const cacheData = {
-        data: sortedContributors,
-        timestamp: Date.now()
-      };
-      localStorage.setItem('leaderboardData', JSON.stringify(cacheData));
+      localStorage.setItem(
+        "leaderboardData",
+        JSON.stringify({ data: sortedContributors, timestamp: Date.now() })
+      );
     } catch (err) {
       console.error("Error fetching contributors:", err);
 
-      const cachedData = localStorage.getItem('leaderboardData');
+      const cachedData = localStorage.getItem("leaderboardData");
       if (cachedData) {
         const { data, timestamp } = JSON.parse(cachedData);
         setContributors(data);
-        setLastUpdated(`Last updated: ${new Date(timestamp).toLocaleString()} (cached)`);
+        setLastUpdated(
+          `Last updated: ${new Date(timestamp).toLocaleString()} (cached)`
+        );
       }
     } finally {
       setLoading(false);
@@ -156,8 +150,8 @@ export default function LeaderBoard() {
     loadLeaderboardData();
   }, []);
 
-  // 🔹 Apply search filter
-  const filteredContributors = contributors.filter(c => {
+  // 🔹 Filtered contributors
+  const filteredContributors = contributors.filter((c) => {
     const q = search.trim().toLowerCase();
     if (!q) return true;
     return (
@@ -166,11 +160,22 @@ export default function LeaderBoard() {
     );
   });
 
-  // 🔹 Pagination logic
+  // 🔹 Pagination
   const indexOfLast = currentPage * CONTRIBUTORS_PER_PAGE;
   const indexOfFirst = indexOfLast - CONTRIBUTORS_PER_PAGE;
-  const currentContributors = filteredContributors.slice(indexOfFirst, indexOfLast);
-  const totalPages = Math.ceil(filteredContributors.length / CONTRIBUTORS_PER_PAGE);
+  const currentContributors = filteredContributors.slice(
+    indexOfFirst,
+    indexOfLast
+  );
+  const totalPages = Math.ceil(
+    filteredContributors.length / CONTRIBUTORS_PER_PAGE
+  );
+
+  // 🔹 Map usernames to global ranks
+  const ranksMap = {};
+  contributors.forEach((c, i) => {
+    ranksMap[c.username] = i + 1;
+  });
 
   return (
     <div className="bg-white py-12 sm:py-16">
@@ -178,9 +183,7 @@ export default function LeaderBoard() {
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
             <span className="block text-indigo-700">GSSoC'25</span>
-            <span className="text-gray-800">
-              Contributor Leaderboard
-            </span>
+            <span className="text-gray-800">Contributor Leaderboard</span>
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Recognizing the amazing contributions from our open source community
@@ -191,7 +194,10 @@ export default function LeaderBoard() {
           <input
             type="text"
             value={search}
-            onChange={e => { setSearch(e.target.value); setCurrentPage(1); }}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setCurrentPage(1);
+            }}
             placeholder="Search contributors..."
             className="w-full max-w-xs px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
           />
@@ -199,98 +205,128 @@ export default function LeaderBoard() {
 
         <div className="bg-gray-50 rounded-2xl shadow-lg overflow-hidden">
           {loading ? (
-            <div className="overflow-x-auto">
-              {/* Skeleton Loader unchanged */}
-            </div>
+            <div className="overflow-x-auto">{/* Skeleton loader */}</div>
           ) : (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contributor</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PRs</th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Rank
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Contributor
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Points
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      PRs
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-100">
-                  {currentContributors.map((c, index) => (
-                    <tr key={c.username} className="hover:bg-gray-50 transition-colors duration-150 border-b border-gray-100">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center">
-                            <span className={`inline-flex items-center justify-center w-8 h-8 rounded-full font-medium 
-                              ${(indexOfFirst + index) === 0 ? 'bg-yellow-500 text-white' :
-                                (indexOfFirst + index) === 1 ? 'bg-gray-300 text-gray-800' :
-                                  (indexOfFirst + index) === 2 ? 'bg-amber-500 text-white' :
-                                    'bg-indigo-50 text-indigo-700'}`}>
-                              {indexOfFirst + index + 1}
-                            </span>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0 h-10 w-10">
-                            <img
-                              className="h-10 w-10 rounded-full border-2 border-indigo-200"
-                              src={c.avatar}
-                              alt={c.username}
-                            />
-                          </div>
-                          <div className="ml-4">
-                            <a href={c.profile} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-gray-900 hover:text-indigo-600 transition-colors">
-                              {c.username}
-                            </a>
-                            <div className="text-sm text-gray-500">
-                              {c.name && c.name !== c.username ? c.name : ''}
+                  {currentContributors.map((c) => {
+                    const rank = ranksMap[c.username]; // ✅ Correct global rank
+                    return (
+                      <tr
+                        key={c.username}
+                        className="hover:bg-gray-50 transition-colors duration-150 border-b border-gray-100"
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center">
+                              <span
+                                className={`inline-flex items-center justify-center w-8 h-8 rounded-full font-medium 
+                                ${
+                                  rank === 1
+                                    ? "bg-yellow-500 text-white"
+                                    : rank === 2
+                                    ? "bg-gray-300 text-gray-800"
+                                    : rank === 3
+                                    ? "bg-amber-500 text-white"
+                                    : "bg-indigo-50 text-indigo-700"
+                                }`}
+                              >
+                                {rank}
+                              </span>
                             </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <FaStar className="text-yellow-400 mr-1" />
-                          <span className="font-medium">{c.points}</span>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <FaCode className="text-indigo-500 mr-1" />
-                          <span className="font-medium">{c.prs}</span>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="flex-shrink-0 h-10 w-10">
+                              <img
+                                className="h-10 w-10 rounded-full border-2 border-indigo-200"
+                                src={c.avatar}
+                                alt={c.username}
+                              />
+                            </div>
+                            <div className="ml-4">
+                              <a
+                                href={c.profile}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-sm font-medium text-gray-900 hover:text-indigo-600 transition-colors"
+                              >
+                                {c.username}
+                              </a>
+                              <div className="text-sm text-gray-500">
+                                {c.name && c.name !== c.username ? c.name : ""}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <FaStar className="text-yellow-400 mr-1" />
+                            <span className="font-medium">{c.points}</span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <FaCode className="text-indigo-500 mr-1" />
+                            <span className="font-medium">{c.prs}</span>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
 
-              {/* 🔹 Pagination controls */}
+              {/* Pagination */}
               {totalPages > 1 && (
                 <div className="flex justify-center items-center space-x-2 py-4">
                   <button
-  onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
-  disabled={currentPage === 1}
-  className="px-3 py-1 text-sm rounded-lg border border-gray-300 disabled:opacity-50 flex items-center"
->
-  <FaChevronLeft />
-</button>
+                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                    disabled={currentPage === 1}
+                    className="px-3 py-1 text-sm rounded-lg border border-gray-300 disabled:opacity-50 flex items-center"
+                  >
+                    <FaChevronLeft />
+                  </button>
                   {[...Array(totalPages)].map((_, i) => (
                     <button
                       key={i}
                       onClick={() => setCurrentPage(i + 1)}
-                      className={`px-3 py-1 text-sm rounded-lg border ${currentPage === (i + 1) ? 'bg-indigo-500 text-white border-indigo-500' : 'border-gray-300'}`}
+                      className={`px-3 py-1 text-sm rounded-lg border ${
+                        currentPage === i + 1
+                          ? "bg-indigo-500 text-white border-indigo-500"
+                          : "border-gray-300"
+                      }`}
                     >
                       {i + 1}
                     </button>
                   ))}
                   <button
-  onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
-  disabled={currentPage === totalPages}
-  className="px-3 py-1 text-sm rounded-lg border border-gray-300 disabled:opacity-50 flex items-center"
->
-  <FaChevronRight />
-</button>
+                    onClick={() =>
+                      setCurrentPage((p) => Math.min(p + 1, totalPages))
+                    }
+                    disabled={currentPage === totalPages}
+                    className="px-3 py-1 text-sm rounded-lg border border-gray-300 disabled:opacity-50 flex items-center"
+                  >
+                    <FaChevronRight />
+                  </button>
                 </div>
               )}
             </div>
