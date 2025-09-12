@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  FiGithub,
-  FiExternalLink,
-  FiStar,
-  FiGitBranch,
-  FiAlertCircle,
-  FiGitPullRequest,
-  FiClock,
-  FiFilter,
-  FiSearch,
-  FiX,
-} from "react-icons/fi";
+import { FiAlertCircle, FiSearch, FiX } from "react-icons/fi";
 import { API_ENDPOINTS, apiUtils } from "../../config/api";
 import ProjectSubmission from "../../components/common/ProjectSubmission";
 import ProjectHero from "./ProjectHero";
+import ProjectCard from "./ProjectCard";
 
 // Skeleton Loader Component
 const SkeletonCard = () => (
@@ -59,6 +49,15 @@ const ProjectGallery = () => {
   const [categories, setCategories] = useState(["all"]);
   const [error, setError] = useState("");
   const [showSubmissionModal, setShowSubmissionModal] = useState(false);
+  const [categoryOpen, setCategoryOpen] = useState(false);
+  const [sortOpen, setSortOpen] = useState(false);
+
+  const sortByLabels = {
+    recent: "Recently Updated",
+    stars: "Most Stars",
+    forks: "Most Forks",
+    issues: "Most Issues",
+  };
 
   // Fetch projects from API
   useEffect(() => {
@@ -133,215 +132,6 @@ const ProjectGallery = () => {
       }
     });
 
-  // Get unique tech stack for filtering
-  const allTechStack = [
-    ...new Set(projects.flatMap((project) => project.techStack)),
-  ];
-
-  // ProjectCard component with improved UI
-  const ProjectCard = ({ project }) => {
-    const uniqueContributors = project.contributors.filter(
-      (contributor) => contributor !== project.author
-    );
-
-    const formatDate = (dateString) => {
-      const date = new Date(dateString);
-      return date.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      });
-    };
-
-    const getStatusColor = (status) => {
-      switch (status.toLowerCase()) {
-        case "active":
-          return "bg-green-100 text-green-800";
-        case "maintenance":
-          return "bg-yellow-100 text-yellow-800";
-        case "archived":
-          return "bg-gray-100 text-gray-800";
-        default:
-          return "bg-blue-100 text-blue-800";
-      }
-    };
-
-    const getDifficultyColor = (difficulty) => {
-      switch (difficulty.toLowerCase()) {
-        case "beginner":
-          return "bg-blue-50 text-blue-700 border-blue-200";
-        case "intermediate":
-          return "bg-purple-50 text-purple-700 border-purple-200";
-        case "advanced":
-          return "bg-pink-50 text-pink-700 border-pink-200";
-        default:
-          return "bg-gray-50 text-gray-700 border-gray-200";
-      }
-    };
-
-    useEffect(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }, []);
-    const [isLoaded, setIsLoaded] = useState(false); // local blur-up state
-
-    return (
-      <motion.div
-        className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-md"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        whileHover={{ y: -4 }}
-      >
-        {/* Project Image with Status */}
-        <div className="relative aspect-[16/9] bg-gray-100 overflow-hidden">
-          <img
-            src={project.lowResImage || project.image}
-            alt={project.title}
-            className={`absolute inset-0 w-full h-full object-cover blur-lg scale-105 transition-opacity duration-500 ${
-              isLoaded ? "opacity-0" : "opacity-100"
-            }`}
-            aria-hidden="true"
-          />
-          <img
-            src={project.image}
-            alt={project.title}
-            loading="lazy"
-            onLoad={() => setIsLoaded(true)}
-            className="relative w-full h-full object-cover transition-transform duration-300"
-          />
-          <span
-            className={`absolute top-3 right-3 text-xs font-medium px-2.5 py-1 rounded-full ${getStatusColor(
-              project.status
-            )}`}
-          >
-            {project.status}
-          </span>
-        </div>
-
-        {/* Project Content */}
-        <div className="p-6">
-          {/* Header with Title and Stats */}
-          <div className="flex justify-between items-start mb-3">
-            <h3 className="text-lg font-bold text-gray-900 line-clamp-1">
-              {project.title}
-            </h3>
-            <div className="flex items-center space-x-3">
-              <div className="flex items-center text-sm text-gray-600">
-                <FiStar className="mr-1 text-yellow-500" />
-                <span>{project.stars}</span>
-              </div>
-              <div className="flex items-center text-sm text-gray-600">
-                <FiGitBranch className="mr-1 text-gray-500" />
-                <span>{project.forks}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Description */}
-          <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-            {project.description}
-          </p>
-
-          {/* Category and Difficulty */}
-          <div className="flex flex-wrap gap-2 mb-4">
-            <span className="px-2.5 py-1 text-xs font-medium bg-indigo-50 text-indigo-700 rounded-full">
-              {project.category}
-            </span>
-            <span
-              className={`px-2.5 py-1 text-xs font-medium border rounded-full ${getDifficultyColor(
-                project.difficulty
-              )}`}
-            >
-              {project.difficulty}
-            </span>
-          </div>
-
-          {/* Author */}
-          <div className="flex items-center mb-4">
-            <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium text-gray-700 mr-2">
-              {project.author.charAt(0)}
-            </div>
-            <span className="text-sm text-gray-700">{project.author}</span>
-          </div>
-
-          {/* Tech Stack */}
-          <div className="flex flex-wrap gap-2 mb-4">
-            {project.techStack.slice(0, 3).map((tech, index) => (
-              <span
-                key={index}
-                className="px-2.5 py-1 text-xs font-medium bg-gray-50 text-gray-700 rounded-full"
-              >
-                {tech}
-              </span>
-            ))}
-            {project.techStack.length > 3 && (
-              <span className="px-2.5 py-1 text-xs font-medium bg-gray-50 text-gray-500 rounded-full">
-                +{project.techStack.length - 3} more
-              </span>
-            )}
-          </div>
-
-          {/* Project Stats */}
-          <div className="grid grid-cols-3 gap-2 text-center text-xs text-gray-500 mb-4">
-            <div className="flex flex-col items-center">
-              <div className="flex items-center">
-                <FiAlertCircle className="mr-1" />
-                <span className="font-medium text-gray-700">
-                  {project.openIssues}
-                </span>
-              </div>
-              <span>Issues</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="flex items-center">
-                <FiGitPullRequest className="mr-1" />
-                <span className="font-medium text-gray-700">
-                  {project.pullRequests}
-                </span>
-              </div>
-              <span>PRs</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="flex items-center">
-                <FiClock className="mr-1" />
-                <span className="font-medium text-gray-700">
-                  {formatDate(project.lastUpdated)}
-                </span>
-              </div>
-              <span>Updated</span>
-            </div>
-          </div>
-
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-2">
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
-            >
-              <FiGithub className="mr-2" />
-              GitHub
-            </a>
-            {project.liveDemo && (
-              <a
-                href={project.liveDemo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <FiExternalLink className="mr-2" />
-                Live Demo
-              </a>
-            )}
-          </div>
-        </div>
-      </motion.div>
-    );
-  };
-
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -377,42 +167,98 @@ const ProjectGallery = () => {
             </div>
 
             {/* Filters & Sorting */}
+            {/* Filters & Sorting */}
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full md:w-auto">
-              {/* Category Filter */}
+              {/* Category Dropdown */}
+              {/* Category Dropdown */}
               <div className="relative flex-1 sm:flex-none">
                 <motion.div
-                  whileHover={{ scale: 1.2, rotate: 10 }}
-                  className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                  className="cursor-pointer relative"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
                 >
-                  <FiFilter className="h-5 w-5 text-gray-400" />
+                  <div
+                    className="flex items-center justify-between px-4 py-3 border border-gray-300 rounded-xl shadow-sm bg-white hover:ring-2 hover:ring-indigo-500 transition-all"
+                    onClick={() => setCategoryOpen((prev) => !prev)}
+                  >
+                    <span className="text-gray-700">
+                      {filterCategory === "all"
+                        ? "All Categories"
+                        : filterCategory}
+                    </span>
+                    <FiX className="ml-2 text-gray-400" />
+                  </div>
+
+                  {/* Dropdown Menu */}
+                  <AnimatePresence>
+                    {categoryOpen && (
+                      <motion.ul
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden"
+                      >
+                        {categories.map((cat) => (
+                          <li
+                            key={cat}
+                            onClick={() => {
+                              setFilterCategory(cat);
+                              setCategoryOpen(false);
+                            }}
+                            className="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-gray-700"
+                          >
+                            {cat === "all" ? "All Categories" : cat}
+                          </li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
-                <select
-                  value={filterCategory}
-                  onChange={(e) => setFilterCategory(e.target.value)}
-                  className="w-full sm:w-auto pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700 text-sm shadow-sm transition-all duration-300"
-                >
-                  <option value="all">All Categories</option>
-                  {categories
-                    .filter((cat) => cat !== "all")
-                    .map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                </select>
               </div>
 
-              {/* Sorting */}
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700 text-sm shadow-sm transition-all duration-300"
-              >
-                <option value="recent">Recently Updated</option>
-                <option value="stars">Most Stars</option>
-                <option value="forks">Most Forks</option>
-                <option value="issues">Most Issues</option>
-              </select>
+              {/* Sort Dropdown */}
+              <div className="relative flex-1 sm:flex-none">
+                <motion.div
+                  className="cursor-pointer relative"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                >
+                  <div
+                    className="flex items-center justify-between px-4 py-3 border border-gray-300 rounded-xl shadow-sm bg-white hover:ring-2 hover:ring-indigo-500 transition-all"
+                    onClick={() => setSortOpen((prev) => !prev)}
+                  >
+                    <span className="text-gray-700">
+                      {sortByLabels[sortBy]}
+                    </span>
+                    <FiX className="ml-2 text-gray-400" />
+                  </div>
+
+                  {/* Dropdown Menu */}
+                  <AnimatePresence>
+                    {sortOpen && (
+                      <motion.ul
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden"
+                      >
+                        {Object.entries(sortByLabels).map(([key, label]) => (
+                          <li
+                            key={key}
+                            onClick={() => {
+                              setSortBy(key);
+                              setSortOpen(false);
+                            }}
+                            className="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-gray-700"
+                          >
+                            {label}
+                          </li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              </div>
 
               {/* Clear Filters Button */}
               <motion.button
