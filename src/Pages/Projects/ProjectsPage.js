@@ -328,45 +328,121 @@ const ProjectGallery = () => {
             </motion.div>
           ) : (
             <motion.div
-              className="bg-white rounded-xl shadow-sm p-8 text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              className="relative overflow-hidden rounded-3xl p-10 text-center shadow-xl border border-gray-100 bg-gradient-to-br from-white via-indigo-50 to-purple-50"
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              <div className="mx-auto max-w-md">
-                <svg
-                  className="mx-auto h-12 w-12 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
+              {/* Smooth glowing background */}
+              <motion.div
+                className="absolute inset-0 -z-10 bg-gradient-to-tr from-indigo-200 via-purple-200 to-pink-200 blur-3xl"
+                animate={{
+                  opacity: [0.3, 0.6, 0.3],
+                  scale: [1, 1.1, 1],
+                  rotate: [0, 10, -10, 0],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+
+              {/* Floating bubbles */}
+              {/* Floating bubbles */}
+              <div className="absolute inset-0 z-0 overflow-hidden">
+                {[...Array(6)].map((_, i) => {
+                  // Predefined positions for more uniform spread
+                  const positions = [
+                    { left: "10%", top: "20%" },
+                    { left: "70%", top: "15%" },
+                    { left: "30%", top: "70%" },
+                    { left: "80%", top: "60%" },
+                    { left: "50%", top: "40%" },
+                    { left: "20%", top: "50%" },
+                  ];
+                  const size = 30 + Math.random() * 40; // random size between 30-70px
+
+                  return (
+                    <motion.div
+                      key={i}
+                      className="absolute rounded-full bg-indigo-300"
+                      style={{
+                        width: size,
+                        height: size,
+                        left: positions[i].left,
+                        top: positions[i].top,
+                        opacity: 0.3,
+                      }}
+                      animate={{
+                        y: [0, -30, 0],
+                        x: [0, 10, -10, 0],
+                        scale: [1, 1.2, 1],
+                      }}
+                      transition={{
+                        duration: 6 + i,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: i * 0.5,
+                      }}
+                    />
+                  );
+                })}
+              </div>
+
+              <div className="mx-auto max-w-sm relative z-10">
+                {/* Floating icon */}
+                <motion.div
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="flex justify-center items-center w-20 h-20 rounded-full bg-white shadow-lg mx-auto border border-indigo-100"
                 >
-                  <path
-                    vectorEffect="non-scaling-stroke"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <h3 className="mt-2 text-lg font-medium text-gray-900">
-                  No projects found
+                  <FiSearch className="h-10 w-10 text-indigo-600" />
+                </motion.div>
+
+                {/* Title */}
+                <h3 className="mt-6 text-2xl font-bold text-gray-900 tracking-tight">
+                  No Projects Found
                 </h3>
-                <p className="mt-1 text-sm text-gray-500">
+
+                {/* Subtitle */}
+                <p className="mt-3 text-sm text-gray-600 leading-relaxed">
                   {searchQuery || filterCategory !== "all"
-                    ? "No projects match your current filters. Try adjusting your search or filters."
-                    : "Check back later for exciting new projects!"}
+                    ? "We couldn’t find any projects with your filters. Try exploring all projects!"
+                    : "Looks like there are no projects yet. Stay tuned for exciting updates!"}
                 </p>
-                <div className="mt-6">
-                  <button
+
+                {/* Buttons */}
+                <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => {
                       setFilterCategory("all");
                       setSearchQuery("");
                       setSortBy("recent");
                     }}
-                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="px-6 py-2.5 text-sm font-medium rounded-lg text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg transition-all"
                   >
-                    Clear all filters
-                  </button>
+                    Clear Filters
+                  </motion.button>
+
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => {
+                      setFilterCategory("all");
+                      setSearchQuery("");
+                      setSortBy("recent");
+                    }}
+                    className="px-6 py-2.5 text-sm font-medium rounded-lg text-indigo-600 border border-indigo-200 bg-white hover:bg-indigo-50 shadow-md transition-all"
+                  >
+                    Explore Projects
+                  </motion.button>
                 </div>
               </div>
             </motion.div>
