@@ -314,12 +314,13 @@ const AboutPage = () => {
           </Link>
         </motion.div>
         <motion.div variants={buttonItem}>
-          <a
-            href="#"
-            className="inline-flex items-center px-8 py-3 rounded-xl font-medium border border-indigo-400/50 text-indigo-200 hover:bg-indigo-500/10 hover:border-indigo-300 transition-all duration-300"
-          >
-            📖 View Documentation
-          </a>
+          <Link
+  to="/documentation"
+  className="inline-flex items-center px-8 py-3 rounded-xl font-medium border border-indigo-400/50 text-indigo-200 hover:bg-indigo-500/10 hover:border-indigo-300 transition-all duration-300"
+>
+  📖 View Documentation
+</Link>
+
         </motion.div>
       </motion.div>
     </motion.div>
