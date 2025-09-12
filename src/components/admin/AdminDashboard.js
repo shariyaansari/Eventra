@@ -107,24 +107,12 @@ const AdminDashboard = () => {
             <h2>Event Management</h2>
             <div className="action-buttons">
               {hasPermission('CREATE_EVENT') && (
-                <button className="action-btn create-event" onClick={() => setShowEventForm(!showEventForm)}>
-                  {showEventForm ? 'Close Form' : '+ New Event'}
+                <button className="action-btn create-event"  onClick={() => navigate("/create-event")}>
+                  + New Event
                 </button>
               )}
             </div>
           </div>
-
-          {showEventForm && (
-            <form className="event-form">
-              <h3>Create New Event</h3>
-              <input type="text" placeholder="Event Title" value={newEvent.title} onChange={(e) => setNewEvent({...newEvent, title: e.target.value})} />
-              <textarea placeholder="Event Description" value={newEvent.description} onChange={(e) => setNewEvent({...newEvent, description: e.target.value})}></textarea>
-              <input type="date" value={newEvent.date} onChange={(e) => setNewEvent({...newEvent, date: e.target.value})} />
-              <input type="text" placeholder="Location" value={newEvent.location} onChange={(e) => setNewEvent({...newEvent, location: e.target.value})} />
-              <input type="number" placeholder="Max Participants" value={newEvent.maxParticipants} onChange={(e) => setNewEvent({...newEvent, maxParticipants: e.target.value})} />
-              <button type="submit" className="action-btn">Create Event</button>
-            </form>
-          )}
 
           <div className="events-table">
             <table>

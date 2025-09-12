@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Search, X, Rocket, Users, Award, Code2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function EventHero({
   events = [],
@@ -25,6 +26,8 @@ export default function EventHero({
     { size: 50, x: 1200, y: 100, color: "#a78bfa", delay: 0.8 },
   ];
 
+  const navigate = useNavigate();
+  
   return (
     <div className="relative bg-gradient-to-l from-indigo-200 to-white text-gray-900 py-24 overflow-hidden">
       {/* Floating Circles */}
@@ -169,6 +172,7 @@ export default function EventHero({
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => navigate("/create-event")}
             className="relative px-7 py-3.5 rounded-xl font-medium text-gray-800 shadow-md backdrop-blur-md border border-gray-300 hover:border-indigo-400 transition-all duration-300 bg-white/70"
           >
             <span className="relative flex items-center">

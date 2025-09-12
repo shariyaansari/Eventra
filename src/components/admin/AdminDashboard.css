@@ -133,7 +133,7 @@ tr, td, th {
 }
 
 .event-form button {
-  background-color: #007bff;
+  background-color: #6c5ce7;
   color: white;
   padding: 12px 24px;
   border: none;
@@ -143,7 +143,7 @@ tr, td, th {
 }
 
 .event-form button:hover {
-  background-color: #0056b3;
+  background-color: #5a4fcf;
 }
 
 .btn-danger {
