@@ -12,6 +12,7 @@ Eventra is a comprehensive event management system that empowers organizers to c
 ## 🌐 Live Demo
 
 - **Frontend**: [https://eventra-psi.vercel.app/](https://eventra-psi.vercel.app/)
+- **Backend Repo**: https://github.com/SandeepVashishtha/Eventra-Backend
 - **Backend API**: [https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net](https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net)
 - **API Documentation**: [Backend Swagger UI](https://eventra-backend-dgcae3etebbag8ft.centralindia-01.azurewebsites.net/swagger-ui.html)
 
