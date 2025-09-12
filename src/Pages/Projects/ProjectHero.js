@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FiPlus } from "react-icons/fi";
 import {
   FaGithub,
   FaTwitter,
@@ -170,7 +169,7 @@ export default function ProjectHero({ setShowSubmissionModal }) {
                 stiffness: 120,
               }}
               whileHover={{ scale: 1.05 }}
-              className="bg-gradient-to-tr from-cyan-50 to-blue-50 shadow-md hover:shadow-xl rounded-3xl p-6 flex flex-col items-center justify-center transition-all duration-300"
+              className="bg-gradient-to-r from-indigo-50 to-white shadow-md hover:shadow-xl rounded-3xl p-6 flex flex-col items-center justify-center transition-all duration-300"
             >
               <span className="text-3xl font-extrabold text-indigo-600">
                 {stat.number}
