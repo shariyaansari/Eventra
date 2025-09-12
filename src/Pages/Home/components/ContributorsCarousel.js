@@ -421,10 +421,17 @@ const Contributors = () => {
               <span>View All Contributors</span>
               <FaExternalLinkAlt className="text-sm" />
             </Link>
-            <Link to="/ContributorGuide">
-  <span>Guide</span>
-</Link>
-
+            <Link
+              to="/ContributorGuide"
+              onClick={() => window.scrollTo(0, 0)}
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600
+             text-white px-8 py-3 rounded-full font-semibold shadow-lg
+             hover:from-indigo-700 hover:to-purple-700 hover:scale-105
+             transition-all duration-300 ease-out ml-10"
+            >
+              <span>Guide</span>
+              <FaExternalLinkAlt className="text-sm" />
+            </Link>
           </div>
         </div>
       </div>
