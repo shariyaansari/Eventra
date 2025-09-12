@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import mockHackathons from "./hackathonMockData.json";
@@ -35,6 +35,7 @@ const HackathonHub = () => {
     location: "",
   });
   const [showFilters, setShowFilters] = useState(false);
+  const cardsSectionRef = useRef(null);
 
   // Simulate API call
   useEffect(() => {
@@ -45,6 +46,10 @@ const HackathonHub = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  const scrollToCards = () => {
+    cardsSectionRef.current?.scrollIntoView({ behavior: "smooth" }); // ✅ scroll function
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -358,8 +363,30 @@ const HackathonHub = () => {
         hackathons={hackathons}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
+        scrollToCards={scrollToCards} // ✅ pass scroll function
       />
 
+      <motion.div
+        ref={cardsSectionRef} // ✅ attach ref
+        key={activeTab}
+        className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+        variants={{
+          hidden: { opacity: 0 },
+          show: {
+            opacity: 1,
+            transition: { staggerChildren: 0.1, delayChildren: 0.3 },
+          },
+        }}
+        initial="hidden"
+        animate="show"
+        exit={{ opacity: 0 }}
+      >
+        {hackathons.map((hackathon) => (
+          <div key={hackathon.id}>
+            {/* HackathonCard component unchanged */}
+          </div>
+        ))}
+      </motion.div>
       {/* Featured Hackathons */}
       {!isLoading && featuredHackathons.length > 0 && (
         <div className="bg-white py-8 border-b border-gray-200">

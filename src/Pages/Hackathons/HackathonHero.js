@@ -5,6 +5,7 @@ export default function HackathonHero({
   hackathons = [],
   searchQuery,
   setSearchQuery,
+  scrollToCards, // ✅ receive scroll function as prop
 }) {
   const filteredHackathons = hackathons.filter(
     (h) =>
@@ -18,12 +19,6 @@ export default function HackathonHero({
 
   return (
     <div className="relative bg-gradient-to-l from-indigo-200 to-white text-gray-900 py-24 overflow-hidden">
-      {/* Decorative Blobs */}
-      {/* <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-300/40 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-300/40 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-2000"></div>
-      <div className="absolute -bottom-20 left-1/3 w-96 h-96 bg-purple-300/40 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-4000"></div> */}
-
-      {/* Hero Content */}
       <div className="relative max-w-6xl mx-auto px-6 text-center">
         <motion.h1
           initial={{ opacity: 0, y: -30 }}
@@ -55,12 +50,10 @@ export default function HackathonHero({
           className="w-full max-w-3xl mx-auto mt-12"
         >
           <div className="relative group">
-            {/* Permanent Search Icon */}
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center z-10 pointer-events-none">
               <Search className="h-5 w-5 text-gray-400 group-focus-within:text-indigo-500 transition-colors" />
             </div>
 
-            {/* Input */}
             <input
               type="text"
               placeholder="Search hackathons by name, location, or tags..."
@@ -72,7 +65,6 @@ export default function HackathonHero({
               onChange={(e) => setSearchQuery(e.target.value)}
             />
 
-            {/* Clear Button */}
             {searchQuery && (
               <motion.button
                 whileHover={{ rotate: 90, scale: 1.1 }}
@@ -85,9 +77,7 @@ export default function HackathonHero({
             )}
           </div>
 
-          {/* Suggestions + Count */}
           <div className="mt-4 flex items-center justify-between flex-wrap gap-3 px-2">
-            {/* Chips */}
             <div className="flex gap-2 flex-wrap">
               {[
                 "AI",
@@ -109,7 +99,6 @@ export default function HackathonHero({
               ))}
             </div>
 
-            {/* Result count */}
             <span className="text-sm text-indigo-600 font-semibold">
               {filteredHackathons.length}{" "}
               {filteredHackathons.length === 1 ? "hackathon" : "hackathons"}{" "}
@@ -125,15 +114,13 @@ export default function HackathonHero({
           transition={{ delay: 0.6, duration: 0.7 }}
           className="mt-12 flex justify-center gap-5 flex-wrap"
         >
-          {/* Primary CTA */}
           <motion.button
             whileHover={{ scale: 1.07 }}
             whileTap={{ scale: 0.95 }}
             className="relative px-7 py-3.5 rounded-xl font-semibold text-white shadow-lg overflow-hidden group"
+            onClick={scrollToCards} // ✅ scrolls to hackathon cards
           >
-            {/* Animated Gradient Background */}
             <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-800 group-hover:from-indigo-500 group-hover:to-indigo-600 transition-all duration-500" />
-            {/* Shiny effect */}
             <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700 ease-in-out" />
             <span className="relative flex items-center">
               <Rocket className="inline-block w-5 h-5 mr-2" />
@@ -141,7 +128,6 @@ export default function HackathonHero({
             </span>
           </motion.button>
 
-          {/* Secondary CTA */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -151,8 +137,6 @@ export default function HackathonHero({
               <Users className="inline-block w-5 h-5 mr-2 text-indigo-600" />
               Host a Hackathon
             </span>
-            {/* Glow on hover */}
-            <span className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-indigo-500 transition-all duration-500"></span>
           </motion.button>
         </motion.div>
       </div>
@@ -174,7 +158,6 @@ export default function HackathonHero({
             whileHover={{ scale: 1.05 }}
             className="relative bg-gradient-to-br from-indigo-50 to-white rounded-3xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-2xl transition-all duration-300"
           >
-            {/* Icon Circle with hover animation */}
             <motion.div
               whileHover={{ rotate: 360, scale: 1.2 }}
               transition={{ type: "spring", stiffness: 200, damping: 10 }}
@@ -183,17 +166,12 @@ export default function HackathonHero({
               <stat.icon className="h-7 w-7 text-white" />
             </motion.div>
 
-            {/* Value */}
             <p className="text-3xl font-extrabold text-gray-900 tracking-tight">
               {stat.value}
             </p>
-
-            {/* Label */}
             <p className="mt-1 text-sm font-medium text-gray-600">
               {stat.label}
             </p>
-
-            {/* Decorative Indigo Glow */}
             <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-indigo-500/10 to-indigo-600/10 blur-2xl opacity-40 -z-10" />
           </motion.div>
         ))}
@@ -201,13 +179,3 @@ export default function HackathonHero({
     </div>
   );
 }
-
-// /* Add these to globals.css if not already */
-// @keyframes blob {
-//   0%, 100% { transform: translate(0px, 0px) scale(1); }
-//   33% { transform: translate(30px, -50px) scale(1.1); }
-//   66% { transform: translate(-20px, 20px) scale(0.9); }
-// }
-// .animate-blob { animation: blob 8s infinite; }
-// .animation-delay-2000 { animation-delay: 2s; }
-// .animation-delay-4000 { animation-delay: 4s; }
