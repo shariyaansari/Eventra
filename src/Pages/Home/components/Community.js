@@ -2,29 +2,38 @@ import { motion } from "framer-motion";
 import { useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaTelegramPlane, FaDiscord, FaLinkedin } from "react-icons/fa";
+import {
+  FaTelegramPlane,
+  FaDiscord,
+  FaLinkedin,
+  FaArrowRight,
+} from "react-icons/fa";
 
 const socials = [
   {
     name: "Telegram",
     icon: <FaTelegramPlane />,
     url: "https://t.me/eventra",
-    description: "Join our Telegram group",
-    gradient: "from-blue-500 to-blue-400",
+    description:
+      "Join our Telegram group for real-time discussions and updates",
+    gradient: "from-blue-500 via-blue-600 to-blue-700",
+    color: "blue",
   },
   {
     name: "Discord",
     icon: <FaDiscord />,
     url: "#discord",
-    description: "Join our Discord server",
-    gradient: "from-indigo-500 to-purple-500",
+    description: "Join our Discord server to connect with the community",
+    gradient: "from-indigo-500 via-purple-600 to-purple-700",
+    color: "purple",
   },
   {
     name: "LinkedIn",
     icon: <FaLinkedin />,
     url: "https://www.linkedin.com/in/sandeepvashishtha/",
-    description: "Connect with me professionally",
-    gradient: "from-blue-700 to-blue-500",
+    description: "Connect with me professionally and expand your network",
+    gradient: "from-blue-700 via-blue-800 to-blue-900",
+    color: "blue",
   },
 ];
 
@@ -38,10 +47,45 @@ const cardVariant = {
 };
 
 const iconVariant = {
-  hover: { scale: 1.2, rotate: [0, 15, -15, 0], transition: { duration: 0.6 } },
+  hover: {
+    scale: 1.2,
+    rotate: [0, 15, -15, 0],
+    transition: { duration: 0.6 },
+  },
   float: {
-    y: [0, -3, 0],
+    y: [0, -5, 0],
     transition: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+  },
+};
+
+const cardHoverVariant = {
+  rest: {
+    scale: 1,
+    boxShadow:
+      "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+  },
+  hover: {
+    scale: 1.03,
+    y: -5,
+    boxShadow:
+      "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+    transition: {
+      duration: 0.3,
+      ease: "easeOut",
+    },
+  },
+};
+
+const buttonHoverVariant = {
+  rest: {
+    width: "auto",
+  },
+  hover: {
+    width: "100%",
+    transition: {
+      duration: 0.3,
+      ease: "easeOut",
+    },
   },
 };
 
@@ -51,75 +95,107 @@ const Community = () => {
   useEffect(() => {
     controls.start("show");
   }, [controls]);
+
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-4xl mx-auto text-center">
+    <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
+      <div className="max-w-6xl mx-auto px-4 text-center">
         <motion.h2
           variants={cardVariant}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-3xl text-center sm:text-5xl font-extrabold text-black mb-8 text-center sm:text-left leading-snug"
+          className="text-4xl sm:text-5xl font-bold text-gray-900 mb-8 leading-tight"
         >
-          <span className="text-center block mb-2 text-black">
-            Connect, collaborate, and
-          </span>
-          <span className=" text-center block text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 via-purple-500 to-blue-500">
+          <span className="block mb-2">Connect, collaborate, and</span>
+          <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 via-purple-500 to-blue-500">
             create amazing events together.
           </span>
         </motion.h2>
 
         <motion.p
           variants={cardVariant}
-          className="text-gray-600 max-w-2xl mx-auto mb-10 text-base sm:text-lg"
+          className="text-gray-600 max-w-2xl mx-auto mb-12 text-lg"
         >
-          "Join our community of event organizers, share best practices, and get
-          support for your events."
+          Join our community of event organizers, share best practices, and get
+          support for your events.
         </motion.p>
-        <div className="flex flex-col sm:flex-row justify-center gap-5 flex-wrap">
+
+        <div className="flex flex-col sm:flex-row justify-center gap-6 flex-wrap mb-16">
           {socials.map((social) => (
-            <motion.a
+            <motion.div
               key={social.name}
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`group w-72 sm:w-64 p-4 sm:p-5 rounded-xl shadow-md bg-gradient-to-r ${social.gradient} text-white flex flex-col justify-between hover:shadow-lg transition-shadow`}
+              className="w-80"
               variants={cardVariant}
               initial="hidden"
               animate="show"
+              whileHover="hover"
             >
-              {/* Top Row: Icon + Name */}
-              <div className="flex flex-col mb-2">
-                <div className="flex items-center mb-2">
+              <motion.a
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block h-full rounded-2xl bg-white overflow-hidden border border-gray-200"
+                variants={cardHoverVariant}
+                initial="rest"
+                whileHover="hover"
+              >
+                {/* Gradient accent bar at top */}
+                <div
+                  className={`h-2 w-full bg-gradient-to-r ${social.gradient}`}
+                ></div>
+
+                <div className="p-6 flex flex-col h-full">
+                  {/* Icon with gradient background */}
+                  <div className="flex items-center mb-4">
+                    <motion.div
+                      className={`p-3 rounded-lg bg-gradient-to-r ${social.gradient} text-white`}
+                      variants={iconVariant}
+                      animate="float"
+                      whileHover="hover"
+                    >
+                      {social.icon}
+                    </motion.div>
+                    <span className="ml-3 text-xl font-semibold text-gray-900">
+                      {social.name}
+                    </span>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-gray-600 text-left mb-6 flex-grow">
+                    {social.description}
+                  </p>
+
+                  {/* Join Button */}
                   <motion.div
-                    className="text-2xl mr-2"
-                    variants={iconVariant}
-                    animate="float"
-                    whileHover="hover"
+                    className="flex items-center"
+                    variants={buttonHoverVariant}
                   >
-                    {social.icon}
+                    <span
+                      className={`text-sm font-medium text-white px-4 py-2 rounded-lg bg-gradient-to-r ${social.gradient} flex items-center justify-center`}
+                    >
+                      Join now
+                      <motion.span
+                        initial={{ x: 0, opacity: 0 }}
+                        whileHover={{
+                          x: 5,
+                          opacity: 1,
+                          transition: { delay: 0.1 },
+                        }}
+                        className="ml-2"
+                      >
+                        <FaArrowRight />
+                      </motion.span>
+                    </span>
                   </motion.div>
-                  <span className="font-semibold">{social.name}</span>
                 </div>
-                {/* Divider line */}
-                <div className="border-b border-white/40 w-full"></div>
-              </div>
-
-              {/* Description */}
-              <p className="text-sm text-left opacity-90 mb-3">
-                {social.description}
-              </p>
-
-              {/* Join Button */}
-              <span className="self-start px-3 py-1 bg-white/20 rounded-full text-sm font-medium hover:bg-white/30 transition-colors cursor-pointer">
-                Join
-              </span>
-            </motion.a>
+              </motion.a>
+            </motion.div>
           ))}
         </div>
       </div>
+
       <motion.div
-        className="bg-indigo-50 rounded-2xl p-8 sm:p-12 text-center mt-32"
+        className="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-2xl p-8 sm:p-12 text-center max-w-5xl mx-4 sm:mx-auto"
         initial={{ opacity: 0, y: 50 }}
         animate={controls}
         variants={{
@@ -144,13 +220,13 @@ const Community = () => {
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Link
             to="/signup"
-            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 transition-all shadow-md hover:shadow-lg"
           >
             Create your profile
           </Link>
           <Link
             to="/events"
-            className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+            className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-all shadow-sm hover:shadow-md"
           >
             Browse hackathons
           </Link>
