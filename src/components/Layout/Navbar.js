@@ -46,14 +46,20 @@ const Navbar = () => {
       icon: <FolderKanban className="w-5 h-5" />,
     },
     {
-      name: "Contributors",
-      href: "/contributors",
+      name: "Community",
       icon: <Users className="w-5 h-5" />,
-    },
-    {
-      name: "LeaderBoard",
-      href: "/leaderBoard",
-      icon: <Trophy className="w-5 h-5" />,
+      subItems: [
+        {
+          name: "Leaderboard",
+          href: "/leaderBoard",
+          icon: <Trophy className="w-5 h-5" />,
+        },
+        {
+          name: "Contributors",
+          href: "/contributors",
+          icon: <Users className="w-5 h-5" />,
+        },
+      ],
     },
     { name: "About", href: "/about", icon: <Info className="w-5 h-5" /> },
   ];
@@ -215,6 +221,13 @@ const Navbar = () => {
       );
     }
   };
+  const [hoveredNav, setHoveredNav] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  React.useEffect(() => {
+    const handleClickOutside = () => setOpenDropdown(null);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
   return (
     <>
@@ -257,7 +270,75 @@ const Navbar = () => {
 
           {/* Nav Items Desktop */}
           <div className="hidden lg:flex items-center space-x-4">
-            <NavbarLink navItems={navItems} />
+            {navItems.map((item) => {
+              const isActive = location.pathname === item.href;
+
+              if (item.subItems) {
+                return (
+                  <div key={item.name} className="relative">
+                    {/* Parent Button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent the global click handler
+                        setOpenDropdown(
+                          openDropdown === item.name ? null : item.name
+                        );
+                      }}
+                      className="flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+                    >
+                      {item.icon} {item.name}
+                      <svg
+                        className="w-4 h-4 ml-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </button>
+
+                    {/* Dropdown */}
+                    {openDropdown === item.name && (
+                      <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-50">
+                        {item.subItems.map((sub) => (
+                          <Link
+                            key={sub.name}
+                            to={sub.href}
+                            onClick={() => setOpenDropdown(null)} // close when link clicked
+                            className={`flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg ${
+                              location.pathname === sub.href
+                                ? "bg-indigo-50 text-indigo-600"
+                                : ""
+                            }`}
+                          >
+                            {sub.icon} {sub.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
+              return (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`flex items-center gap-3 py-2 px-3 rounded-lg font-medium transition-colors ${
+                    isActive
+                      ? "text-indigo-600 bg-indigo-50"
+                      : "text-gray-700 hover:text-indigo-600 hover:bg-indigo-50"
+                  }`}
+                >
+                  {item.icon} {item.name}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Auth Section Desktop */}
@@ -318,34 +399,71 @@ const Navbar = () => {
             </button>
           </div>
           {/* Navigation Links */}
-          <div className="flex-1 overflow-y-auto py-3 px-5 space-y-1">
+          {/* Mobile Navigation Links */}
+          <div className="flex flex-col px-5 py-4 space-y-2 lg:hidden">
             {navItems.map((item) => {
-              const isActive = location.pathname === item.href;
+              if (item.subItems) {
+                return (
+                  <div key={item.name} className="relative">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpenDropdown(
+                          openDropdown === item.name ? null : item.name
+                        );
+                      }}
+                      className="flex items-center justify-between w-full px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
+                    >
+                      <span className="flex items-center gap-2">
+                        {item.icon} {item.name}
+                      </span>
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </button>
+                    {openDropdown === item.name && (
+                      <div className="mt-1 ml-4 flex flex-col space-y-1">
+                        {item.subItems.map((sub) => (
+                          <Link
+                            key={sub.name}
+                            to={sub.href}
+                            onClick={() => {
+                              setOpenDropdown(null);
+                              setIsMobileMenuOpen(false);
+                            }}
+                            className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg"
+                          >
+                            {sub.icon} {sub.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
               return (
                 <Link
                   key={item.name}
                   to={item.href}
-                  onClick={closeAllMenus}
-                  className={`flex items-center gap-3 py-3 px-3 rounded-lg font-medium transition-colors relative
-    ${
-      isActive
-        ? "text-indigo-600 bg-indigo-50"
-        : "text-gray-700 hover:text-indigo-600"
-    }
-    ${!isActive && "hover:bg-indigo-50"}
-  `}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
                 >
-                  {item.icon}
-                  <span className="relative inline-block">
-                    {item.name}
-                    {isActive && (
-                      <span className="absolute left-0 -bottom-1 h-0.5 w-full rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></span>
-                    )}
-                  </span>
+                  {item.icon} {item.name}
                 </Link>
               );
             })}
           </div>
+
           {/* Auth Section */}
           <div className="border-t border-gray-200">
             {isAuthenticated() ? (
