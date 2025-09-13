@@ -22,7 +22,6 @@ const UserDashboard = () => {
     projectsContributed: 1,
   };
 
-  // 🔹 Single unified data source
   const dashboardData = [
     {
       id: 1,
@@ -121,7 +120,7 @@ const UserDashboard = () => {
     },
   ];
 
-  // 🔹 Derived lists
+
   const upcomingEvents = dashboardData.filter(
     (d) => d.type === "Event" && d.status === "Upcoming"
   );
