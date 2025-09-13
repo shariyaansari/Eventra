@@ -7,11 +7,12 @@ import {
   Settings,
   Clock,
   MapPin,
-  Target,
-  Activity
+  Zap,
+  Activity,
 } from "lucide-react";
 
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const UserDashboard = () => {
   // Mock stats
@@ -122,7 +123,6 @@ const UserDashboard = () => {
     },
   ];
 
-
   const upcomingEvents = dashboardData.filter(
     (d) => d.type === "Event" && d.status === "Upcoming"
   );
@@ -145,8 +145,22 @@ const UserDashboard = () => {
   const parseDate = (dateStr) => {
     if (!dateStr || dateStr === "-") return null;
     const [day, month, year] = dateStr.split("-").map(Number);
-    return new Date(year, month - 1, day); // month is 0-indexed
+    return new Date(year, month - 1, day); 
   };
+
+  const fullText = "Welcome back, User!";
+  const [displayText, setDisplayText] = useState("");
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (index < fullText.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText((prev) => prev + fullText[index]);
+        setIndex(index + 1);
+      }, 100);
+      return () => clearTimeout(timeout);
+    }
+  }, [index]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
@@ -157,15 +171,25 @@ const UserDashboard = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Welcome back,{" "}
-            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              User
-            </span>
-          </h1>
-          <p className="text-gray-600 text-lg">
-            Here's what's happening with your events, hackathons, and projects.
-          </p>
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8 mt-6"
+          >
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+              <span
+                className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600
+                 bg-clip-text text-transparent animate-gradient"
+              >
+                {displayText}
+                <span className="animate-pulse">|</span>
+              </span>
+            </h1>
+            <p className="text-gray-600 text-lg">
+              Here's what's happening with your events, hackathons, and
+              projects.
+            </p>
+          </motion.div>
         </motion.div>
 
         <motion.div
@@ -180,41 +204,47 @@ const UserDashboard = () => {
                 fontSize: "1.5rem",
                 fontWeight: "600",
                 color: "#1a1a1a",
-                marginBottom: "24px",
+                marginBottom: "20px",
                 display: "flex",
                 alignItems: "center",
                 gap: "8px",
               }}
             >
-              <Target size={24} color="#3b82f6" />
+              <Zap size={22} color="#f59e0b" />
               Quick Actions
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
               {/* Events */}
               <Link
                 to="/events"
-                className="h-auto p-4 flex flex-col items-center gap-2 border border-blue-200 rounded-lg hover:bg-blue-50 text-blue-600"
+                className="flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-white border rounded-xl shadow-sm p-4 cursor-pointer transition hover:shadow-lg hover:-translate-y-1 hover:border-blue-400 hover:shadow-blue-200/70"
               >
-                <Calendar className="h-5 w-5" />
-                <span className="text-sm">Events</span>
+                <Calendar className="h-6 w-6 text-blue-500 mb-2" />
+                <span className="text-sm font-medium text-gray-700">
+                  Events
+                </span>
               </Link>
 
-              {/* Hackathons */}
               <Link
                 to="/hackathons"
-                className="h-auto p-4 flex flex-col items-center gap-2 border border-pink-200 rounded-lg hover:bg-pink-50 text-pink-600"
+                className="flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 to-white border rounded-xl shadow-sm p-4 cursor-pointer transition hover:shadow-lg hover:-translate-y-1 hover:border-pink-400 hover:shadow-pink-200/70"
               >
-                <Trophy className="h-5 w-5" />
-                <span className="text-sm">Hackathons</span>
+                <Trophy className="h-6 w-6 text-pink-500 mb-2" />
+                <span className="text-sm font-medium text-gray-700">
+                  Hackathons
+                </span>
               </Link>
 
               {/* Projects */}
               <Link
                 to="/projects"
-                className="h-auto p-4 flex flex-col items-center gap-2 border border-purple-200 rounded-lg hover:bg-purple-50 text-purple-600"
+                className="flex flex-col items-center justify-center bg-gradient-to-br from-purple-100 to-white border rounded-xl shadow-sm p-4 cursor-pointer transition hover:shadow-lg hover:-translate-y-1 hover:border-purple-400 hover:shadow-purple-200/70"
               >
-                <FolderOpen className="h-5 w-5" />
-                <span className="text-sm">Projects</span>
+                <FolderOpen className="h-6 w-6 text-purple-500 mb-2" />
+                <span className="text-sm font-medium text-gray-700">
+                  Projects
+                </span>
               </Link>
 
               {/* My Registrations */}
@@ -223,19 +253,26 @@ const UserDashboard = () => {
                   e.preventDefault();
                   document
                     .getElementById("my-registrations")
-                    ?.scrollIntoView({ behavior: "smooth" });
+                    ?.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
-                className="h-auto p-4 flex flex-col items-center gap-2 border border-green-200 rounded-lg hover:bg-green-50 text-green-600"
+                className="flex flex-col items-center justify-center bg-gradient-to-br from-green-50 to-white border rounded-xl shadow-sm p-4 cursor-pointer transition hover:shadow-lg hover:-translate-y-1 hover:border-green-400 hover:shadow-green-200/70"
               >
-                <Users className="h-5 w-5" />
-                <span className="text-sm">My Registrations</span>
+                <Users className="h-6 w-6 text-green-500 mb-2" />
+                <span className="text-sm font-medium text-gray-700">
+                  My Registrations
+                </span>
               </button>
 
               {/* Settings */}
-              <button className="h-auto p-4 flex flex-col items-center gap-2 border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-600">
-                <Settings className="h-5 w-5" />
-                <span className="text-sm">Settings</span>
-              </button>
+              <Link
+                to="/settings"
+                className="flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-white border rounded-xl shadow-sm p-4 cursor-pointer transition hover:shadow-lg hover:-translate-y-1 hover:border-gray-400 hover:shadow-gray-200/70"
+              >
+                <Settings className="h-6 w-6 text-gray-500 mb-2" />
+                <span className="text-sm font-medium text-gray-700">
+                  Settings
+                </span>
+              </Link>
             </div>
           </motion.div>
 
@@ -255,83 +292,55 @@ const UserDashboard = () => {
               <Activity size={24} color="#8b5cf6" />
               Overview
             </h2>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Events */}
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl shadow">
-                <div className="p-4 border-b border-blue-200">
-                  <h3 className="flex items-center gap-2 text-blue-900 font-semibold">
-                    <Calendar className="h-5 w-5 text-blue-600" /> Events
-                  </h3>
-                </div>
-                <div className="p-4 space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-blue-700">Created</span>
-                    <span className="font-semibold text-blue-900">
-                      {userStats.eventsCreated}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-blue-700">Registered</span>
-                    <span className="font-semibold text-blue-900">
-                      {userStats.eventsRegistered}
-                    </span>
-                  </div>
+              <div className="relative bg-gradient-to-br from-blue-100 to-white border rounded-xl shadow-sm p-6 transition duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-blue-400 hover:shadow-blue-200/70">
+                <Calendar className="absolute top-4 right-4 h-5 w-5 text-blue-500" />
+                <h3 className="text-gray-600 text-sm font-medium">Events</h3>
+                <p className="text-3xl font-bold text-gray-900 mt-2">
+                  {userStats.eventsCreated + userStats.eventsRegistered}
+                </p>
+                <div className="flex gap-6 mt-3 text-sm text-gray-500">
+                  <span>{userStats.eventsCreated} Created</span>
+                  <span>{userStats.eventsRegistered} Joined</span>
                 </div>
               </div>
 
               {/* Hackathons */}
-              <div className="bg-gradient-to-br from-pink-50 to-pink-100 border border-pink-200 rounded-xl shadow">
-                <div className="p-4 border-b border-pink-200">
-                  <h3 className="flex items-center gap-2 text-pink-900 font-semibold">
-                    <Trophy className="h-5 w-5 text-pink-600" /> Hackathons
-                  </h3>
-                </div>
-                <div className="p-4 space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-pink-700">Joined</span>
-                    <span className="font-semibold text-pink-900">
-                      {userStats.hackathonsJoined}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-pink-700">Organized</span>
-                    <span className="font-semibold text-pink-900">
-                      {userStats.hackathonsOrganized}
-                    </span>
-                  </div>
+              <div className="relative bg-gradient-to-br from-pink-100 to-white border rounded-xl shadow-sm p-6 transition duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-pink-400 hover:shadow-pink-200/70">
+                <Trophy className="absolute top-4 right-4 h-5 w-5 text-pink-500" />
+                <h3 className="text-gray-600 text-sm font-medium">
+                  Hackathons
+                </h3>
+                <p className="text-3xl font-bold text-gray-900 mt-2">
+                  {userStats.hackathonsJoined + userStats.hackathonsOrganized}
+                </p>
+                <div className="flex gap-6 mt-3 text-sm text-gray-500">
+                  <span>{userStats.hackathonsJoined} Joined</span>
+                  <span>{userStats.hackathonsOrganized} Organized</span>
                 </div>
               </div>
 
               {/* Projects */}
-              <div className="bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-xl shadow">
-                <div className="p-4 border-b border-purple-200">
-                  <h3 className="flex items-center gap-2 text-purple-900 font-semibold">
-                    <FolderOpen className="h-5 w-5 text-purple-600" /> Projects
-                  </h3>
-                </div>
-                <div className="p-4 space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-purple-700">Submitted</span>
-                    <span className="font-semibold text-purple-900">
-                      {userStats.projectsSubmitted}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-purple-700">Contributed</span>
-                    <span className="font-semibold text-purple-900">
-                      {userStats.projectsContributed}
-                    </span>
-                  </div>
+              <div className="relative bg-gradient-to-br from-purple-100 to-white border rounded-xl shadow-sm p-6 transition duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-purple-400 hover:shadow-purple-200/70">
+                <FolderOpen className="absolute top-4 right-4 h-5 w-5 text-purple-500" />
+                <h3 className="text-gray-600 text-sm font-medium">Projects</h3>
+                <p className="text-3xl font-bold text-gray-900 mt-2">
+                  {userStats.projectsSubmitted + userStats.projectsContributed}
+                </p>
+                <div className="flex gap-6 mt-3 text-sm text-gray-500">
+                  <span>{userStats.projectsSubmitted} Submitted</span>
+                  <span>{userStats.projectsContributed} Contributed</span>
                 </div>
               </div>
             </div>
           </motion.div>
-
           {/* Upcoming Events & Active Projects */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Upcoming Events Card */}
             <motion.div variants={itemVariants}>
-              <div className="bg-white border rounded-xl shadow">
+              <div className="border rounded-xl shadow">
                 <div className="p-4 border-b">
                   <h3 className="flex items-center gap-2 font-semibold text-gray-900">
                     <Clock className="h-5 w-5 text-indigo-600" /> Upcoming
@@ -346,7 +355,6 @@ const UserDashboard = () => {
                           key={event.id}
                           className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition relative"
                         >
-                          {/* Badge */}
                           <span className="absolute top-2 right-2 text-xs px-2 py-1 rounded-full bg-indigo-100 text-indigo-700 font-medium">
                             {event.participationType}
                           </span>
@@ -374,9 +382,9 @@ const UserDashboard = () => {
               </div>
             </motion.div>
 
-            {/* Upcoming Hackathons Card */}
+            {/* Hackathons Card */}
             <motion.div variants={itemVariants}>
-              <div className="bg-white border rounded-xl shadow">
+              <div className="border rounded-xl shadow">
                 <div className="p-4 border-b">
                   <h3 className="flex items-center gap-2 font-semibold text-gray-900">
                     <Trophy className="h-5 w-5 text-pink-600" /> Hackathons
@@ -390,7 +398,6 @@ const UserDashboard = () => {
                           key={hackathon.id}
                           className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition relative"
                         >
-                          {/* Badge */}
                           <span className="absolute top-2 right-2 text-xs px-2 py-1 rounded-full bg-pink-100 text-pink-700 font-medium">
                             {hackathon.participationType}
                           </span>
@@ -420,7 +427,7 @@ const UserDashboard = () => {
 
             {/* Active Projects Card */}
             <motion.div variants={itemVariants}>
-              <div className="bg-white border rounded-xl shadow">
+              <div className=" border rounded-xl shadow">
                 <div className="p-4 border-b">
                   <h3 className="flex items-center gap-2 font-semibold text-gray-900">
                     <FolderOpen className="h-5 w-5 text-purple-600" /> Active
@@ -435,11 +442,7 @@ const UserDashboard = () => {
                           key={project.id}
                           className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition relative"
                         >
-                          {/* Badge */}
-                          <span
-                            className={`absolute top-2 right-2 text-xs px-2 py-1 rounded-full font-medium
-                   text-purple-600 bg-purple-100`}
-                          >
+                          <span className="absolute top-2 right-2 text-xs px-2 py-1 rounded-full font-medium text-purple-600 bg-purple-100">
                             {project.projectStatus}
                           </span>
 
@@ -459,7 +462,6 @@ const UserDashboard = () => {
               </div>
             </motion.div>
           </div>
-
           <motion.div
             id="my-registrations"
             variants={itemVariants}
@@ -517,12 +519,16 @@ const UserDashboard = () => {
                           <Trophy className="h-4 w-4 text-pink-600" />
                         )}
                         {item.type === "Project" && (
-                          <FolderOpen className="h-4 w-4 text-green-600" />
+                          <FolderOpen className="h-4 w-4 text-purple-600" />
                         )}
                         {item.type}
                       </td>
-                      <td className="px-6 py-4 text-sm font-semibold">{item.title}</td>
-                      <td className="px-6 py-4 text-sm font-semibold">{item.date || "-"}</td>
+                      <td className="px-6 py-4 text-sm font-semibold">
+                        {item.title}
+                      </td>
+                      <td className="px-6 py-4 text-sm font-semibold">
+                        {item.date || "-"}
+                      </td>
                       <td className="px-6 py-4 text-sm text-gray-500">
                         {item.location || item.status}
                       </td>
@@ -543,7 +549,9 @@ const UserDashboard = () => {
                           {item.projectStatus}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-500">{item.lastUpdate}</td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {item.lastUpdate}
+                      </td>
                       <td className="px-6 py-4 text-sm text-gray-500">
                         {item.participationType}
                       </td>
