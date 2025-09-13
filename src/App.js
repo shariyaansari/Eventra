@@ -15,6 +15,8 @@ import HackathonPage from "./Pages/Hackathons/HackathonPage";
 import ProjectsPage from "./Pages/Projects/ProjectsPage";
 import ContactUs from "./Pages/Contact/ContactUs"; // Import ContactUs page
 import LeaderBoard from "./Pages/Leaderboard/Leaderboard";
+import ContributorGuide from "./Pages/Leaderboard/ContributorGuide";
+
 import NotFound from "./components/NotFound";
 import DocumentationPage from "./Pages/About/DocumentationPage"; 
 import SubmitProject from "./Pages/Projects/SubmitProject";
@@ -50,6 +52,8 @@ function App() {
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/contributors" element={<Contributors />} />
               <Route path="/leaderBoard" element={<LeaderBoard />} />
+              <Route path="/contributorguide" element={<ContributorGuide />} />
+
               <Route path="/about" element={<AboutPage />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
