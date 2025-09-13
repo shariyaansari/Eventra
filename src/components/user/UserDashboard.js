@@ -7,6 +7,8 @@ import {
   Settings,
   Clock,
   MapPin,
+  Target,
+  Activity
 } from "lucide-react";
 
 import { Link } from "react-router-dom";
@@ -173,7 +175,18 @@ const UserDashboard = () => {
           className="space-y-8"
         >
           <motion.div variants={itemVariants}>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+            <h2
+              style={{
+                fontSize: "1.5rem",
+                fontWeight: "600",
+                color: "#1a1a1a",
+                marginBottom: "24px",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <Target size={24} color="#3b82f6" />
               Quick Actions
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -228,7 +241,18 @@ const UserDashboard = () => {
 
           {/* Overview Metrics */}
           <motion.div variants={itemVariants}>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+            <h2
+              style={{
+                fontSize: "1.5rem",
+                fontWeight: "600",
+                color: "#1a1a1a",
+                marginBottom: "24px",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <Activity size={24} color="#8b5cf6" />
               Overview
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -485,7 +509,7 @@ const UserDashboard = () => {
                   })
                   .map((item) => (
                     <tr key={item.id}>
-                      <td className="px-6 py-4 text-sm flex items-center gap-2">
+                      <td className="px-6 py-4 text-sm font-semibold flex items-center gap-2">
                         {item.type === "Event" && (
                           <Calendar className="h-4 w-4 text-indigo-600" />
                         )}
@@ -497,9 +521,9 @@ const UserDashboard = () => {
                         )}
                         {item.type}
                       </td>
-                      <td className="px-6 py-4 text-sm">{item.title}</td>
-                      <td className="px-6 py-4 text-sm">{item.date || "-"}</td>
-                      <td className="px-6 py-4 text-sm">
+                      <td className="px-6 py-4 text-sm font-semibold">{item.title}</td>
+                      <td className="px-6 py-4 text-sm font-semibold">{item.date || "-"}</td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
                         {item.location || item.status}
                       </td>
                       <td className="px-6 py-4 text-sm">
@@ -510,7 +534,7 @@ const UserDashboard = () => {
                 item.projectStatus === "Done"
                   ? "bg-green-100 text-green-700"
                   : item.projectStatus === "Upcoming"
-                  ? "bg-blue-100 text-blue-700"
+                  ? "bg-gray-200 text-gray-600"
                   : item.projectStatus === "In Progress"
                   ? "bg-yellow-100 text-yellow-700"
                   : "bg-gray-100 text-gray-600"
@@ -519,8 +543,8 @@ const UserDashboard = () => {
                           {item.projectStatus}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm">{item.lastUpdate}</td>
-                      <td className="px-6 py-4 text-sm">
+                      <td className="px-6 py-4 text-sm text-gray-500">{item.lastUpdate}</td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
                         {item.participationType}
                       </td>
                     </tr>
