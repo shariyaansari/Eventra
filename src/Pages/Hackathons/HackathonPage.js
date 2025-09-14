@@ -5,6 +5,7 @@ import mockHackathons from "./hackathonMockData.json";
 import HackathonHero from "./HackathonHero";
 import HackathonCard from "./HackathonCard";
 import FeedbackButton from "../../components/FeedbackButton";
+import { FiCode, FiRotateCw, FiCompass } from "react-icons/fi";
 
 // Skeleton Loader Component
 const SkeletonCard = () => (
@@ -374,31 +375,103 @@ const HackathonHub = () => {
             </motion.div>
           ) : (
             <motion.div
-              className="text-center py-16 bg-white rounded-xl shadow-sm"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
+              // Main container for "No Hackathons Found" card
+              className="relative overflow-hidden rounded-3xl p-10 text-center shadow-[0_10px_25px_rgba(0,0,0,0.3)] border border-gray-100 bg-gradient-to-br from-white via-indigo-50 to-purple-50"
+              initial={{ opacity: 0, y: 30, scale: 0.95 }} // Initial animation state
+              animate={{ opacity: 1, y: 0, scale: 1 }} // Animate to visible
+              transition={{ duration: 0.6, ease: "easeOut" }} // Animation timing
             >
-              <div className="mx-auto max-w-md px-4">
-                <svg
-                  className="mx-auto h-24 w-24 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
+              {/* ------------------------------ */}
+              {/* Smooth glowing background behind the card */}
+              {/* ------------------------------ */}
+              <motion.div
+                className="absolute inset-0 -z-10 bg-gradient-to-tr from-indigo-200 via-purple-200 to-pink-200 blur-3xl"
+                animate={{
+                  opacity: [0.3, 0.6, 0.3], // Fade in/out repeatedly
+                  scale: [1, 1.1, 1], // Slight scaling effect
+                  rotate: [0, 10, -10, 0], // Gentle rotation
+                }}
+                transition={{
+                  duration: 8, // Long duration for slow motion
+                  repeat: Infinity, // Loop forever
+                  ease: "easeInOut", // Smooth ease in/out
+                }}
+              />
+
+              {/* ------------------------------ */}
+              {/* Floating animated bubbles */}
+              {/* ------------------------------ */}
+              <div className="absolute inset-0 z-0 overflow-hidden">
+                {[...Array(6)].map((_, i) => {
+                  // Predefined positions for bubbles to spread evenly
+                  const positions = [
+                    { left: "10%", top: "20%" },
+                    { left: "70%", top: "15%" },
+                    { left: "30%", top: "70%" },
+                    { left: "80%", top: "60%" },
+                    { left: "50%", top: "40%" },
+                    { left: "20%", top: "50%" },
+                  ];
+                  // Randomize size between 30-70px for visual variation
+                  const size = 30 + Math.random() * 40;
+
+                  return (
+                    <motion.div
+                      key={i}
+                      className="absolute rounded-full bg-blue-400/60"
+                      style={{
+                        width: size,
+                        height: size,
+                        left: positions[i].left,
+                        top: positions[i].top,
+                        opacity: 0.3, // Slight transparency
+                      }}
+                      animate={{
+                        y: [0, -30, 0], // Vertical floating animation
+                        x: [0, 10, -10, 0], // Horizontal swaying
+                        scale: [1, 1.2, 1], // Pulsing effect
+                      }}
+                      transition={{
+                        duration: 6 + i, // Different speed for each bubble
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: i * 0.5, // Staggered start for variety
+                      }}
+                    />
+                  );
+                })}
+              </div>
+
+              {/* ------------------------------ */}
+              {/* Card content container */}
+              {/* ------------------------------ */}
+              <div className="mx-auto max-w-md relative z-10">
+                {/* ------------------------------ */}
+                {/* Floating code icon at the top */}
+                {/* ------------------------------ */}
+                <motion.div
+                  animate={{ y: [0, -8, 0] }} // Gentle up/down motion
+                  transition={{
+                    duration: 3, // Animation duration
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="flex justify-center items-center w-20 h-20 rounded-full bg-white shadow-lg mx-auto border border-indigo-100"
                 >
-                  <path
-                    vectorEffect="non-scaling-stroke"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <h3 className="mt-2 text-lg font-medium text-gray-900">
-                  No hackathons found
+                  <FiCode className="h-10 w-10 text-indigo-600" />
+                </motion.div>
+
+                {/* ------------------------------ */}
+                {/* Main title of the card */}
+                {/* ------------------------------ */}
+                <h3 className="mt-6 text-2xl font-bold text-gray-900">
+                  No Hackathons Found
                 </h3>
-                <p className="mt-1 text-sm text-gray-500">
+
+                {/* ------------------------------ */}
+                {/* Subtitle with dynamic message based on filters */}
+                {/* ------------------------------ */}
+                <p className="mt-3 text-sm text-gray-600 leading-relaxed">
                   {searchQuery ||
                   filters.difficulty ||
                   filters.prize ||
@@ -406,32 +479,43 @@ const HackathonHub = () => {
                     ? "No hackathons match your current filters. Try adjusting your search or filters."
                     : "Check back later for exciting new hackathons!"}
                 </p>
-                <div className="mt-6">
-                  <button
-                    onClick={resetFilters}
-                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+
+                {/* ------------------------------ */}
+                {/* Buttons container */}
+                {/* ------------------------------ */}
+                <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                  {/* ------------------------------ */}
+                  {/* Reset Filters Button */}
+                  {/* ------------------------------ */}
+                  <motion.button
+                    whileHover={{ scale: 1.05 }} // Grow slightly on hover
+                    whileTap={{ scale: 0.95 }} // Shrink slightly on tap
+                    onClick={resetFilters} // Function to reset search/filter
+                    className="flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium rounded-lg text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg transition-all"
                   >
-                    <svg
-                      className="-ml-1 mr-2 h-5 w-5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    Reset all filters
-                  </button>
+                    <FiRotateCw className="w-4 h-4" />
+                    Reset Filters
+                  </motion.button>
+
+                  {/* ------------------------------ */}
+                  {/* Explore Hackathons Button */}
+                  {/* ------------------------------ */}
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => {}} // Placeholder function for navigation
+                    className="flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium rounded-lg text-indigo-600 border border-indigo-200 bg-white hover:bg-indigo-50 shadow-md transition-all"
+                  >
+                    Explore Hackathons
+                    <FiCompass className="w-4 h-4" />
+                  </motion.button>
                 </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-      
+
       {/* Feedback Button */}
       <FeedbackButton />
     </div>
