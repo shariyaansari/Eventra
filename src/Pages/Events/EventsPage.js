@@ -6,6 +6,7 @@ import mockEvents from "./eventsMockData.json"; // mock data file
 import EventHero from "./EventHero"; // Hero section with search
 import EventCard from "./EventCard"; // Card for displaying event details
 import { Grid, List } from "lucide-react"; // icons for toggle view
+import FeedbackButton from "../../components/FeedbackButton"; // Feedback button component
 
 // -----------------------------
 // Main Events Page Component
@@ -202,6 +203,9 @@ const EventsPage = () => {
           )}
         </AnimatePresence>
       </div>
+      
+      {/* Feedback Button */}
+      <FeedbackButton />
     </div>
   );
 };

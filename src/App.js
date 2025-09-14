@@ -14,6 +14,7 @@ import EventsPage from "./Pages/Events/EventsPage";
 import HackathonPage from "./Pages/Hackathons/HackathonPage";
 import ProjectsPage from "./Pages/Projects/ProjectsPage";
 import ContactUs from "./Pages/Contact/ContactUs"; // Import ContactUs page
+import FeedbackPage from "./Pages/Feedback/FeedbackPage"; // Import FeedbackPage
 import LeaderBoard from "./Pages/Leaderboard/Leaderboard";
 import ContributorGuide from "./Pages/Leaderboard/ContributorGuide";
 
@@ -59,6 +60,8 @@ function App() {
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/contact" element={<ContactUs />} />{" "}
               {/* Add ContactUs route */}
+              <Route path="/feedback" element={<FeedbackPage />} />{" "}
+              {/* Add FeedbackPage route */}
               {/* Protected route for event creation */}
               <Route
                 path="/create-event"

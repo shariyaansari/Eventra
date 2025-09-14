@@ -5,6 +5,7 @@ import { API_ENDPOINTS, apiUtils } from "../../config/api";
 import ProjectSubmission from "../../components/common/ProjectSubmission";
 import ProjectHero from "./ProjectHero";
 import ProjectCard from "./ProjectCard";
+import FeedbackButton from "../../components/FeedbackButton";
 
 // Skeleton Loader Component
 const SkeletonCard = () => (
@@ -493,6 +494,9 @@ const ProjectGallery = () => {
           )}
         </AnimatePresence>
       </div>
+      
+      {/* Feedback Button */}
+      <FeedbackButton />
     </div>
   );
 };
