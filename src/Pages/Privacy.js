@@ -134,45 +134,56 @@ export const Privacy = () => {
 
       {/* Policy Sections */}
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate={controls}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
-        >
-          {policySections.map((section, index) => (
-            <motion.div
-              key={index}
-              variants={item}
-              whileHover={{
-                scale: 1.03,
-                y: -6,
-                boxShadow:
-                  "0 12px 30px rgba(99,102,241,0.15), 0 8px 16px rgba(99,102,241,0.1)",
-              }}
-              transition={{ type: "spring", stiffness: 200, damping: 15 }}
-              className="bg-white/80 backdrop-blur-lg rounded-2xl border border-gray-200 p-8 shadow-md hover:shadow-2xl relative overflow-hidden group"
-            >
-              {/* Gradient Glow Background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-50 via-purple-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+  {/* Container for all policy sections - 
+      This ensures a max width for readability and centers the grid */}
+  <motion.div
+    variants={container} // Animation variants for staggering children (if defined outside)
+    initial="hidden"     // Initial animation state for the container
+    animate={controls}   // Controlled animation trigger (could be from intersection observer, etc.)
+    className="grid grid-cols-1 md:grid-cols-2 gap-8"
+  >
+    {/* Mapping through all sections dynamically from policySections array */}
+    {policySections.map((section, index) => (
+      <motion.div
+        key={index} // Unique key for React reconciliation
+        variants={item} // Animation variant for each individual card
+        className="bg-white/80 backdrop-blur-lg rounded-2xl border border-gray-200 
+                   p-8 shadow-md relative overflow-hidden group 
+                   hover:border-blue-400 transition-colors duration-300"
+      >
+        {/* 
+          Gradient Glow Background 
+          - Initially transparent
+          - On hover, it becomes visible (opacity-100)
+          - Gives a subtle visual emphasis without scaling the card
+        */}
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-50 via-purple-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-              <div className="relative z-10">
-                <div className="flex items-center mb-6">
-                  <div className="flex items-center justify-center w-12 h-12 bg-indigo-100 rounded-xl text-indigo-600 text-2xl mr-4">
-                    {section.icon}
-                  </div>
-                  <h2 className="text-2xl font-bold text-gray-900">
-                    {section.title}
-                  </h2>
-                </div>
-                <p className="text-gray-700 leading-relaxed">
-                  {section.content}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
+        {/* Content wrapper ensures gradient background stays behind actual text */}
+        <div className="relative z-10">
+          
+          {/* Header Section with Icon + Title */}
+          <div className="flex items-center mb-6">
+            {/* Icon wrapper for consistent sizing and background */}
+            <div className="flex items-center justify-center w-12 h-12 bg-indigo-100 rounded-xl text-indigo-600 text-2xl mr-4">
+              {section.icon}
+            </div>
+            
+            {/* Title text */}
+            <h2 className="text-2xl font-bold text-gray-900">
+              {section.title}
+            </h2>
+          </div>
+
+          {/* Section description/content text */}
+          <p className="text-gray-700 leading-relaxed">
+            {section.content}
+          </p>
+        </div>
+      </motion.div>
+    ))}
+  </motion.div>
+</div>
 
       {/* Additional Info Section */}
       <motion.div
