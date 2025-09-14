@@ -19,9 +19,10 @@ import LeaderBoard from "./Pages/Leaderboard/Leaderboard";
 import ContributorGuide from "./Pages/Leaderboard/ContributorGuide";
 
 import NotFound from "./components/NotFound";
-import DocumentationPage from "./Pages/About/DocumentationPage"; 
+import DocumentationPage from "./Pages/About/DocumentationPage";
 import SubmitProject from "./Pages/Projects/SubmitProject";
 import HostHackathon from "./Pages/Hackathons/HostHackathon";
+import CommunityEvent from "./components/CommunityEvent";
 
 // --------------- AUTH PAGES
 import Login from "./components/auth/Login";
@@ -52,9 +53,9 @@ function App() {
               <Route path="/hackathons" element={<HackathonPage />} />
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/contributors" element={<Contributors />} />
+              <Route path="/communityEvent" element={<CommunityEvent />} />
               <Route path="/leaderBoard" element={<LeaderBoard />} />
               <Route path="/contributorguide" element={<ContributorGuide />} />
-
               <Route path="/about" element={<AboutPage />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
@@ -83,7 +84,7 @@ function App() {
               {/* Conatct page documentation page route */}
               <Route path="/documentation" element={<DocumentationPage />} />
               <Route path="/submit-project" element={<SubmitProject />} />
-              <Route path="/host-hackathon" element={<HostHackathon />} /> 
+              <Route path="/host-hackathon" element={<HostHackathon />} />
               <Route
                 path="/dashboard"
                 element={
