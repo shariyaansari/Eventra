@@ -16,6 +16,7 @@ import {
   LogIn,
   ArrowRight,
   ShieldUser,
+  MessageSquare,
 } from "lucide-react";
 
 const Navbar = () => {
@@ -62,6 +63,7 @@ const Navbar = () => {
       ],
     },
     { name: "About", href: "/about", icon: <Info className="w-5 h-5" /> },
+    { name: "Feedback", href: "/feedback", icon: <MessageSquare className="w-5 h-5" /> },
   ];
 
   const handleLogout = () => {
@@ -165,11 +167,11 @@ const Navbar = () => {
       );
     } else {
       return (
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden md:flex items-center space-x-3">
           {/* Sign In Button */}
           <Link
             to="/login"
-            className="flex items-center px-4 py-2 text-gray-800 font-medium rounded-full hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-300 group"
+            className="flex items-center px-3 py-2 text-gray-800 font-medium rounded-full hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-300 group whitespace-nowrap"
           >
             <LogIn className="w-5 h-5 mr-2 text-gray-600 group-hover:text-indigo-600 transition-transform duration-300 transform group-hover:translate-x-1" />
             Sign In
@@ -178,7 +180,7 @@ const Navbar = () => {
           {/* Get Started Button with animated gradient */}
           <Link
             to="/signup"
-            className="relative flex items-center px-6 py-2 font-medium rounded-full text-white overflow-hidden group"
+            className="relative flex items-center px-5 py-2 font-medium rounded-full text-white overflow-hidden group whitespace-nowrap"
           >
             {/* Animated gradient background */}
             <span
@@ -242,7 +244,7 @@ const Navbar = () => {
       />
 
       <nav className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md shadow-xl border-b border-gray-300 py-5 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-4">
           {/* Brand */}
           <Link to="/" className="flex-shrink-0">
             <h2
@@ -269,7 +271,7 @@ const Navbar = () => {
           </Link>
 
           {/* Nav Items Desktop */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-3 flex-1 justify-center">
             {navItems.map((item) => {
               const isActive = location.pathname === item.href;
 
@@ -342,7 +344,7 @@ const Navbar = () => {
           </div>
 
           {/* Auth Section Desktop */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center flex-shrink-0">
             {renderAuthSection()}
           </div>
 

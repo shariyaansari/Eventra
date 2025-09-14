@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import mockHackathons from "./hackathonMockData.json";
 import HackathonHero from "./HackathonHero";
 import HackathonCard from "./HackathonCard";
+import FeedbackButton from "../../components/FeedbackButton";
 
 // Skeleton Loader Component
 const SkeletonCard = () => (
@@ -430,6 +431,9 @@ const HackathonHub = () => {
           )}
         </AnimatePresence>
       </div>
+      
+      {/* Feedback Button */}
+      <FeedbackButton />
     </div>
   );
 };

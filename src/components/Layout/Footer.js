@@ -21,6 +21,7 @@ import {
   FaRocket,
   FaFolder,
   FaTrophy,
+  FaComments,
 } from "react-icons/fa";
 
 // Toast Component
@@ -125,6 +126,7 @@ const Footer = () => {
         icon: <FaQuestionCircle size={14} />,
       },
       { name: "Contact Us", href: "/contact", icon: <FaEnvelope size={14} /> },
+      { name: "Feedback", href: "/feedback", icon: <FaComments size={14} /> },
       { name: "API Docs", href: "#api", icon: <FaBookOpen size={14} /> },
       { name: "Status", href: "#status", icon: <FaServer size={14} /> },
     ],
