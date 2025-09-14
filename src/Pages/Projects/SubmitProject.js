@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 
@@ -25,6 +25,10 @@ const SubmitProject = () => {
     console.log("Project Submitted:", formData);
     alert("Project submitted successfully!");
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100 flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -185,6 +189,7 @@ const SubmitProject = () => {
           ))}
 
           {/* Submit Button */}
+
           <motion.button
             type="submit"
             whileHover={{ scale: 1.05 }}
