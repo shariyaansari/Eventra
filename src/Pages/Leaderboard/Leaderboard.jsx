@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 import { Menu, Transition } from "@headlessui/react";
 import confetti from "canvas-confetti";
+import GSSoCContribution from "./GSSoCContribution";
 
 const GITHUB_REPO = "SandeepVashishtha/Eventra";
 const TOKEN = process.env.REACT_APP_GITHUB_TOKEN || "";
@@ -385,6 +386,7 @@ export default function LeaderBoard() {
           </div>
         </div>
       </div>
+      <GSSoCContribution></GSSoCContribution>
     </div>
   );
 }
