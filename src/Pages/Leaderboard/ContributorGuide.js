@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiCopy, FiCheck, FiChevronDown, FiChevronUp } from "react-icons/fi";
 
 const ContributorGuide = () => {
   const [expandedFAQ, setExpandedFAQ] = useState(null);
   const [copied, setCopied] = useState("");
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const commands = [
     {
