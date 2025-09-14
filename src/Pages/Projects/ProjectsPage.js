@@ -8,6 +8,7 @@ import ProjectCard from "./ProjectCard"; // Individual project card component
 import FeedbackButton from "../../components/FeedbackButton"; // Feedback floating button
 import { useNavigate } from "react-router-dom"; // Navigation hook from React Router
 import { Link } from "react-router-dom"; // Link component for routing
+import ProjectCTA from "./ProjectCTA";
 
 // Skeleton loader for project cards while data is loading
 const SkeletonCard = () => (
@@ -462,41 +463,9 @@ const ProjectGallery = () => {
           )}
         </AnimatePresence>
 
-        {/* Call-to-Action Section */}
-        {!isLoading && filteredAndSortedProjects.length > 0 && (
-          <motion.div
-            className="mt-12 bg-white rounded-xl shadow-sm p-8 text-center border border-gray-100"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            {/* CTA Title */}
-            <h3 className="text-xl font-bold text-gray-900 mb-3">
-              Ready to contribute?
-            </h3>
-            {/* CTA Description */}
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Join our community of developers and start contributing to
-              open-source projects today!
-            </p>
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row justify-center gap-3">
-              <Link
-                to="/submit-project"
-                className="px-6 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
-              >
-                Submit Project
-              </Link>
-              <button className="px-6 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">
-                Browse Issues
-              </button>
-            </div>
-          </motion.div>
-        )}
-
         {/* Project Submission Modal would go here */}
       </div>
+      <ProjectCTA></ProjectCTA>
 
       {/* Floating Feedback Button */}
       <FeedbackButton />
