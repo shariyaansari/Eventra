@@ -7,6 +7,9 @@ import EventHero from "./EventHero"; // Hero section with search
 import EventCard from "./EventCard"; // Card for displaying event details
 import { Grid, List } from "lucide-react"; // icons for toggle view
 import FeedbackButton from "../../components/FeedbackButton"; // Feedback button component
+import { FiCalendar } from "react-icons/fi";
+import { FiRefreshCw } from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi";
 
 // -----------------------------
 // Main Events Page Component
@@ -192,18 +195,131 @@ const EventsPage = () => {
               animate="show"
               exit={{ opacity: 0 }}
             >
-              {/* Render filtered events */}
               {filteredEvents.map((event) => (
                 <EventCard key={event.id} event={event} />
               ))}
             </motion.div>
           ) : (
-            // Show fallback message if no events match search/filter
-            <p className="text-center text-gray-500">No events found</p>
+            <motion.div
+              className="relative overflow-hidden rounded-3xl p-10 text-center border border-gray-100 bg-gradient-to-br from-white via-indigo-50 to-purple-50 shadow-[0_10px_25px_rgba(0,0,0,0.3)]"
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+              {/* Smooth glowing background */}
+              <motion.div
+                className="absolute inset-0 -z-10 bg-gradient-to-tr from-indigo-200 via-purple-200 to-pink-200 blur-3xl"
+                animate={{
+                  opacity: [0.3, 0.6, 0.3],
+                  scale: [1, 1.1, 1],
+                  rotate: [0, 10, -10, 0],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+
+              {/* Floating bubbles */}
+              <div className="absolute inset-0 z-0 overflow-hidden">
+                {[...Array(6)].map((_, i) => {
+                  const positions = [
+                    { left: "10%", top: "20%" },
+                    { left: "70%", top: "15%" },
+                    { left: "30%", top: "70%" },
+                    { left: "80%", top: "60%" },
+                    { left: "50%", top: "40%" },
+                    { left: "20%", top: "50%" },
+                  ];
+                  const size = 30 + Math.random() * 40;
+                  return (
+                    <motion.div
+                      key={i}
+                      className="absolute rounded-full bg-purple-300"
+                      style={{
+                        width: size,
+                        height: size,
+                        left: positions[i].left,
+                        top: positions[i].top,
+                        opacity: 0.3,
+                      }}
+                      animate={{
+                        y: [0, -30, 0],
+                        x: [0, 10, -10, 0],
+                        scale: [1, 1.2, 1],
+                      }}
+                      transition={{
+                        duration: 6 + i,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: i * 0.5,
+                      }}
+                    />
+                  );
+                })}
+              </div>
+
+              <div className="mx-auto max-w-sm relative z-10">
+                {/* Floating icon */}
+                <motion.div
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="flex justify-center items-center w-20 h-20 rounded-full bg-white shadow-lg mx-auto border border-indigo-100"
+                >
+                  <FiCalendar className="h-10 w-10 text-purple-600" />
+                </motion.div>
+
+                {/* Title */}
+                <h3 className="mt-6 text-2xl font-bold text-gray-900 tracking-tight">
+                  No Events Found
+                </h3>
+
+                {/* Subtitle */}
+                <p className="mt-3 text-sm text-gray-600 leading-relaxed">
+                  {searchQuery || filterType !== "all"
+                    ? "We couldn’t find any events with your filters. Try exploring all events!"
+                    : "Looks like there are no events yet. Stay tuned for upcoming events!"}
+                </p>
+
+                {/* Buttons */}
+                <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => {
+                      setFilterType("all");
+                      setSearchQuery("");
+                    }}
+                    className="px-6 py-2.5 text-sm font-medium rounded-lg text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg transition-all flex items-center justify-center gap-2"
+                  >
+                    <FiRefreshCw className="w-4 h-4" />
+                    Clear Filters
+                  </motion.button>
+
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => {
+                      setFilterType("all");
+                      setSearchQuery("");
+                    }}
+                    className="px-6 py-2.5 text-sm font-medium rounded-lg text-indigo-600 border border-indigo-200 bg-white hover:bg-indigo-50 shadow-md transition-all flex items-center justify-center gap-2"
+                  >
+                    Explore Events
+                    <FiArrowRight className="w-4 h-4" />
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
-      
+
       {/* Feedback Button */}
       <FeedbackButton />
     </div>
