@@ -10,6 +10,7 @@ import FeedbackButton from "../../components/FeedbackButton"; // Feedback button
 import { FiCalendar } from "react-icons/fi";
 import { FiRefreshCw } from "react-icons/fi";
 import { FiArrowRight } from "react-icons/fi";
+import EventCTA from "./EventCTA";
 
 // -----------------------------
 // Main Events Page Component
@@ -319,6 +320,7 @@ const EventsPage = () => {
           )}
         </AnimatePresence>
       </div>
+      <EventCTA></EventCTA>
 
       {/* Feedback Button */}
       <FeedbackButton />
