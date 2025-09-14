@@ -8,6 +8,7 @@ import ProjectCard from "./ProjectCard"; // Individual project card component
 import FeedbackButton from "../../components/FeedbackButton"; // Feedback floating button
 import { useNavigate } from "react-router-dom"; // Navigation hook from React Router
 import { Link } from "react-router-dom"; // Link component for routing
+import ProjectCTA from "./ProjectCTA";
 
 // Skeleton loader for project cards while data is loading
 const SkeletonCard = () => (
@@ -497,6 +498,7 @@ const ProjectGallery = () => {
 
         {/* Project Submission Modal would go here */}
       </div>
+      <ProjectCTA></ProjectCTA>
 
       {/* Floating Feedback Button */}
       <FeedbackButton />
