@@ -1,37 +1,46 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FiAlertCircle, FiSearch, FiX } from "react-icons/fi";
-import { API_ENDPOINTS, apiUtils } from "../../config/api";
-import ProjectSubmission from "../../components/common/ProjectSubmission";
-import ProjectHero from "./ProjectHero";
-import ProjectCard from "./ProjectCard";
-import FeedbackButton from "../../components/FeedbackButton";
+import React, { useState, useEffect } from "react"; // React hooks for state and lifecycle
+import { motion, AnimatePresence } from "framer-motion"; // Framer Motion for animations
+import { FiAlertCircle, FiSearch, FiX } from "react-icons/fi"; // Feather icons
+import { API_ENDPOINTS, apiUtils } from "../../config/api"; // API utility functions and endpoints
+import ProjectSubmission from "../../components/common/ProjectSubmission"; // Project submission component
+import ProjectHero from "./ProjectHero"; // Hero section component
+import ProjectCard from "./ProjectCard"; // Individual project card component
+import FeedbackButton from "../../components/FeedbackButton"; // Feedback floating button
+import { useNavigate } from "react-router-dom"; // Navigation hook from React Router
+import { Link } from "react-router-dom"; // Link component for routing
 
-// Skeleton Loader Component
+// Skeleton loader for project cards while data is loading
 const SkeletonCard = () => (
   <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden animate-pulse">
+    {/* Placeholder image */}
     <div className="h-40 bg-gray-100"></div>
     <div className="p-6">
+      {/* Placeholder for project title */}
       <div className="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
+      {/* Placeholder for project description lines */}
       <div className="h-4 bg-gray-100 rounded w-full mb-2"></div>
       <div className="h-4 bg-gray-100 rounded w-5/6 mb-4"></div>
 
+      {/* Placeholder tags */}
       <div className="flex flex-wrap gap-2 mb-4">
         <div className="h-6 bg-gray-100 rounded-full w-16"></div>
         <div className="h-6 bg-gray-100 rounded-full w-24"></div>
       </div>
 
+      {/* Placeholder author section */}
       <div className="flex items-center justify-between mb-4">
         <div className="h-8 w-8 rounded-full bg-gray-200"></div>
         <div className="h-4 bg-gray-100 rounded w-1/3"></div>
       </div>
 
+      {/* More placeholder tags */}
       <div className="flex flex-wrap gap-2 mb-4">
         {[1, 2, 3].map((i) => (
           <div key={i} className="h-6 bg-gray-100 rounded-full w-16"></div>
         ))}
       </div>
 
+      {/* Placeholder buttons */}
       <div className="flex items-center justify-between mt-4">
         <div className="h-10 bg-gray-200 rounded-lg w-1/3"></div>
         <div className="h-10 bg-gray-200 rounded-lg w-1/3"></div>
@@ -40,19 +49,21 @@ const SkeletonCard = () => (
   </div>
 );
 
-// This is the main ProjectGallery component which manages state and renders the cards.
+// Main ProjectGallery component
 const ProjectGallery = () => {
-  const [projects, setProjects] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [filterCategory, setFilterCategory] = useState("all");
-  const [sortBy, setSortBy] = useState("recent");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [categories, setCategories] = useState(["all"]);
-  const [error, setError] = useState("");
-  const [showSubmissionModal, setShowSubmissionModal] = useState(false);
-  const [categoryOpen, setCategoryOpen] = useState(false);
-  const [sortOpen, setSortOpen] = useState(false);
+  // State variables
+  const [projects, setProjects] = useState([]); // Stores all fetched projects
+  const [isLoading, setIsLoading] = useState(true); // Loading state
+  const [filterCategory, setFilterCategory] = useState("all"); // Current category filter
+  const [sortBy, setSortBy] = useState("recent"); // Sorting option
+  const [searchQuery, setSearchQuery] = useState(""); // Search input
+  const [categories, setCategories] = useState(["all"]); // Categories available
+  const [error, setError] = useState(""); // Error message
+  const [showSubmissionModal, setShowSubmissionModal] = useState(false); // Show/hide submission modal
+  const [categoryOpen, setCategoryOpen] = useState(false); // Category dropdown state
+  const [sortOpen, setSortOpen] = useState(false); // Sort dropdown state
 
+  // Labels for sorting options
   const sortByLabels = {
     recent: "Recently Updated",
     stars: "Most Stars",
@@ -60,49 +71,51 @@ const ProjectGallery = () => {
     issues: "Most Issues",
   };
 
-  // Fetch projects from API
+  const navigate = useNavigate(); // Navigation function
+
+  // Fetch projects and categories from API
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        setIsLoading(true);
-        setError("");
+        setIsLoading(true); // Set loading before fetching
+        setError(""); // Reset error
 
-        // Fetch projects
+        // Fetch project list
         const response = await apiUtils.get(API_ENDPOINTS.PROJECTS.LIST);
         if (response.ok) {
           const projectsData = await response.json();
-          setProjects(projectsData);
+          setProjects(projectsData); // Store fetched projects
         } else {
           throw new Error("Failed to fetch projects");
         }
 
-        // Fetch categories
+        // Fetch project categories
         const categoriesResponse = await apiUtils.get(
           API_ENDPOINTS.PROJECTS.CATEGORIES
         );
         if (categoriesResponse.ok) {
           const categoriesData = await categoriesResponse.json();
-          setCategories(["all", ...categoriesData]);
+          setCategories(["all", ...categoriesData]); // Add "all" option
         }
       } catch (error) {
         console.error("Error fetching projects:", error);
-        setError("Failed to load projects. Please try again later.");
+        setError("Failed to load projects. Please try again later."); // Show error
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); // Stop loading
       }
     };
 
-    fetchProjects();
+    fetchProjects(); // Trigger API fetch
   }, []);
 
-  // Filters, searches, and sorts the projects based on the current state
+  // Filter, search, and sort projects dynamically
   const filteredAndSortedProjects = projects
     .filter((project) => {
-      // Category filter
+      // Filter by selected category
       if (filterCategory !== "all" && project.category !== filterCategory)
         return false;
 
-      // Search query filter
+      // Filter by search query
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
         return (
@@ -116,9 +129,10 @@ const ProjectGallery = () => {
         );
       }
 
-      return true;
+      return true; // Include project if no filters applied
     })
     .sort((a, b) => {
+      // Sort projects based on selected option
       switch (sortBy) {
         case "recent":
           return new Date(b.lastUpdated) - new Date(a.lastUpdated);
@@ -135,22 +149,21 @@ const ProjectGallery = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+      {/* Hero Section with CTA */}
       <ProjectHero setShowSubmissionModal={setShowSubmissionModal} />
 
-      {/* Main Content */}
+      {/* Main Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Search and Filter Bar */}
-
+        {/* Search and Filter Panel */}
         <motion.div
           className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 mb-8"
-          style={{ boxShadow: "0 10px 25px rgba(59, 130, 246, 0.2)" }} // subtle blue shadow
+          style={{ boxShadow: "0 10px 25px rgba(59, 130, 246, 0.2)" }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
           <div className="flex flex-col md:flex-row gap-4 md:items-center">
-            {/* Search Input */}
+            {/* Search Input Box */}
             <div className="relative flex-1">
               <motion.div
                 whileHover={{ scale: 1.2, rotate: 10 }}
@@ -163,14 +176,12 @@ const ProjectGallery = () => {
                 placeholder="Search projects by name, tech stack, or category..."
                 className="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700 placeholder-gray-400 shadow-sm transition-all duration-300"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => setSearchQuery(e.target.value)} // Update search query state
               />
             </div>
 
-            {/* Filters & Sorting */}
-            {/* Filters & Sorting */}
+            {/* Filters and Sort Controls */}
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full md:w-auto">
-              {/* Category Dropdown */}
               {/* Category Dropdown */}
               <div className="relative flex-1 sm:flex-none">
                 <motion.div
@@ -190,7 +201,7 @@ const ProjectGallery = () => {
                     <FiX className="ml-2 text-gray-400" />
                   </div>
 
-                  {/* Dropdown Menu */}
+                  {/* Category Dropdown Menu */}
                   <AnimatePresence>
                     {categoryOpen && (
                       <motion.ul
@@ -204,7 +215,7 @@ const ProjectGallery = () => {
                             key={cat}
                             onClick={() => {
                               setFilterCategory(cat);
-                              setCategoryOpen(false);
+                              setCategoryOpen(false); // Close dropdown on selection
                             }}
                             className="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-gray-700"
                           >
@@ -234,7 +245,7 @@ const ProjectGallery = () => {
                     <FiX className="ml-2 text-gray-400" />
                   </div>
 
-                  {/* Dropdown Menu */}
+                  {/* Sort Dropdown Menu */}
                   <AnimatePresence>
                     {sortOpen && (
                       <motion.ul
@@ -248,7 +259,7 @@ const ProjectGallery = () => {
                             key={key}
                             onClick={() => {
                               setSortBy(key);
-                              setSortOpen(false);
+                              setSortOpen(false); // Close dropdown on selection
                             }}
                             className="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-gray-700"
                           >
@@ -266,9 +277,9 @@ const ProjectGallery = () => {
                 whileHover={{ scale: 1.05 }}
                 className="px-4 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-sm font-semibold rounded-xl flex items-center gap-2 hover:from-blue-500 hover:to-cyan-500 transition-all shadow-lg"
                 onClick={() => {
-                  setFilterCategory("all");
-                  setSearchQuery("");
-                  setSortBy("recent");
+                  setFilterCategory("all"); // Reset category
+                  setSearchQuery(""); // Clear search
+                  setSortBy("recent"); // Reset sort
                 }}
               >
                 <FiX className="w-4 h-4 animate-pulse" />
@@ -278,15 +289,17 @@ const ProjectGallery = () => {
           </div>
         </motion.div>
 
-        {/* Projects Grid */}
+        {/* Projects Grid Section */}
         <AnimatePresence mode="wait">
           {isLoading ? (
+            // Show skeleton loaders while fetching
             <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <SkeletonCard key={`skeleton-${i}`} />
               ))}
             </div>
           ) : error ? (
+            // Show error message if fetch fails
             <motion.div
               className="bg-red-50 border border-red-200 rounded-xl p-8 text-center"
               initial={{ opacity: 0, y: 20 }}
@@ -309,6 +322,7 @@ const ProjectGallery = () => {
               </div>
             </motion.div>
           ) : filteredAndSortedProjects.length > 0 ? (
+            // Render actual projects
             <motion.div
               className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
               initial="hidden"
@@ -318,7 +332,7 @@ const ProjectGallery = () => {
                 show: {
                   opacity: 1,
                   transition: {
-                    staggerChildren: 0.1,
+                    staggerChildren: 0.1, // Stagger animation for each card
                   },
                 },
               }}
@@ -328,13 +342,14 @@ const ProjectGallery = () => {
               ))}
             </motion.div>
           ) : (
+            // No projects found placeholder
             <motion.div
               className="relative overflow-hidden rounded-3xl p-10 text-center shadow-xl border border-gray-100 bg-gradient-to-br from-white via-indigo-50 to-purple-50"
               initial={{ opacity: 0, y: 30, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              {/* Smooth glowing background */}
+              {/* Glowing gradient background */}
               <motion.div
                 className="absolute inset-0 -z-10 bg-gradient-to-tr from-indigo-200 via-purple-200 to-pink-200 blur-3xl"
                 animate={{
@@ -350,10 +365,8 @@ const ProjectGallery = () => {
               />
 
               {/* Floating bubbles */}
-              {/* Floating bubbles */}
               <div className="absolute inset-0 z-0 overflow-hidden">
                 {[...Array(6)].map((_, i) => {
-                  // Predefined positions for more uniform spread
                   const positions = [
                     { left: "10%", top: "20%" },
                     { left: "70%", top: "15%" },
@@ -362,8 +375,7 @@ const ProjectGallery = () => {
                     { left: "50%", top: "40%" },
                     { left: "20%", top: "50%" },
                   ];
-                  const size = 30 + Math.random() * 40; // random size between 30-70px
-
+                  const size = 30 + Math.random() * 40;
                   return (
                     <motion.div
                       key={i}
@@ -391,8 +403,8 @@ const ProjectGallery = () => {
                 })}
               </div>
 
+              {/* No projects icon */}
               <div className="mx-auto max-w-sm relative z-10">
-                {/* Floating icon */}
                 <motion.div
                   animate={{ y: [0, -8, 0] }}
                   transition={{
@@ -417,7 +429,7 @@ const ProjectGallery = () => {
                     : "Looks like there are no projects yet. Stay tuned for exciting updates!"}
                 </p>
 
-                {/* Buttons */}
+                {/* Action Buttons */}
                 <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
@@ -450,7 +462,7 @@ const ProjectGallery = () => {
           )}
         </AnimatePresence>
 
-        {/* CTA Section */}
+        {/* Call-to-Action Section */}
         {!isLoading && filteredAndSortedProjects.length > 0 && (
           <motion.div
             className="mt-12 bg-white rounded-xl shadow-sm p-8 text-center border border-gray-100"
@@ -459,20 +471,23 @@ const ProjectGallery = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
+            {/* CTA Title */}
             <h3 className="text-xl font-bold text-gray-900 mb-3">
               Ready to contribute?
             </h3>
+            {/* CTA Description */}
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
               Join our community of developers and start contributing to
               open-source projects today!
             </p>
+            {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row justify-center gap-3">
-              <button
-                onClick={() => setShowSubmissionModal(true)}
+              <Link
+                to="/submit-project"
                 className="px-6 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
               >
                 Submit Project
-              </button>
+              </Link>
               <button className="px-6 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">
                 Browse Issues
               </button>
@@ -480,22 +495,10 @@ const ProjectGallery = () => {
           </motion.div>
         )}
 
-        {/* Project Submission Modal */}
-        <AnimatePresence>
-          {showSubmissionModal && (
-            <ProjectSubmission
-              onClose={() => setShowSubmissionModal(false)}
-              onSubmit={(result) => {
-                console.log("Project submitted:", result);
-                // Optionally refresh the projects list
-                // fetchProjects();
-              }}
-            />
-          )}
-        </AnimatePresence>
+        {/* Project Submission Modal would go here */}
       </div>
-      
-      {/* Feedback Button */}
+
+      {/* Floating Feedback Button */}
       <FeedbackButton />
     </div>
   );
