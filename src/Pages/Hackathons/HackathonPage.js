@@ -6,6 +6,7 @@ import HackathonHero from "./HackathonHero";
 import HackathonCard from "./HackathonCard";
 import FeedbackButton from "../../components/FeedbackButton";
 import { FiCode, FiRotateCw, FiCompass } from "react-icons/fi";
+import HackathonCTA from "./HackathonCTA";
 
 // Skeleton Loader Component
 const SkeletonCard = () => (
@@ -515,6 +516,7 @@ const HackathonHub = () => {
           )}
         </AnimatePresence>
       </div>
+      <HackathonCTA></HackathonCTA>
 
       {/* Feedback Button */}
       <FeedbackButton />
