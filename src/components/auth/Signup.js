@@ -557,7 +557,7 @@ const Signup = () => {
                 id="confirm_password"
                 name="confirm_password"
                 type="password"
-                value={formData.password}
+                value={formData.confirm_password}
                 onChange={handleChange}
                 required
                 disabled={loading}
