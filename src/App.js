@@ -84,7 +84,17 @@ function App() {
               {/* Conatct page documentation page route */}
               <Route path="/documentation" element={<DocumentationPage />} />
               <Route path="/submit-project" element={<SubmitProject />} />
-              <Route path="/host-hackathon" element={<HostHackathon />} />
+                
+              {/* Protected route for host hackathon */}
+              <Route 
+                path="/host-hackathon" 
+                element={
+                  <ProtectedRoute requiredPermissions={["HOST_HACKATHON"]}>
+                    <HostHackathon />
+                  </ProtectedRoute>
+                } 
+              /> 
+
               <Route
                 path="/dashboard"
                 element={

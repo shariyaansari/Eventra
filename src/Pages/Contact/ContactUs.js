@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaTwitter, FaGithub, FaLinkedin, FaDiscord } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaDiscord } from "react-icons/fa";
 
 // Toast Component
 const Toast = ({ message, type = "success", onClose }) => {
@@ -129,9 +129,9 @@ const FloatingInput = ({
 
 const socialLinks = [
   { 
-    name: "Twitter", 
-    icon: <FaTwitter className="w-5 h-5" />, 
-    href: "https://twitter.com" 
+    name: "X", 
+    icon: <span className="w-5 h-5 flex items-center justify-center font-bold">X</span>, 
+    href: "https://x.com" 
   },
   { 
     name: "GitHub", 

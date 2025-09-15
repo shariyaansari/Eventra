@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRightIcon } from "@heroicons/react/24/solid";
+
+import {
+  ArrowRightIcon,
+  ChartBarIcon,
+  UserGroupIcon,
+  StarIcon,
+  ClipboardDocumentListIcon, // for Guidelines
+  RocketLaunchIcon, // for CTA
+} from "@heroicons/react/24/solid";
 
 const HostHackathon = () => {
   const [formData, setFormData] = useState({
@@ -45,15 +53,81 @@ const HostHackathon = () => {
       </motion.div>
 
 
+      {/* Guidelines Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="w-full max-w-4xl bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 shadow-lg rounded-2xl p-6 mb-10"
+      >
+        <div className="flex items-center gap-2 mb-3">
+          <ClipboardDocumentListIcon className="w-6 h-6 text-indigo-600" />
+          <h2 className="text-xl font-semibold text-indigo-700">Guidelines</h2>
+        </div>
+        <ul className="list-disc pl-6 space-y-3 text-gray-700 text-sm sm:text-base">
+          <li>
+            Clearly define the{" "}
+            <span className="font-medium">objectives, theme, and rules</span> of
+            your hackathon so participants know the purpose and scope.
+          </li>
+          <li>
+            Mention <span className="font-medium">eligibility criteria</span>{" "}
+            such as student status, professional background, or region to avoid
+            confusion later.
+          </li>
+          <li>
+            Ensure the{" "}
+            <span className="font-medium">timeline (start and end dates)</span>{" "}
+            is accurate and realistic, giving teams enough time to brainstorm
+            and build.
+          </li>
+          <li>
+            Highlight{" "}
+            <span className="font-medium">
+              prize distribution and judging criteria
+            </span>{" "}
+            to motivate participants and maintain transparency in evaluation.
+          </li>
+          <li>
+            Provide clear{" "}
+            <span className="font-medium">
+              contact details or a support channel
+            </span>{" "}
+            so participants can ask questions during the event.
+          </li>
+          <li>
+            Promote{" "}
+            <span className="font-medium">inclusivity and diversity</span> by
+            encouraging people from different backgrounds, genders, and skill
+            levels to participate.
+          </li>
+          <li>
+            Set{" "}
+            <span className="font-medium">
+              submission guidelines and deadlines
+            </span>{" "}
+            (format, platform, file types) to ensure smooth evaluation of
+            projects.
+          </li>
+          <li>
+            Encourage{" "}
+            <span className="font-medium">collaboration and team spirit</span>{" "}
+            by promoting teamwork, idea-sharing, and peer learning during the
+            event.
+          </li>
+        </ul>
+      </motion.div>
+
+
       {/* Form Section */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-3xl bg-white shadow-xl rounded-2xl p-8 border border-indigo-300"
+        className="w-full max-w-4xl bg-white shadow-xl rounded-2xl p-8 border border-indigo-300"
       >
         <form className="space-y-6" onSubmit={handleSubmit}>
-          {/** Helper function to animate inputs */}
           {[
             {
               label: "Hackathon Name",
@@ -187,6 +261,77 @@ const HostHackathon = () => {
             Submit Hackathon <ArrowRightIcon className="w-5 h-5" />
           </motion.button>
         </form>
+      </motion.div>
+
+      {/* Stats Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-4xl mb-8 mt-12"
+      >
+        {[
+          { number: "500+", label: "Hackathons Hosted", icon: ChartBarIcon },
+          {
+            number: "50k+",
+            label: "Participants Engaged",
+            icon: UserGroupIcon,
+          },
+          { number: "99%", label: "Positive Feedback", icon: StarIcon },
+        ].map((stat, index) => (
+          <motion.div
+            key={index}
+            whileHover={{ scale: 1.08, rotate: 1 }}
+            className="bg-white border border-indigo-200 rounded-2xl shadow-md p-6 text-center flex flex-col items-center"
+          >
+            <stat.icon className="w-10 h-10 text-indigo-600 mb-3 animate-bounce" />
+            <h3 className="text-3xl font-bold text-indigo-700">
+              {stat.number}
+            </h3>
+            <p className="text-gray-600 mt-2">{stat.label}</p>
+          </motion.div>
+        ))}
+      </motion.div>
+
+      {/* CTA Section - Dark Background */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="w-full max-w-4xl mt-10 text-center bg-gradient-to-r from-gray-900 via-indigo-900 to-purple-900 border border-indigo-800 rounded-2xl p-10 shadow-2xl"
+      >
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <RocketLaunchIcon className="w-8 h-8 text-indigo-400" />
+          <h2 className="text-3xl font-bold text-white">
+            Ready to Inspire the Next Big Innovation?
+          </h2>
+        </div>
+        <p className="text-gray-300 mb-6 text-lg">
+          Hosting a hackathon is your chance to bring creative minds together,
+          solve real-world problems, and build impactful projects. Take the lead
+          today!
+        </p>
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-6">
+          <motion.a
+            href="#"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-block bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-8 py-3 rounded-xl shadow-lg hover:from-indigo-600 hover:to-purple-600 transition-all duration-300"
+          >
+            Explore Hosting Options
+          </motion.a>
+
+          <motion.a
+            href="/hackathons"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-block bg-gradient-to-r from-cyan-500 to-indigo-600 text-white px-8 py-3 rounded-xl shadow-lg hover:from-cyan-600 hover:to-indigo-700 transition-all duration-300"
+          >
+            Explore Hackathons
+          </motion.a>
+        </div>
       </motion.div>
     </div>
   );
