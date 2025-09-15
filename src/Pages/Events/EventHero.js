@@ -6,6 +6,7 @@ export default function EventHero({
   events = [],
   searchQuery,
   setSearchQuery,
+  scrollToCard
 }) {
   const filteredEvents = events.filter(
     (e) =>
@@ -160,6 +161,7 @@ export default function EventHero({
             whileHover={{ scale: 1.07 }}
             whileTap={{ scale: 0.95 }}
             className="relative px-7 py-3.5 rounded-xl font-semibold text-white shadow-lg overflow-hidden group"
+            onClick={scrollToCard}
           >
             <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-800 group-hover:from-indigo-500 group-hover:to-indigo-600 transition-all duration-500" />
             <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700 ease-in-out" />

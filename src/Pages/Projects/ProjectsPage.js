@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; // React hooks for state and lifecycle
+import React, { useState, useEffect, useRef } from "react"; // React hooks for state and lifecycle
 import { motion, AnimatePresence } from "framer-motion"; // Framer Motion for animations
 import { FiAlertCircle, FiSearch, FiX } from "react-icons/fi"; // Feather icons
 import { API_ENDPOINTS, apiUtils } from "../../config/api"; // API utility functions and endpoints
@@ -63,6 +63,7 @@ const ProjectGallery = () => {
   const [showSubmissionModal, setShowSubmissionModal] = useState(false); // Show/hide submission modal
   const [categoryOpen, setCategoryOpen] = useState(false); // Category dropdown state
   const [sortOpen, setSortOpen] = useState(false); // Sort dropdown state
+  const cardSectionRef=useRef() // Refer to card section
 
   // Labels for sorting options
   const sortByLabels = {
@@ -148,13 +149,20 @@ const ProjectGallery = () => {
       }
     });
 
+    const scrollToCard = () =>{
+      cardSectionRef.current?.scrollIntoView({behaviour:'smooth'})
+    }
+
   return (
     <div className="min-h-screen">
       {/* Hero Section with CTA */}
-      <ProjectHero setShowSubmissionModal={setShowSubmissionModal} />
+      <ProjectHero 
+        setShowSubmissionModal={setShowSubmissionModal}
+        scrollToCard={scrollToCard} 
+      />
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div ref={cardSectionRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search and Filter Panel */}
         <motion.div
           className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 mb-8"
