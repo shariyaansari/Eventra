@@ -275,8 +275,8 @@ const Signup = () => {
                   htmlFor="firstName"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  First name
-                </label>
+                  First name <sup className="ml-2 text-red-500 text-sm">*</sup>
+                </label> 
                 <motion.input
                   id="firstName"
                   name="firstName"
@@ -301,7 +301,7 @@ const Signup = () => {
                   htmlFor="lastName"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Last name
+                  Last name<sup className="ml-2 text-red-500 text-sm">*</sup>
                 </label>
                 <motion.input
                   id="lastName"
@@ -334,7 +334,7 @@ const Signup = () => {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700"
               >
-                Email address
+                Email address<sup className="ml-2 text-red-500 text-sm">*</sup>
               </label>
               <motion.input
                 id="email"
@@ -376,7 +376,7 @@ const Signup = () => {
                 htmlFor="phone"
                 className="block text-sm font-medium text-gray-700"
               >
-                Contact Number{" "}
+                Contact Number{" "}<sup className="ml-2 text-red-500 text-sm">*</sup>
               </label>
 
               <div className="flex gap-2">
@@ -435,7 +435,7 @@ const Signup = () => {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700"
               >
-                Password
+                Password<sup className="ml-2 text-red-500 text-sm">*</sup>
               </label>
               <motion.input
                 id="password"
@@ -550,7 +550,7 @@ const Signup = () => {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700"
               >
-                Confirm Password
+                Confirm Password<sup className="ml-2 text-red-500 text-sm">*</sup>
               </label>
               <motion.input
                 id="confirm_password"
