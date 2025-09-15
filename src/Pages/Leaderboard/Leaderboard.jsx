@@ -294,7 +294,7 @@ export default function LeaderBoard() {
                                 : rank === 2
                                 ? "bg-gray-300 text-gray-800"
                                 : rank === 3
-                                ? "bg-amber-500 text-white"
+                                ? "bg-amber-800 text-white"
                                 : "bg-indigo-50 text-indigo-700"
                             }`}
                           >
