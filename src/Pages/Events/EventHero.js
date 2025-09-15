@@ -3,21 +3,11 @@ import { Search, X, Rocket, Users, Award, Code2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function EventHero({
-  events = [],
   searchQuery,
-  setSearchQuery,
-  scrollToCard
+  handleSearch,
+  filteredEvents,
+  scrollToCard,
 }) {
-  const filteredEvents = events.filter(
-    (e) =>
-      e.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      e.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      e.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      e.techStack.some((tech) =>
-        tech.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-  );
-
   // Floating circles config (responsive)
   const floatingCircles = [
     { size: 50, x: 50, y: 200, color: "#4f46e5", delay: 0 },
@@ -28,7 +18,7 @@ export default function EventHero({
   ];
 
   const navigate = useNavigate();
-  
+
   return (
     <div className="relative bg-gradient-to-l from-indigo-200 to-white text-gray-900 py-24 overflow-hidden">
       {/* Floating Circles */}
@@ -98,6 +88,7 @@ export default function EventHero({
               <Search className="h-5 w-5 text-gray-400 group-focus-within:text-indigo-500 transition-colors" />
             </div>
 
+            {/* ✅ call handleSearch instead of setSearchQuery */}
             <input
               type="text"
               placeholder="Search events by name, location, or tags..."
@@ -106,14 +97,14 @@ export default function EventHero({
                focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
                transition-all duration-300 shadow-lg hover:shadow-xl"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => handleSearch(e.target.value)}
             />
 
             {searchQuery && (
               <motion.button
                 whileHover={{ rotate: 90, scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                onClick={() => setSearchQuery("")}
+                onClick={() => handleSearch("")} // ✅ clear search
                 className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors z-10"
               >
                 <X className="h-5 w-5" />
@@ -136,7 +127,7 @@ export default function EventHero({
                 <motion.span
                   key={idx}
                   whileHover={{ scale: 1.1 }}
-                  onClick={() => setSearchQuery(tag)}
+                  onClick={() => handleSearch(tag)} // ✅ use handleSearch
                   className="px-3 py-1 text-xs font-medium text-indigo-600 bg-indigo-50 rounded-full cursor-pointer hover:bg-indigo-100 transition"
                 >
                   {tag}
@@ -207,7 +198,6 @@ export default function EventHero({
             whileHover={{ scale: 1.05 }}
             className="relative group bg-white rounded-2xl shadow-md shadow-blue-200/40 p-5 flex flex-col items-center text-center hover:shadow-lg transition-all duration-300"
           >
-            {/* Icon */}
             <motion.div
               whileHover={{ scale: 1.2 }}
               transition={{ type: "spring", stiffness: 200, damping: 12 }}
@@ -215,11 +205,7 @@ export default function EventHero({
             >
               <stat.icon className="h-7 w-7" />
             </motion.div>
-
-            {/* Value */}
             <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-
-            {/* Label */}
             <p className="mt-1 text-sm text-gray-500">{stat.label}</p>
           </motion.div>
         ))}
