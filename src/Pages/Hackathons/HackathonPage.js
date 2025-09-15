@@ -7,6 +7,7 @@ import HackathonCard from "./HackathonCard";
 import FeedbackButton from "../../components/FeedbackButton";
 import { FiCode, FiRotateCw, FiCompass } from "react-icons/fi";
 import HackathonCTA from "./HackathonCTA";
+import Fuse from "fuse.js";
 
 // Skeleton Loader Component
 const SkeletonCard = () => (
@@ -78,38 +79,38 @@ const HackathonHub = () => {
     },
   };
 
-  const filteredHackathons = hackathons
-    .filter((hackathon) => {
-      if (activeTab === "all") return true;
-      return hackathon.status === activeTab;
-    })
-    .filter((hackathon) => {
-      if (!searchQuery) return true;
-      const query = searchQuery.toLowerCase();
-      return (
-        hackathon.title.toLowerCase().includes(query) ||
-        hackathon.description.toLowerCase().includes(query) ||
-        hackathon.location.toLowerCase().includes(query) ||
-        hackathon.techStack.some((tech) => tech.toLowerCase().includes(query))
-      );
-    })
-    .filter((hackathon) => {
-      if (filters.difficulty && hackathon.difficulty !== filters.difficulty)
-        return false;
-      if (
-        filters.prize &&
-        !hackathon.prize.toLowerCase().includes(filters.prize.toLowerCase())
-      )
-        return false;
-      if (
-        filters.location &&
-        !hackathon.location
-          .toLowerCase()
-          .includes(filters.location.toLowerCase())
-      )
-        return false;
-      return true;
-    });
+  const fuse = new Fuse(hackathons, {
+  keys: ["title", "description", "location", "techStack"],
+  threshold: 0.4, // adjust sensitivity (0 = exact, 1 = loose)
+});
+
+const searchedHackathons = searchQuery
+  ? fuse.search(searchQuery).map((result) => result.item)
+  : hackathons;
+
+const filteredHackathons = searchedHackathons
+  .filter((hackathon) => {
+    if (activeTab === "all") return true;
+    return hackathon.status === activeTab;
+  })
+  .filter((hackathon) => {
+    if (filters.difficulty && hackathon.difficulty !== filters.difficulty)
+      return false;
+    if (
+      filters.prize &&
+      !hackathon.prize.toLowerCase().includes(filters.prize.toLowerCase())
+    )
+      return false;
+    if (
+      filters.location &&
+      !hackathon.location
+        .toLowerCase()
+        .includes(filters.location.toLowerCase())
+    )
+      return false;
+    return true;
+  });
+
 
   const featuredHackathons = [...hackathons]
     .filter((h) => h.featured)
