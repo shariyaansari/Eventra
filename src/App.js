@@ -38,6 +38,7 @@ import AdminDashboard from "./components/admin/AdminDashboard";
 import HomePage from "./Pages/Home/HomePage";
 import Terms from "./Pages/Terms";
 import { Privacy } from "./Pages/Privacy";
+import ApiDocs from "./Pages/ApiDocs";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
               <Route path="/about" element={<AboutPage />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/apiDocs" element={<ApiDocs />} />
               <Route path="/contact" element={<ContactUs />} />{" "}
               {/* Add ContactUs route */}
               <Route path="/feedback" element={<FeedbackPage />} />{" "}
@@ -84,17 +86,15 @@ function App() {
               {/* Conatct page documentation page route */}
               <Route path="/documentation" element={<DocumentationPage />} />
               <Route path="/submit-project" element={<SubmitProject />} />
-                
               {/* Protected route for host hackathon */}
-              <Route 
-                path="/host-hackathon" 
+              <Route
+                path="/host-hackathon"
                 element={
                   <ProtectedRoute requiredPermissions={["HOST_HACKATHON"]}>
                     <HostHackathon />
                   </ProtectedRoute>
-                } 
-              /> 
-
+                }
+              />
               <Route
                 path="/dashboard"
                 element={
