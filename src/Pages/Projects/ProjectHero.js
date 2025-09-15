@@ -12,6 +12,8 @@ import {
 import { SiHackaday } from "react-icons/si";
 import { HiPlus, HiArrowRight } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+
 
 const floatingShapes = [
   { size: 40, x: 50, y: 200, color: "#6366f1", delay: 0 },
@@ -38,6 +40,8 @@ const repeatedIcons = [...iconList, ...iconList, ...iconList];
 
 export default function ProjectHero({ setShowSubmissionModal,scrollToCard }) {
   const navigate = useNavigate();
+  const { user, token } = useAuth();
+  
 
   return (
     <div className="relative min-h-screen py-24 overflow-hidden bg-gradient-to-l from-indigo-200 to-white">
@@ -117,27 +121,33 @@ export default function ProjectHero({ setShowSubmissionModal,scrollToCard }) {
         </motion.p>
 
         {/* Buttons */}
-        <div className="flex justify-center gap-6 mb-16">
-          {/* Submit Project Button */}
-          <motion.button
-            onClick={() => navigate("/submit-project")}
-            className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white px-7 py-3 rounded-2xl font-semibold flex items-center gap-3 shadow-2xl hover:shadow-3xl transition-all duration-300"
-            whileTap={{ scale: 0.95 }}
-            whileHover="hover"
-            initial="rest"
-          >
-            <motion.span
-              variants={{
-                rest: { y: 0, scale: 1 },
-                hover: { y: -3, scale: 1.2 },
-              }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="flex items-center"
-            >
-              <HiPlus className="text-xl" />
-            </motion.span>
-            Submit Project
-          </motion.button>
+<div className="flex justify-center gap-6 mb-16">
+  {/* Submit Project Button */}
+  <motion.button
+    onClick={() => {
+      if (!user) {
+        navigate("/login");
+      } else {
+        navigate("/submit-project");
+      }
+    }}
+    className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white px-7 py-3 rounded-2xl font-semibold flex items-center gap-3 shadow-2xl hover:shadow-3xl transition-all duration-300"
+    whileTap={{ scale: 0.95 }}
+    whileHover="hover"
+    initial="rest"
+  >
+    <motion.span
+      variants={{
+        rest: { y: 0, scale: 1 },
+        hover: { y: -3, scale: 1.2 },
+      }}
+      transition={{ type: "spring", stiffness: 300 }}
+      className="flex items-center"
+    >
+      <HiPlus className="text-xl" />
+    </motion.span>
+    Submit Project
+  </motion.button>
           {/* Explore Projects Button */}
           <motion.button
             className="bg-white text-indigo-600 px-6 py-3 rounded-2xl font-semibold flex items-center gap-2 shadow-md hover:shadow-xl hover:bg-indigo-50 transition-all duration-300"

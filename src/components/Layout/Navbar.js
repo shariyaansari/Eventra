@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import NavbarLink from "./NavbarLink";
+import { motion } from "framer-motion";
 import {
   Home,
   Calendar,
@@ -17,6 +18,7 @@ import {
   ArrowRight,
   ShieldUser,
   MessageSquare,
+  Book,
 } from "lucide-react";
 
 const Navbar = () => {
@@ -34,37 +36,43 @@ const Navbar = () => {
   };
 
   const navItems = [
-    { name: "Home", href: "/", icon: <Home className="w-5 h-5" /> },
-    { name: "Events", href: "/events", icon: <Calendar className="w-5 h-5" /> },
-    {
-      name: "Hackathons",
-      href: "/hackathons",
-      icon: <Rocket className="w-5 h-5" />,
-    },
-    {
-      name: "Projects",
-      href: "/projects",
-      icon: <FolderKanban className="w-5 h-5" />,
-    },
-    {
-      name: "Community",
-      icon: <Users className="w-5 h-5" />,
-      subItems: [
-        {
-          name: "Leaderboard",
-          href: "/leaderBoard",
-          icon: <Trophy className="w-5 h-5" />,
-        },
-        {
-          name: "Contributors",
-          href: "/contributors",
-          icon: <Users className="w-5 h-5" />,
-        },
-      ],
-    },
-    { name: "About", href: "/about", icon: <Info className="w-5 h-5" /> },
-    { name: "Feedback", href: "/feedback", icon: <MessageSquare className="w-5 h-5" /> },
-  ];
+  { name: "Home", href: "/", icon: <Home className="w-5 h-5 text-indigo-500" /> },
+  { name: "Events", href: "/events", icon: <Calendar className="w-5 h-5 text-green-500" /> },
+  {
+    name: "Hackathons",
+    href: "/hackathons",
+    icon: <Rocket className="w-5 h-5 text-pink-500" />,
+  },
+  {
+    name: "Projects",
+    href: "/projects",
+    icon: <FolderKanban className="w-5 h-5 text-orange-500" />,
+  },
+  {
+    name: "Community",
+    icon: <Users className="w-5 h-5 text-purple-500" />,
+    subItems: [
+      {
+        name: "Leaderboard",
+        href: "/leaderBoard",
+        icon: <Trophy className="w-5 h-5 text-yellow-500" />,
+      },
+      {
+        name: "Contributors",
+        href: "/contributors",
+        icon: <Users className="w-5 h-5 text-blue-500" />,
+      },
+      {
+        name: "Contributors Guide",
+        href: "/contributorguide",
+        icon: <Book className="w-5 h-5 text-rose-500" />,
+      },
+    ],
+  },
+  { name: "About", href: "/about", icon: <Info className="w-5 h-5 text-cyan-500" /> },
+  { name: "Feedback", href: "/feedback", icon: <MessageSquare className="w-5 h-5 text-teal-500" /> },
+];
+
 
   const handleLogout = () => {
     logout();
@@ -271,7 +279,7 @@ const Navbar = () => {
           </Link>
 
           {/* Nav Items Desktop */}
-          <div className="hidden lg:flex items-center space-x-3 flex-1 justify-center">
+          <div className="hidden lg:flex items-center space-x-0.5 flex-1 justify-center">
             {navItems.map((item) => {
               const isActive = location.pathname === item.href;
 
@@ -306,23 +314,45 @@ const Navbar = () => {
 
                     {/* Dropdown */}
                     {openDropdown === item.name && (
-                      <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-50">
-                        {item.subItems.map((sub) => (
-                          <Link
-                            key={sub.name}
-                            to={sub.href}
-                            onClick={() => setOpenDropdown(null)} // close when link clicked
-                            className={`flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg ${
-                              location.pathname === sub.href
-                                ? "bg-indigo-50 text-indigo-600"
-                                : ""
-                            }`}
-                          >
-                            {sub.icon} {sub.name}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
+  <motion.div
+    initial={{ opacity: 0, y: -8 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -8 }}
+    transition={{ duration: 0.2, ease: "easeOut" }}
+    className="absolute left-0 mt-2 w-56 bg-white/90 backdrop-blur-md shadow-xl rounded-2xl z-50 border border-gray-100 divide-y divide-gray-300"
+  >
+    {item.subItems.map((sub, idx) => (
+      <Link
+        key={sub.name}
+        to={sub.href}
+        onClick={() => setOpenDropdown(null)}
+        className={`group flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors duration-200
+          ${
+            location.pathname === sub.href
+              ? "bg-indigo-100 text-indigo-700"
+              : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
+          }
+          ${idx === 0 ? "rounded-t-2xl" : ""} 
+          ${idx === item.subItems.length - 1 ? "rounded-b-2xl" : ""}
+        `}
+      >
+        {/* Icon with animation */}
+        <motion.span
+  whileHover={{ scale: 1.2, rotate: 8 }}
+  transition={{ type: "spring", stiffness: 300, damping: 12 }}
+>
+  {sub.icon}
+</motion.span>
+
+
+        {sub.name}
+      </Link>
+    ))}
+  </motion.div>
+)}
+
+
+
                   </div>
                 );
               }

@@ -112,12 +112,29 @@ const Footer = () => {
       },
       {
         name: "Community Events",
-        href: "#community",
+        href: "/communityEvent",
         icon: <FaUsers size={14} />,
       },
-      { name: "Documentation", href: "#docs", icon: <FaBook size={14} /> },
-      { name: "Contributors", href: "/contributors", icon: <FaUsers size={14} /> },
-      { name: "LeaderBoard", href: "/leaderBoard", icon: <FaTrophy size={14} /> },
+      {
+        name: "Documentation",
+        href: "/documentation",
+        icon: <FaBook size={14} />,
+      },
+      {
+        name: "Contributors",
+        href: "/contributors",
+        icon: <FaUsers size={14} />,
+      },
+      {
+        name: "Contributors Guide",
+        href: "/contributorguide",
+        icon: <FaBook size={14} />,
+      },
+      {
+        name: "LeaderBoard",
+        href: "/leaderBoard",
+        icon: <FaTrophy size={14} />,
+      },
     ],
     support: [
       {
