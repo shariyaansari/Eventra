@@ -44,6 +44,7 @@ const HostHackathon = () => {
         </p>
       </motion.div>
 
+
       {/* Form Section */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
