@@ -14,7 +14,6 @@ const FeedbackButton = () => {
       <Link
         to="/feedback"
         className="flex items-center justify-center w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full shadow-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300 border-2 border-white group"
-        title="Share Feedback"
         aria-label="Share Feedback"
       >
         <motion.div
