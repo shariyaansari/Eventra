@@ -2,12 +2,34 @@ import { motion } from "framer-motion";
 import { Search, X, Rocket, Users, Award, Code2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * HackathonHero Component
+ * ---------------------------------------------------------
+ * This component serves as the hero section of the Hackathons page.
+ * It contains:
+ *  - Title & tagline for hackathons
+ *  - A live search box with tag filters
+ *  - Call-to-action buttons (Explore Hackathons, Host a Hackathon)
+ *  - Stats summary section
+ *  - Smooth animations using Framer Motion
+ * 
+ * Props:
+ *  - hackathons: array of hackathon objects
+ *  - searchQuery: current text in the search input
+ *  - setSearchQuery: setter for updating the query
+ *  - scrollToCards: callback function to scroll to the hackathon list
+ */
 export default function HackathonHero({
-  hackathons = [],
-  searchQuery,
-  setSearchQuery,
-  scrollToCards, // ✅ receive scroll function as prop
+  hackathons = [], // ✅ default empty array if no hackathons
+  searchQuery, // ✅ current search term
+  setSearchQuery, // ✅ function to update the search input
+  scrollToCards, // ✅ function to scroll down to hackathon cards
 }) {
+  /**
+   * Filter hackathons based on search query
+   * - Matches title, description, location, or tech stack
+   * - Converts everything to lowercase for case-insensitive matching
+   */
   const filteredHackathons = hackathons.filter(
     (h) =>
       h.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -17,11 +39,15 @@ export default function HackathonHero({
         tech.toLowerCase().includes(searchQuery.toLowerCase())
       )
   );
+
+  // React Router hook to navigate programmatically
   const navigate = useNavigate();
 
   return (
     <div className="relative bg-gradient-to-l from-indigo-200 to-white text-gray-900 py-6 ">
+      {/* ======================= HERO TITLE ======================= */}
       <div className="relative max-w-6xl mx-auto px-8 text-center mt-12">
+        {/* Title with gradient animation */}
         <motion.h1
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -34,6 +60,7 @@ export default function HackathonHero({
           </span>
         </motion.h1>
 
+        {/* Subtitle / tagline under the main heading */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -44,7 +71,7 @@ export default function HackathonHero({
           and win amazing prizes 🚀"
         </motion.p>
 
-        {/* Search Box */}
+        {/* ======================= SEARCH BOX ======================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -52,10 +79,12 @@ export default function HackathonHero({
           className="w-full max-w-3xl mx-auto mt-12"
         >
           <div className="relative group">
+            {/* Search Icon at the left side */}
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center z-10 pointer-events-none">
               <Search className="h-5 w-5 text-gray-400 group-focus-within:text-indigo-500 transition-colors" />
             </div>
 
+            {/* Search Input Field */}
             <input
               type="text"
               placeholder="Search hackathons by name, location, or tags..."
@@ -67,6 +96,7 @@ export default function HackathonHero({
               onChange={(e) => setSearchQuery(e.target.value)}
             />
 
+            {/* Clear Button (X) - appears only when there's a query */}
             {searchQuery && (
               <motion.button
                 whileHover={{ rotate: 90, scale: 1.1 }}
@@ -79,7 +109,9 @@ export default function HackathonHero({
             )}
           </div>
 
+          {/* ======================= TAG FILTERS ======================= */}
           <div className="mt-4 flex items-center justify-between flex-wrap gap-3 px-2">
+            {/* Predefined Tags for quick filtering */}
             <div className="flex gap-2 flex-wrap">
               {[
                 "AI",
@@ -101,21 +133,25 @@ export default function HackathonHero({
               ))}
             </div>
 
+            {/* Show count of matched hackathons */}
             <span className="text-sm text-indigo-600 font-semibold">
               {filteredHackathons.length}{" "}
-              {filteredHackathons.length === 1 ? "hackathon" : "hackathons"}{" "}
+              {filteredHackathons.length === 1
+                ? "hackathon"
+                : "hackathons"}{" "}
               found
             </span>
           </div>
         </motion.div>
 
-        {/* CTA Buttons */}
+        {/* ======================= CTA BUTTONS ======================= */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.7 }}
           className="mt-8 flex justify-center gap-5 flex-wrap"
         >
+          {/* Explore Hackathons Button (scrolls to cards section) */}
           <motion.button
             whileHover={{ scale: 1.07 }}
             whileTap={{ scale: 0.95 }}
@@ -130,6 +166,7 @@ export default function HackathonHero({
             </span>
           </motion.button>
 
+          {/* Host Hackathon Button (navigates to hosting page) */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -144,7 +181,7 @@ export default function HackathonHero({
         </motion.div>
       </div>
 
-      {/* Stats Section */}
+      {/* ======================= STATS SECTION ======================= */}
       <div className="relative max-w-6xl mx-auto px-6 mt-20 mb-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {[
           { label: "Hackathons Hosted", value: "120+", icon: Rocket },
@@ -161,6 +198,7 @@ export default function HackathonHero({
             whileHover={{ scale: 1.05 }}
             className="relative bg-gradient-to-br from-indigo-50 to-white rounded-3xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-2xl transition-all duration-300"
           >
+            {/* Animated Icon in a circular container */}
             <motion.div
               whileHover={{ rotate: 360, scale: 1.2 }}
               transition={{ type: "spring", stiffness: 200, damping: 10 }}
@@ -169,12 +207,17 @@ export default function HackathonHero({
               <stat.icon className="h-7 w-7 text-white" />
             </motion.div>
 
+            {/* Stat Value (big bold number) */}
             <p className="text-3xl font-extrabold text-gray-900 tracking-tight">
               {stat.value}
             </p>
+
+            {/* Stat Label (e.g., Participants, Projects Built) */}
             <p className="mt-1 text-sm font-medium text-gray-600">
               {stat.label}
             </p>
+
+            {/* Decorative gradient glow effect */}
             <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-indigo-500/10 to-indigo-600/10 blur-2xl opacity-40 -z-10" />
           </motion.div>
         ))}
