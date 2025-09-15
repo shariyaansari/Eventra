@@ -20,8 +20,8 @@ export default function HackathonHero({
   const navigate = useNavigate();
 
   return (
-    <div className="relative bg-gradient-to-l from-indigo-200 to-white text-gray-900 py-24 overflow-hidden">
-      <div className="relative max-w-6xl mx-auto px-6 text-center">
+    <div className="relative bg-gradient-to-l from-indigo-200 to-white text-gray-900 py-6 ">
+      <div className="relative max-w-6xl mx-auto px-8 text-center mt-12">
         <motion.h1
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -114,7 +114,7 @@ export default function HackathonHero({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.7 }}
-          className="mt-12 flex justify-center gap-5 flex-wrap"
+          className="mt-8 flex justify-center gap-5 flex-wrap"
         >
           <motion.button
             whileHover={{ scale: 1.07 }}
@@ -145,7 +145,7 @@ export default function HackathonHero({
       </div>
 
       {/* Stats Section */}
-      <div className="relative max-w-6xl mx-auto px-6 mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="relative max-w-6xl mx-auto px-6 mt-20 mb-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {[
           { label: "Hackathons Hosted", value: "120+", icon: Rocket },
           { label: "Participants", value: "50k+", icon: Users },

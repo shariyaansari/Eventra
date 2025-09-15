@@ -137,7 +137,7 @@ const HackathonHub = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white relative">
+    <div className="bg-white relative">
       {/* Floating Action Button */}
       <motion.div
         className="fixed bottom-6 right-6 z-50"
@@ -175,7 +175,7 @@ const HackathonHub = () => {
       <motion.div
         ref={cardsSectionRef} // ✅ attach ref
         key={activeTab}
-        className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+        className="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
         variants={{
           hidden: { opacity: 0 },
           show: {
@@ -208,7 +208,7 @@ const HackathonHub = () => {
                 View all featured
               </Link>
             </div>
-            <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {featuredHackathons.map((hackathon, index) => (
                 <HackathonCard
                   key={index}
@@ -222,11 +222,13 @@ const HackathonHub = () => {
       )}
 
       {/* Hackathons Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         {/* Search and Filters */}
         <div className="mb-8">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">All Hackathons</h2>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 mt-0">
+            <h2 className="text-2xl font-bold text-gray-900 mt-0">
+              All Hackathons
+            </h2>
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setShowFilters(!showFilters)}
