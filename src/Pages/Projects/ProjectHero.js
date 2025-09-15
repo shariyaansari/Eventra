@@ -36,7 +36,7 @@ const iconList = [
 
 const repeatedIcons = [...iconList, ...iconList, ...iconList];
 
-export default function ProjectHero({ setShowSubmissionModal }) {
+export default function ProjectHero({ setShowSubmissionModal,scrollToCard }) {
   const navigate = useNavigate();
 
   return (
@@ -142,6 +142,7 @@ export default function ProjectHero({ setShowSubmissionModal }) {
           <motion.button
             className="bg-white text-indigo-600 px-6 py-3 rounded-2xl font-semibold flex items-center gap-2 shadow-md hover:shadow-xl hover:bg-indigo-50 transition-all duration-300"
             whileTap={{ scale: 0.95 }}
+            onClick={scrollToCard}
           >
             Explore Projects
             <motion.span
