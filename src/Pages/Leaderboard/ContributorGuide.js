@@ -1,11 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiCopy, FiCheck, FiChevronDown, FiChevronUp } from "react-icons/fi";
+import {
+  FiCopy,
+  FiCheck,
+  FiChevronDown,
+  FiChevronUp,
+  FiInfo,
+} from "react-icons/fi";
+import {
+  FiFile,
+  FiLock,
+  FiCode,
+  FiFileText,
+  FiPackage,
+  FiCheckCircle,
+  FiServer,
+  FiClipboard,
+} from "react-icons/fi";
+import { FiGitBranch } from "react-icons/fi";
+import { FiGithub, FiArrowRightCircle } from "react-icons/fi";
 
 const ContributorGuide = () => {
   const [expandedFAQ, setExpandedFAQ] = useState(null);
   const [copied, setCopied] = useState("");
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -50,6 +68,51 @@ const ContributorGuide = () => {
       answer:
         "Use descriptive names like 'feature/login' or 'fix/header-bug' to indicate purpose clearly.",
     },
+    {
+      question: "Can I contribute without coding?",
+      answer: "Yes! You can improve documentation, design, or testing.",
+    },
+  ];
+
+  const contributionTypes = [
+    {
+      title: "Bug Fixes",
+      description:
+        "Identify bugs from issues tagged 'bug' and submit a PR with a clear explanation and test cases if possible.",
+      example: "Example: Fix header alignment issue in responsive view.",
+    },
+    {
+      title: "Features",
+      description:
+        "Add a new feature or improve an existing one. Make sure to follow existing patterns and code structure.",
+      example: "Example: Add dark mode toggle button with smooth animation.",
+    },
+    {
+      title: "Documentation",
+      description:
+        "Improve README, add examples, or clarify instructions for contributors.",
+      example: "Example: Add step-by-step setup instructions with screenshots.",
+    },
+    {
+      title: "Testing",
+      description:
+        "Write unit or integration tests for existing code to ensure stability and prevent regressions.",
+      example: "Example: Add Jest tests for new login form components.",
+    },
+    {
+      title: "Design & UI",
+      description:
+        "Improve the user interface, accessibility, or design consistency across the project.",
+      example:
+        "Example: Update button styles for better contrast and hover effects.",
+    },
+    {
+      title: "Code Refactoring",
+      description:
+        "Improve existing code structure without changing functionality to make it cleaner, readable, and maintainable.",
+      example:
+        "Example: Simplify a complex function or restructure components into smaller reusable pieces.",
+    },
   ];
 
   const copyCommand = (cmd, id) => {
@@ -59,107 +122,311 @@ const ContributorGuide = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen px-6 py-12 max-w-6xl mx-auto space-y-16">
+    <div className="bg-gray-50 min-h-screen px-4 sm:px-6 lg:px-12 py-12 max-w-6xl mx-auto space-y-16">
       {/* Page Heading */}
       <div className="text-center mb-12">
         <h1 className="text-5xl font-bold text-indigo-900 mb-4">
           Welcome to Eventra Contributions!
         </h1>
         <p className="text-gray-700 text-base max-w-3xl mx-auto">
-          "We're excited to have you join the Eventra community as a
-          contributor. Whether you're fixing a bug, adding a feature, or
-          improving documentation, this guide will help you navigate the process
-          smoothly."
+          We're excited to have you join the Eventra community! This guide
+          provides detailed, actionable instructions, examples, and interactive
+          tips to help first-time contributors succeed.
         </p>
       </div>
 
       {/* Step-by-Step Contribution Section */}
       <div className="bg-white p-8 rounded-xl shadow-md">
-        <h2 className="text-3xl font-bold text-gray-900 mb-3">
+        <h2 className="text-3xl font-bold text-gray-900 mb-8 mt-8 text-center">
           Step-by-Step Contribution Journey
         </h2>
-        <p className="text-gray-700 mb-6">
-          Follow these steps to make your first contribution confidently.
-        </p>
-        <div className="space-y-6">
-          <div className="border-l-4 border-blue-600 pl-4">
-            <h3 className="text-xl font-semibold text-gray-900">
-              1. Fork the Repository
-            </h3>
-            <p className="text-gray-700">
-              Click the "Fork" button on GitHub to create your personal copy of
-              Eventra.
-            </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {contributionTypes.map((type, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="border-l-4 border-indigo-500 p-4 bg-gray-200 rounded shadow-sm"
+            >
+              <div className="flex items-center mb-2">
+                <FiInfo className="text-indigo-500 mr-2" />
+                <h3 className="text-xl font-semibold text-gray-900">
+                  {type.title}
+                </h3>
+              </div>
+              <p className="text-gray-700 mb-2">{type.description}</p>
+              <p className="text-gray-600 italic">💡 {type.example}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Important Files Section */}
+      <div className="bg-white p-8 rounded-xl shadow-md">
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center flex items-center justify-center gap-3">
+          <FiFile className="text-indigo-500" size={32} />
+          Important Files in This Project
+        </h2>
+
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-300">
+            <thead className="bg-indigo-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                  File
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                  Purpose
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-300">
+              <tr className="hover:bg-indigo-50 transition-colors">
+                <td className="px-6 py-4 flex items-center gap-2 font-mono text-indigo-500">
+                  <FiLock /> .env
+                </td>
+                <td className="px-6 py-4 text-gray-700">
+                  Stores environment variables like API keys. Do not commit this
+                  file.
+                </td>
+              </tr>
+              <tr className="hover:bg-indigo-50 transition-colors">
+                <td className="px-6 py-4 flex items-center gap-2 font-mono text-indigo-500">
+                  <FiLock /> .env.example
+                </td>
+                <td className="px-6 py-4 text-gray-700">
+                  Example environment file. Use it as a template to create your
+                  own .env file.
+                </td>
+              </tr>
+              <tr className="hover:bg-indigo-50 transition-colors">
+                <td className="px-6 py-4 flex items-center gap-2 font-mono text-indigo-500">
+                  <FiCode /> .gitignore
+                </td>
+                <td className="px-6 py-4 text-gray-700">
+                  Lists files/folders to ignore in Git commits, like
+                  node_modules or .env.
+                </td>
+              </tr>
+              <tr className="hover:bg-indigo-50 transition-colors">
+                <td className="px-6 py-4 flex items-center gap-2 font-mono text-indigo-500">
+                  <FiFileText /> LICENSE
+                </td>
+                <td className="px-6 py-4 text-gray-700">
+                  Contains the license details for the project.
+                </td>
+              </tr>
+              <tr className="hover:bg-indigo-50 transition-colors">
+                <td className="px-6 py-4 flex items-center gap-2 font-mono text-indigo-500">
+                  <FiClipboard /> README.md
+                </td>
+                <td className="px-6 py-4 text-gray-700">
+                  Main documentation for the project. Explains setup, usage, and
+                  contribution guide.
+                </td>
+              </tr>
+              <tr className="hover:bg-indigo-50 transition-colors">
+                <td className="px-6 py-4 flex items-center gap-2 font-mono text-indigo-500">
+                  <FiPackage /> package.json
+                </td>
+                <td className="px-6 py-4 text-gray-700">
+                  Contains project metadata, scripts, and dependencies.
+                </td>
+              </tr>
+              <tr className="hover:bg-indigo-50 transition-colors">
+                <td className="px-6 py-4 flex items-center gap-2 font-mono text-indigo-500">
+                  <FiCheckCircle /> package-lock.json
+                </td>
+                <td className="px-6 py-4 text-gray-700">
+                  Locks dependency versions for consistent installs across
+                  environments.
+                </td>
+              </tr>
+              <tr className="hover:bg-indigo-50 transition-colors">
+                <td className="px-6 py-4 flex items-center gap-2 font-mono text-indigo-500">
+                  <FiServer /> vercel.json
+                </td>
+                <td className="px-6 py-4 text-gray-700">
+                  Configuration file for deployment on Vercel.
+                </td>
+              </tr>
+              <tr className="hover:bg-indigo-50 transition-colors">
+                <td className="px-6 py-4 flex items-center gap-2 font-mono text-indigo-500">
+                  <FiFileText /> CODE_OF_CONDUCT.md
+                </td>
+                <td className="px-6 py-4 text-gray-700">
+                  Outlines expected behavior and guidelines for contributors.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Issue & PR Workflow Section */}
+      <div className="bg-white p-8 rounded-xl shadow-md mt-10">
+        <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center flex items-center justify-center gap-3">
+          <FiGitBranch className="text-indigo-500" size={32} />
+          Issue & PR Workflow
+        </h2>
+
+        {/* Numbered Steps */}
+        <div className="space-y-8">
+          {[
+            {
+              step: 1,
+              icon: <FiFileText />,
+              title: "Pick an Issue",
+              description: (
+                <>
+                  Browse issues labeled{" "}
+                  <span className="font-mono text-indigo-500">
+                    good-first-issue
+                  </span>{" "}
+                  or <span className="font-mono text-indigo-500">bug</span>.
+                  Choose one you can work on.
+                </>
+              ),
+            },
+            {
+              step: 2,
+              icon: <FiGitBranch />,
+              title: "Create a Branch",
+              description: (
+                <>
+                  Use descriptive branch names like{" "}
+                  <span className="font-mono text-indigo-500">
+                    feature/add-login
+                  </span>{" "}
+                  or{" "}
+                  <span className="font-mono text-indigo-500">
+                    fix/navbar-bug
+                  </span>
+                  .
+                </>
+              ),
+            },
+            {
+              step: 3,
+              icon: <FiCheckCircle />,
+              title: "Make Changes & Commit",
+              description: (
+                <>
+                  Make your code changes locally. Commit with clear messages
+                  like{" "}
+                  <span className="font-mono text-indigo-500">
+                    Add login form component
+                  </span>
+                  .
+                </>
+              ),
+            },
+            {
+              step: 4,
+              icon: <FiArrowRightCircle />,
+              title: "Open a Pull Request",
+              description: (
+                <>
+                  Push your branch to GitHub and open a PR. Follow the template
+                  below:
+                </>
+              ),
+              code: `### Description
+Explain what your PR does.
+
+### Type of Change
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Documentation update
+
+### Checklist
+- [ ] I have tested my changes
+- [ ] I have updated documentation if needed
+
+### Related Issue
+Closes #<issue_number>`,
+            },
+          ].map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="flex flex-col md:flex-row items-start gap-4 p-6 border-b last:border-b-0 rounded-lg hover:bg-indigo-50 transition-colors"
+            >
+              <div className="flex-shrink-0">
+                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-indigo-500 text-white font-bold text-lg">
+                  {item.step}
+                </div>
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-lg text-gray-900 flex items-center gap-2 mb-2">
+                  {item.icon} {item.title}
+                </h3>
+                <p className="text-gray-700 mb-2">{item.description}</p>
+                {item.code && (
+                  <div className="bg-gray-100 rounded-lg p-4 font-mono text-sm text-gray-800 overflow-x-auto">
+                    {item.code}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Optional visual flowchart */}
+        <div className="mt-10 flex justify-center items-center gap-6 overflow-x-auto">
+          <div className="flex flex-col items-center gap-2">
+            <FiFileText className="text-indigo-500" size={36} />
+            <span className="text-sm font-semibold text-gray-700">
+              Pick Issue
+            </span>
           </div>
-          <div className="border-l-4 border-green-600 pl-4">
-            <h3 className="text-xl font-semibold text-gray-900">
-              2. Clone Locally
-            </h3>
-            <p className="text-gray-700">
-              Download the repository to your local machine using git clone.
-            </p>
+          <div className="text-indigo-300 text-2xl">→</div>
+          <div className="flex flex-col items-center gap-2">
+            <FiGitBranch className="text-indigo-500" size={36} />
+            <span className="text-sm font-semibold text-gray-700">
+              Create Branch
+            </span>
           </div>
-          <div className="border-l-4 border-purple-600 pl-4">
-            <h3 className="text-xl font-semibold text-gray-900">
-              3. Create a Branch
-            </h3>
-            <p className="text-gray-700">
-              Make a new branch for your feature or bugfix to keep your changes
-              organized.
-            </p>
+          <div className="text-indigo-300 text-2xl">→</div>
+          <div className="flex flex-col items-center gap-2">
+            <FiCheckCircle className="text-indigo-500" size={36} />
+            <span className="text-sm font-semibold text-gray-700">
+              Commit Changes
+            </span>
           </div>
-          <div className="border-l-4 border-orange-600 pl-4">
-            <h3 className="text-xl font-semibold text-gray-900">
-              4. Make Changes
-            </h3>
-            <p className="text-gray-700">
-              Edit files, fix bugs, or add features while following coding
-              standards.
-            </p>
-          </div>
-          <div className="border-l-4 border-red-600 pl-4">
-            <h3 className="text-xl font-semibold text-gray-900">
-              5. Commit & Push
-            </h3>
-            <p className="text-gray-700">
-              Commit your changes with clear messages and push them to your
-              forked repo.
-            </p>
-          </div>
-          <div className="border-l-4 border-teal-600 pl-4">
-            <h3 className="text-xl font-semibold text-gray-900">
-              6. Create Pull Request
-            </h3>
-            <p className="text-gray-700">
-              Open a PR to submit your changes for review. Be descriptive and
-              polite!
-            </p>
+          <div className="text-indigo-300 text-2xl">→</div>
+          <div className="flex flex-col items-center gap-2">
+            <FiArrowRightCircle className="text-indigo-500" size={36} />
+            <span className="text-sm font-semibold text-gray-700">Open PR</span>
           </div>
         </div>
       </div>
 
       {/* Git Commands Section */}
       <div className="bg-white p-8 rounded-xl shadow-md">
-        <h2 className="text-3xl font-bold text-gray-900 mb-3">
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">
           Essential Git Commands
         </h2>
-        <p className="text-gray-700 mb-6">
-          These commands will help you manage your local repository and push
-          changes.
-        </p>
         <div className="space-y-4">
           {commands.map((c) => (
             <div
               key={c.id}
-              className="flex justify-between items-center bg-gray-200 p-4 rounded shadow-sm border border-gray-100"
+              className="flex justify-between items-center bg-gray-100 p-4 rounded-lg border border-gray-200"
             >
               <div>
                 <h3 className="font-semibold text-gray-900">{c.title}</h3>
-                <code className="text-blue-600">{c.cmd}</code>
+                <pre className="bg-gray-200 p-2 rounded mt-1 overflow-x-auto text-sm text-blue-600">
+                  {c.cmd}
+                </pre>
               </div>
               <button
                 onClick={() => copyCommand(c.cmd, c.id)}
-                className="flex items-center gap-1 bg-gray-200 px-3 py-1 rounded hover:bg-gray-300 transition"
+                className="flex items-center gap-2 bg-gray-200 px-3 py-1 rounded hover:bg-gray-300 transition"
               >
                 {copied === c.id ? <FiCheck /> : <FiCopy />}
                 <span>{copied === c.id ? "Copied" : "Copy"}</span>
@@ -171,17 +438,14 @@ const ContributorGuide = () => {
 
       {/* FAQ Section */}
       <div className="bg-white p-8 rounded-xl shadow-md">
-        <h2 className="text-3xl font-bold text-gray-900 mb-3">
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">
           Frequently Asked Questions
         </h2>
-        <p className="text-gray-700 mb-6">
-          Some common questions from new contributors.
-        </p>
         <div className="space-y-2">
           {faqs.map((faq, index) => {
             const isOpen = expandedFAQ === index;
             return (
-              <div key={index} className="border rounded overflow-hidden">
+              <div key={index} className="border rounded-lg overflow-hidden">
                 <button
                   onClick={() => setExpandedFAQ(isOpen ? null : index)}
                   className="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 transition"
@@ -209,21 +473,29 @@ const ContributorGuide = () => {
       </div>
 
       {/* Call to Action */}
-      <div className="bg-white p-8 rounded-xl shadow-md text-center">
-        <h2 className="text-3xl font-bold text-gray-900 mb-3">
-          Ready to Contribute?
+
+      <div className="relative overflow-hidden rounded-xl p-10 shadow-xl text-center text-white bg-gradient-to-r from-black via-indigo-600 via-purple-600 to-pink-900">
+        {/* Decorative Icons */}
+        <FiArrowRightCircle className="absolute top-5 left-5 text-white/20 text-6xl rotate-12" />
+        <FiArrowRightCircle className="absolute bottom-5 right-5 text-white/20 text-6xl -rotate-12" />
+
+        {/* Content */}
+        <h2 className="text-3xl font-bold mb-3 flex items-center justify-center gap-2">
+          <FiArrowRightCircle /> Ready to Contribute?
         </h2>
-        <p className="text-gray-700 mb-6">
+        <p className="mb-6 text-white/90 text-lg">
           Take the first step and submit your pull request today!
         </p>
-        <a
+        <motion.a
           href="https://github.com/SandeepVashishtha/Eventra"
           target="_blank"
           rel="noreferrer"
-          className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-indigo-300 to-purple-600 text-white font-semibold px-8 py-3 rounded-full shadow-lg hover:from-indigo-600 hover:to-purple-600 transition-all duration-300"
         >
-          Go to GitHub
-        </a>
+          <FiGithub className="text-lg" /> Go to GitHub
+        </motion.a>
       </div>
     </div>
   );
