@@ -14,7 +14,6 @@ import { HiPlus, HiArrowRight } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
-
 const floatingShapes = [
   { size: 40, x: 50, y: 200, color: "#6366f1", delay: 0 },
   { size: 60, x: 300, y: 500, color: "#4338ca", delay: 1 },
@@ -38,10 +37,9 @@ const iconList = [
 
 const repeatedIcons = [...iconList, ...iconList, ...iconList];
 
-export default function ProjectHero({ setShowSubmissionModal,scrollToCard }) {
+export default function ProjectHero({ setShowSubmissionModal, scrollToCard }) {
   const navigate = useNavigate();
   const { user, token } = useAuth();
-  
 
   return (
     <div className="relative min-h-screen py-24 overflow-hidden bg-gradient-to-l from-indigo-200 to-white">
@@ -67,37 +65,39 @@ export default function ProjectHero({ setShowSubmissionModal,scrollToCard }) {
       ))}
 
       {/* Continuous Zigzag Icon Train */}
-      <div className="absolute right-8 top-0 h-full flex flex-col items-center justify-start overflow-hidden z-0">
-        <motion.div
-          animate={{ y: ["0%", "-100%"] }}
-          transition={{
-            repeat: Infinity,
-            duration: 18,
-            ease: "linear",
-          }}
-          className="flex flex-col gap-6"
-        >
-          {repeatedIcons.map((item, idx) => (
-            <motion.div
-              key={idx}
-              className="rounded-full p-3 shadow-lg flex items-center justify-center bg-white"
-              animate={{
-                x: [0, 8, -8, 0],
-                rotate: [0, 15, -15, 0],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                repeatType: "loop",
-                ease: "easeInOut",
-                delay: idx * 0.2,
-              }}
-            >
-              {React.cloneElement(item.icon, { color: item.color, size: 24 })}
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
+      {/* Continuous Zigzag Icon Train */}
+<div className="absolute right-8 top-0 h-full flex flex-col items-center justify-start overflow-hidden z-0
+                hidden lg:flex"> {/* hide on small screens, show on large screens */}
+  <motion.div
+    animate={{ y: ["0%", "-100%"] }}
+    transition={{
+      repeat: Infinity,
+      duration: 18,
+      ease: "linear",
+    }}
+    className="flex flex-col gap-6"
+  >
+    {repeatedIcons.map((item, idx) => (
+      <motion.div
+        key={idx}
+        className="rounded-full p-3 shadow-lg flex items-center justify-center bg-white"
+        animate={{
+          x: [0, 8, -8, 0],
+          rotate: [0, 15, -15, 0],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          repeatType: "loop",
+          ease: "easeInOut",
+          delay: idx * 0.2,
+        }}
+      >
+        {React.cloneElement(item.icon, { color: item.color, size: 24 })}
+      </motion.div>
+    ))}
+  </motion.div>
+</div>
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center relative z-10">
@@ -121,33 +121,33 @@ export default function ProjectHero({ setShowSubmissionModal,scrollToCard }) {
         </motion.p>
 
         {/* Buttons */}
-<div className="flex justify-center gap-6 mb-16">
-  {/* Submit Project Button */}
-  <motion.button
-    onClick={() => {
-      if (!user) {
-        navigate("/login");
-      } else {
-        navigate("/submit-project");
-      }
-    }}
-    className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white px-7 py-3 rounded-2xl font-semibold flex items-center gap-3 shadow-2xl hover:shadow-3xl transition-all duration-300"
-    whileTap={{ scale: 0.95 }}
-    whileHover="hover"
-    initial="rest"
-  >
-    <motion.span
-      variants={{
-        rest: { y: 0, scale: 1 },
-        hover: { y: -3, scale: 1.2 },
-      }}
-      transition={{ type: "spring", stiffness: 300 }}
-      className="flex items-center"
-    >
-      <HiPlus className="text-xl" />
-    </motion.span>
-    Submit Project
-  </motion.button>
+        <div className="flex justify-center gap-6 mb-16">
+          {/* Submit Project Button */}
+          <motion.button
+            onClick={() => {
+              if (!user) {
+                navigate("/login");
+              } else {
+                navigate("/submit-project");
+              }
+            }}
+            className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white px-7 py-3 rounded-2xl font-semibold flex items-center gap-3 shadow-2xl hover:shadow-3xl transition-all duration-300"
+            whileTap={{ scale: 0.95 }}
+            whileHover="hover"
+            initial="rest"
+          >
+            <motion.span
+              variants={{
+                rest: { y: 0, scale: 1 },
+                hover: { y: -3, scale: 1.2 },
+              }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className="flex items-center"
+            >
+              <HiPlus className="text-xl" />
+            </motion.span>
+            Submit Project
+          </motion.button>
           {/* Explore Projects Button */}
           <motion.button
             className="bg-white text-indigo-600 px-6 py-3 rounded-2xl font-semibold flex items-center gap-2 shadow-md hover:shadow-xl hover:bg-indigo-50 transition-all duration-300"
