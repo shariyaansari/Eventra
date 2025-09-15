@@ -254,6 +254,7 @@ const Signup = () => {
             <p className="text-sm text-gray-600">
               Join Eventra and start building amazing events
             </p>
+            
           </motion.div>
 
           <motion.form
@@ -642,6 +643,8 @@ const Signup = () => {
                 Sign in here
               </Link>
             </p>
+              <p class="text-gray-500 text-sm mb-4">* indicates required fields</p>
+
           </motion.div>
 
           <motion.p
