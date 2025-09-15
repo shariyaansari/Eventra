@@ -139,7 +139,7 @@ const Footer = () => {
     support: [
       {
         name: "Help Center",
-        href: "#help",
+        href: "/helpcenter",
         icon: <FaQuestionCircle size={14} />,
       },
       { name: "Contact Us", href: "/contact", icon: <FaEnvelope size={14} /> },
