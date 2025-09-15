@@ -6,14 +6,15 @@ import { FiMessageSquare } from "react-icons/fi";
 const FeedbackButton = () => {
   return (
     <motion.div
-      className="fixed bottom-20 right-6 z-50"
+      className="fixed bottom-6 left-6 z-50"
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
     >
       <Link
         to="/feedback"
-        className="flex items-center justify-center w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full shadow-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300 border-2 border-white group"
+        className="flex items-center justify-center w-14 h-14 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-full shadow-lg hover:from-purple-600 hover:to-pink-700 transition-all duration-300 border-2 border-white group"
+        title="Share Feedback"
         aria-label="Share Feedback"
       >
         <motion.div

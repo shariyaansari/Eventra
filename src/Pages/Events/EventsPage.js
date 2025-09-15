@@ -1,5 +1,5 @@
 // Importing necessary React hooks and libraries
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion"; // for animations
 import { Link } from "react-router-dom"; // navigation
 import mockEvents from "./eventsMockData.json"; // mock data file
@@ -30,6 +30,8 @@ const EventsPage = () => {
 
   // State for storing the filtered + searched list of events
   const [filteredEvents, setFilteredEvents] = useState([]);
+
+  const cardSectionRef=useRef()
 
   // -----------------------------
   // Load events from mock JSON when component mounts
@@ -101,6 +103,10 @@ const EventsPage = () => {
     show: { y: 0, opacity: 1, transition: { duration: 0.5 } },
   };
 
+  const scrollToCard=()=>{
+    cardSectionRef.current?.scrollIntoView({behaviour:'smooth'})
+  }
+
   // -----------------------------
   // JSX Render
   // -----------------------------
@@ -112,10 +118,11 @@ const EventsPage = () => {
         setSearchQuery={setSearchQuery}
         filteredEvents={filteredEvents}
         handleSearch={handleSearch}
+        scrollToCard={scrollToCard}
       />
 
       {/* Main content wrapper */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div ref={cardSectionRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" >
         {/* ----------------------------- */}
         {/* Filters + Toggle View Section */}
         {/* ----------------------------- */}

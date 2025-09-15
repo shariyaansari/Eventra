@@ -1,7 +1,32 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiStar, FiMessageSquare, FiUser, FiMail, FiCheckCircle } from "react-icons/fi";
+import { FaTwitter, FaGithub, FaLinkedin, FaDiscord } from "react-icons/fa";
 import "./FeedbackPage.css";
+
+//Social media links
+const socialLinks = [
+  { 
+    name: "Twitter", 
+    icon: <FaTwitter className="w-5 h-5" />, 
+    href: "https://twitter.com" 
+  },
+  { 
+    name: "GitHub", 
+    icon: <FaGithub className="w-5 h-5" />, 
+    href: "https://github.com" 
+  },
+  { 
+    name: "LinkedIn", 
+    icon: <FaLinkedin className="w-5 h-5" />, 
+    href: "https://linkedin.com/in" 
+  },
+  { 
+    name: "Discord", 
+    icon: <FaDiscord className="w-5 h-5" />, 
+    href: "https://discord.gg/" 
+  },
+];
 
 // Toast Component
 const Toast = ({ message, type = "success", onClose }) => {
@@ -456,16 +481,27 @@ const FeedbackPage = () => {
               </div>
 
               <div className="mt-10">
-                <h3 className="font-medium mb-4">Feedback Types</h3>
-                <div className="space-y-2 text-sm opacity-90">
-                  <p>• General feedback and suggestions</p>
-                  <p>• Bug reports and issues</p>
-                  <p>• Feature requests</p>
-                  <p>• UI/UX improvements</p>
-                  <p>• Event-related feedback</p>
-                </div>
+                              <h3 className="font-medium mb-4">Follow Us</h3>
+                              <div className="flex space-x-4">
+                                {socialLinks.map(
+                                  ({name , icon , href}) => (
+                                    <motion.a
+                                      key={name}
+                                      href={href}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      whileHover={{ y: -3 }}
+                                      className="bg-white bg-opacity-20 p-2 rounded-full"
+                                    >
+                                      <span className="sr-only">{name}</span>
+                                      {icon}
+                                    </motion.a>
+                                  )
+                                )}
+                              </div>
+                            </div>
+
               </div>
-            </div>
 
             <div className="md:w-3/5 p-10">
               <div className="text-center mb-8">
