@@ -39,6 +39,8 @@ import HomePage from "./Pages/Home/HomePage";
 import Terms from "./Pages/Terms";
 import { Privacy } from "./Pages/Privacy";
 import ApiDocs from "./Pages/ApiDocs";
+import HelpCenter from "./Pages/HelpCenter";
+
 
 function App() {
   return (
@@ -61,6 +63,7 @@ function App() {
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/apiDocs" element={<ApiDocs />} />
+              <Route path="/helpcenter" element={<HelpCenter />} />
               <Route path="/contact" element={<ContactUs />} />{" "}
               {/* Add ContactUs route */}
               <Route path="/feedback" element={<FeedbackPage />} />{" "}
