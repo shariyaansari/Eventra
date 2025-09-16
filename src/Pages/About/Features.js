@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   FaRocket,
   FaQrcode,
@@ -139,13 +140,23 @@ export default function Features() {
                 </h3>
                 <p className="text-gray-600 mb-4">{feature.description}</p>
 
-                <a
-                  href="#"
-                  className="text-indigo-600 hover:text-indigo-800 font-medium text-sm flex items-center group"
-                >
-                  {feature.cta}
-                  <FaArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" />
-                </a>
+               {feature.cta === "Start Creating" ? (
+  <Link
+     to="/events"
+     className="text-indigo-600 hover:text-indigo-800 font-medium text-sm flex items-center group"
+   >
+     {feature.cta}
+     <FaArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" />
+   </Link>
+ ) : (
+   <a
+     href="#"
+     className="text-indigo-600 hover:text-indigo-800 font-medium text-sm flex items-center group"
+   >
+     {feature.cta}
+     <FaArrowRight className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" />
+   </a>
+ )}
               </div>
             </motion.div>
           ))}
