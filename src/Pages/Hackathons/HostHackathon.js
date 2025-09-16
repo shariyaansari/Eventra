@@ -52,6 +52,7 @@ const HostHackathon = () => {
         </p>
       </motion.div>
 
+
       {/* Guidelines Section */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -117,6 +118,7 @@ const HostHackathon = () => {
           </li>
         </ul>
       </motion.div>
+
 
       {/* Form Section */}
       <motion.div

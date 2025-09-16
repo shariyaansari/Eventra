@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { FaTwitter, FaLinkedin, FaDiscord, FaTelegram } from "react-icons/fa";
+import { FaLinkedin, FaDiscord, FaTelegram } from "react-icons/fa";
 import { SiX } from "react-icons/si";
 import {
   FaInfoCircle,
   FaGithub,
-  FaCode,
-  FaFileAlt,
   FaShieldAlt,
   FaFileContract,
   FaQuestionCircle,
@@ -139,12 +137,12 @@ const Footer = () => {
     support: [
       {
         name: "Help Center",
-        href: "#help",
+        href: "/helpcenter",
         icon: <FaQuestionCircle size={14} />,
       },
       { name: "Contact Us", href: "/contact", icon: <FaEnvelope size={14} /> },
       { name: "Feedback", href: "/feedback", icon: <FaComments size={14} /> },
-      { name: "API Docs", href: "#api", icon: <FaBookOpen size={14} /> },
+      { name: "API Docs", href: "/apiDocs", icon: <FaBookOpen size={14} /> },
       { name: "Status", href: "#status", icon: <FaServer size={14} /> },
     ],
   };
