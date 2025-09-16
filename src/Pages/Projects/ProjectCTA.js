@@ -58,11 +58,12 @@ const ProjectCTA = () => {
           </motion.a>
 
           <Link
-  to={user ? "/submit-project" : "/login"}
-  className="inline-flex items-center justify-center gap-2 bg-white text-blue-700 font-semibold px-8 py-4 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
->
-  <UploadCloud size={20} /> Submit Project
-</Link>
+             to={user ? "/submit-project" : "/login"}
+            // UPDATED: The secondary button needs a subtle dark mode style
+            className="inline-flex items-center justify-center gap-2 bg-white text-blue-700 dark:bg-gray-200 dark:text-blue-800 font-semibold px-8 py-4 rounded-full shadow-lg transition-transform duration-300"
+          >
+            <UploadCloud size={20} /> Submit Project
+          </Link>
 
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Link

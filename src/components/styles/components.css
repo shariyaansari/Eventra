@@ -1,5 +1,249 @@
 /* ===== CONSOLIDATED COMPONENTS CSS ===== */
 
+/* src/styles/components.css */
+
+/* =================================== */
+/* ====== SEARCH FILTER DARK MODE ====== */
+/* =================================== */
+
+/* --- General & Header --- */
+.dark .search-filter-container {
+  color: #d1d5db; /* gray-300 */
+}
+.dark .search-header .search-title {
+  color: #f9fafb; /* gray-50 */
+}
+.dark .search-header .search-subtitle {
+  color: #9ca3af; /* gray-400 */
+}
+
+/* --- Search & Filters --- */
+.dark .search-bar {
+  background-color: #1f2937; /* gray-800 */
+  border-color: #374151; /* gray-700 */
+}
+.dark .search-input {
+  background-color: transparent;
+  color: #f9fafb; /* gray-50 */
+}
+.dark .search-input::placeholder {
+  color: #9ca3af; /* gray-400 */
+}
+.dark .filters-container {
+  background-color: #1f2937; /* gray-800 */
+  border-color: #374151; /* gray-700 */
+}
+.dark .filter-group label {
+  color: #d1d5db; /* gray-300 */
+}
+.dark .filter-select {
+  background-color: #374151; /* gray-700 */
+  border-color: #4b5563; /* gray-600 */
+  color: #f9fafb; /* gray-50 */
+}
+.dark .results-count {
+  color: #9ca3af; /* gray-400 */
+}
+
+/* --- Event Cards --- */
+.dark .event-card-search {
+  background-color: #1f2937; /* gray-800 */
+  border-color: #374151; /* gray-700 */
+}
+.dark .event-image-large {
+  background-color: #374151; /* gray-700 */
+}
+.dark .price-badge.free {
+  background-color: rgba(34, 197, 94, 0.2);
+  color: #86efac; /* green-300 */
+}
+.dark .price-badge.paid {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #fca5a5; /* red-300 */
+}
+.dark .event-title {
+  color: #f3f4f6; /* gray-100 */
+}
+.dark .event-description {
+  color: #d1d5db; /* gray-300 */
+}
+.dark .event-meta span,
+.dark .event-rating .rating-value {
+  color: #9ca3af; /* gray-400 */
+}
+
+/* --- No Results --- */
+.dark .no-results {
+  background-color: #1f2937; /* gray-800 */
+  border-color: #374151; /* gray-700 */
+}
+.dark .no-results h3 {
+  color: #f9fafb; /* gray-50 */
+}
+.dark .no-results p {
+  color: #9ca3af; /* gray-400 */
+}
+
+/* =================================== */
+/* ==== COLLABORATION HUB DARK MODE ==== */
+/* =================================== */
+
+/* --- Main Hub --- */
+.dark .collaboration-hub {
+  color: #d1d5db; /* gray-300 */
+}
+.dark .collaboration-header .collaboration-title {
+  color: #f9fafb; /* gray-50 */
+}
+.dark .collaboration-header .collaboration-subtitle {
+  color: #9ca3af; /* gray-400 */
+}
+
+/* --- Tabs --- */
+.dark .collaboration-tabs {
+  background-color: #1f2937; /* gray-800 */
+  border-color: #374151; /* gray-700 */
+}
+.dark .tab-button {
+  color: #d1d5db; /* gray-300 */
+}
+.dark .tab-button:hover {
+  background-color: #374151; /* gray-700 */
+}
+.dark .tab-button.active {
+  background: linear-gradient(to right, #4f46e5, #a855f7); /* indigo-600 to purple-600 */
+  color: #ffffff;
+}
+
+/* --- General Section Styles --- */
+.dark .section-header h2 {
+  color: #f9fafb; /* gray-50 */
+}
+.dark .filter-btn {
+  background-color: #374151; /* gray-700 */
+  color: #d1d5db; /* gray-300 */
+}
+.dark .filter-btn:hover {
+  background-color: #4b5563; /* gray-600 */
+}
+.dark .filter-btn.active {
+  background-color: #4f46e5; /* indigo-600 */
+  color: #ffffff;
+}
+
+/* --- Opportunity Cards --- */
+.dark .opportunity-card {
+  background-color: #1f2937; /* gray-800 */
+  border-color: #374151; /* gray-700 */
+}
+.dark .opportunity-title {
+  color: #f3f4f6; /* gray-100 */
+}
+.dark .status-badge.open {
+  background-color: rgba(34, 197, 94, 0.2);
+  color: #86efac; /* green-300 */
+}
+.dark .status-badge.urgent {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #fca5a5; /* red-300 */
+}
+.dark .organizer, .dark .type {
+  color: #9ca3af; /* gray-400 */
+}
+.dark .opportunity-description {
+  color: #d1d5db; /* gray-300 */
+}
+.dark .skill-tag {
+  background-color: #3730a3; /* indigo-800 */
+  color: #c7d2fe; /* indigo-300 */
+}
+.dark .detail-item .label {
+  color: #9ca3af; /* gray-400 */
+}
+.dark .detail-item .value {
+  color: #e5e7eb; /* gray-200 */
+}
+
+/* --- My Collaborations Cards --- */
+.dark .collaboration-card {
+  background-color: #1f2937; /* gray-800 */
+  border-color: #374151; /* gray-700 */
+}
+.dark .collaboration-card h3 {
+  color: #f3f4f6; /* gray-100 */
+}
+.dark .partner {
+  color: #9ca3af; /* gray-400 */
+}
+.dark .progress-header span {
+  color: #d1d5db; /* gray-300 */
+}
+.dark .progress-bar {
+  background-color: #374151; /* gray-700 */
+}
+.dark .task-item {
+  border-bottom-color: #374151; /* gray-700 */
+}
+
+/* --- Networking Cards --- */
+.dark .networking-card {
+  background-color: #1f2937; /* gray-800 */
+  border-color: #374151; /* gray-700 */
+}
+.dark .avatar {
+  background-color: #374151; /* gray-700 */
+}
+.dark .name-role h3 {
+  color: #f3f4f6; /* gray-100 */
+}
+.dark .name-role p {
+  color: #9ca3af; /* gray-400 */
+}
+.dark .networking-message {
+  background-color: #374151; /* gray-700 */
+  border-color: #4b5563; /* gray-600 */
+}
+
+/* --- Create Request Form --- */
+.dark .request-form {
+  background-color: #1f2937; /* gray-800 */
+  border-color: #374151; /* gray-700 */
+}
+.dark .form-group label {
+  color: #d1d5db; /* gray-300 */
+}
+.dark .form-group input,
+.dark .form-group select,
+.dark .form-group textarea {
+  background-color: #374151; /* gray-700 */
+  border-color: #4b5563; /* gray-600 */
+  color: #f9fafb; /* gray-50 */
+}
+.dark .form-group input::placeholder,
+.dark .form-group textarea::placeholder {
+  color: #9ca3af; /* gray-400 */
+}
+
+/* --- General Buttons --- */
+.dark .btn-primary {
+  background: linear-gradient(to right, #4f46e5, #a855f7);
+  color: #ffffff;
+}
+.dark .btn-outline {
+  border-color: #4f46e5; /* indigo-600 */
+  color: #a5b4fc; /* indigo-300 */
+}
+.dark .btn-outline:hover {
+  background-color: rgba(79, 70, 229, 0.2);
+}
+.dark .btn-secondary {
+  background-color: #374151; /* gray-700 */
+  color: #d1d5db; /* gray-300 */
+}
+.dark .btn-secondary:hover {
+  background-color: #4b5563; /* gray-600 */
+}
+
 /* ===== HERO SECTION ===== */
 .hero {
   min-height: 100vh;

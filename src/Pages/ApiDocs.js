@@ -75,7 +75,7 @@ const endpoints = [
 
 const ApiDocs = () => {
   return (
-    <div className="min-h-screen bg-[#121212] text-gray-100 px-6 py-16">
+    <div className="min-h-screen bg-white dark:bg-[#121212] text-gray-900 dark:text-gray-100 px-6 py-16">
       {/* Hero Section */}
       <section className="text-center mb-16">
         <motion.h1
@@ -86,12 +86,13 @@ const ApiDocs = () => {
         >
           API Documentation
         </motion.h1>
-        <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+        {/* UPDATED: Subtitle text */}
+        <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">
           Use our RESTful APIs to interact with{" "}
-          <span className="text-blue-400">Hackathons</span>,{" "}
-          <span className="text-green-400">Projects</span>,{" "}
-          <span className="text-purple-400">Contributors</span>, and{" "}
-          <span className="text-yellow-400">Leaderboards</span>{" "}
+          <span className="text-blue-500 dark:text-blue-400">Hackathons</span>,{" "}
+          <span className="text-green-500 dark:text-green-400">Projects</span>,{" "}
+          <span className="text-purple-500 dark:text-purple-400">Contributors</span>, and{" "}
+          <span className="text-yellow-500 dark:text-yellow-400">Leaderboards</span>{" "}
           programmatically.
         </p>
       </section>
@@ -101,9 +102,11 @@ const ApiDocs = () => {
         <h2 className="text-3xl font-semibold mb-10 text-center">
           Available Endpoints
         </h2>
-        <div className="overflow-x-auto rounded-xl shadow border border-gray-800">
+        {/* UPDATED: Table container */}
+        <div className="overflow-x-auto rounded-xl shadow border border-gray-200 dark:border-gray-800">
           <table className="w-full border-collapse">
-            <thead className="bg-[#1c1c1c]">
+            {/* UPDATED: Table header */}
+            <thead className="bg-gray-50 dark:bg-[#1c1c1c]">
               <tr>
                 <th className="p-4 text-left">API</th>
                 <th className="p-4 text-left">Method</th>
@@ -115,21 +118,24 @@ const ApiDocs = () => {
               {endpoints.map((ep, idx) => (
                 <tr
                   key={idx}
-                  className="border-t border-gray-800 hover:bg-[#1a1a1a] transition"
+                  // UPDATED: Table row
+                  className="border-t border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-[#1a1a1a] transition"
                 >
                   <td className="p-4 flex items-center gap-3">
                     {ep.icon}
                     <span className="font-medium">{ep.title}</span>
                   </td>
                   <td className="p-4">
-                    <span className="px-2 py-1 text-xs font-bold rounded bg-blue-900 text-blue-300">
+                    {/* UPDATED: Method tag */}
+                    <span className="px-2 py-1 text-xs font-bold rounded bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
                       {ep.method}
                     </span>
                   </td>
-                  <td className="p-4 font-mono text-sm text-gray-300">
+                  {/* UPDATED: Text colors */}
+                  <td className="p-4 font-mono text-sm text-gray-600 dark:text-gray-300">
                     {ep.url}
                   </td>
-                  <td className="p-4 text-gray-400">{ep.desc}</td>
+                  <td className="p-4 text-gray-500 dark:text-gray-400">{ep.desc}</td>
                 </tr>
               ))}
             </tbody>
@@ -147,23 +153,24 @@ const ApiDocs = () => {
             <motion.div
               key={idx}
               whileHover={{ scale: 1.02 }}
-              className="bg-[#1a1a1a] border border-gray-800 rounded-xl p-6 shadow-lg"
+              // UPDATED: Card styles
+              className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-800 rounded-xl p-6 shadow-lg"
             >
               <div className="flex items-center gap-3 mb-4">
                 {ep.icon}
                 <h3 className="text-xl font-semibold">{ep.title}</h3>
               </div>
-              <p className="text-gray-400 mb-3">{ep.desc}</p>
+              <p className="text-gray-600 dark:text-gray-400 mb-3">{ep.desc}</p>
 
-              {/* Example Request */}
               <h4 className="font-semibold mb-2">Example Request</h4>
-              <pre className="bg-black text-green-400 text-sm rounded-lg p-3 overflow-x-auto">
+              {/* UPDATED: Code block styles */}
+              <pre className="bg-gray-100 dark:bg-black text-cyan-700 dark:text-green-400 text-sm rounded-lg p-3 overflow-x-auto">
                 <code>{ep.example}</code>
               </pre>
 
-              {/* Example Response */}
               <h4 className="font-semibold mt-4 mb-2">Example Response</h4>
-              <pre className="bg-black text-yellow-300 text-sm rounded-lg p-3 overflow-x-auto">
+              {/* UPDATED: Code block styles */}
+              <pre className="bg-gray-100 dark:bg-black text-purple-700 dark:text-yellow-300 text-sm rounded-lg p-3 overflow-x-auto">
                 <code>{ep.response}</code>
               </pre>
             </motion.div>
@@ -174,40 +181,41 @@ const ApiDocs = () => {
       {/* Error Codes */}
       <section className="max-w-4xl mx-auto mb-16">
         <h2 className="text-3xl font-semibold mb-8 text-center">Error Codes</h2>
-        <div className="bg-[#1a1a1a] border border-gray-800 rounded-xl shadow p-6">
+        {/* UPDATED: Card styles */}
+        <div className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-800 rounded-xl shadow p-6">
           <div className="flex items-center gap-2 mb-4">
             <AlertCircle className="w-6 h-6 text-red-500" />
             <h3 className="text-xl font-semibold">Common Errors</h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
-              <thead className="bg-[#222]">
+              <thead className="bg-gray-50 dark:bg-[#222]">
                 <tr>
                   <th className="p-3 text-left">Code</th>
                   <th className="p-3 text-left">Description</th>
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-t border-gray-800">
-                  <td className="p-3 text-red-400 font-bold">400</td>
+                <tr className="border-t border-gray-200 dark:border-gray-800">
+                  <td className="p-3 text-red-600 dark:text-red-400 font-bold">400</td>
                   <td className="p-3">
                     Bad Request (missing or invalid parameters)
                   </td>
                 </tr>
-                <tr className="border-t border-gray-800">
-                  <td className="p-3 text-red-400 font-bold">401</td>
+                <tr className="border-t border-gray-200 dark:border-gray-800">
+                  <td className="p-3 text-red-600 dark:text-red-400 font-bold">400</td>
                   <td className="p-3">
-                    Unauthorized (invalid or missing API key)
+                    Bad Request (missing or invalid parameters)
                   </td>
                 </tr>
-                <tr className="border-t border-gray-800">
-                  <td className="p-3 text-red-400 font-bold">404</td>
+                <tr className="border-t border-gray-200 dark:border-gray-800">
+                  <td className="p-3 text-red-600 dark:text-red-400 font-bold">404</td>
                   <td className="p-3">
                     Not Found (endpoint or resource not available)
                   </td>
                 </tr>
-                <tr className="border-t border-gray-800">
-                  <td className="p-3 text-red-400 font-bold">500</td>
+                <tr className="border-t border-gray-200 dark:border-gray-800">
+                  <td className="p-3 text-red-600 dark:text-red-400 font-bold">500</td>
                   <td className="p-3">
                     Server Error (something went wrong on our side)
                   </td>

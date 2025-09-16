@@ -12,39 +12,28 @@ import ProjectCTA from "./ProjectCTA";
 
 // Skeleton loader for project cards while data is loading
 const SkeletonCard = () => (
-  <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden animate-pulse">
-    {/* Placeholder image */}
-    <div className="h-40 bg-gray-100"></div>
+  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden animate-pulse">
+    <div className="h-40 bg-gray-100 dark:bg-gray-700"></div>
     <div className="p-6">
-      {/* Placeholder for project title */}
-      <div className="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
-      {/* Placeholder for project description lines */}
-      <div className="h-4 bg-gray-100 rounded w-full mb-2"></div>
-      <div className="h-4 bg-gray-100 rounded w-5/6 mb-4"></div>
-
-      {/* Placeholder tags */}
+      <div className="h-6 bg-gray-200 dark:bg-gray-600 rounded w-3/4 mb-4"></div>
+      <div className="h-4 bg-gray-100 dark:bg-gray-600 rounded w-full mb-2"></div>
+      <div className="h-4 bg-gray-100 dark:bg-gray-600 rounded w-5/6 mb-4"></div>
       <div className="flex flex-wrap gap-2 mb-4">
-        <div className="h-6 bg-gray-100 rounded-full w-16"></div>
-        <div className="h-6 bg-gray-100 rounded-full w-24"></div>
+        <div className="h-6 bg-gray-100 dark:bg-gray-600 rounded-full w-16"></div>
+        <div className="h-6 bg-gray-100 dark:bg-gray-600 rounded-full w-24"></div>
       </div>
-
-      {/* Placeholder author section */}
       <div className="flex items-center justify-between mb-4">
-        <div className="h-8 w-8 rounded-full bg-gray-200"></div>
-        <div className="h-4 bg-gray-100 rounded w-1/3"></div>
+        <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+        <div className="h-4 bg-gray-100 dark:bg-gray-600 rounded w-1/3"></div>
       </div>
-
-      {/* More placeholder tags */}
       <div className="flex flex-wrap gap-2 mb-4">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="h-6 bg-gray-100 rounded-full w-16"></div>
+          <div key={i} className="h-6 bg-gray-100 dark:bg-gray-600 rounded-full w-16"></div>
         ))}
       </div>
-
-      {/* Placeholder buttons */}
       <div className="flex items-center justify-between mt-4">
-        <div className="h-10 bg-gray-200 rounded-lg w-1/3"></div>
-        <div className="h-10 bg-gray-200 rounded-lg w-1/3"></div>
+        <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded-lg w-1/3"></div>
+        <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded-lg w-1/3"></div>
       </div>
     </div>
   </div>
@@ -154,19 +143,17 @@ const ProjectGallery = () => {
     }
 
   return (
-    <div className="min-h-screen">
+    // UPDATED: Main page background
+    <div className="min-h-screen bg-gray-50 dark:bg-black">
       {/* Hero Section with CTA */}
-      <ProjectHero 
-        setShowSubmissionModal={setShowSubmissionModal}
-        scrollToCard={scrollToCard} 
-      />
-
+      <ProjectHero setShowSubmissionModal={setShowSubmissionModal} scrollToCard={scrollToCard} />
       {/* Main Container */}
       <div ref={cardSectionRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search and Filter Panel */}
         <motion.div
-          className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 mb-8"
-          style={{ boxShadow: "0 10px 25px rgba(59, 130, 246, 0.2)" }}
+          // UPDATED: Panel background and border
+          className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 mb-8"
+          style={{ boxShadow: "0 10px 25px rgba(59, 130, 246, 0.1)" }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
@@ -178,14 +165,16 @@ const ProjectGallery = () => {
                 whileHover={{ scale: 1.2, rotate: 10 }}
                 className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
               >
-                <FiSearch className="h-5 w-5 text-gray-400" />
+                {/* UPDATED: Icon color */}
+                <FiSearch className="h-5 w-5 text-gray-400 dark:text-gray-500" />
               </motion.div>
               <input
                 type="text"
                 placeholder="Search projects by name, tech stack, or category..."
-                className="block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700 placeholder-gray-400 shadow-sm transition-all duration-300"
+                // UPDATED: Input styles
+                className="block w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 shadow-sm transition-all duration-300"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)} // Update search query state
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
 
@@ -199,25 +188,20 @@ const ProjectGallery = () => {
                   animate={{ opacity: 1, y: 0 }}
                 >
                   <div
-                    className="flex items-center justify-between px-4 py-3 border border-gray-300 rounded-xl shadow-sm bg-white hover:ring-2 hover:ring-indigo-500 transition-all"
+                    // UPDATED: Dropdown button styles
+                    className="flex items-center justify-between px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl shadow-sm bg-white dark:bg-gray-700 hover:ring-2 hover:ring-indigo-500 transition-all"
                     onClick={() => setCategoryOpen((prev) => !prev)}
                   >
-                    <span className="text-gray-700">
-                      {filterCategory === "all"
-                        ? "All Categories"
-                        : filterCategory}
+                    <span className="text-gray-700 dark:text-gray-200">
+                      {filterCategory === "all" ? "All Categories" : filterCategory}
                     </span>
-                    <FiX className="ml-2 text-gray-400" />
+                    <FiX className="ml-2 text-gray-400 dark:text-gray-500" />
                   </div>
-
-                  {/* Category Dropdown Menu */}
                   <AnimatePresence>
                     {categoryOpen && (
                       <motion.ul
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden"
+                        // UPDATED: Dropdown menu styles
+                        className="absolute z-10 mt-2 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg overflow-hidden"
                       >
                         {categories.map((cat) => (
                           <li
@@ -226,7 +210,8 @@ const ProjectGallery = () => {
                               setFilterCategory(cat);
                               setCategoryOpen(false); // Close dropdown on selection
                             }}
-                            className="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-gray-700"
+                            // UPDATED: Dropdown item styles
+                            className="px-4 py-2 hover:bg-indigo-50 dark:hover:bg-gray-700 cursor-pointer text-gray-700 dark:text-gray-300"
                           >
                             {cat === "all" ? "All Categories" : cat}
                           </li>
@@ -245,7 +230,8 @@ const ProjectGallery = () => {
                   animate={{ opacity: 1, y: 0 }}
                 >
                   <div
-                    className="flex items-center justify-between px-4 py-3 border border-gray-300 rounded-xl shadow-sm bg-white hover:ring-2 hover:ring-indigo-500 transition-all"
+                    // UPDATED: Dropdown button styles
+                    className="flex items-center justify-between px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl shadow-sm bg-white dark:bg-gray-700 hover:ring-2 hover:ring-indigo-500 transition-all"
                     onClick={() => setSortOpen((prev) => !prev)}
                   >
                     <span className="text-gray-700">
@@ -261,7 +247,8 @@ const ProjectGallery = () => {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden"
+                        // UPDATED: Dropdown menu styles
+                        className="absolute z-10 mt-2 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg overflow-hidden"
                       >
                         {Object.entries(sortByLabels).map(([key, label]) => (
                           <li
@@ -270,7 +257,8 @@ const ProjectGallery = () => {
                               setSortBy(key);
                               setSortOpen(false); // Close dropdown on selection
                             }}
-                            className="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-gray-700"
+                            // UPDATED: Dropdown item styles
+                            className="px-4 py-2 hover:bg-indigo-50 dark:hover:bg-gray-700 cursor-pointer text-gray-700 dark:text-gray-300"
                           >
                             {label}
                           </li>
@@ -310,16 +298,17 @@ const ProjectGallery = () => {
           ) : error ? (
             // Show error message if fetch fails
             <motion.div
-              className="bg-red-50 border border-red-200 rounded-xl p-8 text-center"
+              // UPDATED: Error message styles
+              className="bg-red-50 dark:bg-red-900/40 border border-red-200 dark:border-red-700 rounded-xl p-8 text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
               <div className="mx-auto max-w-md">
                 <FiAlertCircle className="mx-auto h-12 w-12 text-red-400" />
-                <h3 className="mt-2 text-lg font-medium text-red-900">
+                <h3 className="mt-2 text-lg font-medium text-red-900 dark:text-red-200">
                   Error loading projects
                 </h3>
-                <p className="mt-1 text-sm text-red-700">{error}</p>
+                <p className="mt-1 text-sm text-red-700 dark:text-red-300">{error}</p>
                 <div className="mt-6">
                   <button
                     onClick={() => window.location.reload()}
@@ -353,14 +342,15 @@ const ProjectGallery = () => {
           ) : (
             // No projects found placeholder
             <motion.div
-              className="relative overflow-hidden rounded-3xl p-10 text-center shadow-xl border border-gray-100 bg-gradient-to-br from-white via-indigo-50 to-purple-50"
+              // UPDATED: Main container styles
+              className="relative overflow-hidden rounded-3xl p-10 text-center shadow-xl border border-gray-100 dark:border-gray-800 bg-gradient-to-br from-white via-indigo-50 to-purple-50 dark:from-gray-800 dark:via-indigo-900/20 dark:to-purple-900/20"
               initial={{ opacity: 0, y: 30, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              {/* Glowing gradient background */}
+              {/* UPDATED: Glowing gradient background */}
               <motion.div
-                className="absolute inset-0 -z-10 bg-gradient-to-tr from-indigo-200 via-purple-200 to-pink-200 blur-3xl"
+                className="absolute inset-0 -z-10 bg-gradient-to-tr from-indigo-200 via-purple-200 to-pink-200 dark:from-indigo-900/50 dark:via-purple-900/50 dark:to-pink-900/50 blur-3xl"
                 animate={{
                   opacity: [0.3, 0.6, 0.3],
                   scale: [1, 1.1, 1],
@@ -388,7 +378,7 @@ const ProjectGallery = () => {
                   return (
                     <motion.div
                       key={i}
-                      className="absolute rounded-full bg-indigo-300"
+                      className="absolute rounded-full bg-indigo-300 dark:bg-indigo-500/40"
                       style={{
                         width: size,
                         height: size,
@@ -421,18 +411,16 @@ const ProjectGallery = () => {
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  className="flex justify-center items-center w-20 h-20 rounded-full bg-white shadow-lg mx-auto border border-indigo-100"
+                  className="flex justify-center items-center w-20 h-20 rounded-full bg-white dark:bg-gray-700 shadow-lg mx-auto border border-indigo-100 dark:border-gray-600"
                 >
-                  <FiSearch className="h-10 w-10 text-indigo-600" />
+                  <FiSearch className="h-10 w-10 text-indigo-600 dark:text-indigo-400" />
                 </motion.div>
 
-                {/* Title */}
-                <h3 className="mt-6 text-2xl font-bold text-gray-900 tracking-tight">
+                {/* UPDATED: Text colors */}
+                <h3 className="mt-6 text-2xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">
                   No Projects Found
                 </h3>
-
-                {/* Subtitle */}
-                <p className="mt-3 text-sm text-gray-600 leading-relaxed">
+                <p className="mt-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                   {searchQuery || filterCategory !== "all"
                     ? "We couldn’t find any projects with your filters. Try exploring all projects!"
                     : "Looks like there are no projects yet. Stay tuned for exciting updates!"}
@@ -461,7 +449,7 @@ const ProjectGallery = () => {
                       setSearchQuery("");
                       setSortBy("recent");
                     }}
-                    className="px-6 py-2.5 text-sm font-medium rounded-lg text-indigo-600 border border-indigo-200 bg-white hover:bg-indigo-50 shadow-md transition-all"
+                    className="px-6 py-2.5 text-sm font-medium rounded-lg text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:bg-indigo-50 dark:hover:bg-gray-600 shadow-md transition-all"
                   >
                     Explore Projects
                   </motion.button>

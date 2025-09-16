@@ -65,7 +65,7 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="admin-dashboard">
+    <div className="admin-dashboard bg-gray-50 dark:bg-black">
       <div className="dashboard-header">
         <h1>Admin Dashboard</h1>
         <p>Welcome back, {user?.firstName} {user?.lastName}</p>

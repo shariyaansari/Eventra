@@ -1,10 +1,37 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #1a1a1a;
+  --text-color-light: #4a4a4a; /* Lighter text for secondary content */
+  --border-color: #e1e5e9;
+  --card-bg-color: #ffffff;
+  --scrollbar-track-color: #f1f1f1;
+  --scrollbar-thumb-color: #c1c1c1;
+  --scrollbar-thumb-hover-color: #a8a8a8;
+  --btn-secondary-text: #4a4a4a;
+}
+
+body.dark {
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --text-color-light: #a0a0a0;
+  --border-color: #333333;
+  --card-bg-color: #1e1e1e;
+  --scrollbar-track-color: #2c2c2c;
+  --scrollbar-thumb-color: #555555;
+  --scrollbar-thumb-hover-color: #777777;
+  --btn-secondary-text: #e0e0e0;
+}
+
 
 html {
   scroll-behavior: smooth;
@@ -18,9 +45,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
-  color: #1a1a1a;
-  background-color: #ffffff;
   overflow-x: hidden;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 code {
@@ -34,16 +62,16 @@ code {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--scrollbar-track-color);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: var(--scrollbar-thumb-color);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+  background: var(--scrollbar-thumb-hover-color);
 }
 
 /* Utilities */
@@ -87,9 +115,9 @@ code {
 
 .btn-secondary {
   background: transparent;
-  color: #ffffffff;
+  color: var(--btn-secondary-text);
   padding: 12px 32px;
-  border: 2px solid #e1e5e9;
+  border: 2px solid var(--border-color);
   border-radius: 8px;
   font-weight: 600;
   text-decoration: none;
@@ -101,7 +129,7 @@ code {
 
 .btn-secondary:hover {
   border-color: #667eea;
-  color: #ffffffff;
+  color: #667eea;
   transform: translateY(-2px);
 }
 

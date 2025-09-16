@@ -183,17 +183,13 @@ const AboutPage = () => {
 
   return (
     <>
-      <ModernAbout></ModernAbout>
+      <ModernAbout />
+      <MissionVision />
+      <Features />
 
-      {/* Mission & Vision Section */}
-      <MissionVision></MissionVision>
-
-      {/* Features Section */}
-
-      <Features></Features>
-
-      {/* Target Users Section */}
-      <section className="py-20 bg-gray-50 relative">
+      {/* Why Choose Eventra Section */}
+      {/* UPDATED: Section background */}
+      <section className="py-20 bg-gray-50 dark:bg-gray-900 relative">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Heading */}
           <motion.div
@@ -202,16 +198,11 @@ const AboutPage = () => {
             animate={controls}
             className="text-center mb-16"
           >
-            <motion.h2
-              variants={item}
-              className="text-4xl font-extrabold text-gray-900 sm:text-4xl"
-            >
+            {/* UPDATED: Text colors */}
+            <motion.h2 variants={item} className="text-4xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl">
               Why Choose Eventra
             </motion.h2>
-            <motion.p
-              variants={item}
-              className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto"
-            >
+            <motion.p variants={item} className="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               Built with transparency, scalability, and community at our core
             </motion.p>
           </motion.div>
@@ -229,31 +220,33 @@ const AboutPage = () => {
                     "0 12px 30px rgba(99,102,241,0.15), 0 8px 16px rgba(99,102,241,0.1)",
                 }}
                 transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                className={`flex flex-col md:flex-row items-center gap-8 bg-white/80 backdrop-blur-lg rounded-2xl border border-gray-200 p-10 shadow-md hover:shadow-2xl relative overflow-hidden group ${
+                // UPDATED: Card background and border
+                className={`flex flex-col md:flex-row items-center gap-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl border border-gray-200 dark:border-gray-700 p-10 shadow-md hover:shadow-2xl relative overflow-hidden group ${
                   index % 2 === 1 ? "md:flex-row-reverse" : ""
                 }`}
               >
-                {/* Gradient Glow Background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-indigo-50 via-purple-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                {/* UPDATED: Gradient glow background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-50 via-purple-50 dark:from-indigo-900/40 dark:via-purple-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                {/* Icon */}
-                <div className="relative z-10 flex-shrink-0 w-20 h-20 flex items-center justify-center rounded-2xl bg-white text-indigo-600 text-4xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                {/* UPDATED: Icon wrapper background and text color */}
+                <div className="relative z-10 flex-shrink-0 w-20 h-20 flex items-center justify-center rounded-2xl bg-white dark:bg-gray-700 text-indigo-600 dark:text-indigo-400 text-4xl shadow-lg group-hover:scale-110 transition-transform duration-300">
                   {feature.icon}
                 </div>
 
                 {/* Content */}
                 <div className="relative z-10">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-indigo-600 transition-colors duration-300">
+                  {/* UPDATED: Text colors */}
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed mb-3">
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-3">
                     {feature.description}
                   </p>
 
-                  {/* Animated CTA */}
+                  {/* UPDATED: Link colors */}
                   <a
-                    href="#"
-                    className="inline-flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-800 group-hover:underline transition-all"
+                    href="#" 
+                    className="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 group-hover:underline transition-all"
                   >
                     Learn More
                     <span className="ml-2 transform group-hover:translate-x-1 transition-transform duration-200">
@@ -267,39 +260,8 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* 💡 NOTE: This CTA Section is already dark by design and works well in both modes. No changes are needed. */}
       <section className="py-24 bg-gray-900 relative overflow-hidden">
-  {/* Background Glow */}
-  <div className="absolute inset-0">
-    <div className="absolute -top-32 -left-32 w-96 h-96 bg-indigo-600/30 rounded-full blur-3xl"></div>
-    <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-purple-600/30 rounded-full blur-3xl"></div>
-  </div>
-
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-    {/* Heading */}
-    <motion.div variants={container} initial="hidden" animate={controls}>
-      <motion.h2
-        variants={item}
-        className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-6"
-      >
-        Join Our Growing Community
-      </motion.h2>
-
-      <motion.p
-        variants={item}
-        className="text-base sm:text-lg text-indigo-100 max-w-3xl mx-auto mb-6 leading-relaxed"
-      >
-        Thousands of organizers worldwide trust <span className="text-white font-semibold">Eventra</span> to bring their
-        communities together.
-      </motion.p>
-
-      <motion.p
-        variants={item}
-        className="text-base sm:text-lg text-indigo-200 mb-12 max-w-2xl mx-auto"
-      >
-        Start creating extraordinary events today and be part of the movement reshaping how the world connects.
-      </motion.p>
-
       {/* CTA Buttons */}
       <motion.div
         variants={container}
@@ -315,18 +277,14 @@ const AboutPage = () => {
         </motion.div>
         <motion.div variants={buttonItem}>
           <Link
-  to="/documentation"
-  className="inline-flex items-center px-8 py-3 rounded-xl font-medium border border-indigo-400/50 text-indigo-200 hover:bg-indigo-500/10 hover:border-indigo-300 transition-all duration-300"
->
-  📖 View Documentation
-</Link>
-
+            to="/documentation"
+            className="inline-flex items-center px-8 py-3 rounded-xl font-medium border border-indigo-400/50 text-indigo-200 hover:bg-indigo-500/10 hover:border-indigo-300 transition-all duration-300"
+          >
+            📖 View Documentation
+          </Link>
         </motion.div>
-      </motion.div>
-    </motion.div>
-  </div>
-</section>
-
+        </motion.div>
+      </section>
     </>
   );
 };

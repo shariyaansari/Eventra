@@ -71,13 +71,15 @@ const Login = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8"
+      // UPDATED: Page background gradient
+      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-gray-900 dark:to-black py-12 px-4 sm:px-6 lg:px-8"
     >
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4, delay: 0.1 }}
-        className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5"
+        // UPDATED: Subtle background haze for dark mode
+        className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 dark:from-blue-900/10 dark:via-purple-900/10 dark:to-pink-900/10"
       ></motion.div>
       
       <div className="relative w-full max-w-md">
@@ -86,7 +88,8 @@ const Login = () => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="backdrop-blur-xl bg-white/80 border border-white/20 shadow-2xl rounded-2xl p-8 space-y-8"
+          // UPDATED: Glassmorphism background and border for dark mode
+          className="backdrop-blur-xl bg-white/80 dark:bg-gray-900/70 border border-white/20 dark:border-white/10 shadow-2xl rounded-2xl p-8 space-y-8"
         >
           {/* Logo/Brand section */}
           <motion.div 
@@ -110,10 +113,12 @@ const Login = () => {
               transition={{ duration: 0.4, delay: 0.5 }}
               className="space-y-2"
             >
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+              {/* UPDATED: Header text gradient */}
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400 bg-clip-text text-transparent">
                 Welcome Back
               </h1>
-              <p className="text-gray-600 font-medium">
+              {/* UPDATED: Subtitle text */}
+              <p className="text-gray-600 dark:text-gray-400 font-medium">
                 Sign in to your Eventra account
               </p>
             </motion.div>
@@ -136,6 +141,10 @@ const Login = () => {
               <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
                 Email address <sup className='text-sm text-red-500'>*</sup>
               </label>
+              {/* UPDATED: Label text color */}
+              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Email address
+              </label>
               <div className="relative group">
                 <motion.div 
                   initial={{ scale: 0 }}
@@ -143,7 +152,8 @@ const Login = () => {
                   transition={{ duration: 0.3, delay: 0.7 }}
                   className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
                 >
-                  <svg className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {/* UPDATED: Icon color */}
+                  <svg className="h-5 w-5 text-gray-400 dark:text-gray-500 group-focus-within:text-blue-500 dark:group-focus-within:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                   </svg>
                 </motion.div>
@@ -158,9 +168,11 @@ const Login = () => {
                   required
                   disabled={loading}
                   placeholder="Enter your email address"
-                  className="w-full pl-10 pr-4 py-3 bg-white/50 border border-gray-200 rounded-xl shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white disabled:bg-gray-50/50 disabled:cursor-not-allowed transition-all duration-200 hover:shadow-md"
+                  // UPDATED: Input styles for dark mode
+                  className="w-full pl-10 pr-4 py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl shadow-sm placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:focus:border-blue-400 focus:bg-white dark:focus:bg-gray-700 disabled:bg-gray-50/50 dark:disabled:bg-gray-800/50 disabled:cursor-not-allowed transition-all duration-200 hover:shadow-md text-gray-900 dark:text-gray-100"
                 />
-                {error.email && <p style={{color: "red"}}>{error.email}</p>}
+                {/* IMPROVEMENT: Replaced inline style with theme-aware classes */}
+                {error.email && <p className="text-red-500 dark:text-red-400 text-sm mt-1">{error.email}</p>}
               </div>
             </motion.div>
 
@@ -174,6 +186,10 @@ const Login = () => {
               <label htmlFor="password" className="block text-sm font-semibold text-gray-700">
                 Password <sup className='ml-1 text-sm text-red-500'>*</sup>
               </label>
+              {/* UPDATED: Label text color */}
+              <label htmlFor="password" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Password
+              </label>
               <div className="relative group">
                 <motion.div 
                   initial={{ scale: 0 }}
@@ -181,7 +197,8 @@ const Login = () => {
                   transition={{ duration: 0.3, delay: 0.9 }}
                   className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
                 >
-                  <svg className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {/* UPDATED: Icon color */}
+                  <svg className="h-5 w-5 text-gray-400 dark:text-gray-500 group-focus-within:text-blue-500 dark:group-focus-within:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </motion.div>
@@ -196,14 +213,16 @@ const Login = () => {
                   required
                   disabled={loading}
                   placeholder="Enter your password"
-                  className="w-full pl-10 pr-12 py-3 bg-white/50 border border-gray-200 rounded-xl shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white disabled:bg-gray-50/50 disabled:cursor-not-allowed transition-all duration-200 hover:shadow-md"
+                  // UPDATED: Input styles for dark mode
+                  className="w-full pl-10 pr-12 py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl shadow-sm placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:focus:border-blue-400 focus:bg-white dark:focus:bg-gray-700 disabled:bg-gray-50/50 dark:disabled:bg-gray-800/50 disabled:cursor-not-allowed transition-all duration-200 hover:shadow-md text-gray-900 dark:text-gray-100"
                 />
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+                  // UPDATED: Show/hide password icon color
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                 >
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -227,13 +246,14 @@ const Login = () => {
                   </AnimatePresence>
                 </motion.button>
               </div>
-              {error.password && <p style={{color: "red"}}>{error.password}</p>}
+              {/* IMPROVEMENT: Replaced inline style with theme-aware classes */}
+              {error.password && <p className="text-red-500 dark:text-red-400 text-sm mt-1">{error.password}</p>}
               <div className="flex justify-end">
+                {/* UPDATED: Link colors */}
                 <Link 
                   to="/password-reset" 
-                  className="text-blue-600 hover:text-blue-700 font-semibold text-sm hover:underline transition-colors"
+                  className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold text-sm hover:underline transition-colors"
                 >
-                  
                   Forgot Password?
                 </Link>
               </div>
@@ -247,13 +267,15 @@ const Login = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.95 }}
                   transition={{ duration: 0.3 }}
-                  className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm flex items-start space-x-2"
+                  // UPDATED: General error message styles
+                  className="bg-red-50 dark:bg-red-900/40 border border-red-200 dark:border-red-700 text-red-700 dark:text-red-300 px-4 py-3 rounded-xl text-sm flex items-start space-x-2"
                 >
                   <motion.svg 
                     initial={{ rotate: -180 }}
                     animate={{ rotate: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" 
+                    // UPDATED: Error icon color
+                    className="h-5 w-5 text-red-500 dark:text-red-400 flex-shrink-0 mt-0.5" 
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24"
@@ -271,7 +293,8 @@ const Login = () => {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-4 rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white/80 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg"
+              // UPDATED: Focus ring offset for dark mode
+              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-4 rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white/80 dark:focus:ring-offset-gray-900 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg"
             >
               <AnimatePresence mode="wait">
                 {loading ? (
@@ -321,11 +344,12 @@ const Login = () => {
             transition={{ duration: 0.4, delay: 1.0 }}
             className="text-center"
           >
-            <p className="text-gray-600">
+            {/* UPDATED: Text and link colors */}
+            <p className="text-gray-600 dark:text-gray-400">
               Don't have an account?{' '}
               <Link 
                 to="/signup" 
-                className="text-blue-600 hover:text-blue-700 font-semibold hover:underline transition-colors"
+                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold hover:underline transition-colors"
               >
                 Create one here
               </Link>
@@ -337,15 +361,16 @@ const Login = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 1.4 }}
-            className="text-xs text-center text-gray-500 leading-relaxed"
-          >
-            By signing in, you agree to our{' '}
-            <Link to="/terms" className="hover:underline text-blue-600 font-semibold transition-colors">
-              Terms of Service
-            </Link>{' '}
-            and{' '}
-            <Link to="/privacy" className="hover:underline text-blue-600 font-semibold transition-colors">
-              Privacy Policy
+            
+            // UPDATED: Text and link colors 
+            className="text-xs text-center text-gray-500 dark:text-gray-500 leading-relaxed">
+              By signing in, you agree to our{' '}
+              <Link to="/terms" className="hover:underline text-blue-600 dark:text-blue-400 font-semibold transition-colors">
+                Terms of Service
+              </Link>{' '}
+              and{' '}
+              <Link to="/privacy" className="hover:underline text-blue-600 dark:text-blue-400 font-semibold transition-colors">
+                Privacy Policy
             </Link>
           </motion.p>
         </motion.div>

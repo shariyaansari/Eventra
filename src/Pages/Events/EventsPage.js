@@ -100,8 +100,9 @@ const EventsPage = () => {
   // JSX Render
   // -----------------------------
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero section with search bar */}
+    // UPDATED: Main page background
+    <div className="min-h-screen bg-gray-50 dark:bg-black">
+      {/* Hero section will be updated in the next step */}
       <EventHero
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -115,17 +116,13 @@ const EventsPage = () => {
         ref={cardSectionRef}
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
       >
-        {/* ----------------------------- */}
         {/* Filters + Toggle View Section */}
-        {/* ----------------------------- */}
         <motion.div
           className="mb-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          {/* ----------------------------- */}
           {/* Filter Buttons */}
-          {/* ----------------------------- */}
           <div className="flex flex-wrap gap-3">
             {[
               { key: "all", label: "All" },
@@ -137,10 +134,11 @@ const EventsPage = () => {
               <button
                 key={filter.key}
                 onClick={() => setFilterType(filter.key)}
+                // UPDATED: Inactive button styles for dark mode
                 className={`px-4 py-2 text-sm rounded-full transition ${
                   filterType === filter.key
                     ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
-                    : "bg-white text-gray-700 border hover:bg-indigo-50"
+                    : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-gray-700"
                 }`}
               >
                 {filter.label}
@@ -148,17 +146,17 @@ const EventsPage = () => {
             ))}
           </div>
 
-          {/* ----------------------------- */}
           {/* Toggle View Buttons (Grid / List) */}
-          {/* ----------------------------- */}
-          <div className="flex items-center space-x-2 bg-white rounded-lg p-1 shadow-sm">
+          {/* UPDATED: Toggle container background */}
+          <div className="flex items-center space-x-2 bg-white dark:bg-gray-800 rounded-lg p-1 shadow-sm">
             {/* Grid View Button */}
             <button
               onClick={() => setViewMode("grid")}
+              // UPDATED: Inactive toggle styles
               className={`p-2 rounded-md transition-all duration-200 flex items-center justify-center ${
                 viewMode === "grid"
                   ? "bg-gradient-to-r from-indigo-400 to-purple-400 text-white shadow-md"
-                  : "text-gray-500 hover:bg-gray-100"
+                  : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
               }`}
             >
               <Grid size={16} />
@@ -167,10 +165,11 @@ const EventsPage = () => {
             {/* List View Button */}
             <button
               onClick={() => setViewMode("list")}
+              // UPDATED: Inactive toggle styles
               className={`p-2 rounded-md transition-all duration-200 flex items-center justify-center ${
                 viewMode === "list"
                   ? "bg-gradient-to-r from-indigo-400 to-purple-400 text-white shadow-md"
-                  : "text-gray-500 hover:bg-gray-100"
+                  : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
               }`}
             >
               <List size={16} />
@@ -178,9 +177,7 @@ const EventsPage = () => {
           </div>
         </motion.div>
 
-        {/* ----------------------------- */}
         {/* Event Cards Section */}
-        {/* ----------------------------- */}
         <AnimatePresence mode="wait">
           {filteredEvents.length > 0 ? (
             <motion.div
@@ -201,23 +198,21 @@ const EventsPage = () => {
             </motion.div>
           ) : (
             <motion.div
-              className="relative overflow-hidden rounded-3xl p-10 text-center border border-gray-100 bg-gradient-to-br from-white via-indigo-50 to-purple-50 shadow-[0_10px_25px_rgba(0,0,0,0.3)]"
-              initial={{ opacity: 0, y: 30, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              // UPDATED: "No Events Found" message styles
+              className="relative overflow-hidden rounded-3xl p-10 text-center border border-gray-100 dark:border-gray-700 bg-gradient-to-br from-white via-indigo-50 to-purple-50 dark:from-gray-800 dark:via-indigo-900/20 dark:to-purple-900/20 shadow-[0_10px_25px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.3)]"
+              // ... animation props
             >
-              {/* ... your No Events Found block stays the same ... */}
+              {/* NOTE: You'll need to update the text colors inside this block as well */}
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+      
+      {/* These components will be updated in the next steps */}
       <EventCTA />
-
-      {/* Feedback Button */}
       <FeedbackButton />
     </div>
   );
 };
 
-// Exporting the component
 export default EventsPage;

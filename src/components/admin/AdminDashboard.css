@@ -1,3 +1,115 @@
+/* src/components/admin/AdminDashboard.css */
+
+/* =================================== */
+/* ======== DARK MODE STYLES ========= */
+/* =================================== */
+
+/* Main container */
+.dark .admin-dashboard {
+  color: #d1d5db; /* gray-300 */
+}
+
+/* Header */
+.dark .dashboard-header {
+  background-color: #1f2937; /* gray-800 */
+  border-bottom: 1px solid #374151; /* gray-700 */
+}
+.dark .dashboard-header h1 {
+  color: #f9fafb; /* gray-50 */
+}
+.dark .dashboard-header p {
+  color: #9ca3af; /* gray-400 */
+}
+.dark .logout-button {
+  background-color: #374151; /* gray-700 */
+  color: #f9fafb; /* gray-50 */
+}
+.dark .logout-button:hover {
+  background-color: #4b5563; /* gray-600 */
+}
+
+/* Tabs */
+.dark .dashboard-tabs {
+  background-color: #1f2937; /* gray-800 */
+  border: 1px solid #374151; /* gray-700 */
+}
+.dark .dashboard-tabs button {
+  color: #d1d5db; /* gray-300 */
+}
+.dark .dashboard-tabs button:hover {
+  background-color: #374151; /* gray-700 */
+}
+.dark .dashboard-tabs button.active {
+  background-color: #4f46e5; /* indigo-600 */
+  color: #ffffff;
+}
+
+/* Error Message */
+.dark .error-message {
+  background-color: #f87171; /* red-400 */
+  color: #1f2937; /* gray-800 */
+}
+
+/* Stat Cards */
+.dark .stat-card {
+  background-color: #1f2937; /* gray-800 */
+  border: 1px solid #374151; /* gray-700 */
+}
+.dark .stat-card h3 {
+  color: #9ca3af; /* gray-400 */
+}
+.dark .stat-card .stat-number {
+  color: #f9fafb; /* gray-50 */
+}
+
+/* Actions & Buttons */
+.dark .dashboard-actions h2 {
+  color: #f3f4f6; /* gray-100 */
+}
+.dark .action-btn.create-event {
+  background-color: #4f46e5; /* indigo-600 */
+  color: #ffffff;
+}
+.dark .action-btn.create-event:hover {
+  background-color: #4338ca; /* indigo-700 */
+}
+
+/* Tables */
+.dark table {
+  background-color: #1f2937; /* gray-800 */
+}
+.dark table thead tr {
+  background-color: #374151; /* gray-700 */
+}
+.dark table th {
+  color: #e5e7eb; /* gray-200 */
+}
+.dark table tbody tr {
+  border-bottom: 1px solid #374151; /* gray-700 */
+}
+.dark table tbody tr:hover {
+  background-color: #374151; /* gray-700 */
+}
+.dark table td {
+  color: #d1d5db; /* gray-300 */
+}
+
+/* Small Table Buttons */
+.dark .btn-small {
+  background-color: #4b5563; /* gray-600 */
+  color: #f9fafb; /* gray-50 */
+}
+.dark .btn-small:hover {
+  background-color: #6b7280; /* gray-500 */
+}
+.dark .btn-small.btn-danger {
+  background-color: #ef4444; /* red-500 */
+  color: #ffffff;
+}
+.dark .btn-small.btn-danger:hover {
+  background-color: #dc2626; /* red-600 */
+}
+
 .admin-dashboard {
   padding: 2rem;
   background-color: #f9f9f9;

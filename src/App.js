@@ -41,85 +41,87 @@ import { Privacy } from "./Pages/Privacy";
 import ApiDocs from "./Pages/ApiDocs";
 import HelpCenter from "./Pages/HelpCenter";
 
-
+import { ThemeProvider } from './context/ThemeContext';
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <div className="App">
-          <Navbar />
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
+          <div className="App">
+            <Navbar />
 
-          <main className="min-h-screen">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/events" element={<EventsPage />} />
-              <Route path="/hackathons" element={<HackathonPage />} />
-              <Route path="/projects" element={<ProjectsPage />} />
-              <Route path="/contributors" element={<Contributors />} />
-              <Route path="/communityEvent" element={<CommunityEvent />} />
-              <Route path="/leaderBoard" element={<LeaderBoard />} />
-              <Route path="/contributorguide" element={<ContributorGuide />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/apiDocs" element={<ApiDocs />} />
-              <Route path="/helpcenter" element={<HelpCenter />} />
-              <Route path="/contact" element={<ContactUs />} />{" "}
-              {/* Add ContactUs route */}
-              <Route path="/feedback" element={<FeedbackPage />} />{" "}
-              {/* Add FeedbackPage route */}
-              {/* Protected route for event creation */}
-              <Route
-                path="/create-event"
-                element={
-                  <ProtectedRoute requiredPermissions={["CREATE_EVENT"]}>
-                    <EventCreation />
-                  </ProtectedRoute>
-                }
-              />
-              {/* Dashboard routes */}
-              <Route
-                path="/admin"
-                element={
-                  <ProtectedRoute requiredRoles={["ADMIN"]}>
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                }
-              />
-              {/* Conatct page documentation page route */}
-              <Route path="/documentation" element={<DocumentationPage />} />
-              <Route path="/submit-project" element={<SubmitProject />} />
-              {/* Protected route for host hackathon */}
-              <Route
-                path="/host-hackathon"
-                element={
-                  <ProtectedRoute requiredPermissions={["HOST_HACKATHON"]}>
-                    <HostHackathon />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-              {/* Auth routes */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/unauthorized" element={<Unauthorized />} />
-              <Route path="/password-reset" element={<PasswordReset />} />
-              <Route path="/*" element={<NotFound />} />
-            </Routes>
-          </main>
+            <main className="min-h-screen">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/events" element={<EventsPage />} />
+                <Route path="/hackathons" element={<HackathonPage />} />
+                <Route path="/projects" element={<ProjectsPage />} />
+                <Route path="/contributors" element={<Contributors />} />
+                <Route path="/communityEvent" element={<CommunityEvent />} />
+                <Route path="/leaderBoard" element={<LeaderBoard />} />
+                <Route path="/contributorguide" element={<ContributorGuide />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/apiDocs" element={<ApiDocs />} />
+                <Route path="/helpcenter" element={<HelpCenter />} />
+                <Route path="/contact" element={<ContactUs />} />{" "}
+                {/* Add ContactUs route */}
+                <Route path="/feedback" element={<FeedbackPage />} />{" "}
+                {/* Add FeedbackPage route */}
+                {/* Protected route for event creation */}
+                <Route
+                  path="/create-event"
+                  element={
+                    <ProtectedRoute requiredPermissions={["CREATE_EVENT"]}>
+                      <EventCreation />
+                    </ProtectedRoute>
+                  }
+                />
+                {/* Dashboard routes */}
+                <Route
+                  path="/admin"
+                  element={
+                    <ProtectedRoute requiredRoles={["ADMIN"]}>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                {/* Conatct page documentation page route */}
+                <Route path="/documentation" element={<DocumentationPage />} />
+                <Route path="/submit-project" element={<SubmitProject />} />
+                {/* Protected route for host hackathon */}
+                <Route
+                  path="/host-hackathon"
+                  element={
+                    <ProtectedRoute requiredPermissions={["HOST_HACKATHON"]}>
+                      <HostHackathon />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                {/* Auth routes */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/unauthorized" element={<Unauthorized />} />
+                <Route path="/password-reset" element={<PasswordReset />} />
+                <Route path="/*" element={<NotFound />} />
+              </Routes>
+            </main>
 
-          <ScrollToTop />
-          <Footer />
-        </div>
-      </Router>
-    </AuthProvider>
+            <ScrollToTop />
+            <Footer />
+          </div>
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

@@ -84,7 +84,8 @@ export const Privacy = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    // UPDATED: Main page background
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black py-12 px-4 sm:px-6 lg:px-8">
       {/* Header Section */}
       <motion.div
         variants={container}
@@ -92,15 +93,16 @@ export const Privacy = () => {
         animate={controls}
         className="max-w-4xl mx-auto text-center mb-16"
       >
+        {/* UPDATED: Text colors */}
         <motion.h1
           variants={item}
-          className="text-4xl font-extrabold text-gray-900 sm:text-5xl mb-4"
+          className="text-4xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-5xl mb-4"
         >
           Privacy Policy
         </motion.h1>
         <motion.p
           variants={item}
-          className="text-xl text-gray-600 max-w-2xl mx-auto"
+          className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
         >
           Your privacy is important to us. Learn how we protect your data and
           your rights.
@@ -116,15 +118,17 @@ export const Privacy = () => {
       >
         <motion.div
           variants={item}
-          className="bg-white/80 backdrop-blur-lg rounded-2xl border border-gray-200 p-8 shadow-md"
+          // UPDATED: Card background and border
+          className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl border border-gray-200 dark:border-gray-700 p-8 shadow-md"
         >
-          <p className="text-lg text-gray-800">
-            At <span className="font-bold text-indigo-600">Eventra</span>, we
+          {/* UPDATED: Text colors */}
+          <p className="text-lg text-gray-800 dark:text-gray-200">
+            At <span className="font-bold text-indigo-600 dark:text-indigo-400">Eventra</span>, we
             are committed to protecting your personal information and your right
             to privacy. As an open-source event management platform, we value
             transparency in how we handle your data.
           </p>
-          <p className="mt-4 text-gray-700">
+          <p className="mt-4 text-gray-700 dark:text-gray-300">
             This Privacy Policy explains how we collect, use, disclose, and
             safeguard your information when you use our event management
             platform and services.
@@ -132,58 +136,46 @@ export const Privacy = () => {
         </motion.div>
       </motion.div>
 
+
       {/* Policy Sections */}
       <div className="max-w-6xl mx-auto">
-  {/* Container for all policy sections - 
-      This ensures a max width for readability and centers the grid */}
-  <motion.div
-    variants={container} // Animation variants for staggering children (if defined outside)
-    initial="hidden"     // Initial animation state for the container
-    animate={controls}   // Controlled animation trigger (could be from intersection observer, etc.)
-    className="grid grid-cols-1 md:grid-cols-2 gap-8"
-  >
-    {/* Mapping through all sections dynamically from policySections array */}
-    {policySections.map((section, index) => (
-      <motion.div
-        key={index} // Unique key for React reconciliation
-        variants={item} // Animation variant for each individual card
-        className="bg-white/80 backdrop-blur-lg rounded-2xl border border-gray-200 
-                   p-8 shadow-md relative overflow-hidden group 
-                   hover:border-blue-400 transition-colors duration-300"
-      >
-        {/* 
-          Gradient Glow Background 
-          - Initially transparent
-          - On hover, it becomes visible (opacity-100)
-          - Gives a subtle visual emphasis without scaling the card
-        */}
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-50 via-purple-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-        {/* Content wrapper ensures gradient background stays behind actual text */}
-        <div className="relative z-10">
-          
-          {/* Header Section with Icon + Title */}
-          <div className="flex items-center mb-6">
-            {/* Icon wrapper for consistent sizing and background */}
-            <div className="flex items-center justify-center w-12 h-12 bg-indigo-100 rounded-xl text-indigo-600 text-2xl mr-4">
-              {section.icon}
-            </div>
-            
-            {/* Title text */}
-            <h2 className="text-2xl font-bold text-gray-900">
-              {section.title}
-            </h2>
-          </div>
-
-          {/* Section description/content text */}
-          <p className="text-gray-700 leading-relaxed">
-            {section.content}
-          </p>
-        </div>
-      </motion.div>
-    ))}
-  </motion.div>
-</div>
+        {/* Container for all policy sections - 
+            This ensures a max width for readability and centers the grid */}
+        <motion.div
+          variants={container} // Animation variants for staggering children (if defined outside)
+          initial="hidden"     // Initial animation state for the container
+          animate={controls}   // Controlled animation trigger (could be from intersection observer, etc.)
+          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+        >
+          {/* Mapping through all sections dynamically from policySections array */}
+          {policySections.map((section, index) => (
+            <motion.div
+              key={index} // Unique key for React reconciliation
+              variants={item} // Animation variant for each individual card
+              className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl border border-gray-200 dark:border-gray-700 p-8 shadow-md relative overflow-hidden group hover:border-blue-400 dark:hover:border-blue-500 transition-colors duration-300"
+            >
+              {/* UPDATED: Gradient glow background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-50 via-purple-50 dark:from-indigo-900/40 dark:via-purple-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center mb-6">
+                  {/* UPDATED: Icon wrapper */}
+                  <div className="flex items-center justify-center w-12 h-12 bg-indigo-100 dark:bg-gray-700 rounded-xl text-indigo-600 dark:text-indigo-400 text-2xl mr-4">
+                    {section.icon}
+                  </div>
+                  {/* UPDATED: Text colors */}
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                    {section.title}
+                  </h2>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  {section.content}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
 
       {/* Additional Info Section */}
       <motion.div
@@ -194,17 +186,19 @@ export const Privacy = () => {
       >
         <motion.div
           variants={item}
-          className="bg-indigo-50 rounded-2xl border border-indigo-100 p-8"
+          // UPDATED: Card background and border
+          className="bg-indigo-50 dark:bg-gray-800 rounded-2xl border border-indigo-100 dark:border-gray-700 p-8"
         >
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
+          {/* UPDATED: Text colors */}
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
             Policy Updates
           </h3>
-          <p className="text-gray-700 mb-4">
+          <p className="text-gray-700 dark:text-gray-300 mb-4">
             We may update our privacy practices. Changes will be posted on this
             page with a revised date. For significant changes, we will notify
             you through email or a prominent notice on our website.
           </p>
-          <p className="text-gray-700">
+          <p className="text-gray-700 dark:text-gray-300">
             <strong>Last updated:</strong>{" "}
             {new Date().toLocaleDateString("en-US", {
               year: "numeric",

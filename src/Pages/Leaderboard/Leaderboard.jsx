@@ -196,14 +196,15 @@ export default function LeaderBoard() {
   ];
 
   return (
-    <div className="bg-white py-12 sm:py-16">
+    <div className="bg-white dark:bg-black py-12 sm:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            <span className="block text-indigo-700">GSSoC'25</span>
-            <span className="text-gray-800">Contributor Leaderboard</span>
+          {/* UPDATED: Header text */}
+          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            <span className="block text-indigo-700 dark:text-indigo-400">GSSoC'25</span>
+            <span className="text-gray-800 dark:text-gray-200">Contributor Leaderboard</span>
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Recognizing the amazing contributions from our open source community
           </p>
         </div>
@@ -218,11 +219,12 @@ export default function LeaderBoard() {
               setCurrentPage(1);
             }}
             placeholder="Search contributors..."
-            className="w-full max-w-xs px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+            className="w-full max-w-xs px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
           />
 
           <Menu as="div" className="relative inline-block text-left">
-            <Menu.Button className="inline-flex justify-center w-48 px-4 py-2 bg-white text-sm font-medium text-gray-700 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+            {/* UPDATED: Sort dropdown button */}
+            <Menu.Button className="inline-flex justify-center w-48 px-4 py-2 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400">
               Sort by: {sortOptions.find((opt) => opt.value === sortBy)?.label}
               <FaChevronDown className="ml-2 h-4 w-4" />
             </Menu.Button>
@@ -236,14 +238,16 @@ export default function LeaderBoard() {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg focus:outline-none z-50">
+              {/* UPDATED: Dropdown menu */}
+              <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 divide-y divide-gray-100 dark:divide-gray-700 rounded-md shadow-lg focus:outline-none z-50">
                 {sortOptions.map((option) => (
                   <Menu.Item key={option.value}>
                     {({ active }) => (
                       <button
                         onClick={() => setSortBy(option.value)}
+                        // Active state is fine, just need to update inactive text
                         className={`${
-                          active ? "bg-indigo-500 text-white" : "text-gray-700"
+                          active ? "bg-indigo-500 text-white" : "text-gray-700 dark:text-gray-300"
                         } group flex w-full items-center px-4 py-2 text-sm`}
                       >
                         {option.label}
@@ -256,46 +260,42 @@ export default function LeaderBoard() {
           </Menu>
         </div>
 
-        <div className="bg-gray-50 rounded-2xl shadow-lg overflow-hidden">
-          {loading ? (
+        {/* UPDATED: Table container */}
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+          {loading ?  (
             <div className="overflow-x-auto">{/* Skeleton loader */}</div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gray-50 dark:bg-gray-700/50">
                   <tr>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Rank
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Rank
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Contributor
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Points
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       PRs
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-100">
+                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700">
                   {currentContributors.map((c) => {
                     const rank = ranksMap[c.username];
                     return (
-                      <tr
-                        key={c.username}
-                        className="hover:bg-gray-50 transition-colors duration-150 border-b border-gray-100"
-                      >
+                      <tr key={c.username} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150 border-b border-gray-100 dark:border-gray-700">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
+                            // UPDATED: Rank badges
                             className={`inline-flex items-center justify-center w-8 h-8 rounded-full font-medium ${
-                              rank === 1
-                                ? "bg-yellow-500 text-white"
-                                : rank === 2
-                                ? "bg-gray-300 text-gray-800"
-                                : rank === 3
-                                ? "bg-amber-800 text-white"
-                                : "bg-indigo-50 text-indigo-700"
+                              rank === 1 ? "bg-yellow-500 text-white"
+                              : rank === 2 ? "bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200"
+                              : rank === 3 ? "bg-amber-800 text-white"
+                              : "bg-indigo-50 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300"
                             }`}
                           >
                             {rank}
@@ -304,22 +304,18 @@ export default function LeaderBoard() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="flex-shrink-0 h-10 w-10">
-                              <img
-                                className="h-10 w-10 rounded-full border-2 border-indigo-200"
-                                src={c.avatar}
-                                alt={c.username}
-                              />
+                              <img className="h-10 w-10 rounded-full border-2 border-indigo-200 dark:border-gray-600" src={c.avatar} alt={c.username} />
                             </div>
                             <div className="ml-4">
                               <a
                                 href={c.profile}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-sm font-medium text-gray-900 hover:text-indigo-600 transition-colors"
+                                className="text-sm font-medium text-gray-900 dark:text-gray-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
                               >
                                 {c.username}
                               </a>
-                              <div className="text-sm text-gray-500">
+                              <div className="text-sm text-gray-500 dark:text-gray-400">
                                 {c.name && c.name !== c.username ? c.name : ""}
                               </div>
                             </div>
@@ -345,12 +341,8 @@ export default function LeaderBoard() {
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex justify-center items-center space-x-2 py-4">
-                  <button
-                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                    disabled={currentPage === 1}
-                    className="px-3 py-1 text-sm rounded-lg border border-gray-300 disabled:opacity-50 flex items-center"
-                  >
+                <div className="flex justify-center items-center space-x-2 py-4 bg-white dark:bg-gray-800">
+                  <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1} className="px-3 py-1 text-sm rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 flex items-center bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                     <FaChevronLeft />
                   </button>
                   {[...Array(totalPages)].map((_, i) => (
@@ -360,33 +352,29 @@ export default function LeaderBoard() {
                       className={`px-3 py-1 text-sm rounded-lg border ${
                         currentPage === i + 1
                           ? "bg-indigo-500 text-white border-indigo-500"
-                          : "border-gray-300"
+                          : "border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
                       }`}
                     >
                       {i + 1}
                     </button>
                   ))}
-                  <button
-                    onClick={() =>
-                      setCurrentPage((p) => Math.min(p + 1, totalPages))
-                    }
-                    disabled={currentPage === totalPages}
-                    className="px-3 py-1 text-sm rounded-lg border border-gray-300 disabled:opacity-50 flex items-center"
-                  >
+                  <button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} className="px-3 py-1 text-sm rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 flex items-center bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                     <FaChevronRight />
                   </button>
                 </div>
               )}
             </div>
           )}
-          <div className="bg-gray-50 px-6 py-2 text-right border-t border-gray-200">
+          
+          {/* UPDATED: Table footer */}
+          <div className="bg-gray-50 dark:bg-gray-800 px-6 py-2 text-right border-t border-gray-200 dark:border-gray-700">
             {lastUpdated && (
-              <span className="text-xs text-gray-500">{lastUpdated}</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">{lastUpdated}</span>
             )}
           </div>
         </div>
       </div>
-      <GSSoCContribution></GSSoCContribution>
+      <GSSoCContribution />
     </div>
   );
 }

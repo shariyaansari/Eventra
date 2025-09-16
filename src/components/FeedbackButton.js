@@ -26,9 +26,11 @@ const FeedbackButton = () => {
         </motion.div>
         
         {/* Tooltip */}
-        <div className="absolute left-full ml-3 px-3 py-2 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
+        {/* UPDATED: Tooltip background color for dark mode */}
+        <div className="pointer-events-none absolute left-full ml-3 whitespace-nowrap rounded-lg bg-gray-800 dark:bg-gray-700 px-3 py-2 text-sm text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           Share your feedback
-          <div className="absolute right-full top-1/2 transform -translate-y-1/2 border-4 border-transparent border-r-gray-800"></div>
+          {/* UPDATED: Tooltip arrow color for dark mode */}
+          <div className="absolute right-full top-1/2 -translate-y-1/2 transform border-4 border-transparent border-r-gray-800 dark:border-r-gray-700"></div>
         </div>
       </Link>
     </motion.div>

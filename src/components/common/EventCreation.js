@@ -398,7 +398,7 @@ const EventCreation = () => {
   };
 
   return (
-    <div className="event-creation-container">
+    <div className="event-creation-container bg-gray-50 dark:bg-black">
       {currentStep === 'form' ? (
         <div className="event-form">
           <h1>Create Event</h1>

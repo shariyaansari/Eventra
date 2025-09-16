@@ -104,7 +104,7 @@ We follow conventional commits:
 - test: – Adding or updating tests
 - chore: – Maintenance tasks
 
-### ✅ Examples:
+### Examples:
 - feat: add leaderboard component
 - fix: resolve API CORS issue
 - docs: update contributing guidelines

@@ -87,7 +87,7 @@ const CollaborationHub = () => {
   ];
 
   return (
-    <div className="collaboration-hub">
+    <div className="collaboration-hub bg-gray-50 dark:bg-black">
       <div className="collaboration-header">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
