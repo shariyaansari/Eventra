@@ -141,7 +141,7 @@ const socialLinks = [
   { 
     name: "LinkedIn", 
     icon: <FaLinkedin className="w-5 h-5" />, 
-    href: "https://linkedin.com/in" 
+    href: "https://www.linkedin.com/in/sandeepvashishtha/" 
   },
   { 
     name: "Discord", 
