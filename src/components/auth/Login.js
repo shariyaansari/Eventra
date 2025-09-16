@@ -134,7 +134,7 @@ const Login = () => {
               className="space-y-2"
             >
               <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
-                Email address
+                Email address <sup className='text-sm text-red-500'>*</sup>
               </label>
               <div className="relative group">
                 <motion.div 
@@ -172,7 +172,7 @@ const Login = () => {
               className="space-y-2"
             >
               <label htmlFor="password" className="block text-sm font-semibold text-gray-700">
-                Password
+                Password <sup className='ml-1 text-sm text-red-500'>*</sup>
               </label>
               <div className="relative group">
                 <motion.div 
