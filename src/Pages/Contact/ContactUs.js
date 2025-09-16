@@ -133,20 +133,20 @@ const socialLinks = [
     icon: <span className="w-5 h-5 flex items-center justify-center font-bold">X</span>, 
     href: "https://x.com" 
   },
-  { 
-    name: "GitHub", 
-    icon: <FaGithub className="w-5 h-5" />, 
-    href: "https://github.com" 
+  {
+    name: "GitHub",
+    icon: <FaGithub className="w-5 h-5" />,
+    href: "https://github.com",
   },
-  { 
-    name: "LinkedIn", 
-    icon: <FaLinkedin className="w-5 h-5" />, 
-    href: "https://linkedin.com/in" 
+  {
+    name: "LinkedIn",
+    icon: <FaLinkedin className="w-5 h-5" />,
+    href: "https://linkedin.com/in",
   },
-  { 
-    name: "Discord", 
-    icon: <FaDiscord className="w-5 h-5" />, 
-    href: "https://discord.gg/" 
+  {
+    name: "Discord",
+    icon: <FaDiscord className="w-5 h-5" />,
+    href: "https://discord.gg/",
   },
 ];
 
@@ -156,6 +156,7 @@ const ContactUs = () => {
     email: "",
     subject: "",
     message: "",
+    phone: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -361,21 +362,19 @@ const ContactUs = () => {
               <div className="mt-10">
                 <h3 className="font-medium mb-4">Follow Us</h3>
                 <div className="flex space-x-4">
-                  {socialLinks.map(
-                    ({name , icon , href}) => (
-                      <motion.a
-                        key={name}
-                        href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ y: -3 }}
-                        className="bg-white bg-opacity-20 p-2 rounded-full"
-                      >
-                        <span className="sr-only">{name}</span>
-                        {icon}
-                      </motion.a>
-                    )
-                  )}
+                  {socialLinks.map(({ name, icon, href }) => (
+                    <motion.a
+                      key={name}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ y: -3 }}
+                      className="bg-white bg-opacity-20 p-2 rounded-full"
+                    >
+                      <span className="sr-only">{name}</span>
+                      {icon}
+                    </motion.a>
+                  ))}
                 </div>
               </div>
             </div>
@@ -407,6 +406,37 @@ const ContactUs = () => {
                   onChange={handleChange}
                   error={errors.email}
                 />
+
+                <div className="flex items-end space-x-2">
+                  {/* Country code select */}
+                  <select
+                    name="countryCode"
+                    value={formData.countryCode}
+                    onChange={handleChange}
+                    className="border h-[50px] rounded px-2 py-1 bg-white text-gray-700"
+                  >
+                    <option value="+1">+1 (US)</option>
+                    <option value="+91">+91 (IN)</option>
+                    <option value="+44">+44 (UK)</option>
+                    {/* Add more country codes */}
+                  </select>
+
+                  {/* Phone number input */}
+                  <FloatingInput
+                  // className="px-2 py-1"
+                    id="phone"
+                    label="Contact Number (Optional)"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    error={errors.phone}
+                    type="tel" 
+                    inputMode="numeric" 
+                    pattern="[0-9]*" 
+                    name="phone"
+                    maxLenght={10}
+                    className="h-[45px]"
+                  />
+                </div>
 
                 <FloatingInput
                   id="subject"
