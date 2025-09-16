@@ -367,7 +367,7 @@ const Signup = () => {
               </AnimatePresence>
             </motion.div>
 
-            <motion.div
+            {/* <motion.div
               initial={{ x: 20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.7 }}
@@ -392,9 +392,9 @@ const Signup = () => {
                   <option value="+91">🇮🇳 +91</option>
                   <option value="+44">🇬🇧 +44</option>
                   <option value="+61">🇦🇺 +61</option>
-                </select>
+                </select> */}
 
-                <motion.input
+                {/* <motion.input
                   id="phone"
                   name="phone"
                   type="tel"
@@ -424,7 +424,7 @@ const Signup = () => {
                   </motion.p>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </motion.div> */}
 
             <motion.div
               initial={{ x: -20, opacity: 0 }}
