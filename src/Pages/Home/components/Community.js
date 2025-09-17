@@ -22,7 +22,7 @@ const socials = [
   {
     name: "Discord",
     icon: <FaDiscord />,
-    url: "#discord",
+    url: "https://discord.com/",
     description: "Join our Discord server to connect with the community",
     gradient: "from-indigo-500 via-purple-600 to-purple-700",
     color: "purple",
