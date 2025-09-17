@@ -91,7 +91,7 @@ const StarRating = ({ rating, onRatingChange, error }) => {
     <div className="relative mt-6">
       <motion.label
         className={`block text-sm font-medium mb-3 ${
-          error ? "text-red-500" : "text-gray-700"
+          error ? "text-red-500 dark:text-red-400" : "text-gray-700 dark:text-gray-300"
         }`}
         initial={false}
         animate={{ opacity: 1 }}
@@ -114,7 +114,7 @@ const StarRating = ({ rating, onRatingChange, error }) => {
               className={`w-8 h-8 transition-colors duration-200 ${
                 star <= (hoveredRating || rating)
                   ? "text-yellow-400 fill-current"
-                  : "text-gray-300"
+                  : "text-gray-300 dark:text-gray-600"
               }`}
             />
           </motion.button>
@@ -123,7 +123,7 @@ const StarRating = ({ rating, onRatingChange, error }) => {
           <motion.span
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
-            className="ml-3 text-sm text-gray-600"
+            className="ml-3 text-sm text-gray-600 dark:text-gray-400"
           >
             {rating === 1 && "Poor"}
             {rating === 2 && "Fair"}
@@ -137,7 +137,7 @@ const StarRating = ({ rating, onRatingChange, error }) => {
         <motion.p
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-red-500 text-xs mt-1"
+          className="text-red-500 dark:text-red-400 text-xs mt-1"
         >
           {error}
         </motion.p>
@@ -163,13 +163,11 @@ const FloatingInput = ({
     <div className="relative mt-6">
       <motion.label
         htmlFor={id}
-        className={`absolute transition-all duration-300 ${
-          Icon ? "left-14" : "left-4"
-        } ${
+        className={`absolute transition-all duration-300 ${ Icon ? "left-14" : "left-4"} ${
           isFocused || value
-            ? "top-0 text-xs text-indigo-600 font-medium"
-            : "top-4 text-sm text-gray-500"
-        } ${error ? "text-red-500" : ""}`}
+            ? "top-0 text-xs text-indigo-600 dark:text-indigo-400 font-medium"
+            : "top-4 text-sm text-gray-500 dark:text-gray-400"
+        } ${error ? "text-red-500 dark:text-red-400" : ""}`}
         initial={false}
         animate={{
           y: isFocused || value ? -20 : 0,
@@ -180,7 +178,7 @@ const FloatingInput = ({
       </motion.label>
       <div className="relative">
         {Icon && (
-          <Icon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <Icon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 w-5 h-5" />
         )}
         <input
           id={id}
@@ -190,12 +188,12 @@ const FloatingInput = ({
           onChange={onChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          className={`w-full pt-5 pb-2 px-4 border rounded-lg focus:ring-2 focus:outline-none ${
+          className={`w-full pt-5 pb-2 px-4 border rounded-lg focus:ring-2 focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 ${
             Icon ? "pl-14" : ""
           } ${
             error
               ? "border-red-500 focus:ring-red-200"
-              : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-200"
+              : "border-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-indigo-200 dark:focus:ring-indigo-900/50"
           }`}
         />
       </div>
@@ -203,7 +201,7 @@ const FloatingInput = ({
         <motion.p
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-red-500 text-xs mt-1 ml-1"
+          className="text-red-500 dark:text-red-400 text-xs mt-1 ml-1"
         >
           {error}
         </motion.p>
@@ -233,9 +231,9 @@ const FloatingSelect = ({
           Icon ? "left-14" : "left-4"
         } ${
           isFocused || value
-            ? "top-0 text-xs text-indigo-600 font-medium"
-            : "top-4 text-sm text-gray-500"
-        } ${error ? "text-red-500" : ""}`}
+            ? "top-0 text-xs text-indigo-600 dark:text-indigo-400 font-medium"
+            : "top-4 text-sm text-gray-500 dark:text-gray-400"
+        } ${error ? "text-red-500 dark:text-red-400" : ""}`}
         initial={false}
         animate={{
           y: isFocused || value ? -20 : 0,
@@ -246,7 +244,7 @@ const FloatingSelect = ({
       </motion.label>
       <div className="relative">
         {Icon && (
-          <Icon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <Icon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 w-5 h-5" />
         )}
         <select
           id={id}
@@ -255,12 +253,12 @@ const FloatingSelect = ({
           onChange={onChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          className={`w-full pt-5 pb-2 px-4 border rounded-lg focus:ring-2 focus:outline-none ${
+          className={`w-full pt-5 pb-2 px-4 border rounded-lg focus:ring-2 focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 ${
             Icon ? "pl-14" : ""
           } ${
             error
               ? "border-red-500 focus:ring-red-200"
-              : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-200"
+              : "border-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-indigo-200 dark:focus:ring-indigo-900/50"
           }`}
         >
           <option value=""></option>
@@ -275,7 +273,7 @@ const FloatingSelect = ({
         <motion.p
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-red-500 text-xs mt-1 ml-1"
+          className="text-red-500 dark:text-red-400 text-xs mt-1 ml-1"
         >
           {error}
         </motion.p>
@@ -425,13 +423,15 @@ const FeedbackPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    // UPDATED: Main page background
+    <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="max-w-4xl w-full mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-100"
+          // UPDATED: Card background and border
+          className="bg-white dark:bg-gray-900 shadow-2xl rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800"
         >
           <div className="md:flex">
             <div className="md:w-2/5 bg-gradient-to-br from-indigo-600 to-purple-600 text-white p-10 flex flex-col justify-between">
@@ -505,10 +505,11 @@ const FeedbackPage = () => {
 
             <div className="md:w-3/5 p-10">
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-extrabold text-gray-900">
+                {/* UPDATED: Text colors */}
+                <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100">
                   We'd Love to Hear From You
                 </h2>
-                <p className="mt-2 text-gray-600">
+                <p className="mt-2 text-gray-600 dark:text-gray-400">
                   Help us make Eventra better for everyone
                 </p>
               </div>
@@ -545,14 +546,15 @@ const FeedbackPage = () => {
                   icon={FiMessageSquare}
                 />
 
+                {/* UPDATED: Textarea and its floating label */}
                 <div className="relative mt-6">
                   <motion.label
                     htmlFor="message"
                     className={`absolute left-4 transition-all duration-300 ${
                       formData.message
-                        ? "top-0 text-xs text-indigo-600 font-medium"
-                        : "top-4 text-sm text-gray-500"
-                    } ${errors.message ? "text-red-500" : ""}`}
+                        ? "top-0 text-xs text-indigo-600 dark:text-indigo-400 font-medium"
+                        : "top-4 text-sm text-gray-500 dark:text-gray-400"
+                    } ${errors.message ? "text-red-500 dark:text-red-400" : ""}`}
                     initial={false}
                     animate={{
                       y: formData.message ? -20 : 0,
@@ -585,17 +587,17 @@ const FeedbackPage = () => {
                           );
                       }
                     }}
-                    className={`w-full pt-5 pb-2 px-4 border rounded-lg focus:ring-2 focus:outline-none ${
+                    className={`w-full pt-5 pb-2 px-4 border rounded-lg focus:ring-2 focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 ${
                       errors.message
                         ? "border-red-500 focus:ring-red-200"
-                        : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-200"
+                        : "border-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-indigo-200 dark:focus:ring-indigo-900/50"
                     }`}
                   ></textarea>
                   {errors.message && (
                     <motion.p
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="text-red-500 text-xs mt-1 ml-1"
+                      className="text-red-500 dark:text-red-400 text-xs mt-1 ml-1"
                     >
                       {errors.message}
                     </motion.p>

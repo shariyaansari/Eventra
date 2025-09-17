@@ -42,7 +42,8 @@ export default function ProjectHero({ setShowSubmissionModal, scrollToCard }) {
   const { user, token } = useAuth();
 
   return (
-    <div className="relative min-h-screen py-24 overflow-hidden bg-gradient-to-l from-indigo-200 to-white">
+    // UPDATED: Main background gradient
+    <div className="relative min-h-screen py-24 overflow-hidden bg-gradient-to-l from-indigo-200 to-white dark:from-gray-900 dark:to-black">
       {/* Floating Shapes */}
       {floatingShapes.map((shape, idx) => (
         <motion.div
@@ -65,39 +66,39 @@ export default function ProjectHero({ setShowSubmissionModal, scrollToCard }) {
       ))}
 
       {/* Continuous Zigzag Icon Train */}
-      {/* Continuous Zigzag Icon Train */}
-<div className="absolute right-8 top-0 h-full flex flex-col items-center justify-start overflow-hidden z-0
+      <div className="absolute right-8 top-0 h-full flex flex-col items-center justify-start overflow-hidden z-0
                 hidden lg:flex"> {/* hide on small screens, show on large screens */}
-  <motion.div
-    animate={{ y: ["0%", "-100%"] }}
-    transition={{
-      repeat: Infinity,
-      duration: 18,
-      ease: "linear",
-    }}
-    className="flex flex-col gap-6"
-  >
-    {repeatedIcons.map((item, idx) => (
-      <motion.div
-        key={idx}
-        className="rounded-full p-3 shadow-lg flex items-center justify-center bg-white"
-        animate={{
-          x: [0, 8, -8, 0],
-          rotate: [0, 15, -15, 0],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          repeatType: "loop",
-          ease: "easeInOut",
-          delay: idx * 0.2,
-        }}
-      >
-        {React.cloneElement(item.icon, { color: item.color, size: 24 })}
-      </motion.div>
-    ))}
-  </motion.div>
-</div>
+        <motion.div
+          animate={{ y: ["0%", "-100%"] }}
+          transition={{
+            repeat: Infinity,
+            duration: 18,
+            ease: "linear",
+          }}
+          className="flex flex-col gap-6"
+        >
+          {repeatedIcons.map((item, idx) => (
+            <motion.div
+              key={idx}
+              // UPDATED: Icon wrapper background
+              className="rounded-full p-3 shadow-lg flex items-center justify-center bg-white dark:bg-gray-800"
+              animate={{
+                x: [0, 8, -8, 0],
+                rotate: [0, 15, -15, 0],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "easeInOut",
+                delay: idx * 0.2,
+              }}
+            >
+              {React.cloneElement(item.icon, { color: item.color, size: 24 })}
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center relative z-10">
@@ -105,16 +106,18 @@ export default function ProjectHero({ setShowSubmissionModal, scrollToCard }) {
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="text-4xl sm:text-6xl font-extrabold mb-6 mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text leading-tight"
+          // UPDATED: Title text color and gradient
+          className="text-4xl sm:text-6xl font-extrabold mb-6 mt-6 bg-gradient-to-r from-indigo-600 dark:from-indigo-400 to-purple-600 dark:to-purple-400 text-transparent bg-clip-text leading-tight"
         >
-          Discover <span className="text-gray-900">Amazing Projects</span>
+          Discover <span className="text-gray-900 dark:text-gray-100">Amazing Projects</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-12"
+          // UPDATED: Subtitle text color
+          className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-12"
         >
           "Explore, contribute to, and showcase innovative open-source creations
           from developers worldwide."
@@ -150,7 +153,7 @@ export default function ProjectHero({ setShowSubmissionModal, scrollToCard }) {
           </motion.button>
           {/* Explore Projects Button */}
           <motion.button
-            className="bg-white text-indigo-600 px-6 py-3 rounded-2xl font-semibold flex items-center gap-2 shadow-md hover:shadow-xl hover:bg-indigo-50 transition-all duration-300"
+            className="bg-white dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 px-6 py-3 rounded-2xl font-semibold flex items-center gap-2 shadow-md hover:shadow-xl hover:bg-indigo-50 dark:hover:bg-gray-700 transition-all duration-300"
             whileTap={{ scale: 0.95 }}
             onClick={scrollToCard}
           >
@@ -182,12 +185,14 @@ export default function ProjectHero({ setShowSubmissionModal, scrollToCard }) {
                 stiffness: 120,
               }}
               whileHover={{ scale: 1.05 }}
-              className="bg-gradient-to-r from-indigo-50 to-white shadow-md hover:shadow-xl rounded-3xl p-6 flex flex-col items-center justify-center transition-all duration-300"
+              // UPDATED: Stat card background
+              className="bg-gradient-to-r from-indigo-50 to-white dark:from-gray-800 dark:to-gray-700 shadow-md hover:shadow-xl rounded-3xl p-6 flex flex-col items-center justify-center transition-all duration-300"
             >
-              <span className="text-3xl font-extrabold text-indigo-600">
+              {/* UPDATED: Text colors */}
+              <span className="text-3xl font-extrabold text-indigo-600 dark:text-indigo-400">
                 {stat.number}
               </span>
-              <span className="text-gray-700 mt-1 text-sm sm:text-base">
+              <span className="text-gray-700 dark:text-gray-300 mt-1 text-sm sm:text-base">
                 {stat.label}
               </span>
             </motion.div>

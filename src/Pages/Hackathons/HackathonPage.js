@@ -9,22 +9,22 @@ import { FiCode, FiRotateCw, FiCompass } from "react-icons/fi";
 import HackathonCTA from "./HackathonCTA";
 import Fuse from "fuse.js";
 
-// Skeleton Loader Component
+// UPDATED: Skeleton Loader for dark mode
 const SkeletonCard = () => (
-  <div className="bg-white rounded-xl overflow-hidden shadow-md animate-pulse">
+  <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md animate-pulse">
     <div className="p-6">
       <div className="flex justify-between items-start mb-4">
-        <div className="h-6 w-24 bg-gray-200 rounded-full"></div>
-        <div className="h-6 w-20 bg-gray-200 rounded-full"></div>
+        <div className="h-6 w-24 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+        <div className="h-6 w-20 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
       </div>
-      <div className="h-6 w-3/4 bg-gray-200 rounded mb-4"></div>
-      <div className="h-4 w-full bg-gray-100 rounded mb-2"></div>
-      <div className="h-4 w-5/6 bg-gray-100 rounded mb-4"></div>
+      <div className="h-6 w-3/4 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
+      <div className="h-4 w-full bg-gray-100 dark:bg-gray-600 rounded mb-2"></div>
+      <div className="h-4 w-5/6 bg-gray-100 dark:bg-gray-600 rounded mb-4"></div>
       <div className="space-y-3 mb-4">
-        <div className="h-4 w-3/4 bg-gray-100 rounded"></div>
-        <div className="h-4 w-1/2 bg-gray-100 rounded"></div>
+        <div className="h-4 w-3/4 bg-gray-100 dark:bg-gray-600 rounded"></div>
+        <div className="h-4 w-1/2 bg-gray-100 dark:bg-gray-600 rounded"></div>
       </div>
-      <div className="h-10 w-full bg-gray-200 rounded-lg"></div>
+      <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
     </div>
   </div>
 );
@@ -53,7 +53,7 @@ const HackathonHub = () => {
   }, []);
 
   const scrollToCards = () => {
-    cardsSectionRef.current?.scrollIntoView({ behavior: "smooth" }); // ✅ scroll function
+    cardsSectionRef.current?.scrollIntoView({ behavior: "smooth" }); // scroll function
   };
 
   const containerVariants = {
@@ -138,7 +138,8 @@ const filteredHackathons = searchedHackathons
   }, []);
 
   return (
-    <div className="bg-white relative">
+    // UPDATED: Main page background
+    <div className="bg-white dark:bg-black relative">
       {/* Floating Action Button */}
       <motion.div
         className="fixed bottom-6 right-6 z-50"
@@ -170,11 +171,11 @@ const filteredHackathons = searchedHackathons
         hackathons={hackathons}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        scrollToCards={scrollToCards} // ✅ pass scroll function
+        scrollToCards={scrollToCards} // pass scroll function
       />
 
       <motion.div
-        ref={cardsSectionRef} // ✅ attach ref
+        ref={cardsSectionRef} // attach ref
         key={activeTab}
         className="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
         variants={{
@@ -194,17 +195,20 @@ const filteredHackathons = searchedHackathons
           </div>
         ))}
       </motion.div>
+
       {/* Featured Hackathons */}
       {!isLoading && featuredHackathons.length > 0 && (
-        <div className="bg-white py-8 border-b border-gray-200">
+        // UPDATED: Section background and border
+        <div className="bg-white dark:bg-black py-8 border-b border-gray-200 dark:border-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">
+              {/* UPDATED: Text colors */}
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 Featured Hackathons
               </h2>
               <Link
                 to="/hackathons?filter=featured"
-                className="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+                className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 text-sm font-medium"
               >
                 View all featured
               </Link>
@@ -227,13 +231,15 @@ const filteredHackathons = searchedHackathons
         {/* Search and Filters */}
         <div className="mb-8">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 mt-0">
-            <h2 className="text-2xl font-bold text-gray-900 mt-0">
+            {/* UPDATED: Text colors */}
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-0">
               All Hackathons
             </h2>
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50"
+                // UPDATED: Button styles
+                className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
               >
                 <svg
                   className="w-4 h-4"
@@ -253,7 +259,8 @@ const filteredHackathons = searchedHackathons
               {(filters.difficulty || filters.prize || filters.location) && (
                 <button
                   onClick={resetFilters}
-                  className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
+                  // UPDATED: Link color
+                  className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium"
                 >
                   Clear all filters
                 </button>
@@ -267,11 +274,13 @@ const filteredHackathons = searchedHackathons
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="bg-white p-6 rounded-xl border border-gray-100 mb-6 overflow-hidden shadow-[0_4px_12px_rgba(59,130,246,0.2)]"
+              // UPDATED: Panel background and border
+              className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 mb-6 overflow-hidden shadow-[0_4px_12px_rgba(59,130,246,0.1)]"
             >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {/* UPDATED: Label and Select styles */}
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Difficulty
                   </label>
                   <select
@@ -279,7 +288,7 @@ const filteredHackathons = searchedHackathons
                     onChange={(e) =>
                       setFilters({ ...filters, difficulty: e.target.value })
                     }
-                    className="w-full rounded-xl border border-gray-300 bg-white py-3 px-4 pr-10 text-base font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200"
+                    className="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-3 px-4 pr-10 text-base font-medium text-gray-700 dark:text-gray-200 shadow-sm focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:outline-none transition-all duration-200"
                   >
                     <option value="">All Levels</option>
                     {difficulties.map((level) => (
@@ -344,10 +353,11 @@ const filteredHackathons = searchedHackathons
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
+                // UPDATED: Inactive tab styles
                 className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 transform ${
                   activeTab === tab.key
                     ? "bg-gradient-to-r from-indigo-700 via-indigo-500 to-blue-600 text-white shadow-lg scale-105"
-                    : "bg-white text-gray-700 hover:bg-gray-100 hover:scale-105"
+                    : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:scale-105"
                 }`}
               >
                 {tab.label}
@@ -380,7 +390,8 @@ const filteredHackathons = searchedHackathons
           ) : (
             <motion.div
               // Main container for "No Hackathons Found" card
-              className="relative overflow-hidden rounded-3xl p-10 text-center shadow-[0_10px_25px_rgba(0,0,0,0.3)] border border-gray-100 bg-gradient-to-br from-white via-indigo-50 to-purple-50"
+              // UPDATED: "No Hackathons Found" card styles
+              className="relative overflow-hidden rounded-3xl p-10 text-center shadow-[0_10px_25px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.3)] border border-gray-100 dark:border-gray-800 bg-gradient-to-br from-white via-indigo-50 to-purple-50 dark:from-gray-800 dark:via-indigo-900/20 dark:to-purple-900/20"
               initial={{ opacity: 0, y: 30, scale: 0.95 }} // Initial animation state
               animate={{ opacity: 1, y: 0, scale: 1 }} // Animate to visible
               transition={{ duration: 0.6, ease: "easeOut" }} // Animation timing
@@ -389,16 +400,16 @@ const filteredHackathons = searchedHackathons
               {/* Smooth glowing background behind the card */}
               {/* ------------------------------ */}
               <motion.div
-                className="absolute inset-0 -z-10 bg-gradient-to-tr from-indigo-200 via-purple-200 to-pink-200 blur-3xl"
+                className="absolute inset-0 -z-10 bg-gradient-to-tr from-indigo-200 via-purple-200 to-pink-200 dark:from-indigo-900/50 dark:via-purple-900/50 dark:to-pink-900/50 blur-3xl"
                 animate={{
-                  opacity: [0.3, 0.6, 0.3], // Fade in/out repeatedly
-                  scale: [1, 1.1, 1], // Slight scaling effect
-                  rotate: [0, 10, -10, 0], // Gentle rotation
+                  opacity: [0.3, 0.6, 0.3],
+                  scale: [1, 1.1, 1],
+                  rotate: [0, 10, -10, 0],
                 }}
                 transition={{
-                  duration: 8, // Long duration for slow motion
-                  repeat: Infinity, // Loop forever
-                  ease: "easeInOut", // Smooth ease in/out
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
                 }}
               />
 
@@ -422,7 +433,7 @@ const filteredHackathons = searchedHackathons
                   return (
                     <motion.div
                       key={i}
-                      className="absolute rounded-full bg-blue-400/60"
+                      className="absolute rounded-full bg-blue-400/60 dark:bg-blue-500/40"
                       style={{
                         width: size,
                         height: size,
@@ -460,26 +471,23 @@ const filteredHackathons = searchedHackathons
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  className="flex justify-center items-center w-20 h-20 rounded-full bg-white shadow-lg mx-auto border border-indigo-100"
+                  className="flex justify-center items-center w-20 h-20 rounded-full bg-white dark:bg-gray-700 shadow-lg mx-auto border border-indigo-100 dark:border-gray-600"
                 >
-                  <FiCode className="h-10 w-10 text-indigo-600" />
+                  <FiCode className="h-10 w-10 text-indigo-600 dark:text-indigo-400" />
                 </motion.div>
 
                 {/* ------------------------------ */}
                 {/* Main title of the card */}
                 {/* ------------------------------ */}
-                <h3 className="mt-6 text-2xl font-bold text-gray-900">
+                <h3 className="mt-6 text-2xl font-bold text-gray-900 dark:text-gray-100">
                   No Hackathons Found
                 </h3>
 
                 {/* ------------------------------ */}
                 {/* Subtitle with dynamic message based on filters */}
                 {/* ------------------------------ */}
-                <p className="mt-3 text-sm text-gray-600 leading-relaxed">
-                  {searchQuery ||
-                  filters.difficulty ||
-                  filters.prize ||
-                  filters.location
+                <p className="mt-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  {searchQuery || filters.difficulty || filters.prize || filters.location
                     ? "No hackathons match your current filters. Try adjusting your search or filters."
                     : "Check back later for exciting new hackathons!"}
                 </p>
@@ -508,8 +516,8 @@ const filteredHackathons = searchedHackathons
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => {}} // Placeholder function for navigation
-                    className="flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium rounded-lg text-indigo-600 border border-indigo-200 bg-white hover:bg-indigo-50 shadow-md transition-all"
-                  >
+                    className="flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium rounded-lg text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:bg-indigo-50 dark:hover:bg-gray-600 shadow-md transition-all"
+                >
                     Explore Hackathons
                     <FiCompass className="w-4 h-4" />
                   </motion.button>

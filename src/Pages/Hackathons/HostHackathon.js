@@ -36,7 +36,7 @@ const HostHackathon = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-indigo-100 to-white flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-r from-indigo-100 to-white dark:from-gray-900 dark:to-black flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       {/* Heading Section */}
       <motion.div
         initial={{ opacity: 0, y: -30 }}
@@ -44,14 +44,14 @@ const HostHackathon = () => {
         transition={{ duration: 0.7 }}
         className="text-center mb-10"
       >
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-indigo-800 mb-4">
+        {/* UPDATED: Text colors */}
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-indigo-800 dark:text-indigo-300 mb-4">
           Host Your Hackathon
         </h1>
-        <p className="text-xs sm:text-base text-gray-600">
+        <p className="text-xs sm:text-base text-gray-600 dark:text-gray-400">
           "Fill in the details below and let's get your hackathon live!"
         </p>
       </motion.div>
-
 
       {/* Guidelines Section */}
       <motion.div
@@ -59,11 +59,11 @@ const HostHackathon = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
-        className="w-full max-w-4xl bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 shadow-lg rounded-2xl p-6 mb-10"
+        className="w-full max-w-4xl bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 border border-indigo-200 dark:border-gray-700 shadow-lg rounded-2xl p-6 mb-10"
       >
         <div className="flex items-center gap-2 mb-3">
-          <ClipboardDocumentListIcon className="w-6 h-6 text-indigo-600" />
-          <h2 className="text-xl font-semibold text-indigo-700">Guidelines</h2>
+          <ClipboardDocumentListIcon className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+          <h2 className="text-xl font-semibold text-indigo-700 dark:text-indigo-400">Guidelines</h2>
         </div>
         <ul className="list-disc pl-6 space-y-3 text-gray-700 text-sm sm:text-base">
           <li>
@@ -125,7 +125,7 @@ const HostHackathon = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-4xl bg-white shadow-xl rounded-2xl p-8 border border-indigo-300"
+        className="w-full max-w-4xl bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 border border-indigo-300 dark:border-gray-700"
       >
         <form className="space-y-6" onSubmit={handleSubmit}>
           {[
@@ -186,7 +186,7 @@ const HostHackathon = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 {field.label}
               </label>
               <input
@@ -196,7 +196,7 @@ const HostHackathon = () => {
                 onChange={handleChange}
                 required={field.required}
                 placeholder={field.placeholder}
-                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 transition-all duration-300"
               />
             </motion.div>
           ))}
@@ -211,7 +211,7 @@ const HostHackathon = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   {label}
                 </label>
                 <input
@@ -224,9 +224,9 @@ const HostHackathon = () => {
                   }
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
-                />
-              </motion.div>
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 transition-all duration-300"
+              />
+            </motion.div>
             ))}
           </motion.div>
 
@@ -237,7 +237,7 @@ const HostHackathon = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Description
             </label>
             <textarea
@@ -247,9 +247,9 @@ const HostHackathon = () => {
               rows="4"
               placeholder="Briefly describe your hackathon"
               required
-              className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
-            />
-          </motion.div>
+              className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 transition-all duration-300"
+              />
+            </motion.div>
 
           {/* Submit Button */}
           <motion.button
@@ -283,13 +283,14 @@ const HostHackathon = () => {
           <motion.div
             key={index}
             whileHover={{ scale: 1.08, rotate: 1 }}
-            className="bg-white border border-indigo-200 rounded-2xl shadow-md p-6 text-center flex flex-col items-center"
+            className="bg-white dark:bg-gray-800 border border-indigo-200 dark:border-gray-700 rounded-2xl shadow-md p-6 text-center flex flex-col items-center"
           >
-            <stat.icon className="w-10 h-10 text-indigo-600 mb-3 animate-bounce" />
-            <h3 className="text-3xl font-bold text-indigo-700">
+            {/* UPDATED: Icon and text colors */}
+            <stat.icon className="w-10 h-10 text-indigo-600 dark:text-indigo-400 mb-3 animate-bounce" />
+            <h3 className="text-3xl font-bold text-indigo-700 dark:text-indigo-400">
               {stat.number}
             </h3>
-            <p className="text-gray-600 mt-2">{stat.label}</p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">{stat.label}</p>
           </motion.div>
         ))}
       </motion.div>

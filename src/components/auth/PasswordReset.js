@@ -34,12 +34,16 @@ const PasswordReset = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 mt-10">
-      <div className="w-full max-w-md space-y-6 bg-white border border-gray-200 p-8 rounded-lg shadow-lg">
-        <h1 className="text-2xl font-semibold text-gray-900 text-center">Reset Password</h1>
+    // UPDATED: Main page background
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-black py-12 px-4 sm:px-6 lg:px-8 mt-10">
+      {/* UPDATED: Form card background and border */}
+      <div className="w-full max-w-md space-y-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-8 rounded-lg shadow-lg">
+        {/* UPDATED: Title text */}
+        <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 text-center">Reset Password</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            {/* UPDATED: Label text */}
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Email address
             </label>
             <input
@@ -51,21 +55,25 @@ const PasswordReset = () => {
               required
               disabled={loading}
               placeholder="Enter your email address"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed"
+              // UPDATED: Input styles
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 disabled:bg-gray-50 dark:disabled:bg-gray-700/50 disabled:cursor-not-allowed"
             />
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
+            // UPDATED: Error message styles
+            <div className="bg-red-50 dark:bg-red-900/40 border border-red-200 dark:border-red-700 text-red-700 dark:text-red-300 px-4 py-3 rounded-md text-sm">
               {error}
             </div>
           )}
           {message && (
-            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md text-sm">
+            // UPDATED: Success message styles
+            <div className="bg-green-50 dark:bg-green-900/40 border border-green-200 dark:border-green-700 text-green-700 dark:text-green-300 px-4 py-3 rounded-md text-sm">
               {message}
             </div>
           )}
 
+          {/* Primary button works on both themes */}
           <button
             type="submit"
             disabled={loading}
@@ -76,7 +84,8 @@ const PasswordReset = () => {
         </form>
 
         <div className="text-center">
-          <Link to="/login" className="text-blue-600 hover:underline font-medium">
+          {/* UPDATED: Link color */}
+          <Link to="/login" className="text-blue-600 dark:text-blue-400 hover:underline font-medium">
             Back to Login
           </Link>
         </div>

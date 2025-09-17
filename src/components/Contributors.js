@@ -135,22 +135,25 @@ const Contributors = () => {
     fetchContributors();
   }, [fetchContributors]);
 
+  // UPDATED: Loading text color
   if (loading)
-    return <p className="text-center py-20">Loading contributors...</p>;
+    return <p className="text-center py-20 text-gray-600 dark:text-gray-400">Loading contributors...</p>;
 
   return (
-    <section className="py-20 bg-gradient-to-br from-indigo-50 to-white">
+    // UPDATED: Section background
+    <section className="py-20 bg-gradient-to-br from-indigo-50 to-white dark:from-gray-900 dark:to-black">
       <div className="max-w-7xl mx-auto px-6">
         <motion.h2
-          className="text-5xl font-extrabold text-center mb-16 text-gray-800 tracking-tight"
+          // UPDATED: Title text
+          className="text-5xl font-extrabold text-center mb-16 text-gray-800 dark:text-gray-100 tracking-tight"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           🌟 Our Amazing{" "}
+          {/* UPDATED: Gradient text for dark mode */}
           <span
-            className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 
-                   bg-clip-text text-transparent animate-pulse"
+            className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 dark:from-indigo-400 dark:via-purple-500 dark:to-pink-500 bg-clip-text text-transparent animate-pulse"
           >
             Contributors
           </span>
@@ -160,16 +163,14 @@ const Contributors = () => {
           {contributors.map((c, i) => (
             <motion.div
               key={c.id}
-              className="relative bg-gradient-to-br from-white/90 to-indigo-50/80 backdrop-blur-xl 
-             p-6 rounded-2xl shadow-lg border border-gray-100 
-             flex flex-col items-center text-center 
-             transition-all duration-300 ease-out"
+              // UPDATED: Card background and border
+              className="relative bg-gradient-to-br from-white/90 to-indigo-50/80 dark:from-gray-700/80 dark:to-gray-800/70 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center transition-all duration-300 ease-out"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
               whileHover={{
                 scale: 1.02,
-                y: -4, // much smaller than before, prevents overlap
+                y: -4,
                 boxShadow: "0px 8px 25px rgba(99,102,241,0.25)",
               }}
             >
@@ -187,51 +188,50 @@ const Contributors = () => {
 
               {/* Name + Role + Badge */}
               <div className="mt-16">
-                <h3 className="text-lg font-bold text-gray-800">{c.name}</h3>
-                <p className="text-indigo-600 text-sm font-medium mb-3 flex items-center justify-center gap-1">
-                  <FaMedal className="text-yellow-500 animate-bounce" />{" "}
-                  {c.role}
+                {/* UPDATED: Name and role text */}
+                <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">{c.name}</h3>
+                <p className="text-indigo-600 dark:text-indigo-400 text-sm font-medium mb-3 flex items-center justify-center gap-1">
+                  <FaMedal className="text-yellow-500 animate-bounce" /> {c.role}
                 </p>
-
-                {/* Contribution Badge (🥇🥈🥉) */}
+                {/* UPDATED: Contribution Badges */}
                 {i === 0 && (
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">
+                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 dark:bg-yellow-900/50 text-yellow-700 dark:text-yellow-300">
                     🥇 Top Contributor
                   </span>
                 )}
                 {i === 1 && (
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gray-200 text-gray-700">
+                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300">
                     🥈 Silver Contributor
                   </span>
                 )}
                 {i === 2 && (
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-700">
+                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300">
                     🥉 Bronze Contributor
                   </span>
                 )}
               </div>
 
               {/* Stats Section (Glass style) */}
-              <div className="grid grid-cols-3 gap-3 text-sm text-gray-700 my-5 w-full">
-                <div className="flex flex-col items-center bg-white/60 backdrop-blur-md p-2 rounded-lg shadow-sm">
-                  <FaCodeBranch className="text-indigo-600 mb-1" />
+              <div className="grid grid-cols-3 gap-3 text-sm text-gray-700 dark:text-gray-300 my-5 w-full">
+                <div className="flex flex-col items-center bg-white/60 dark:bg-gray-600/50 backdrop-blur-md p-2 rounded-lg shadow-sm">
+                  <FaCodeBranch className="text-indigo-600 dark:text-indigo-400 mb-1" />
                   <span className="font-semibold">{c.public_repos}</span>
-                  <span className="text-xs text-gray-500">Repos</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">Repos</span>
                 </div>
-                <div className="flex flex-col items-center bg-white/60 backdrop-blur-md p-2 rounded-lg shadow-sm">
-                  <FaUserFriends className="text-indigo-600 mb-1" />
+                <div className="flex flex-col items-center bg-white/60 dark:bg-gray-600/50 backdrop-blur-md p-2 rounded-lg shadow-sm">
+                  <FaUserFriends className="text-indigo-600 dark:text-indigo-400 mb-1" />
                   <span className="font-semibold">{c.followers}</span>
-                  <span className="text-xs text-gray-500">Followers</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">Followers</span>
                 </div>
-                <div className="flex flex-col items-center bg-white/60 backdrop-blur-md p-2 rounded-lg shadow-sm">
-                  <span className="text-indigo-600 font-bold">🔥</span>
+                <div className="flex flex-col items-center bg-white/60 dark:bg-gray-600/50 backdrop-blur-md p-2 rounded-lg shadow-sm">
+                  <span className="text-indigo-600 dark:text-indigo-400 font-bold">🔥</span>
                   <span className="font-semibold">{c.contributions}</span>
-                  <span className="text-xs text-gray-500">Contribs</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">Contribs</span>
                 </div>
               </div>
 
               {/* Contribution Progress Bar */}
-              <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden mb-4">
+              <div className="w-full bg-gray-200 dark:bg-gray-600 h-2 rounded-full overflow-hidden mb-4">
                 <div
                   className="h-2 bg-gradient-to-r from-indigo-500 to-purple-500"
                   style={{
@@ -243,7 +243,7 @@ const Contributors = () => {
               </div>
 
               {/* Extra Info */}
-              <div className="flex flex-col gap-1 text-xs text-gray-500 mb-4">
+              <div className="flex flex-col gap-1 text-xs text-gray-500 dark:text-gray-400 mb-4">
                 {c.company && (
                   <span className="flex items-center gap-1 justify-center">
                     <FaBuilding /> {c.company}

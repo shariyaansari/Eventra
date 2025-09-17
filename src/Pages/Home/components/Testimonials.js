@@ -34,7 +34,8 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className="py-16 sm:py-20 bg-white overflow-hidden">
+    //  UPDATED: Section background
+    <section className="py-16 sm:py-20 bg-white dark:bg-gray-800 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Title */}
         <motion.div
@@ -44,10 +45,11 @@ const Testimonials = () => {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+          {/*  UPDATED: Text colors */}
+          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl">
             Stories from our community
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
+          <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-400">
             Join thousands of professionals who trust Eventra for their events
           </p>
         </motion.div>
@@ -72,11 +74,15 @@ const Testimonials = () => {
             {[...testimonials, ...testimonials].map((testimonial, index) => (
               <div
                 key={index}
-                className="flex-shrink-0 w-80 p-7 rounded-xl bg-white border-2 border-gray-100 shadow-sm"
+                //  UPDATED: Card background and border
+                className="flex-shrink-0 w-80 p-7 rounded-xl bg-white dark:bg-gray-700/50 border-2 border-gray-100 dark:border-gray-600 shadow-sm"
               >
-                <FaQuoteLeft className="absolute top-6 right-6 text-gray-100 text-4xl -z-10" />
-                <p className="text-gray-700 mb-6">{testimonial.quote}</p>
-                <div className="mt-auto pt-6 border-t border-gray-100 flex items-center">
+                {/*  UPDATED: Decorative quote icon color */}
+                <FaQuoteLeft className="absolute top-6 right-6 text-gray-100 dark:text-gray-600 text-4xl -z-10" />
+                {/*  UPDATED: Quote text color */}
+                <p className="text-gray-700 dark:text-gray-300 mb-6">{testimonial.quote}</p>
+                {/*  UPDATED: Divider border color */}
+                <div className="mt-auto pt-6 border-t border-gray-100 dark:border-gray-600 flex items-center">
                   <img
                     src={testimonial.image}
                     alt={testimonial.author}
@@ -84,10 +90,11 @@ const Testimonials = () => {
                     onError={(e) => (e.target.style.display = "none")}
                   />
                   <div className="ml-4">
-                    <div className="font-semibold text-gray-900">
+                    {/*  UPDATED: Author text colors */}
+                    <div className="font-semibold text-gray-900 dark:text-gray-100">
                       {testimonial.author}
                     </div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
                       {testimonial.role}
                     </div>
                   </div>

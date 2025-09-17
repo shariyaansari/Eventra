@@ -27,18 +27,22 @@ const EventCard = ({ event }) => {
 
   return (
     <motion.div
-      className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-2xl transition-all duration-300 flex flex-col"
+      // UPDATED: Added dark mode background and border
+      className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 flex flex-col"
       whileHover={{ y: -4 }}
     >
       {/* --- Header --- */}
-      <div className="flex items-center px-6 py-4 gap-4 bg-gradient-to-r from-indigo-100 to-white border-b">
-        <div className="p-2 bg-indigo-100 rounded-lg">{randomIcon}</div>
-        <h3 className="text-gray-800 font-semibold text-lg truncate">
+      {/* UPDATED: Changed gradient, border, and icon background for dark mode */}
+      <div className="flex items-center px-6 py-4 gap-4 bg-gradient-to-r from-indigo-50 dark:from-gray-700 to-white dark:to-gray-800 border-b border-gray-200 dark:border-gray-700">
+        <div className="p-2 bg-indigo-100 dark:bg-gray-600 rounded-lg">{randomIcon}</div>
+        {/* UPDATED: Added dark mode text color */}
+        <h3 className="text-gray-800 dark:text-gray-100 font-semibold text-lg truncate">
           {event.title}
         </h3>
         <div className="ml-auto">
           {event.status === "upcoming" && (
-            <span className="text-xs px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full">
+            // UPDATED: Added dark mode background and text colors for the tag
+            <span className="text-xs px-3 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400 rounded-full">
               Upcoming
             </span>
           )}
@@ -56,14 +60,17 @@ const EventCard = ({ event }) => {
       </div>
 
       {/* --- Description --- */}
-      <div className="px-6 py-4 border-b">
-        <p className="text-gray-600 text-sm line-clamp-3">
+      {/* UPDATED: Added dark mode border color */}
+      <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+        {/* UPDATED: Added dark mode text color */}
+        <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
           {event.description}
         </p>
       </div>
 
       {/* --- Info Section --- */}
-      <div className="px-6 py-4 grid grid-cols-2 gap-4 text-gray-700 text-sm">
+      {/* UPDATED: Added dark mode text color */}
+      <div className="px-6 py-4 grid grid-cols-2 gap-4 text-gray-700 dark:text-gray-300 text-sm">
         <div className="flex items-center gap-2">
           <MapPin size={16} className="text-pink-500" />
           <span className="truncate">{event.location}</span>
@@ -98,7 +105,8 @@ const EventCard = ({ event }) => {
         </Link>
         <Link
           to={`/events/${event.id}`}
-          className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 text-gray-700 px-4 py-2 text-sm font-medium hover:bg-gray-50 transition-all"
+          // UPDATED: Added dark mode styles for the secondary button
+          className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
         >
           View Details
         </Link>

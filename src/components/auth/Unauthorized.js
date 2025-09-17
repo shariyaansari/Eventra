@@ -31,50 +31,50 @@ const Unauthorized = () => {
 
   return (
     <div
-      // Full-screen wrapper for Unauthorized page
-      // Centers content both vertically and horizontally
-      className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 via-red-100 to-red-200 overflow-hidden px-4"
+      // UPDATED: Main page background
+      className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 via-red-100 to-red-200 dark:from-red-900/40 dark:via-gray-900 dark:to-black overflow-hidden px-4"
     >
       {/* Floating decorative bubbles */}
       {bubblePositions.map((pos, i) => (
         <motion.div
           key={i}
-          custom={i} // Pass index to variants for unique animation
+          custom={i}
           variants={floatingVariants}
-          animate="float" // Start floating animation
-          className="absolute rounded-full bg-red-400/20"
+          animate="float"
+          // UPDATED: Bubble color
+          className="absolute rounded-full bg-red-400/20 dark:bg-red-500/10"
           style={{
-            width: 40 + i * 10, // Gradually increasing bubble size
-            height: 40 + i * 10, // Make bubbles proportional in height
-            ...pos, // Apply the predefined position
+            width: 40 + i * 10,
+            height: 40 + i * 10,
+            ...pos,
           }}
         />
       ))}
 
       {/* Main Card container */}
-      <div className="relative bg-white rounded-3xl shadow-2xl p-10 max-w-md w-full text-center z-10">
-        {/* Card content: icon, title, description */}
+      {/* UPDATED: Card background and border */}
+      <div className="relative bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-10 max-w-md w-full text-center z-10 dark:border dark:border-gray-700">
         <div className="flex flex-col items-center space-y-4">
-          {/* Access Denied Icon */}
+          {/* Icon color is fine for both themes */}
           <XCircleIcon className="h-20 w-20 text-red-500 animate-pulse" />
-          {/* Title */}
-          <h2 className="text-3xl font-extrabold text-gray-800">
+          
+          {/* UPDATED: Text colors */}
+          <h2 className="text-3xl font-extrabold text-gray-800 dark:text-gray-100">
             Access Denied
           </h2>
-          {/* Short description */}
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-400">
             You don’t have permission to access this page.
           </p>
         </div>
 
-        {/* Additional info and navigation */}
         <div className="mt-6 text-center">
-          {/* Informational paragraph */}
-          <p className="text-gray-500 mb-4">
+          {/* UPDATED: Text color */}
+          <p className="text-gray-500 dark:text-gray-500 mb-4">
             This page requires special permissions. If you think this is an
             error, contact an administrator.
           </p>
-          {/* Homepage navigation button */}
+          
+          {/* Button color is fine for both themes */}
           <Link
             to="/"
             className="inline-block bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition transform hover:-translate-y-1"
@@ -83,18 +83,6 @@ const Unauthorized = () => {
           </Link>
         </div>
       </div>
-
-      {/* Additional comments for future improvements */}
-      {/* 1. You can add more bubbles for richer effect */}
-      {/* 2. Colors can be dynamically generated for a gradient effect */}
-      {/* 3. Motion variants can include rotation or scaling */}
-      {/* 4. Responsive adjustments can be made using Tailwind breakpoints */}
-      {/* 5. Accessibility: consider ARIA labels for the icon and button */}
-      {/* 6. Potential enhancement: click on bubbles could trigger subtle animations */}
-      {/* 7. Use a context or prop to dynamically change the page title */}
-      {/* 8. Consider adding a small illustration or SVG behind the card */}
-      {/* 9. Use motion div for the card itself for entrance animation */}
-      {/* 10. Add dark mode styles for better theming support */}
     </div>
   );
 };

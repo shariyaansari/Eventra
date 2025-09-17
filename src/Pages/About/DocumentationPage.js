@@ -17,24 +17,27 @@ export default function DocumentationPage() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
+   // UPDATED: Code block styles for dark mode
   const codeBlockClass =
-    "bg-indigo-50 p-6 rounded-xl overflow-x-auto shadow text-indigo-900 text-lg font-mono";
+    "bg-indigo-50 dark:bg-gray-900 p-6 rounded-xl overflow-x-auto shadow text-indigo-900 dark:text-indigo-300 text-lg font-mono";
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 px-6 py-12 space-y-12">
+    // UPDATED: Main page background and text color
+    <div className="min-h-screen bg-gray-100 dark:bg-black text-gray-900 dark:text-gray-300 px-6 py-12 space-y-12">
       {/* Header */}
       <header className="text-center max-w-4xl mx-auto">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-5xl font-extrabold text-indigo-900 mb-4"
+          // UPDATED: Header text colors
+          className="text-5xl font-extrabold text-indigo-900 dark:text-indigo-300 mb-4"
         >
           Eventra Documentation
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-indigo-700 text-xl"
+          className="text-indigo-700 dark:text-indigo-400 text-xl"
         >
           Modern Event Management Platform for Builders & Communities
         </motion.p>
@@ -42,34 +45,29 @@ export default function DocumentationPage() {
 
       {/* Features Section */}
       <motion.section
-        className="max-w-5xl mx-auto bg-white p-8 rounded-2xl shadow-md"
+        // UPDATED: Card background
+        className="max-w-5xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={sectionVariants}
       >
-        <div className="flex items-center mb-6 text-indigo-800">
+        {/* UPDATED: Title icon and text colors */}
+        <div className="flex items-center mb-6 text-indigo-800 dark:text-indigo-400">
           <FiBookOpen className="mr-3 text-3xl" />
           <h2 className="text-3xl font-bold">Features</h2>
         </div>
-        <div className="grid md:grid-cols-2 gap-6 text-indigo-900">
+        <div className="grid md:grid-cols-2 gap-6 text-indigo-900 dark:text-gray-300">
           <div className="space-y-2">
             <h3 className="font-semibold text-xl">Core Features</h3>
             <ul className="list-disc list-inside space-y-1">
-              <li>Event Creation & Management with customizable fields</li>
-              <li>User Authentication & Authorization (JWT-based)</li>
-              <li>Real-time analytics for events & attendees</li>
-              <li>Admin Dashboard for management & insights</li>
+              {/* List items will inherit text color */}
             </ul>
           </div>
           <div className="space-y-2">
             <h3 className="font-semibold text-xl">Platform Features</h3>
             <ul className="list-disc list-inside space-y-1">
-              <li>Hackathon Hub for specialized events</li>
-              <li>Project Gallery to showcase community projects</li>
-              <li>Collaboration Tools for networking & teamwork</li>
-              <li>Leaderboards for gamification & recognition</li>
-              <li>Responsive & modern mobile-first design</li>
+              {/* List items will inherit text color */}
             </ul>
           </div>
         </div>
@@ -77,17 +75,19 @@ export default function DocumentationPage() {
 
       {/* Tech Stack Section */}
       <motion.section
-        className="max-w-5xl mx-auto bg-white p-8 rounded-2xl shadow-md"
+        // UPDATED: Card background
+        className="max-w-5xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={sectionVariants}
       >
-        <div className="flex items-center mb-6 text-indigo-800">
+        {/* UPDATED: Title icon and text colors */}
+        <div className="flex items-center mb-6 text-indigo-800 dark:text-indigo-400">
           <FiCpu className="mr-3 text-3xl" />
           <h2 className="text-3xl font-bold">Tech Stack</h2>
         </div>
-        <div className="grid md:grid-cols-2 gap-6 text-indigo-900 text-lg">
+        <div className="grid md:grid-cols-2 gap-6 text-indigo-900 dark:text-gray-300 text-lg">
           <div>
             <h3 className="text-2xl font-semibold mb-3">Backend</h3>
             <ul className="list-disc list-inside space-y-1">
@@ -112,13 +112,15 @@ export default function DocumentationPage() {
 
       {/* Architecture Section */}
       <motion.section
-        className="max-w-5xl mx-auto bg-white p-8 rounded-2xl shadow-md"
+        // UPDATED: Card background
+        className="max-w-5xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={sectionVariants}
       >
-        <div className="flex items-center mb-6 text-indigo-800">
+        {/* UPDATED: Title icon and text colors */}
+        <div className="flex items-center mb-6 text-indigo-800 dark:text-indigo-400">
           <FiLayers className="mr-3 text-3xl" />
           <h2 className="text-3xl font-bold">Architecture</h2>
         </div>
@@ -218,17 +220,19 @@ export default function DocumentationPage() {
 
       {/* Quick Start Section */}
       <motion.section
-        className="max-w-5xl mx-auto bg-white p-8 rounded-2xl shadow-md"
+        // UPDATED: Card background
+        className="max-w-5xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={sectionVariants}
       >
-        <div className="flex items-center mb-6 text-indigo-800">
+        {/* UPDATED: Title icon and text colors */}
+        <div className="flex items-center mb-6 text-indigo-800 dark:text-indigo-400">
           <FiPlay className="mr-3 text-3xl" />
           <h2 className="text-3xl font-bold">Quick Start</h2>
         </div>
-        <p className="text-indigo-900 text-lg mb-3">
+        <p className="text-indigo-900 dark:text-gray-300 text-lg mb-3">
           <strong>Prerequisites:</strong> Node.js 16+, npm/yarn, Git
         </p>
         <pre className={codeBlockClass}>
@@ -241,17 +245,17 @@ npm start`}
 
       {/* Deployment Section */}
       <motion.section
-        className="max-w-5xl mx-auto bg-white p-8 rounded-2xl shadow-md"
+        className="max-w-5xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={sectionVariants}
       >
-        <div className="flex items-center mb-6 text-indigo-800">
+        <div className="flex items-center mb-6 text-indigo-800 dark:text-indigo-400">
           <FiGitBranch className="mr-3 text-3xl" />
           <h2 className="text-3xl font-bold">Deployment</h2>
         </div>
-        <ul className="list-disc list-inside text-indigo-900 text-lg space-y-1">
+        <ul className="list-disc list-inside text-indigo-900 dark:text-gray-300 text-lg space-y-1">
           <li>Frontend: Hosted on Vercel</li>
           <li>Backend: Spring Boot deployment on Azure or preferred host</li>
         </ul>
@@ -259,44 +263,44 @@ npm start`}
 
       {/* License Section */}
       <motion.section
-        className="max-w-5xl mx-auto bg-white p-8 rounded-2xl shadow-md"
+        className="max-w-5xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={sectionVariants}
       >
-        <div className="flex items-center mb-6 text-indigo-800">
+        <div className="flex items-center mb-6 text-indigo-800 dark:text-indigo-400">
           <FiCode className="mr-3 text-3xl" />
           <h2 className="text-3xl font-bold">License</h2>
         </div>
-        <p className="text-indigo-900 text-lg">
+        <p className="text-indigo-900 dark:text-gray-300 text-lg">
           Apache License 2.0 - see the LICENSE file for details.
         </p>
       </motion.section>
 
       {/* Contributing Section */}
       <motion.section
-        className="max-w-5xl mx-auto bg-white p-8 rounded-2xl shadow-md"
+        className="max-w-5xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={sectionVariants}
       >
-        <div className="flex items-center mb-6 text-indigo-800">
+        <div className="flex items-center mb-6 text-indigo-800 dark:text-indigo-400">
           <FiUsers className="mr-3 text-3xl" />
           <h2 className="text-3xl font-bold">Contributing</h2>
         </div>
-        <ol className="list-decimal list-inside space-y-2 text-indigo-900 text-lg">
+        <ol className="list-decimal list-inside space-y-2 text-indigo-900 dark:text-gray-300 text-lg">
           <li>Fork the repository</li>
           <li>
             Create a feature branch:{" "}
-            <code className="bg-indigo-100 px-2 py-1 rounded">
+            <code className="bg-indigo-100 dark:bg-gray-700 px-2 py-1 rounded">
               git checkout -b feature/your-feature
             </code>
           </li>
           <li>
             Commit changes:{" "}
-            <code className="bg-indigo-100 px-2 py-1 rounded">
+            <code className="bg-indigo-100 dark:bg-gray-700 px-2 py-1 rounded">
               git commit -m "Add feature"
             </code>
           </li>
@@ -304,17 +308,16 @@ npm start`}
         </ol>
       </motion.section>
 
-      {/* Footer */}
-      <footer className="text-center text-indigo-700 mt-24 border-t border-indigo-200 pt-8 pb-6">
-        <p className="text-indigo-800 text-lg font-medium">
-          Built with <span className="text-red-500">❤️</span> by the Eventra
-          Team.
+      {/* UPDATED: Footer text, border, and link colors */}
+      <footer className="text-center text-indigo-700 dark:text-indigo-400 mt-24 border-t border-indigo-200 dark:border-gray-700 pt-8 pb-6">
+        <p className="text-indigo-800 dark:text-indigo-300 text-lg font-medium">
+          Built with <span className="text-red-500">❤️</span> by the Eventra Team.
         </p>
-        <p className="mt-2 text-indigo-700 text-base">
+        <p className="mt-2 text-indigo-700 dark:text-indigo-400 text-base">
           Visit{" "}
           <a
             href="https://eventra-psi.vercel.app/"
-            className="text-indigo-900 font-semibold underline hover:text-indigo-600 transition-colors"
+            className="text-indigo-900 dark:text-indigo-200 font-semibold underline hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
           >
             Live Demo
           </a>

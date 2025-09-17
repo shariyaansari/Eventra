@@ -88,63 +88,72 @@ const events = [
 
 const CommunityEvent = () => {
   return (
-    <div className="max-w-7xl mx-auto px-6 py-16">
-      {/* Intro Section */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-14"
-      >
-        <div className="flex justify-center mb-6">
-          <div className="p-4 rounded-full bg-indigo-100 text-indigo-600 shadow-md">
-            <Users size={32} />
-          </div>
-        </div>
-        <h1 className="text-5xl font-extrabold text-indigo-900 mb-4">
-          Community Events
-        </h1>
-        <p className="text-base text-gray-600 max-w-2xl mx-auto">
-          "Explore meetups, hackathons, webinars, and global conferences where
-          developers collaborate, innovate, and grow together."
-        </p>
-      </motion.div>
-
-      {/* Events Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {events.map((event, idx) => (
-          <motion.div
-            key={idx}
-            whileHover={{ scale: 1.03 }}
-            transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            className="p-6 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 shadow-md border border-indigo-100 hover:border-indigo-400 transition-colors"
-          >
-            {/* Event Header */}
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 bg-indigo-100 text-indigo-600 rounded-xl">
-                {event.icon}
-              </div>
-              <h2 className="text-xl font-bold text-gray-900">{event.title}</h2>
+    // UPDATED: Main page background
+    <div className="bg-white dark:bg-black">
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        {/* Intro Section */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-14"
+        >
+          <div className="flex justify-center mb-6">
+            {/* UPDATED: Icon wrapper */}
+            <div className="p-4 rounded-full bg-indigo-100 dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 shadow-md">
+              <Users size={32} />
             </div>
+          </div>
+          {/* UPDATED: Text colors */}
+          <h1 className="text-5xl font-extrabold text-indigo-900 dark:text-gray-100 mb-4">
+            Community Events
+          </h1>
+          <p className="text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            "Explore meetups, hackathons, webinars, and global conferences where
+            developers collaborate, innovate, and grow together."
+          </p>
+        </motion.div>
 
-            {/* Event Info */}
-            <p className="text-sm text-gray-600">
-              <strong>Date:</strong> {event.date}
-            </p>
-            <p className="text-sm text-gray-600">
-              <strong>Location:</strong> {event.location}
-            </p>
-            <p className="mt-4 text-gray-700">{event.description}</p>
-
-            {/* Learn More Button */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              className="mt-6 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg shadow-md hover:from-indigo-600 hover:to-purple-600 transition-all"
+        {/* Events Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {events.map((event, idx) => (
+            <motion.div
+              key={idx}
+              whileHover={{ scale: 1.03 }}
+              transition={{ type: "spring", stiffness: 200, damping: 15 }}
+              // UPDATED: Card background and border
+              className="p-6 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 shadow-md border border-indigo-100 dark:border-gray-700 hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors"
             >
-              Learn More →
-            </motion.button>
-          </motion.div>
-        ))}
+              {/* Event Header */}
+              <div className="flex items-center gap-3 mb-4">
+                {/* UPDATED: Icon wrapper */}
+                <div className="p-3 bg-indigo-100 dark:bg-gray-700/50 text-indigo-600 dark:text-indigo-400 rounded-xl">
+                  {event.icon}
+                </div>
+                {/* UPDATED: Text color */}
+                <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">{event.title}</h2>
+              </div>
+
+              {/* Event Info */}
+              {/* UPDATED: Text colors */}
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                <strong>Date:</strong> {event.date}
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                <strong>Location:</strong> {event.location}
+              </p>
+              <p className="mt-4 text-gray-700 dark:text-gray-300">{event.description}</p>
+
+              {/* Learn More Button is fine for both themes */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                className="mt-6 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg shadow-md hover:from-indigo-600 hover:to-purple-600 transition-all"
+              >
+                Learn More →
+              </motion.button>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );

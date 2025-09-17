@@ -116,7 +116,7 @@ const SearchFilter = () => {
   });
 
   return (
-    <div className="search-filter-container">
+    <div className="search-filter-container bg-gray-50 dark:bg-black">
       <div className="search-header">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}

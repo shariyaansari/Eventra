@@ -25,7 +25,7 @@ const HackathonCTA = () => {
           key={idx}
           className={`absolute rounded-full ${bubble.color}`}
           style={{
-            width: bubble.size,
+            width: bubble.size, 
             height: bubble.size,
             top: bubble.top,
             left: bubble.left,
@@ -73,7 +73,8 @@ const HackathonCTA = () => {
 
         <motion.button
           onClick={() => setShowModal(true)}
-          className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 font-semibold px-8 py-4 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
+          // UPDATED: The secondary button needs a subtle dark mode style
+          className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 dark:bg-gray-200 dark:text-indigo-800 font-semibold px-8 py-4 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -84,12 +85,14 @@ const HackathonCTA = () => {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl p-8 w-full max-w-md relative text-center">
-            <h3 className="text-2xl font-bold mb-4">Register for Hackathon</h3>
-            <p className="text-gray-700 text-lg">
+          {/* UPDATED: Modal card background, border, and text */}
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 w-full max-w-md relative text-center dark:border dark:border-gray-700">
+            <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Register for Hackathon</h3>
+            <p className="text-gray-700 dark:text-gray-400 text-lg">
               To register, please select a hackathon from the cards displayed
               above.
             </p>
+            {/* The close button works well in both themes. */}
             <button
               className="mt-6 px-6 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition"
               onClick={() => setShowModal(false)}

@@ -11,36 +11,37 @@ import {
 } from "react-icons/fi";
 
 // Status color gradients
+// UPDATED: Added dark mode classes for all statuses
 const getStatusColor = (status) => {
   switch (status.toLowerCase()) {
     case "active":
-      return "bg-green-100 text-green-800";
+      return "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300";
     case "maintenance":
-      return "bg-yellow-100 text-yellow-800";
+      return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300";
     case "archived":
-      return "bg-gray-100 text-gray-800";
+      return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
     default:
-      return "bg-blue-100 text-blue-800";
+      return "bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300";
   }
 };
 
-// Difficulty color
+// UPDATED: Added dark mode classes for all difficulties
 const getDifficultyColor = (difficulty) => {
   switch (difficulty.toLowerCase()) {
     case "beginner":
-      return "bg-blue-50 text-blue-700 border-blue-200";
+      return "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/40 dark:text-blue-300 dark:border-blue-700";
     case "intermediate":
-      return "bg-purple-50 text-purple-700 border-purple-200";
+      return "bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/40 dark:text-purple-300 dark:border-purple-700";
     case "advanced":
-      return "bg-pink-50 text-pink-700 border-pink-200";
+      return "bg-pink-50 text-pink-700 border-pink-200 dark:bg-pink-900/40 dark:text-pink-300 dark:border-pink-700";
     default:
-      return "bg-gray-50 text-gray-700 border-gray-200";
+      return "bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500";
   }
 };
 
-// Tech tag styling
+// UPDATED: Added dark mode classes for the tech tag style
 const techTagStyle =
-  "px-2 py-1 text-xs font-medium rounded-full bg-indigo-100 text-indigo-900 border border-indigo-300";
+  "px-2 py-1 text-xs font-medium rounded-full bg-indigo-100 text-indigo-900 border border-indigo-300 dark:bg-indigo-900/60 dark:text-indigo-300 dark:border-indigo-700";
 
 const ProjectCard = ({ project }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -51,17 +52,19 @@ const ProjectCard = ({ project }) => {
 
   return (
     <motion.div
-      className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 max-w-sm mx-auto hover:shadow-lg transition-all duration-300"
+      // UPDATED: Card background and border
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-gray-100 dark:border-gray-700 max-w-sm mx-auto hover:shadow-lg transition-all duration-300"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4, scale: 1.02 }}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 bg-gradient-to-r from-indigo-50 to-white">
+      {/* UPDATED: Header gradient, border, icon, and title text */}
+      <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-indigo-50 dark:from-gray-700/50 to-white dark:to-gray-800">
         <div className="border-2 border-indigo-500 p-2 rounded-full flex items-center justify-center">
-          <RandomIcon size={24} className="text-indigo-600" />
+          <RandomIcon size={24} className="text-indigo-600 dark:text-indigo-400" />
         </div>
-        <h3 className="text-center text-lg font-semibold text-gray-900 flex-1 mx-3 line-clamp-1">
+        <h3 className="text-center text-lg font-semibold text-gray-900 dark:text-gray-100 flex-1 mx-3 line-clamp-1">
           {project.title}
         </h3>
         <span
@@ -74,7 +77,8 @@ const ProjectCard = ({ project }) => {
       </div>
 
       {/* Image */}
-      <div className="relative aspect-[16/9] bg-gray-100 border-b border-gray-200 overflow-hidden">
+      {/* UPDATED: Image container background and border */}
+      <div className="relative aspect-[16/9] bg-gray-100 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-700 overflow-hidden">
         <img
           src={project.lowResImage || project.image}
           alt={project.title}
@@ -93,13 +97,15 @@ const ProjectCard = ({ project }) => {
       </div>
 
       {/* Description */}
-      <p className="px-5 py-4 text-gray-600 text-sm border-b border-gray-200">
+      {/* UPDATED: Description text and border */}
+      <p className="px-5 py-4 text-gray-600 dark:text-gray-400 text-sm border-b border-gray-200 dark:border-gray-700">
         {project.description}
       </p>
 
       {/* Category & Difficulty */}
-      <div className="px-5 py-2 flex flex-wrap gap-2 border-b border-gray-200">
-        <span className="px-2.5 py-1 text-xs font-medium bg-indigo-50 text-indigo-700 rounded-full border border-indigo-300">
+      {/* UPDATED: Section border and category tag styles */}
+      <div className="px-5 py-2 flex flex-wrap gap-2 border-b border-gray-200 dark:border-gray-700">
+        <span className="px-2.5 py-1 text-xs font-medium bg-indigo-50 text-indigo-700 rounded-full border border-indigo-300 dark:bg-indigo-900/40 dark:text-indigo-300 dark:border-indigo-700">
           {project.category}
         </span>
         <span
@@ -112,31 +118,33 @@ const ProjectCard = ({ project }) => {
       </div>
 
       {/* Admin + Stats */}
-      <div className="px-5 py-4 flex justify-between items-center border-b border-gray-200">
+      {/* UPDATED: Section border, author styles, and stat tag styles */}
+      <div className="px-5 py-4 flex justify-between items-center border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-sm font-medium text-indigo-600 border-2 border-indigo-500">
+          <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-600 flex items-center justify-center text-sm font-medium text-indigo-600 dark:text-indigo-400 border-2 border-indigo-500">
             {project.author.charAt(0)}
           </div>
-          <span className="text-sm text-gray-700">{project.author}</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">{project.author}</span>
         </div>
         <div className="flex gap-2 text-xs">
-          <div className="flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-md text-yellow-700">
+          <div className="flex items-center gap-1 bg-yellow-50 dark:bg-yellow-900/40 px-2 py-1 rounded-md text-yellow-700 dark:text-yellow-300">
             <FiStar /> {project.stars}
           </div>
-          <div className="flex items-center gap-1 bg-green-50 px-2 py-1 rounded-md text-green-700">
+          <div className="flex items-center gap-1 bg-green-50 dark:bg-green-900/40 px-2 py-1 rounded-md text-green-700 dark:text-green-300">
             <FiGithub /> {project.forks}
           </div>
-          <div className="flex items-center gap-1 bg-red-50 px-2 py-1 rounded-md text-red-700">
+          <div className="flex items-center gap-1 bg-red-50 dark:bg-red-900/40 px-2 py-1 rounded-md text-red-700 dark:text-red-300">
             <FiAlertCircle /> {project.openIssues}
           </div>
-          <div className="flex items-center gap-1 bg-blue-50 px-2 py-1 rounded-md text-blue-700">
+          <div className="flex items-center gap-1 bg-blue-50 dark:bg-blue-900/40 px-2 py-1 rounded-md text-blue-700 dark:text-blue-300">
             <FiGitPullRequest /> {project.pullRequests}
           </div>
         </div>
       </div>
 
       {/* Tech Stack */}
-      <div className="px-5 py-4 flex flex-wrap gap-2 border-b border-gray-200">
+      {/* UPDATED: Section border */}
+      <div className="px-5 py-4 flex flex-wrap gap-2 border-b border-gray-200 dark:border-gray-700">
         {project.techStack.map((tech, index) => (
           <span key={index} className={techTagStyle}>
             {tech}
@@ -156,13 +164,15 @@ const ProjectCard = ({ project }) => {
         </a>
 
         {project.liveDemo && (
+          // UPDATED: Secondary button styles
           <a
             href={project.liveDemo}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 border-2 border-indigo-500 text-indigo-600 font-semibold rounded-lg hover:bg-indigo-100 hover:text-indigo-800 hover:scale-105 transition-all duration-300"
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 border-2 border-indigo-500 text-indigo-600 dark:text-indigo-400 font-semibold rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/40 hover:text-indigo-800 dark:hover:text-indigo-300 hover:scale-105 transition-all duration-300"
           >
-            <FiExternalLink className="text-indigo-600" /> Live Demo
+            {/* The icon will now inherit the text color, which changes on hover. */}
+            <FiExternalLink /> Live Demo
           </a>
         )}
       </div>

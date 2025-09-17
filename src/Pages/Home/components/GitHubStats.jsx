@@ -126,7 +126,7 @@ export default function GitHubStats() {
     {
       label: "License",
       value: stats.license,
-      icon: <Scale className="text-gray-600" size={40} />,
+      icon: <Scale className="text-gray-600 dark:text-gray-400" size={40} />,
       link: `https://github.com/${GITHUB_USER}/${GITHUB_REPO}/blob/main/LICENSE`,
     },
     {
@@ -152,13 +152,15 @@ export default function GitHubStats() {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-l from-indigo-100 to-indigo-50">
+    // UPDATED: Section background
+    <section className="py-16 bg-gradient-to-l from-indigo-100 to-indigo-50 dark:from-gray-800 dark:to-gray-900">
       <div className="max-w-7xl mx-auto px-6">
         <motion.h2
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-4xl font-extrabold text-center text-gray-900 mb-10"
+          // UPDATED: Title text color
+          className="text-4xl font-extrabold text-center text-gray-900 dark:text-gray-100 mb-10"
         >
           Project Statistics
         </motion.h2>
@@ -176,26 +178,31 @@ export default function GitHubStats() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
-              className="group flex flex-col items-center justify-center bg-white rounded-2xl px-8 py-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 relative overflow-hidden w-52"
+              // UPDATED: Card background and border
+              className="group flex flex-col items-center justify-center bg-white dark:bg-gray-800 rounded-2xl px-8 py-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-700 relative overflow-hidden w-52"
             >
               {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-100 via-transparent to-indigo-100 opacity-0 group-hover:opacity-100 transition duration-500 blur-2xl"></div>
+              {/* UPDATED: Glow effect for dark mode */}
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-100 via-transparent to-indigo-100 dark:from-indigo-900/50 dark:via-transparent dark:to-indigo-900/50 opacity-0 group-hover:opacity-100 transition duration-500 blur-2xl"></div>
 
               <div className="z-10 flex flex-col items-center space-y-3">
-                <div className="p-4 bg-gray-50 rounded-full shadow-inner">
+                {/* UPDATED: Icon wrapper background */}
+                <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-full shadow-inner">
                   {icon}
                 </div>
-                <p className="text-xl font-bold text-gray-900 text-center break-words">
+                {/* UPDATED: Text colors */}
+                <p className="text-xl font-bold text-gray-900 dark:text-gray-100 text-center break-words">
                   {value}
                 </p>
-                <p className="text-sm font-medium text-gray-500 text-center">
+                <p className="text-sm font-medium text-gray-500 dark:text-gray-400 text-center">
                   {label}
                 </p>
               </div>
 
+              {/* UPDATED: Icon color */}
               <ExternalLink
                 size={16}
-                className="absolute top-3 right-3 text-gray-400 opacity-0 group-hover:opacity-100 transition duration-300"
+                className="absolute top-3 right-3 text-gray-400 dark:text-gray-500 opacity-0 group-hover:opacity-100 transition duration-300"
               />
             </motion.a>
           ))}

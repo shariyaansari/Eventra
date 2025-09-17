@@ -87,9 +87,9 @@ const FloatingInput = ({
         htmlFor={id}
         className={`absolute left-4 transition-all duration-300 ${
           isFocused || value
-            ? "top-0 text-xs text-indigo-600 font-medium"
-            : "top-4 text-sm text-gray-500"
-        } ${error ? "text-red-500" : ""}`}
+            ? "top-0 text-xs text-indigo-600 dark:text-indigo-400 font-medium"
+            : "top-4 text-sm text-gray-500 dark:text-gray-400"
+        } ${error ? "text-red-500 dark:text-red-400" : ""}`}
         initial={false}
         animate={{
           y: isFocused || value ? -20 : 0,
@@ -106,17 +106,17 @@ const FloatingInput = ({
         onChange={onChange}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        className={`w-full pt-5 pb-2 px-4 border rounded-lg focus:ring-2 focus:outline-none ${
+        className={`w-full pt-5 pb-2 px-4 border rounded-lg focus:ring-2 focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 ${
           error
             ? "border-red-500 focus:ring-red-200"
-            : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-200"
+            : "border-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-indigo-200 dark:focus:ring-indigo-900/50"
         }`}
       />
       {error && (
         <motion.p
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-red-500 text-xs mt-1 ml-1"
+          className="text-red-500 dark:text-red-400 text-xs mt-1 ml-1"
         >
           {error}
         </motion.p>
@@ -261,13 +261,14 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="max-w-4xl w-full mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-100"
+          // UPDATED: Card background and border
+          className="bg-white dark:bg-gray-900 shadow-2xl rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800"
         >
           <div className="md:flex">
             <div className="md:w-2/5 bg-gradient-to-br from-indigo-600 to-purple-600 text-white p-10 flex flex-col justify-between">
@@ -382,10 +383,10 @@ const ContactUs = () => {
 
             <div className="md:w-3/5 p-10">
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-extrabold text-gray-900">
+                <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100">
                   Send us a Message
                 </h2>
-                <p className="mt-2 text-gray-600">
+                <p className="mt-2 text-gray-600 dark:text-gray-400">
                   We typically respond within 24 hours
                 </p>
               </div>
@@ -414,7 +415,7 @@ const ContactUs = () => {
                     name="countryCode"
                     value={formData.countryCode}
                     onChange={handleChange}
-                    className="border h-[50px] rounded px-2 py-1 bg-white text-gray-700"
+                    className="border dark:border-gray-600 h-[50px] rounded px-2 py-1 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200"
                   >
                     <option value="+1">+1 (US)</option>
                     <option value="+91">+91 (IN)</option>
@@ -452,9 +453,9 @@ const ContactUs = () => {
                     htmlFor="message"
                     className={`absolute left-4 transition-all duration-300 ${
                       formData.message
-                        ? "top-0 text-xs text-indigo-600 font-medium"
-                        : "top-4 text-sm text-gray-500"
-                    } ${errors.message ? "text-red-500" : ""}`}
+                        ? "top-0 text-xs text-indigo-600 dark:text-indigo-400 font-medium"
+                        : "top-4 text-sm text-gray-500 dark:text-gray-400"
+                    } ${errors.message ? "text-red-500 dark:text-red-400" : ""}`}
                     initial={false}
                     animate={{
                       y: formData.message ? -20 : 0,
@@ -487,17 +488,17 @@ const ContactUs = () => {
                           );
                       }
                     }}
-                    className={`w-full pt-5 pb-2 px-4 border rounded-lg focus:ring-2 focus:outline-none ${
+                    className={`w-full pt-5 pb-2 px-4 border rounded-lg focus:ring-2 focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 ${
                       errors.message
                         ? "border-red-500 focus:ring-red-200"
-                        : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-200"
+                        : "border-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-indigo-200 dark:focus:ring-indigo-900/50"
                     }`}
                   ></textarea>
                   {errors.message && (
                     <motion.p
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="text-red-500 text-xs mt-1 ml-1"
+                      className="text-red-500 dark:text-red-400 text-xs mt-1 ml-1"
                     >
                       {errors.message}
                     </motion.p>

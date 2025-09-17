@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import NavbarLink from "./NavbarLink";
 import { motion } from "framer-motion";
+import ThemeToggleButton from "../common/ThemeToggleButton";
 import {
   Home,
   Calendar,
@@ -89,7 +90,8 @@ const Navbar = () => {
               e.stopPropagation();
               setShowProfileDropdown(!showProfileDropdown);
             }}
-            className="flex items-center space-x-2 bg-white p-1 rounded-full hover:shadow-md transition-shadow duration-300"
+            // UPDATED: Added dark mode background and shadow
+            className="flex items-center space-x-2 bg-white dark:bg-gray-700 p-1 rounded-full hover:shadow-md transition-shadow duration-300"
           >
             {user?.profilePicture ? (
               <img
@@ -99,16 +101,19 @@ const Navbar = () => {
                 onError={(e) => (e.target.style.display = "none")}
               />
             ) : (
-              <div className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-indigo-600 bg-gray-100 text-gray-500">
+              // UPDATED: Added dark mode background and text colors
+              <div className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-indigo-600 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-400">
                 <UserIcon className="w-6 h-6" />
               </div>
             )}
 
-            <span className="text-gray-800 font-medium">
+            {/* UPDATED: Added dark mode text color */}
+            <span className="text-gray-800 dark:text-gray-200 font-medium">
               {user?.firstName || user?.email?.split("@")[0] || "User"}
             </span>
+            {/* UPDATED: Added dark mode text color */}
             <svg
-              className="w-5 h-5 text-gray-600"
+              className="w-5 h-5 text-gray-600 dark:text-gray-400"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -121,8 +126,10 @@ const Navbar = () => {
           </button>
 
           {showProfileDropdown && (
-            <div className="absolute top-full right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl py-3 z-50 animate-fadeIn">
-              <div className="px-4 py-3 border-b border-gray-100">
+            // UPDATED: Added dark mode background and border
+            <div className="absolute top-full right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-2xl py-3 z-50 animate-fadeIn border border-transparent dark:border-gray-700">
+              {/* UPDATED: Added dark mode border */}
+              <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
                 <div className="flex items-center space-x-3">
                   {user?.profilePicture ? (
                     <img
@@ -132,40 +139,45 @@ const Navbar = () => {
                       onError={(e) => (e.target.style.display = "none")}
                     />
                   ) : (
-                    <div className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-indigo-600 bg-gray-100 text-gray-500">
+                    // UPDATED: Added dark mode background and text colors
+                    <div className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-indigo-600 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-400">
                       <UserIcon className="w-6 h-6" />
                     </div>
                   )}
-
                   <div>
-                    <div className="font-semibold text-gray-900">
+                    {/* UPDATED: Added dark mode text color */}
+                    <div className="font-semibold text-gray-900 dark:text-gray-100">
                       {user?.firstName && user?.lastName
                         ? `${user.firstName} ${user.lastName}`
                         : user?.firstName
                         ? user.firstName
                         : user?.email || "User"}
                     </div>
-                    <div className="text-sm text-gray-500">
+                    {/* UPDATED: Added dark mode text color */}
+                    <div className="text-sm text-gray-500 dark:text-gray-400">
                       {user?.email || "No email available"}
                     </div>
                   </div>
                 </div>
               </div>
+              {/* UPDATED: Added dark mode text and hover colors */}
               <Link
                 to="/dashboard"
-                className="flex items-center px-4 py-3 text-gray-700 hover:bg-indigo-50 rounded-lg transition-colors"
+                className="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
               >
                 Dashboard
               </Link>
+              {/* UPDATED: Added dark mode text and hover colors */}
               <Link
                 to="/profile"
-                className="flex items-center px-4 py-3 text-gray-700 hover:bg-indigo-50 rounded-lg transition-colors"
+                className="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
               >
                 Edit Profile
               </Link>
+              {/* UPDATED: Added dark mode hover color */}
               <button
                 onClick={handleLogout}
-                className="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 flex items-center rounded-lg transition-colors"
+                className="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/50 flex items-center rounded-lg transition-colors"
               >
                 Logout
               </button>
@@ -177,11 +189,13 @@ const Navbar = () => {
       return (
         <div className="hidden md:flex items-center space-x-3">
           {/* Sign In Button */}
+          {/* UPDATED: Added dark mode text and hover colors */}
           <Link
             to="/login"
-            className="flex items-center px-3 py-2 text-gray-800 font-medium rounded-full hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-300 group whitespace-nowrap"
+            className="flex items-center px-3 py-2 text-gray-800 dark:text-gray-200 font-medium rounded-full hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-all duration-300 group whitespace-nowrap"
           >
-            <LogIn className="w-5 h-5 mr-2 text-gray-600 group-hover:text-indigo-600 transition-transform duration-300 transform group-hover:translate-x-1" />
+            {/* UPDATED: Added dark mode text colors */}
+            <LogIn className="w-5 h-5 mr-2 text-gray-600 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-transform duration-300 transform group-hover:translate-x-1" />
             Sign In
           </Link>
 
@@ -251,7 +265,7 @@ const Navbar = () => {
         onClick={closeAllMenus}
       />
 
-      <nav className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md shadow-xl border-b border-gray-300 py-5 transition-all duration-300">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-white/70 dark:bg-gray-900/80 backdrop-blur-md shadow-xl border-b border-gray-300 dark:border-gray-700 py-5 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-4">
           {/* Brand */}
           <Link to="/" className="flex-shrink-0">
@@ -294,7 +308,8 @@ const Navbar = () => {
                           openDropdown === item.name ? null : item.name
                         );
                       }}
-                      className="flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+                      // UPDATED: Added dark mode text and hover colors
+                      className="flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-colors"
                     >
                       {item.icon} {item.name}
                       <svg
@@ -314,57 +329,54 @@ const Navbar = () => {
 
                     {/* Dropdown */}
                     {openDropdown === item.name && (
-  <motion.div
-    initial={{ opacity: 0, y: -8 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -8 }}
-    transition={{ duration: 0.2, ease: "easeOut" }}
-    className="absolute left-0 mt-2 w-56 bg-white/90 backdrop-blur-md shadow-xl rounded-2xl z-50 border border-gray-100 divide-y divide-gray-300"
-  >
-    {item.subItems.map((sub, idx) => (
-      <Link
-        key={sub.name}
-        to={sub.href}
-        onClick={() => setOpenDropdown(null)}
-        className={`group flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors duration-200
-          ${
-            location.pathname === sub.href
-              ? "bg-indigo-100 text-indigo-700"
-              : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
-          }
-          ${idx === 0 ? "rounded-t-2xl" : ""} 
-          ${idx === item.subItems.length - 1 ? "rounded-b-2xl" : ""}
-        `}
-      >
-        {/* Icon with animation */}
-        <motion.span
-  whileHover={{ scale: 1.2, rotate: 8 }}
-  transition={{ type: "spring", stiffness: 300, damping: 12 }}
->
-  {sub.icon}
-</motion.span>
-
-
-        {sub.name}
-      </Link>
-    ))}
-  </motion.div>
-)}
-
-
-
+                      <motion.div
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        // UPDATED: Added dark mode background, border, and divider colors
+                        className="absolute left-0 mt-2 w-56 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-xl rounded-2xl z-50 border border-gray-100 dark:border-gray-700 divide-y divide-gray-300 dark:divide-gray-600"
+                      >
+                        {item.subItems.map((sub, idx) => (
+                          <Link
+                            key={sub.name}
+                            to={sub.href}
+                            onClick={() => setOpenDropdown(null)}
+                            // UPDATED: Added dark mode classes for both active and inactive states                           
+                            className={`group flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors duration-200
+                              ${
+                                location.pathname === sub.href
+                                  ? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400"
+                                  : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                              }
+                              ${idx === 0 ? "rounded-t-2xl" : ""} 
+                              ${idx === item.subItems.length - 1 ? "rounded-b-2xl" : ""}
+                            `}
+                          >
+                            {/* Icon with animation */}
+                            <motion.span
+                              whileHover={{ scale: 1.2, rotate: 8 }}
+                              transition={{ type: "spring", stiffness: 300, damping: 12 }}
+                            >
+                              {sub.icon}
+                            </motion.span>
+                            {sub.name}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
                   </div>
                 );
               }
-
               return (
                 <Link
                   key={item.name}
                   to={item.href}
+                  // UPDATED: Added dark mode classes for both active and inactive states
                   className={`flex items-center gap-3 py-2 px-3 rounded-lg font-medium transition-colors ${
                     isActive
-                      ? "text-indigo-600 bg-indigo-50"
-                      : "text-gray-700 hover:text-indigo-600 hover:bg-indigo-50"
+                      ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+                      : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700"
                   }`}
                 >
                   {item.icon} {item.name}
@@ -375,6 +387,7 @@ const Navbar = () => {
 
           {/* Auth Section Desktop */}
           <div className="hidden lg:flex items-center flex-shrink-0">
+            <ThemeToggleButton />
             {renderAuthSection()}
           </div>
 
@@ -385,7 +398,8 @@ const Navbar = () => {
                 e.stopPropagation();
                 setIsMobileMenuOpen(!isMobileMenuOpen);
               }}
-              className="p-2 rounded-md text-gray-700 hover:text-indigo-600 hover:bg-gray-100 transition-colors"
+              // UPDATED: Added dark mode text and hover colors
+              className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
               <svg
                 className="h-6 w-6"
@@ -405,15 +419,18 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu */}
+        {/* UPDATED: Added dark mode background */}
         <div
-          className={`fixed top-0 right-0 h-screen w-72 bg-white shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out 
-    ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+          className={`fixed top-0 right-0 h-screen w-72 bg-white dark:bg-gray-800 shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out 
+          ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
         >
           {/* Header */}
-          <div className="flex items-center justify-end px-5 py-2 border-b border-gray-200 bg-white">
+          {/* UPDATED: Added dark mode border and background */}
+          <div className="flex items-center justify-end px-5 py-2 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
             <button
               onClick={closeAllMenus}
-              className="p-2 rounded-full text-gray-500 bg-gray-100 hover:bg-gray-200 transition-colors"
+              // UPDATED: Added dark mode text and background colors
+              className="p-2 rounded-full text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
             >
               <svg
                 className="h-4 w-4"
@@ -444,7 +461,8 @@ const Navbar = () => {
                           openDropdown === item.name ? null : item.name
                         );
                       }}
-                      className="flex items-center justify-between w-full px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
+                      // UPDATED: Added dark mode text and hover colors
+                      className="flex items-center justify-between w-full px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
                     >
                       <span className="flex items-center gap-2">
                         {item.icon} {item.name}
@@ -473,7 +491,8 @@ const Navbar = () => {
                               setOpenDropdown(null);
                               setIsMobileMenuOpen(false);
                             }}
-                            className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg"
+                            // UPDATED: Added dark mode text and hover colors
+                            className="flex items-center gap-2 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-lg"
                           >
                             {sub.icon} {sub.name}
                           </Link>
@@ -488,7 +507,8 @@ const Navbar = () => {
                   key={item.name}
                   to={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
+                  // UPDATED: Added dark mode text and hover colors
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
                 >
                   {item.icon} {item.name}
                 </Link>
@@ -497,7 +517,8 @@ const Navbar = () => {
           </div>
 
           {/* Auth Section */}
-          <div className="border-t border-gray-200">
+          {/* UPDATED: Added dark mode border */}
+          <div className="border-t border-gray-200 dark:border-gray-700">
             {isAuthenticated() ? (
               <div className="px-4 py-4 space-y-1">
                 {/* User Info */}
@@ -510,16 +531,19 @@ const Navbar = () => {
                       onError={(e) => (e.target.style.display = "none")}
                     />
                   ) : (
-                    <div className="w-9 h-9 flex items-center justify-center rounded-full border border-indigo-500 bg-gray-100 text-gray-500">
+                    // UPDATED: Added dark mode background and text
+                    <div className="w-9 h-9 flex items-center justify-center rounded-full border border-indigo-500 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-400">
                       <UserIcon className="w-5 h-5" />
                     </div>
                   )}
 
                   <div>
-                    <p className="text-sm font-medium text-gray-900">
+                    {/* UPDATED: Added dark mode text */}
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
                       {user?.firstName || user?.email?.split("@")[0] || "User"}
                     </p>
-                    <p className="text-xs text-gray-500">{user?.email}</p>
+                    {/* UPDATED: Added dark mode text */}
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</p>
                   </div>
                 </div>
 
@@ -527,12 +551,13 @@ const Navbar = () => {
                 <Link
                   to="/dashboard"
                   onClick={closeAllMenus}
+                  // UPDATED: Added dark mode active/inactive colors
                   className={`flex items-center gap-3 px-3 py-3 rounded-lg relative transition-colors 
-          ${
-            location.pathname === "/dashboard"
-              ? "text-indigo-600 bg-indigo-50"
-              : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
-          }`}
+                    ${
+                      location.pathname === "/dashboard"
+                        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                    }`}
                 >
                   <LayoutDashboard className="w-5 h-5" />
                   <span className="relative inline-block">
@@ -546,12 +571,13 @@ const Navbar = () => {
                 <Link
                   to="/profile"
                   onClick={closeAllMenus}
+                  // UPDATED: Added dark mode active/inactive colors
                   className={`flex items-center gap-3 px-3 py-3 rounded-lg relative transition-colors 
-          ${
-            location.pathname === "/profile"
-              ? "text-indigo-600 bg-indigo-50"
-              : "text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
-          }`}
+                    ${
+                      location.pathname === "/profile"
+                        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                    }`}
                 >
                   <ShieldUser className="w-5 h-5" />
                   <span className="relative inline-block">
@@ -567,7 +593,8 @@ const Navbar = () => {
                     handleLogout();
                     closeAllMenus();
                   }}
-                  className="flex items-center gap-3 w-full text-left px-3 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
+                  // UPDATED: Added dark mode hover color
+                  className="flex items-center gap-3 w-full text-left px-3 py-3 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/50 transition-colors"
                 >
                   <LogOut className="w-5 h-5" />
                   Logout
@@ -578,9 +605,10 @@ const Navbar = () => {
                 <Link
                   to="/login"
                   onClick={closeAllMenus}
-                  className="group flex w-full items-center justify-center px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 bg-gray-100 hover:bg-gray-50 transition-colors"
+                  // UPDATED: Added dark mode colors
+                  className="group flex w-full items-center justify-center px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
                 >
-                  <LogIn className="w-5 h-5 mr-2 text-gray-600 group-hover:text-indigo-600 transition-transform duration-300 transform group-hover:translate-x-1" />
+                  <LogIn className="w-5 h-5 mr-2 text-gray-600" />
                   Sign In
                 </Link>
 

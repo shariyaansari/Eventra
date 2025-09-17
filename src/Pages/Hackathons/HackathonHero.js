@@ -20,10 +20,10 @@ import { useNavigate } from "react-router-dom";
  *  - scrollToCards: callback function to scroll to the hackathon list
  */
 export default function HackathonHero({
-  hackathons = [], // ✅ default empty array if no hackathons
-  searchQuery, // ✅ current search term
-  setSearchQuery, // ✅ function to update the search input
-  scrollToCards, // ✅ function to scroll down to hackathon cards
+  hackathons = [], // default empty array if no hackathons
+  searchQuery, // current search term
+  setSearchQuery, // function to update the search input
+  scrollToCards, // function to scroll down to hackathon cards
 }) {
   /**
    * Filter hackathons based on search query
@@ -44,10 +44,9 @@ export default function HackathonHero({
   const navigate = useNavigate();
 
   return (
-    <div className="relative bg-gradient-to-l from-indigo-200 to-white text-gray-900 py-6 ">
-      {/* ======================= HERO TITLE ======================= */}
+    // UPDATED: Main background gradient and base text color
+    <div className="relative bg-gradient-to-l from-indigo-200 to-white dark:from-gray-900 dark:to-black text-gray-900 dark:text-gray-100 py-6 ">
       <div className="relative max-w-6xl mx-auto px-8 text-center mt-12">
-        {/* Title with gradient animation */}
         <motion.h1
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -55,17 +54,18 @@ export default function HackathonHero({
           className="text-4xl sm:text-6xl font-extrabold leading-tight"
         >
           Discover{" "}
-          <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-gradient">
+          {/* UPDATED: Text gradient for dark mode */}
+          <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent animate-gradient">
             Amazing Hackathons
           </span>
         </motion.h1>
 
-        {/* Subtitle / tagline under the main heading */}
+        {/* UPDATED: Subtitle text color */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.7 }}
-          className="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto"
+          className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
         >
           "Find and join the most exciting hackathons, compete with the best,
           and win amazing prizes 🚀"
@@ -79,19 +79,16 @@ export default function HackathonHero({
           className="w-full max-w-3xl mx-auto mt-12"
         >
           <div className="relative group">
-            {/* Search Icon at the left side */}
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center z-10 pointer-events-none">
-              <Search className="h-5 w-5 text-gray-400 group-focus-within:text-indigo-500 transition-colors" />
+              {/* UPDATED: Search icon color */}
+              <Search className="h-5 w-5 text-gray-400 dark:text-gray-500 group-focus-within:text-indigo-500 dark:group-focus-within:text-indigo-400 transition-colors" />
             </div>
 
-            {/* Search Input Field */}
             <input
               type="text"
               placeholder="Search hackathons by name, location, or tags..."
-              className="block w-full pl-12 pr-12 py-4 text-base text-gray-900 placeholder-gray-400 
-               bg-white/60 backdrop-blur-xl border border-gray-200 rounded-2xl
-               focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
-               transition-all duration-300 shadow-lg hover:shadow-xl"
+              // UPDATED: Search input styles
+              className="block w-full pl-12 pr-12 py-4 text-base text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl border border-gray-200 dark:border-gray-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 transition-all duration-300 shadow-lg hover:shadow-xl"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -102,7 +99,8 @@ export default function HackathonHero({
                 whileHover={{ rotate: 90, scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setSearchQuery("")}
-                className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors z-10"
+                // UPDATED: Clear button icon color
+                className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors z-10"
               >
                 <X className="h-5 w-5" />
               </motion.button>
@@ -126,20 +124,18 @@ export default function HackathonHero({
                   key={idx}
                   whileHover={{ scale: 1.1 }}
                   onClick={() => setSearchQuery(tag)}
-                  className="px-3 py-1 text-xs font-medium text-indigo-600 bg-indigo-50 rounded-full cursor-pointer hover:bg-indigo-100 transition"
+                  // UPDATED: Tag styles
+                  className="px-3 py-1 text-xs font-medium text-indigo-600 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-900/50 rounded-full cursor-pointer hover:bg-indigo-100 dark:hover:bg-indigo-900 transition"
                 >
                   {tag}
                 </motion.span>
               ))}
             </div>
 
-            {/* Show count of matched hackathons */}
-            <span className="text-sm text-indigo-600 font-semibold">
+            {/* UPDATED: Hackathon count text color */}
+            <span className="text-sm text-indigo-600 dark:text-indigo-400 font-semibold">
               {filteredHackathons.length}{" "}
-              {filteredHackathons.length === 1
-                ? "hackathon"
-                : "hackathons"}{" "}
-              found
+              {filteredHackathons.length === 1 ? "hackathon" : "hackathons"} found
             </span>
           </div>
         </motion.div>
@@ -155,14 +151,13 @@ export default function HackathonHero({
           <motion.button
             whileHover={{ scale: 1.07 }}
             whileTap={{ scale: 0.95 }}
-            className="relative px-7 py-3.5 rounded-xl font-semibold text-white shadow-lg overflow-hidden group"
-            onClick={scrollToCards} // ✅ scrolls to hackathon cards
+            onClick={() => navigate("/host-hackathon")}
+            className="relative px-7 py-3.5 rounded-xl font-medium text-gray-800 dark:text-gray-200 shadow-md backdrop-blur-md border border-gray-300 dark:border-gray-600 hover:border-indigo-400 transition-all duration-300 bg-white/70 dark:bg-gray-800/70"
           >
-            <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-800 group-hover:from-indigo-500 group-hover:to-indigo-600 transition-all duration-500" />
-            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700 ease-in-out" />
             <span className="relative flex items-center">
-              <Rocket className="inline-block w-5 h-5 mr-2" />
-              Explore Hackathons
+              {/* UPDATED: Icon color */}
+              <Users className="inline-block w-5 h-5 mr-2 text-indigo-600 dark:text-indigo-400" />
+              Host a Hackathon
             </span>
           </motion.button>
 
@@ -196,7 +191,8 @@ export default function HackathonHero({
             viewport={{ once: true }}
             transition={{ delay: 0.2 + idx * 0.15, duration: 0.6 }}
             whileHover={{ scale: 1.05 }}
-            className="relative bg-gradient-to-br from-indigo-50 to-white rounded-3xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-2xl transition-all duration-300"
+            // UPDATED: Stat card styles
+            className="relative bg-gradient-to-br from-indigo-50 to-white dark:from-gray-800 dark:to-gray-700 rounded-3xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-2xl transition-all duration-300"
           >
             {/* Animated Icon in a circular container */}
             <motion.div
@@ -208,17 +204,16 @@ export default function HackathonHero({
             </motion.div>
 
             {/* Stat Value (big bold number) */}
-            <p className="text-3xl font-extrabold text-gray-900 tracking-tight">
+            {/* UPDATED: Text colors */}
+            <p className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">
               {stat.value}
             </p>
-
-            {/* Stat Label (e.g., Participants, Projects Built) */}
-            <p className="mt-1 text-sm font-medium text-gray-600">
+            <p className="mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">
               {stat.label}
             </p>
 
-            {/* Decorative gradient glow effect */}
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-indigo-500/10 to-indigo-600/10 blur-2xl opacity-40 -z-10" />
+            {/* UPDATED: Decorative glow */}
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-indigo-500/10 to-indigo-600/10 dark:from-indigo-500/20 dark:to-indigo-600/20 blur-2xl opacity-40 -z-10" />
           </motion.div>
         ))}
       </div>
