@@ -50,7 +50,7 @@ function App() {
           <div className="App">
             <Navbar />
 
-            <main className="min-h-screen">
+            <main className="min-h-screen bg-white dark:bg-black">
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/events" element={<EventsPage />} />
