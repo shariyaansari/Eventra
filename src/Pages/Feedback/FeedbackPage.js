@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiStar, FiMessageSquare, FiUser, FiMail, FiCheckCircle } from "react-icons/fi";
 import { FaTwitter, FaGithub, FaLinkedin, FaDiscord } from "react-icons/fa";
+import { FiChevronDown } from "react-icons/fi"; 
 import "./FeedbackPage.css";
 
 //Social media links
@@ -156,6 +157,7 @@ const FloatingInput = ({
   required = true,
   error,
   icon: Icon,
+  placeholder,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -188,11 +190,12 @@ const FloatingInput = ({
           onChange={onChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          className={`w-full pt-5 pb-2 px-4 border rounded-lg focus:ring-2 focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 ${
-            Icon ? "pl-14" : ""
+          placeholder={placeholder}
+          className={`w-full p-4 border rounded-lg focus:ring-2 focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 ${
+          Icon ? "pl-14" : ""
           } ${
             error
-              ? "border-red-500 focus:ring-red-200"
+              ? "border-red-500 focus:ring-red-200 dark:focus:ring-red-900/50"
               : "border-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-indigo-200 dark:focus:ring-indigo-900/50"
           }`}
         />
@@ -220,6 +223,7 @@ const FloatingSelect = ({
   required = true,
   error,
   icon: Icon,
+  placeholder,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -253,21 +257,23 @@ const FloatingSelect = ({
           onChange={onChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          className={`w-full pt-5 pb-2 px-4 border rounded-lg focus:ring-2 focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 ${
-            Icon ? "pl-14" : ""
+          className={`w-full p-4 border rounded-lg focus:ring-2 focus:outline-none bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 appearance-none ${
+          Icon ? "pl-14" : ""
           } ${
             error
-              ? "border-red-500 focus:ring-red-200"
+              ? "border-red-500 focus:ring-red-200 dark:focus:ring-red-900/50"
               : "border-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-indigo-200 dark:focus:ring-indigo-900/50"
           }`}
         >
-          <option value=""></option>
+          <option value="" disabled>{placeholder}</option>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}
         </select>
+        {/* ✅ ADD THIS ICON FOR THE DROPDOWN ARROW */}
+        <FiChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500 pointer-events-none" />
       </div>
       {error && (
         <motion.p
@@ -523,6 +529,7 @@ const FeedbackPage = () => {
                   error={errors.name}
                   icon={FiUser}
                   required={false}
+                  placeholder="Enter your name"
                 />
 
                 <FloatingInput
@@ -534,6 +541,7 @@ const FeedbackPage = () => {
                   error={errors.email}
                   icon={FiMail}
                   required={false}
+                  placeholder="your@email.com"
                 />
 
                 <FloatingSelect
@@ -544,6 +552,7 @@ const FeedbackPage = () => {
                   options={feedbackTypes}
                   error={errors.feedbackType}
                   icon={FiMessageSquare}
+                  placeholder="Select a feedback type"
                 />
 
                 {/* UPDATED: Textarea and its floating label */}
