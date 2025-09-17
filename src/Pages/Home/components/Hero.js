@@ -78,14 +78,14 @@ const Hero = () => {
   ];
 
   return (
-    // UPDATED: Main section background gradient for dark mode
+    // Main section background gradient for dark mode
     <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-indigo-50 via-indigo-100 to-white dark:from-gray-900 dark:via-indigo-900/20 dark:to-black py-24 lg:py-32">
       {/* Floating Gradient Shapes */}
       {shapes.map((shape, i) => (
         <motion.div
           key={i}
           animate={floatShape(i)}
-          // UPDATED: Reduced shape opacity in dark mode for a subtler effect
+          // Reduced shape opacity in dark mode for a subtler effect
           className={`absolute rounded-full bg-gradient-to-tr ${shape.color} opacity-30 dark:opacity-10`}
           style={{
             width: `${shape.size}px`,
@@ -106,7 +106,7 @@ const Hero = () => {
           {/* Headline */}
           <motion.h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-snug">
             <motion.span
-              // UPDATED: Main headline text color
+              // Main headline text color
               className="block text-gray-900 dark:text-gray-100"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -119,7 +119,7 @@ const Hero = () => {
               <AnimatePresence mode="wait">
                 <motion.span
                   key={index}
-                  // UPDATED: Animated text gradient for dark mode
+                  // Animated text gradient for dark mode
                   className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-800 via-blue-500 to-purple-700 dark:from-indigo-400 dark:via-blue-400 dark:to-purple-500 mb-4"
                   initial={{ opacity: 0, y: 40 }}
                   animate={{
@@ -142,7 +142,7 @@ const Hero = () => {
           {/* Subtext */}
           <motion.p
             variants={fadeUp}
-            // UPDATED: Subtext color
+            // Subtext color
             className="text-base sm:text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mt-2 mb-12"
           >
             "Connect with developers, learn new skills, and grow your network at
@@ -180,12 +180,11 @@ const Hero = () => {
               </Link>
             </motion.div>
 
-            {/* Secondary Button - Join Hackathons */}
+            {/* Secondary Button - Join Hackathons - FIXED */}
             <motion.div variants={fadeUp}>
               <Link
                 to="/hackathons"
-                // UPDATED: Secondary button styles
-                className="relative inline-flex items-center px-8 py-4 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 font-semibold shadow hover:shadow-lg hover:dark:bg-gray-700 hover:scale-105 transition-all duration-300"
+                className="relative inline-flex items-center px-8 py-4 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 font-semibold shadow hover:shadow-lg hover:bg-gray-100 hover:text-gray-900 hover:dark:bg-gray-700 hover:dark:text-white hover:scale-105 transition-all duration-300"
               >
                 Join Hackathons
               </Link>
@@ -224,13 +223,13 @@ const Hero = () => {
                 variants={fadeUp}
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
-                // UPDATED: Stat card background for dark "glassmorphism" effect
+                // Stat card background for dark "glassmorphism" effect
                 className="bg-white/30 dark:bg-gray-700/30 backdrop-blur-md rounded-2xl p-6 text-center shadow-lg"
               >
                 <p className={`text-3xl font-bold mb-2 ${stat.color}`}>
                   {stat.value}
                 </p>
-                {/* UPDATED: Stat label text */}
+                {/* Stat label text */}
                 <p className="text-gray-700 dark:text-gray-300 text-sm">{stat.label}</p>
               </motion.div>
             ))}
