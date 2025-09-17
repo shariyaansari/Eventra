@@ -138,12 +138,10 @@ const Login = () => {
               transition={{ duration: 0.4, delay: 0.6 }}
               className="space-y-2"
             >
-              <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
-                Email address <sup className='text-sm text-red-500'>*</sup>
-              </label>
+            
               {/* UPDATED: Label text color */}
               <label htmlFor="email" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                Email address
+                Email address <sup className='ml-1 text-sm text-red-500'>*</sup>
               </label>
               <div className="relative group">
                 <motion.div 
@@ -183,12 +181,10 @@ const Login = () => {
               transition={{ duration: 0.4, delay: 0.8 }}
               className="space-y-2"
             >
-              <label htmlFor="password" className="block text-sm font-semibold text-gray-700">
-                Password <sup className='ml-1 text-sm text-red-500'>*</sup>
-              </label>
+
               {/* UPDATED: Label text color */}
               <label htmlFor="password" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                Password
+                Password <sup className='ml-1 text-sm text-red-500'>*</sup>
               </label>
               <div className="relative group">
                 <motion.div 
