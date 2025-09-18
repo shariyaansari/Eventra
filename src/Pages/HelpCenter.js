@@ -6,43 +6,86 @@ import {
   Award,
   Users,
   FileText,
-  Settings,
   Star,
-  Calendar,
+  Calendar, Settings
 } from "lucide-react";
+import { Link } from "react-router-dom"; // ✅ Import for navigation
 
 const categories = [
   {
     icon: <Calendar className="w-8 h-8 text-blue-500" />,
     title: "Hosting Hackathons",
     description: "Learn how to create, manage, and publish hackathons.",
+    link: "/hackathons",
   },
   {
     icon: <FileText className="w-8 h-8 text-green-500" />,
     title: "Project Submission",
     description: "Step-by-step guide for submitting projects correctly.",
+    link: "/submit-project",
   },
   {
     icon: <Search className="w-8 h-8 text-yellow-500" />,
     title: "Explore Projects",
     description: "Search, filter, and bookmark projects on the platform.",
+    link: "/projects",
   },
   {
     icon: <Users className="w-8 h-8 text-purple-500" />,
     title: "Contributing",
     description: "Guides for contributors and GSOC participants.",
+    link: "/contributorguide",
   },
   {
     icon: <Award className="w-8 h-8 text-red-500" />,
     title: "Leaderboard",
     description: "Understand points, ranks, and top contributors.",
+    link: "/leaderBoard",
   },
   {
     icon: <Star className="w-8 h-8 text-pink-500" />,
     title: "Tips & Best Practices",
     description: "Maximize your visibility, submissions, and participation.",
+    link: "/documentation",
+  },
+  {
+    icon: <Calendar className="w-8 h-8 text-indigo-500" />,
+    title: "Events",
+    description: "Stay updated with upcoming hackathons and events.",
+    link: "/events",
+  },
+  {
+    icon: <FileText className="w-8 h-8 text-gray-600" />,
+    title: "See on GitHub",
+    description: "Browse our open-source repositories and contributions.",
+    link: "https://github.com/your-repo", // 🔗 replace with actual repo URL
+  },
+  {
+    icon: <Settings className="w-8 h-8 text-teal-500" />,
+    title: "API Docs",
+    description: "Explore our API documentation for developers.",
+    link: "/api-docs",
+  },
+  {
+    icon: <Users className="w-8 h-8 text-orange-500" />,
+    title: "Contributors",
+    description: "Meet the amazing contributors powering this project.",
+    link: "/contributors",
+  },
+  {
+    icon: <Calendar className="w-8 h-8 text-cyan-500" />,
+    title: "Community Events",
+    description: "Join upcoming community-driven meetups and activities.",
+    link: "/communityEvent",
+  },
+  {
+    icon: <Star className="w-8 h-8 text-rose-500" />,
+    title: "Contact Us",
+    description: "Reach out for support, feedback, or collaboration.",
+    link: "/contact",
   },
 ];
+
 
 const faqs = [
   {
@@ -93,8 +136,8 @@ const HelpCenter = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.9 }}
         >
-          "Find step-by-step guides, FAQs, and tips to make the most of our
-          platform."
+          Find step-by-step guides, FAQs, and tips to make the most of our
+          platform.
         </motion.p>
       </section>
 
@@ -105,22 +148,24 @@ const HelpCenter = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories.map((cat, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow hover:shadow-lg transition-shadow cursor-pointer"
-            >
-              <div className="mb-4">{cat.icon}</div>
-              <h3 className="text-xl font-semibold mb-2">{cat.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                {cat.description}
-              </p>
+            <motion.div key={idx} whileHover={{ scale: 1.05 }}>
+              {/* ✅ Use React Router <Link> */}
+              <Link
+                to={cat.link}
+                className="block bg-white dark:bg-gray-800 rounded-xl p-6 shadow hover:shadow-lg transition-shadow cursor-pointer"
+              >
+                <div className="mb-4">{cat.icon}</div>
+                <h3 className="text-xl font-semibold mb-2">{cat.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  {cat.description}
+                </p>
+              </Link>
+
+              
             </motion.div>
           ))}
         </div>
       </section>
-
-      {/* FAQ Section */}
 
       {/* Tutorials / Guides Section */}
       <section className="py-16 px-4 max-w-6xl mx-auto">
@@ -165,6 +210,7 @@ const HelpCenter = () => {
           ))}
         </div>
       </section>
+
       {/* Guidelines Section */}
       <section className="py-8 px-4 max-w-6xl mx-auto mt-2 mb-6">
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
@@ -172,26 +218,17 @@ const HelpCenter = () => {
             Guidelines for Using the Platform
           </h3>
           <ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
-            <li>
-              Always check the hackathon rules before submitting a project.
-            </li>
-            <li>
-              Use descriptive titles and proper documentation for your
-              submissions.
-            </li>
-            <li>
-              Follow contribution guidelines for GSOC or other open-source
-              tasks.
-            </li>
+            <li>Always check the hackathon rules before submitting a project.</li>
+            <li>Use descriptive titles and proper documentation for your submissions.</li>
+            <li>Follow contribution guidelines for GSOC or other open-source tasks.</li>
             <li>Respect deadlines for hackathons and project submissions.</li>
-            <li>
-              Explore existing projects before submitting to avoid duplicates.
-            </li>
+            <li>Explore existing projects before submitting to avoid duplicates.</li>
             <li>Reach out to support if you encounter any issues or errors.</li>
           </ul>
         </div>
       </section>
 
+      {/* FAQ Section */}
       <section className="py-16 px-4 max-w-4xl mx-auto">
         <h2 className="text-3xl font-semibold mb-8 text-center">
           Frequently Asked Questions
@@ -224,7 +261,5 @@ const HelpCenter = () => {
     </div>
   );
 };
-
-
 
 export default HelpCenter;
