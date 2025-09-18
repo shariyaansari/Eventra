@@ -19,6 +19,13 @@ import {
 } from "react-icons/fi";
 import { FiGitBranch } from "react-icons/fi";
 import { FiGithub, FiArrowRightCircle } from "react-icons/fi";
+import {
+  HelpCircle,
+  GitBranch,
+  GitPullRequest,
+  FileText,
+  Users,
+} from "lucide-react";
 
 const ContributorGuide = () => {
   const [expandedFAQ, setExpandedFAQ] = useState(null);
@@ -54,23 +61,64 @@ const ContributorGuide = () => {
 
   const faqs = [
     {
+      icon: <GitBranch className="w-5 h-5 text-blue-500" />,
       question: "What is a fork?",
       answer:
-        "A fork is your personal copy of the repository where you can safely make changes.",
+        "A fork is your personal copy of the repository where you can safely make changes without affecting the original project.",
     },
     {
+      icon: <GitPullRequest className="w-5 h-5 text-green-500" />,
       question: "What is a pull request?",
       answer:
-        "A pull request is a request to merge your changes back into the main project.",
+        "A pull request is a way to propose your changes and request that they be reviewed and merged into the main project.",
     },
     {
+      icon: <FileText className="w-5 h-5 text-purple-500" />,
       question: "How should I name branches?",
       answer:
-        "Use descriptive names like 'feature/login' or 'fix/header-bug' to indicate purpose clearly.",
+        "Use descriptive names like 'feature/login' or 'fix/header-bug' to indicate the purpose of the branch clearly.",
     },
     {
+      icon: <Users className="w-5 h-5 text-pink-500" />,
       question: "Can I contribute without coding?",
-      answer: "Yes! You can improve documentation, design, or testing.",
+      answer:
+        "Yes! Contributions can include improving documentation, design, accessibility, testing, or community support.",
+    },
+    {
+      icon: <HelpCircle className="w-5 h-5 text-yellow-500" />,
+      question: "Where can I ask for help?",
+      answer:
+        "You can open a discussion in the repository, raise an issue, or join our community chat to get assistance.",
+    },
+    {
+      icon: <HelpCircle className="w-5 h-5 text-orange-500" />,
+      question: "Do I need prior open-source experience?",
+      answer:
+        "Not at all! Beginners are welcome — open-source is a great way to learn and grow your skills.",
+    },
+    {
+      icon: <FileText className="w-5 h-5 text-indigo-500" />,
+      question: "How do I report a bug?",
+      answer:
+        "You can report bugs by creating a new issue in the repository. Be sure to include steps to reproduce the problem and screenshots if possible.",
+    },
+    {
+      icon: <Users className="w-5 h-5 text-red-500" />,
+      question: "How do I find beginner-friendly issues?",
+      answer:
+        "Look for labels like 'good first issue' or 'beginner-friendly' in the issues tab of the repository.",
+    },
+    {
+      icon: <GitBranch className="w-5 h-5 text-teal-500" />,
+      question: "Should I work on an issue without assignment?",
+      answer:
+        "It's best to comment on the issue and ask to be assigned before starting. This avoids duplicate efforts.",
+    },
+    {
+      icon: <GitPullRequest className="w-5 h-5 text-cyan-500" />,
+      question: "What happens after I open a pull request?",
+      answer:
+        "Your pull request will be reviewed by maintainers or contributors. They may suggest changes before it gets merged into the main branch.",
     },
   ];
 
@@ -160,8 +208,12 @@ const ContributorGuide = () => {
                   {type.title}
                 </h3>
               </div>
-              <p className="text-gray-700 dark:text-gray-300 mb-2">{type.description}</p>
-              <p className="text-gray-600 dark:text-gray-400 italic">💡 {type.example}</p>
+              <p className="text-gray-700 dark:text-gray-300 mb-2">
+                {type.description}
+              </p>
+              <p className="text-gray-600 dark:text-gray-400 italic">
+                💡 {type.example}
+              </p>
             </motion.div>
           ))}
         </div>
@@ -178,8 +230,12 @@ const ContributorGuide = () => {
           <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-600">
             <thead className="bg-indigo-50 dark:bg-gray-700/50">
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">File</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Purpose</th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                  File
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                  Purpose
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-300 dark:divide-gray-600">
@@ -189,7 +245,8 @@ const ContributorGuide = () => {
                   <FiLock /> .env
                 </td>
                 <td className="px-6 py-4 text-gray-700 dark:text-gray-300">
-                  Stores environment variables like API keys. Do not commit this file.
+                  Stores environment variables like API keys. Do not commit this
+                  file.
                 </td>
               </tr>
               <tr className="hover:bg-indigo-50 dark:hover:bg-gray-700 transition-colors">
@@ -267,13 +324,15 @@ const ContributorGuide = () => {
 
       {/* Issue & PR Workflow Section */}
       {/* UPDATED: Section card background */}
-<div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md mt-10">
-  {/* UPDATED: Title text and icon color */}
-  <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-10 text-center flex items-center justify-center gap-3">
-    <FiGitBranch className="text-indigo-500 dark:text-indigo-400" size={32} />
-    Issue & PR Workflow
-  </h2>
-
+      <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md mt-10">
+        {/* UPDATED: Title text and icon color */}
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-10 text-center flex items-center justify-center gap-3">
+          <FiGitBranch
+            className="text-indigo-500 dark:text-indigo-400"
+            size={32}
+          />
+          Issue & PR Workflow
+        </h2>
 
         {/* Numbered Steps */}
         <div className="space-y-8">
@@ -370,7 +429,9 @@ Closes #<issue_number>`,
                 <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100 flex items-center gap-2 mb-2">
                   {item.icon} {item.title}
                 </h3>
-                <p className="text-gray-700 dark:text-gray-300 mb-2">{item.description}</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-2">
+                  {item.description}
+                </p>
                 {item.code && (
                   // UPDATED: Code block styles
                   <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm text-gray-800 dark:text-gray-200 overflow-x-auto">
@@ -385,29 +446,43 @@ Closes #<issue_number>`,
         {/* Optional visual flowchart */}
         <div className="mt-10 flex justify-center items-center gap-6 overflow-x-auto">
           <div className="flex flex-col items-center gap-2">
-            <FiFileText className="text-indigo-500 dark:text-indigo-400" size={36} />
+            <FiFileText
+              className="text-indigo-500 dark:text-indigo-400"
+              size={36}
+            />
             <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
               Pick Issue
             </span>
           </div>
           <div className="text-indigo-300 dark:text-gray-600 text-2xl">→</div>
           <div className="flex flex-col items-center gap-2">
-            <FiGitBranch className="text-indigo-500 dark:text-indigo-400" size={36} />
+            <FiGitBranch
+              className="text-indigo-500 dark:text-indigo-400"
+              size={36}
+            />
             <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
               Create Branch
             </span>
           </div>
           <div className="text-indigo-300 dark:text-gray-600 text-2xl">→</div>
           <div className="flex flex-col items-center gap-2">
-            <FiCheckCircle className="text-indigo-500 dark:text-indigo-400" size={36} />
+            <FiCheckCircle
+              className="text-indigo-500 dark:text-indigo-400"
+              size={36}
+            />
             <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
               Commit Changes
             </span>
           </div>
           <div className="text-indigo-300 dark:text-gray-600 text-2xl">→</div>
           <div className="flex flex-col items-center gap-2">
-            <FiArrowRightCircle className="text-indigo-500 dark:text-indigo-400" size={36} />
-            <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Open PR</span>
+            <FiArrowRightCircle
+              className="text-indigo-500 dark:text-indigo-400"
+              size={36}
+            />
+            <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+              Open PR
+            </span>
           </div>
         </div>
       </div>
@@ -428,7 +503,9 @@ Closes #<issue_number>`,
             >
               <div>
                 {/* UPDATED: Text colors */}
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100">{c.title}</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                  {c.title}
+                </h3>
                 <pre className="bg-gray-200 dark:bg-gray-900/50 p-2 rounded mt-1 overflow-x-auto text-sm text-blue-600 dark:text-blue-400">
                   {c.cmd}
                 </pre>
@@ -447,25 +524,51 @@ Closes #<issue_number>`,
       </div>
 
       {/* FAQ Section */}
-      <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md">
-        {/* UPDATED: Title text */}
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+      <section className="bg-indigo-50 dark:bg-gray-900 p-8 rounded-2xl shadow-lg">
+        {/* Section Title */}
+        <motion.h2
+          initial={{ opacity: 0, y: -20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="relative text-4xl font-extrabold tracking-tight 
+             text-transparent bg-clip-text 
+             bg-gradient-to-r from-blue-700 via-purple-700 to-cyan-400 
+             dark:from-blue-400 dark:via-purple-400 dark:to-cyan-400 
+             mb-10 text-center"
+        >
           Frequently Asked Questions
-        </h2>
-        <div className="space-y-2">
+          {/* Animated underline */}
+          <motion.span
+            initial={{ width: 0 }}
+            animate={{ width: "60%" }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="absolute left-1/2 -translate-x-1/2 -bottom-2 h-1 rounded-full 
+               bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+          />
+        </motion.h2>
+
+        {/* FAQ List */}
+        <div className="divide-y divide-gray-400 dark:divide-gray-700">
           {faqs.map((faq, index) => {
             const isOpen = expandedFAQ === index;
+
             return (
-              // UPDATED: Accordion border
-              <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+              <div key={index} className="py-3">
                 <button
                   onClick={() => setExpandedFAQ(isOpen ? null : index)}
-                  // UPDATED: Accordion button styles
-                  className="w-full flex justify-between items-center p-4 bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                  className="w-full flex justify-between items-center px-2 py-3 text-left group"
                 >
-                  <span className="text-gray-900 dark:text-gray-100">{faq.question}</span>
-                  {isOpen ? <FiChevronUp /> : <FiChevronDown />}
+                  <div className="flex items-center gap-3">
+                    {faq.icon}
+                    <span className="text-lg font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-500 transition">
+                      {faq.question}
+                    </span>
+                  </div>
+                  <span className="text-gray-500 dark:text-gray-400">
+                    {isOpen ? <FiChevronUp /> : <FiChevronDown />}
+                  </span>
                 </button>
+
                 <AnimatePresence>
                   {isOpen && (
                     <motion.div
@@ -473,8 +576,8 @@ Closes #<issue_number>`,
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="p-4 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700/50"
-              >
+                      className="pl-9 pr-2 pb-3 text-gray-700 dark:text-gray-300 leading-relaxed"
+                    >
                       {faq.answer}
                     </motion.div>
                   )}
@@ -483,7 +586,7 @@ Closes #<issue_number>`,
             );
           })}
         </div>
-      </div>
+      </section>
 
       {/* Call to Action */}
 
