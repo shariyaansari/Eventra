@@ -157,7 +157,7 @@ export default function HackathonHero({
             <span className="relative flex items-center">
               {/* UPDATED: Icon color */}
               <Users className="inline-block w-5 h-5 mr-2 text-indigo-600 dark:text-indigo-400" />
-              Host a Hackathon
+              Explore Hackathons
             </span>
           </motion.button>
 
