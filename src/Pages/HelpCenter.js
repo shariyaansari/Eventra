@@ -58,15 +58,34 @@ const categories = [
     icon: <FileText className="w-8 h-8 text-gray-600" />,
     title: "See on GitHub",
     description: "Browse our open-source repositories and contributions.",
-    link: "https://github.com/SandeepVashishtha/Eventra",
+    link: "https://github.com/your-repo", // 🔗 replace with actual repo URL
   },
   {
     icon: <Settings className="w-8 h-8 text-teal-500" />,
     title: "API Docs",
     description: "Explore our API documentation for developers.",
-    link: "/apiDocs",
+    link: "/api-docs",
+  },
+  {
+    icon: <Users className="w-8 h-8 text-orange-500" />,
+    title: "Contributors",
+    description: "Meet the amazing contributors powering this project.",
+    link: "/contributors",
+  },
+  {
+    icon: <Calendar className="w-8 h-8 text-cyan-500" />,
+    title: "Community Events",
+    description: "Join upcoming community-driven meetups and activities.",
+    link: "/communityEvent",
+  },
+  {
+    icon: <Star className="w-8 h-8 text-rose-500" />,
+    title: "Contact Us",
+    description: "Reach out for support, feedback, or collaboration.",
+    link: "/contact",
   },
 ];
+
 
 const faqs = [
   {
@@ -142,19 +161,7 @@ const HelpCenter = () => {
                 </p>
               </Link>
 
-              {/* ❌ If not using React Router, uncomment below and remove <Link> */}
-              {/* 
-              <a
-                href={cat.link}
-                className="block bg-white dark:bg-gray-800 rounded-xl p-6 shadow hover:shadow-lg transition-shadow cursor-pointer"
-              >
-                <div className="mb-4">{cat.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{cat.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  {cat.description}
-                </p>
-              </a> 
-              */}
+              
             </motion.div>
           ))}
         </div>
