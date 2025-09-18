@@ -116,7 +116,13 @@ function App() {
               </Routes>
             </main>
 
-            <ScrollToTop />
+
+
+            <ScrollToTop 
+              
+            />
+
+
             <Footer />
           </div>
         </Router>
