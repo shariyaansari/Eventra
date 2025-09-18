@@ -37,42 +37,42 @@ const Navbar = () => {
   };
 
   const navItems = [
-  { name: "Home", href: "/", icon: <Home className="w-5 h-5 text-indigo-500" /> },
-  { name: "Events", href: "/events", icon: <Calendar className="w-5 h-5 text-green-500" /> },
-  {
-    name: "Hackathons",
-    href: "/hackathons",
-    icon: <Rocket className="w-5 h-5 text-pink-500" />,
-  },
-  {
-    name: "Projects",
-    href: "/projects",
-    icon: <FolderKanban className="w-5 h-5 text-orange-500" />,
-  },
-  {
-    name: "Community",
-    icon: <Users className="w-5 h-5 text-purple-500" />,
-    subItems: [
-      {
-        name: "Leaderboard",
-        href: "/leaderBoard",
-        icon: <Trophy className="w-5 h-5 text-yellow-500" />,
-      },
-      {
-        name: "Contributors",
-        href: "/contributors",
-        icon: <Users className="w-5 h-5 text-blue-500" />,
-      },
-      {
-        name: "Contributors Guide",
-        href: "/contributorguide",
-        icon: <Book className="w-5 h-5 text-rose-500" />,
-      },
-    ],
-  },
-  { name: "About", href: "/about", icon: <Info className="w-5 h-5 text-cyan-500" /> },
-  { name: "Feedback", href: "/feedback", icon: <MessageSquare className="w-5 h-5 text-teal-500" /> },
-];
+    { name: "Home", href: "/", icon: <Home className="w-5 h-5 text-indigo-500" /> },
+    { name: "Events", href: "/events", icon: <Calendar className="w-5 h-5 text-green-500" /> },
+    {
+      name: "Hackathons",
+      href: "/hackathons",
+      icon: <Rocket className="w-5 h-5 text-pink-500" />,
+    },
+    {
+      name: "Projects",
+      href: "/projects",
+      icon: <FolderKanban className="w-5 h-5 text-orange-500" />,
+    },
+    {
+      name: "Community",
+      icon: <Users className="w-5 h-5 text-purple-500" />,
+      subItems: [
+        {
+          name: "Leaderboard",
+          href: "/leaderBoard",
+          icon: <Trophy className="w-5 h-5 text-yellow-500" />,
+        },
+        {
+          name: "Contributors",
+          href: "/contributors",
+          icon: <Users className="w-5 h-5 text-blue-500" />,
+        },
+        {
+          name: "Contributors Guide",
+          href: "/contributorguide",
+          icon: <Book className="w-5 h-5 text-rose-500" />,
+        },
+      ],
+    },
+    { name: "About", href: "/about", icon: <Info className="w-5 h-5 text-cyan-500" /> },
+    { name: "Feedback", href: "/feedback", icon: <MessageSquare className="w-5 h-5 text-teal-500" /> },
+  ];
 
 
   const handleLogout = () => {
@@ -150,8 +150,8 @@ const Navbar = () => {
                       {user?.firstName && user?.lastName
                         ? `${user.firstName} ${user.lastName}`
                         : user?.firstName
-                        ? user.firstName
-                        : user?.email || "User"}
+                          ? user.firstName
+                          : user?.email || "User"}
                     </div>
                     {/* UPDATED: Added dark mode text color */}
                     <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -257,11 +257,10 @@ const Navbar = () => {
     <>
       {/* Overlay */}
       <div
-        className={`fixed inset-0 bg-black bg-opacity-40 z-30 transition-opacity duration-300 ${
-          isMobileMenuOpen || showProfileDropdown
+        className={`fixed inset-0 bg-black bg-opacity-40 z-30 transition-opacity duration-300 ${isMobileMenuOpen || showProfileDropdown
             ? "opacity-100"
             : "opacity-0 pointer-events-none"
-        }`}
+          }`}
         onClick={closeAllMenus}
       />
 
@@ -345,10 +344,9 @@ const Navbar = () => {
                             onClick={() => setOpenDropdown(null)}
                             // UPDATED: Added dark mode classes for both active and inactive states                           
                             className={`group flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors duration-200
-                              ${
-                                location.pathname === sub.href
-                                  ? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400"
-                                  : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                              ${location.pathname === sub.href
+                                ? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400"
+                                : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
                               }
                               ${idx === 0 ? "rounded-t-2xl" : ""} 
                               ${idx === item.subItems.length - 1 ? "rounded-b-2xl" : ""}
@@ -374,11 +372,10 @@ const Navbar = () => {
                   key={item.name}
                   to={item.href}
                   // UPDATED: Added dark mode classes for both active and inactive states
-                  className={`flex items-center gap-3 py-2 px-3 rounded-lg font-medium transition-colors ${
-                    isActive
+                  className={`flex items-center gap-3 py-2 px-3 rounded-lg font-medium transition-colors ${isActive
                       ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
                       : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700"
-                  }`}
+                    }`}
                 >
                   {item.icon} {item.name}
                 </Link>
@@ -515,6 +512,10 @@ const Navbar = () => {
                 </Link>
               );
             })}
+            <div className="mt-2 px-1 flex items-center">
+              <ThemeToggleButton /> <p className=" dark:text-gray-300 text-black">Theme</p>
+            </div>
+
           </div>
 
           {/* Auth Section */}
@@ -554,10 +555,9 @@ const Navbar = () => {
                   onClick={closeAllMenus}
                   // UPDATED: Added dark mode active/inactive colors
                   className={`flex items-center gap-3 px-3 py-3 rounded-lg relative transition-colors 
-                    ${
-                      location.pathname === "/dashboard"
-                        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
-                        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                    ${location.pathname === "/dashboard"
+                      ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
                     }`}
                 >
                   <LayoutDashboard className="w-5 h-5" />
@@ -574,10 +574,9 @@ const Navbar = () => {
                   onClick={closeAllMenus}
                   // UPDATED: Added dark mode active/inactive colors
                   className={`flex items-center gap-3 px-3 py-3 rounded-lg relative transition-colors 
-                    ${
-                      location.pathname === "/profile"
-                        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
-                        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                    ${location.pathname === "/profile"
+                      ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
                     }`}
                 >
                   <ShieldUser className="w-5 h-5" />
