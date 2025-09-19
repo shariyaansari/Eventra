@@ -10,15 +10,15 @@ const Signup = () => {
     email: "",
     password: "",
     confirm_password: "",
-    countryCode: "+91",
-    phone: "",
+    // countryCode: "+91",
+    // phone: "",
     role: "USER", // Default to USER role
   });
   const [loading, setLoading] = useState(false);
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
   const [error, setError] = useState("");
-  const [phoneError, setPhoneError] = useState("");
+  // const [phoneError, setPhoneError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [success, setSuccess] = useState("");
   const [passwordStrength, setPasswordStrength] = useState({
@@ -287,7 +287,7 @@ const Signup = () => {
                   onChange={handleChange}
                   required
                   disabled={loading}
-                  placeholder="John"
+                  placeholder="Enter your first name"
                   // UPDATED: Input styles
                   className="w-full px-3 py-2 bg-white dark:bg-gray-700/50 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder:text-gray-400 dark:placeholder:text-gray-500 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:border-blue-400 disabled:bg-gray-50 dark:disabled:bg-gray-700/50 disabled:cursor-not-allowed"
                   whileFocus={{ scale: 1.02 }}
@@ -373,25 +373,9 @@ const Signup = () => {
               className="space-y-2"
             >
               {/* UPDATED: Label text */}
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Contact Number <sup className="ml-1 text-red-500">*</sup>
-              </label>
+              
 
-              <div className="flex gap-2">
-                <select
-                  name="countryCode"
-                  value={formData.countryCode}
-                  onChange={handleChange}
-                  disabled={loading}
-                  // UPDATED: Select styles
-                  className="px-3 py-2 bg-white dark:bg-gray-700/50 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                >
-                  <option value="+1">🇺🇸 +1</option>
-                  <option value="+91">🇮🇳 +91</option>
-                  <option value="+44">🇬🇧 +44</option>
-                  <option value="+61">🇦🇺 +61</option>
-                </select> 
-                </div>
+      
 
                 {/* <motion.input
                   id="phone"

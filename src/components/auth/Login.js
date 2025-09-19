@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
-import { GoogleLogin } from 'react-google-login';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -67,49 +66,6 @@ const Login = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  // Integrated backend logic for Google login
-  const handleGoogleSuccess = async (response) => {
-    const token = response?.tokenId;
-    if (!token) {
-      setError({ general: "Google login failed. No token received." });
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const res = await fetch("/api/auth/google-login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        console.error("Google login failed (backend):", data);
-        setError({ general: data?.message || "Google login failed. Please try again." });
-      } else {
-        console.log("Google login successful:", data);
-        // If your auth context has a token setter, call it here (e.g., loginWithToken)
-        // navigate to dashboard
-        navigate("/dashboard");
-      }
-    } catch (err) {
-      console.error("Google login failed (network):", err);
-      setError({ general: "Google login failed. Please try again." });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Google login failure handler
-  const handleGoogleFailure = (err) => {
-    console.error("Google login failed:", err);
-    setError({ general: "Google login failed. Please try again." });
   };
 
   return (
@@ -377,16 +333,7 @@ const Login = () => {
                 <div className="flex-grow border-t border-gray-200 dark:border-gray-700" />
               </div>
 
-              <div className="mt-4 flex justify-center">
-                <GoogleLogin
-                  clientId="639737528994-tu0m2ppat9lt8n5oaqmn15d9hjld2buc.apps.googleusercontent.com"
-                  buttonText="Sign in with Google"
-                  onSuccess={handleGoogleSuccess}
-                  onFailure={handleGoogleFailure}
-                  cookiePolicy={"single_host_origin"}
-                  disabled={loading}
-                />
-              </div>
+
             </div>
           </motion.form>
 
