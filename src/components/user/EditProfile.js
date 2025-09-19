@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   User as UserIcon,
   AtSign,
@@ -84,7 +84,7 @@ const allSkillSuggestions = [
   "NumPy",
 ];
 
-const urlRegex =
+  const urlRegex =
   /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-._~:/?#[\]@!$&'()*+,;=]*)?$/i;
 
 const EditProfile = () => {
@@ -95,18 +95,19 @@ const EditProfile = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [currentSkillInput, setCurrentSkillInput] = useState("");
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
-  setLoadingInitial(true);
-  const savedProfile = localStorage.getItem("userProfile");
+    setLoadingInitial(true);
+    const savedProfile = localStorage.getItem("userProfile");
 
-  if (savedProfile) {
-    setForm(JSON.parse(savedProfile));
-  } else {
-    setForm(mockUserProfile);
-  }
-  setLoadingInitial(false); 
-}, []);
+    if (savedProfile) {
+      setForm(JSON.parse(savedProfile));
+    } else {
+      setForm(mockUserProfile);
+    }
+    setLoadingInitial(false);
+  }, []);
 
   const validate = (nextForm) => {
     const v = {};
@@ -174,6 +175,12 @@ const EditProfile = () => {
     }, 1500);
   };
 
+  const handleRemoveImage = () => {
+    setForm((prev) => ({ ...prev, avatarBase64: "" }));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null;
+    }
+  };
   const filteredSuggestions = allSkillSuggestions
     .filter(
       (suggestion) =>
@@ -200,6 +207,7 @@ const EditProfile = () => {
 
         <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm overflow-hidden">
           {/* Top Bar with Avatar */}
+          {/* Top Bar with Avatar */}
           <div className="px-6 py-5 border-b border-gray-200 dark:border-gray-700 flex items-center gap-4">
             <div className="relative">
               <div className="h-20 w-20 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700 flex items-center justify-center ring-2 ring-indigo-200/60 dark:ring-indigo-900/40">
@@ -213,15 +221,31 @@ const EditProfile = () => {
                   <UserIcon className="h-8 w-8 text-gray-400" />
                 )}
               </div>
-              <label className="absolute bottom-0 right-0 inline-flex items-center justify-center h-8 w-8 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white shadow cursor-pointer">
-                <ImageIcon className="h-4 w-4" />
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
-              </label>
+
+              {/* 👇 This is the new, combined button logic */}
+              {form.avatarBase64 ? (
+                // If image exists, show the RED REMOVE button
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute bottom-0 right-0 inline-flex items-center justify-center h-8 w-8 rounded-full bg-red-600 hover:bg-red-700 text-white shadow cursor-pointer"
+                  aria-label="Remove profile photo"
+                >
+                  <XIcon className="h-4 w-4" />
+                </button>
+              ) : (
+                // Otherwise, show the BLUE UPLOAD button
+                <label className="absolute bottom-0 right-0 inline-flex items-center justify-center h-8 w-8 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white shadow cursor-pointer">
+                  <ImageIcon className="h-4 w-4" />
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                  />
+                </label>
+              )}
             </div>
             <div className="flex-1">
               <div className="text-gray-900 dark:text-gray-100 font-semibold">
