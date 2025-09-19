@@ -1,15 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiStar, FiMessageSquare, FiUser, FiMail, FiCheckCircle } from "react-icons/fi";
-import { FaTwitter, FaGithub, FaLinkedin, FaDiscord } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaDiscord } from "react-icons/fa";
 import { FiChevronDown } from "react-icons/fi"; 
 import "./FeedbackPage.css";
 
 //Social media links
 const socialLinks = [
   { 
-    name: "Twitter", 
-    icon: <FaTwitter className="w-5 h-5" />, 
+    name: "X", 
+    icon: <span className="w-5 h-5 flex items-center justify-center font-bold">X</span>, 
+    // icon: <FaTwitter className="w-5 h-5" />, 
     href: "https://twitter.com" 
   },
   { 
