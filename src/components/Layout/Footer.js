@@ -21,6 +21,7 @@ import {
   FaTrophy,
   FaComments,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 // Toast Component
 const Toast = ({ message, type, onClose }) => {
@@ -213,7 +214,9 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             <div className="space-y-4 md:col-span-2">
               {/* UPDATED: Added dark mode text color */}
-              <h2 className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">Eventra</h2>
+              <h2 className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
+                Eventra
+              </h2>
               {/* UPDATED: Added dark mode text color */}
               <p className="text-gray-600 dark:text-gray-400 text-sm">
                 Open-source event management for communities worldwide.
@@ -266,17 +269,19 @@ const Footer = () => {
                 <ul className="space-y-2">
                   {links.map((link) => (
                     <li key={link.name}>
-                      <a
-                        href={link.href}
+                      <Link
+                        to={link.href}
                         // UPDATED: Added dark mode text and hover colors
                         className="text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-2 transition-colors"
                       >
                         {link.icon && (
                           // UPDATED: Added dark mode icon text color
-                          <span className="text-indigo-500 dark:text-indigo-400">{link.icon}</span>
+                          <span className="text-indigo-500 dark:text-indigo-400">
+                            {link.icon}
+                          </span>
                         )}
                         {link.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
