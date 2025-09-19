@@ -13,20 +13,20 @@ const socialLinks = [
     // icon: <FaTwitter className="w-5 h-5" />, 
     href: "https://twitter.com" 
   },
-  { 
-    name: "GitHub", 
-    icon: <FaGithub className="w-5 h-5" />, 
-    href: "https://github.com" 
+  {
+    name: "GitHub",
+    icon: <FaGithub className="w-5 h-5" />,
+    href: "https://github.com/SandeepVashishtha/Eventra",
   },
-  { 
-    name: "LinkedIn", 
-    icon: <FaLinkedin className="w-5 h-5" />, 
-    href: "https://linkedin.com/in" 
+  {
+    name: "LinkedIn",
+    icon: <FaLinkedin className="w-5 h-5" />,
+    href: "https://linkedin.com/in",
   },
-  { 
-    name: "Discord", 
-    icon: <FaDiscord className="w-5 h-5" />, 
-    href: "https://discord.gg/" 
+  {
+    name: "Discord",
+    icon: <FaDiscord className="w-5 h-5" />,
+    href: "https://discord.gg/",
   },
 ];
 
