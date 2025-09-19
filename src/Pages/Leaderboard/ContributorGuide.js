@@ -435,7 +435,9 @@ Closes #<issue_number>`,
                 {item.code && (
                   // UPDATED: Code block styles
                   <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm text-gray-800 dark:text-gray-200 overflow-x-auto">
-                    {item.code}
+                    <pre>
+                      {item.code}
+                    </pre>
                   </div>
                 )}
               </div>
