@@ -206,14 +206,14 @@ const UserDashboard = () => {
             {/* UPDATED: Quick action cards */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
               {/* Events */}
-              <Link to="/events" className="flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-white dark:from-gray-800 dark:to-gray-700 border dark:border-gray-700 rounded-xl shadow-sm p-4 cursor-pointer transition hover:shadow-lg hover:-translate-y-1 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-blue-200/70 dark:hover:shadow-blue-900/50">
+              <Link to="/events" className="flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-white dark:from-gray-800 dark:to-gray-700 border border-gray-300 dark:border-gray-700 rounded-xl shadow-sm p-4 cursor-pointer transition hover:shadow-lg hover:-translate-y-1 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-blue-200/70 dark:hover:shadow-blue-900/50">
                 <Calendar className="h-6 w-6 text-blue-500 mb-2" />
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Events</span>
               </Link>
 
               <Link
                 to="/hackathons"
-                className="flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 to-white border dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-sm p-4 cursor-pointer transition hover:shadow-lg hover:-translate-y-1 hover:border-pink-400 hover:shadow-pink-200/70 dark:hover:border-pink-500 hover:shadow-pink-200/70 dark:hover:shadow-pink-900/50"
+                className="flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 to-white border border-gray-300 dark:border-gray-700 dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-sm p-4 cursor-pointer transition hover:shadow-lg hover:-translate-y-1 hover:border-pink-400 hover:shadow-pink-200/70 dark:hover:border-pink-500 hover:shadow-pink-200/70 dark:hover:shadow-pink-900/50"
               >
                 <Trophy className="h-6 w-6 text-pink-500 mb-2" />
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -224,7 +224,7 @@ const UserDashboard = () => {
               {/* Projects */}
               <Link
                 to="/projects"
-                className="flex flex-col items-center justify-center bg-gradient-to-br from-purple-100 to-white border dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-sm p-4 cursor-pointer transition hover:shadow-lg hover:-translate-y-1 hover:border-purple-400 hover:shadow-purple-200/70 dark:hover:border-purple-500 hover:shadow-purple-200/70 dark:hover:shadow-purple-900/50"
+                className="flex flex-col items-center justify-center bg-gradient-to-br from-purple-100 to-white border border-gray-300 dark:border-gray-700 dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-sm p-4 cursor-pointer transition hover:shadow-lg hover:-translate-y-1 hover:border-purple-400 hover:shadow-purple-200/70 dark:hover:border-purple-500 hover:shadow-purple-200/70 dark:hover:shadow-purple-900/50"
               >
                 <FolderOpen className="h-6 w-6 text-purple-500 mb-2" />
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -240,7 +240,7 @@ const UserDashboard = () => {
                     .getElementById("my-registrations")
                     ?.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
-                className="flex flex-col items-center justify-center bg-gradient-to-br from-green-50 to-white border dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-sm p-4 cursor-pointer transition hover:shadow-lg hover:-translate-y-1 hover:border-green-400 hover:shadow-green-200/70 dark:hover:border-green-500 hover:shadow-green-200/70 dark:hover:shadow-green-900/50"
+                className="flex flex-col items-center justify-center bg-gradient-to-br from-green-50 to-white border border-gray-300 dark:border-gray-700 dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-sm p-4 cursor-pointer transition hover:shadow-lg hover:-translate-y-1 hover:border-green-400 hover:shadow-green-200/70 dark:hover:border-green-500 hover:shadow-green-200/70 dark:hover:shadow-green-900/50"
               >
                 <Users className="h-6 w-6 text-green-500 mb-2" />
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -251,7 +251,7 @@ const UserDashboard = () => {
               {/* Settings */}
               <Link
                 to="/settings"
-                className="flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-white border dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-sm p-4 cursor-pointer transition hover:shadow-lg hover:-translate-y-1 hover:border-gray-400 hover:shadow-gray-200/70 dark:hover:border-gray-500 hover:shadow-gray-200/70 dark:hover:shadow-gray-900/50"
+                className="flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-white border border-gray-300 dark:border-gray-700 dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-sm p-4 cursor-pointer transition hover:shadow-lg hover:-translate-y-1 hover:border-gray-400 hover:shadow-gray-200/70 dark:hover:border-gray-500 hover:shadow-gray-200/70 dark:hover:shadow-gray-900/50"
               >
                 <Settings className="h-6 w-6 text-gray-500 mb-2" />
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -272,7 +272,7 @@ const UserDashboard = () => {
             {/* UPDATED: Overview metric cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Events */}
-              <div className="relative bg-gradient-to-br from-blue-100 to-white dark:from-gray-800 dark:to-gray-700 border dark:border-gray-700 rounded-xl shadow-sm p-6 transition duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-blue-200/70 dark:hover:shadow-blue-900/50">
+              <div className="relative bg-gradient-to-br from-blue-100 to-white dark:from-gray-800 dark:to-gray-700 border border-gray-300 dark:border-gray-700 rounded-xl shadow-sm p-6 transition duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-blue-200/70 dark:hover:shadow-blue-900/50">
                 <Calendar className="absolute top-4 right-4 h-5 w-5 text-blue-500" />
                 <h3 className="text-gray-600 dark:text-gray-400 text-sm font-medium">Events</h3>
                 <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{userStats.eventsCreated + userStats.eventsRegistered}</p>
@@ -283,7 +283,8 @@ const UserDashboard = () => {
               </div>
 
               {/* Hackathons */}
-              <div className="relative bg-gradient-to-br from-pink-100 to-white dark:from-gray-800 dark:to-gray-700 border dark:border-gray-700 rounded-xl shadow-sm p-6 transition duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-pink-400 dark:hover:border-pink-500 hover:shadow-pink-200/70 dark:hover:shadow-pink-900/50">
+              
+              <div className="relative bg-gradient-to-br from-pink-100 to-white dark:from-gray-800 dark:to-gray-700 border border-gray-300 dark:border-gray-700 rounded-xl shadow-sm p-6 transition duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-pink-400 dark:hover:border-pink-500 hover:shadow-pink-200/70 dark:hover:shadow-pink-900/50">
                 <Trophy className="absolute top-4 right-4 h-5 w-5 text-pink-500" />
                 <h3 className="text-gray-600 dark:text-gray-400 text-sm font-medium">
                   Hackathons
@@ -298,7 +299,7 @@ const UserDashboard = () => {
               </div>
 
               {/* Projects */}
-              <div className="relative bg-gradient-to-br from-purple-100 to-white dark:from-gray-800 dark:to-gray-700 border dark:border-gray-700 rounded-xl shadow-sm p-6 transition duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-purple-400 dark:hover:border-purple-500 hover:shadow-purple-200/70 dark:hover:shadow-purple-900/50">
+              <div className="relative bg-gradient-to-br from-purple-100 to-white dark:from-gray-800 dark:to-gray-700  border border-gray-300 dark:border dark:border-gray-700 rounded-xl shadow-sm p-6 transition duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-purple-400 dark:hover:border-purple-500 hover:shadow-purple-200/70 dark:hover:shadow-purple-900/50">
                 <FolderOpen className="absolute top-4 right-4 h-5 w-5 text-purple-500" />
                 <h3 className="text-gray-600 dark:text-gray-400 text-sm font-medium">Projects</h3>
                 <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">
@@ -315,8 +316,8 @@ const UserDashboard = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Upcoming Events Card */}
             <motion.div variants={itemVariants}>
-              <div className="border dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-800">
-                <div className="p-4 border-b dark:border-gray-700">
+              <div className=" border border-gray-300 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-800">
+                <div className="p-4  border-b border-gray-300 dark:border-gray-700">
                   <h3 className="flex items-center gap-2 font-semibold text-gray-900 dark:text-gray-100">
                     <Clock className="h-5 w-5 text-indigo-600" /> Upcoming Events
                   </h3>
@@ -353,8 +354,8 @@ const UserDashboard = () => {
 
             {/* Hackathons Card */}
             <motion.div variants={itemVariants}>
-              <div className="border dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-800">
-                <div className="p-4 border-b dark:border-gray-700">
+              <div className="border border-gray-300 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-800">
+                <div className="p-4 border-b border-gray-300 dark:border-gray-700">
                   <h3 className="flex items-center gap-2 font-semibold text-gray-900 dark:text-gray-100">
                     <Trophy className="h-5 w-5 text-pink-600" /> Hackathons
                   </h3>
@@ -396,8 +397,8 @@ const UserDashboard = () => {
 
             {/* Active Projects Card */}
             <motion.div variants={itemVariants}>
-              <div className=" border dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-800">
-                <div className="p-4 border-b dark:border-gray-700">
+              <div className=" border border-gray-300 dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-800">
+                <div className="p-4 border-b border-gray-300 dark:border-gray-700">
                   <h3 className="flex items-center gap-2 font-semibold text-gray-900 dark:text-gray-100">
                     <FolderOpen className="h-5 w-5 text-purple-600" /> Active
                     Projects
@@ -418,7 +419,7 @@ const UserDashboard = () => {
                           <h4 className="font-semibold text-gray-900 dark:text-gray-100">
                             {project.title}
                           </h4>
-                          <p className="text-sm text-gray-600">
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
                             Last update: {project.lastUpdate}
                           </p>
                         </div>
@@ -444,25 +445,25 @@ const UserDashboard = () => {
               </span>
             </h2>
 
-            <table className="w-full min-w-[900px] border dark:border-gray-700 rounded-xl shadow bg-white dark:bg-gray-800">
+            <table className="w-full min-w-[900px]  rounded-xl shadow bg-white dark:bg-gray-800">
               <thead className="bg-gray-100 dark:bg-gray-700">
                 <tr>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-600">
                     Type
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-600">
                     Title
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-600">
                     Date
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-600">
                     Location / Status
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-600 ">
                     Project Status
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-600">
                     Last Update
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">
@@ -480,7 +481,7 @@ const UserDashboard = () => {
                   })
                   .map((item) => (
                     <tr key={item.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                      <td className="px-6 py-4 text-sm font-semibold flex items-center gap-2 text-gray-800 dark:text-gray-200">
+                      <td className="px-6 py-4 text-sm font-semibold flex items-center gap-2 text-gray-800 dark:text-gray-200 border-r border-gray-200 dark:border-gray-600">
                         {item.type === "Event" && (
                           <Calendar className="h-4 w-4 text-indigo-600" />
                         )}
@@ -492,16 +493,16 @@ const UserDashboard = () => {
                         )}
                         {item.type}
                       </td>
-                      <td className="px-6 py-4 text-sm font-semibold text-gray-800 dark:text-gray-200">
+                      <td className="px-6 py-4 text-sm font-semibold text-gray-800 dark:text-gray-200 border-r border-gray-200 dark:border-gray-600">
                         {item.title}
                       </td>
-                      <td className="px-6 py-4 text-sm font-semibold text-gray-800 dark:text-gray-200">
+                      <td className="px-6 py-4 text-sm font-semibold text-gray-800 dark:text-gray-200 border-r border-gray-200 dark:border-gray-600">
                         {item.date || "-"}
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                      <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 border-r border-gray-200 dark:border-gray-600">
                         {item.location || item.status}
                       </td>
-                      <td className="px-6 py-4 text-sm">
+                      <td className="px-6 py-4 text-sm border-r border-gray-200 dark:border-gray-600">
                         <span className={`px-2 py-1 rounded-full font-medium whitespace-nowrap text-xs ${
                         item.projectStatus === "Done" ? "bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300"
                         : item.projectStatus === "Upcoming" ? "bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300"
@@ -511,7 +512,7 @@ const UserDashboard = () => {
                         {item.projectStatus}
                         </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{item.lastUpdate}</td>
+                    <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 border-r border-gray-200 dark:border-gray-600">{item.lastUpdate}</td>
                     <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{item.participationType}</td>
                   </tr>
                 ))}
