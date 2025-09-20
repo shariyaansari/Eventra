@@ -1,14 +1,25 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { Mail, MessageCircle } from "lucide-react";
+
 import {
   Search,
   Award,
   Users,
   FileText,
   Star,
-  Calendar, Settings
+  Calendar,
+  Settings,
 } from "lucide-react";
+import {
+  FaDiscord,
+  FaGithub,
+  FaTwitter,
+  FaYoutube,
+  FaLinkedin,
+  FaTelegram,
+} from "react-icons/fa"; // ✅ Community icons
 import { Link } from "react-router-dom"; // ✅ Import for navigation
 
 const categories = [
@@ -86,7 +97,6 @@ const categories = [
   },
 ];
 
-
 const faqs = [
   {
     question: "How do I host a hackathon?",
@@ -149,7 +159,6 @@ const HelpCenter = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories.map((cat, idx) => (
             <motion.div key={idx} whileHover={{ scale: 1.05 }}>
-              {/* ✅ Use React Router <Link> */}
               <Link
                 to={cat.link}
                 className="block bg-white dark:bg-gray-800 rounded-xl p-6 shadow hover:shadow-lg transition-shadow cursor-pointer"
@@ -160,9 +169,80 @@ const HelpCenter = () => {
                   {cat.description}
                 </p>
               </Link>
-
-              
             </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Community Links Section */}
+      <section className="py-12 px-4 max-w-6xl mx-auto">
+        <h2 className="text-3xl font-bold mb-8 text-center">
+          Connect with the Community
+        </h2>
+        <p className="text-center text-gray-600 dark:text-gray-300 mb-12">
+          Join discussions, meet contributors, and stay updated through our
+          community platforms.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {[
+            {
+              title: "Discord",
+              link: "#discord",
+              icon: <FaDiscord className="w-8 h-8" />,
+              color: "from-indigo-500 to-purple-500",
+            },
+            {
+              title: "GitHub Discussions",
+              link: "https://github.com/sandeepvashishtha/Eventra",
+              icon: <FaGithub className="w-8 h-8" />,
+              color: "from-gray-800 to-gray-600",
+            },
+            {
+              title: "Twitter",
+              link: "https://x.com/#",
+              icon: <FaTwitter className="w-8 h-8" />,
+              color: "from-blue-400 to-cyan-500",
+            },
+            {
+              title: "Telegram",
+              link: "https://t.me/eventra",
+              icon: <FaTelegram className="w-8 h-8" />,
+              color: "from-purple-500 to-pink-500",
+            },
+            {
+              title: "YouTube",
+              link: "#youtube",
+              icon: <FaYoutube className="w-8 h-8" />,
+              color: "from-red-500 to-orange-500",
+            },
+            {
+              title: "LinkedIn",
+              link: "https://www.linkedin.com/in/sandeepvashishtha/",
+              icon: <FaLinkedin className="w-8 h-8" />,
+              color: "from-sky-600 to-blue-700",
+            },
+          ].map((item, idx) => (
+            <a
+              key={idx}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center transition-transform transform hover:scale-105 hover:shadow-2xl"
+            >
+              <div
+                className={`w-16 h-16 mb-4 flex items-center justify-center text-white rounded-full bg-gradient-to-br ${item.color} shadow-lg group-hover:rotate-12 transition-transform`}
+              >
+                {item.icon}
+              </div>
+              <h3 className="font-semibold text-lg mb-2 group-hover:text-indigo-500 transition-colors">
+                {item.title}
+              </h3>
+              <p className="text-gray-500 dark:text-gray-400 text-sm">
+                Click to visit and connect with other contributors and
+                enthusiasts.
+              </p>
+            </a>
           ))}
         </div>
       </section>
@@ -218,11 +298,21 @@ const HelpCenter = () => {
             Guidelines for Using the Platform
           </h3>
           <ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
-            <li>Always check the hackathon rules before submitting a project.</li>
-            <li>Use descriptive titles and proper documentation for your submissions.</li>
-            <li>Follow contribution guidelines for GSOC or other open-source tasks.</li>
+            <li>
+              Always check the hackathon rules before submitting a project.
+            </li>
+            <li>
+              Use descriptive titles and proper documentation for your
+              submissions.
+            </li>
+            <li>
+              Follow contribution guidelines for GSOC or other open-source
+              tasks.
+            </li>
             <li>Respect deadlines for hackathons and project submissions.</li>
-            <li>Explore existing projects before submitting to avoid duplicates.</li>
+            <li>
+              Explore existing projects before submitting to avoid duplicates.
+            </li>
             <li>Reach out to support if you encounter any issues or errors.</li>
           </ul>
         </div>
@@ -256,6 +346,66 @@ const HelpCenter = () => {
               )}
             </div>
           ))}
+        </div>
+      </section>
+      {/* Modern CTA Section */}
+      <section className="relative py-16 px-8 m-8 rounded-3xl bg-gradient-to-tr from-black via-purple-800 via-indigo-900 to-pink-900 text-white shadow-xl overflow-hidden">
+        <motion.div
+          className="absolute inset-0 pointer-events-none overflow-hidden"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%)",
+          }}
+          initial={{ x: "-100%" }}
+          animate={{ x: "100%" }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+
+        {/* Centered Content */}
+        <div className="relative z-10 text-center max-w-3xl mx-auto">
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold mb-4"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            Need Help or Have Feedback?
+          </motion.h2>
+
+          <motion.p
+            className="text-base md:text-lg mb-10 text-gray-200"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            Reach out to our support team or share your thoughts to improve the
+            platform.
+          </motion.p>
+
+          {/* Buttons */}
+          <div className="flex flex-col md:flex-row justify-center gap-4">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                to="/contact"
+                className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-500 font-semibold px-8 py-4 rounded-full shadow-lg hover:shadow-indigo-400/50 transition-transform duration-300"
+              >
+                <Mail size={20} /> Contact Us
+              </Link>
+            </motion.div>
+
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                to="/feedback"
+                className="inline-flex items-center justify-center gap-2 bg-white text-indigo-700 dark:bg-gray-200 dark:text-indigo-800 font-semibold px-8 py-4 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
+              >
+                <MessageCircle size={20} /> Give Feedback
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </section>
     </div>
