@@ -35,6 +35,7 @@ import PasswordReset from "./components/auth/PasswordReset";
 // --------------- DASHBOARD PAGES
 import Dashboard from "./components/Dashboard";
 import AdminDashboard from "./components/admin/AdminDashboard";
+import EditProfile from "./components/user/EditProfile";
 import HomePage from "./Pages/Home/HomePage";
 import Terms from "./Pages/Terms";
 import { Privacy } from "./Pages/Privacy";
@@ -104,6 +105,14 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                      <EditProfile />
                     </ProtectedRoute>
                   }
                 />
