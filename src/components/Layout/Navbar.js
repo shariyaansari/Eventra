@@ -21,6 +21,7 @@ import {
   MessageSquare,
   Book,
 } from "lucide-react";
+import { RocketLaunchIcon } from "@heroicons/react/20/solid";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -37,8 +38,16 @@ const Navbar = () => {
   };
 
   const navItems = [
-    { name: "Home", href: "/", icon: <Home className="w-5 h-5 text-indigo-500" /> },
-    { name: "Events", href: "/events", icon: <Calendar className="w-5 h-5 text-green-500" /> },
+    {
+      name: "Home",
+      href: "/",
+      icon: <Home className="w-5 h-5 text-indigo-500" />,
+    },
+    {
+      name: "Events",
+      href: "/events",
+      icon: <Calendar className="w-5 h-5 text-green-500" />,
+    },
     {
       name: "Hackathons",
       href: "/hackathons",
@@ -68,12 +77,24 @@ const Navbar = () => {
           href: "/contributorguide",
           icon: <Book className="w-5 h-5 text-rose-500" />,
         },
+        {
+          name: "Community Events",
+          href: "/communityEvent",
+          icon: <RocketLaunchIcon className="w-5 h-5 text-blue-500" />,
+        },
       ],
     },
-    { name: "About", href: "/about", icon: <Info className="w-5 h-5 text-cyan-500" /> },
-    { name: "Feedback", href: "/feedback", icon: <MessageSquare className="w-5 h-5 text-teal-500" /> },
+    {
+      name: "About",
+      href: "/about",
+      icon: <Info className="w-5 h-5 text-cyan-500" />,
+    },
+    {
+      name: "Contact",
+      href: "/contact",
+      icon: <MessageSquare className="w-5 h-5 text-teal-500" />,
+    },
   ];
-
 
   const handleLogout = () => {
     logout();
@@ -150,8 +171,8 @@ const Navbar = () => {
                       {user?.firstName && user?.lastName
                         ? `${user.firstName} ${user.lastName}`
                         : user?.firstName
-                          ? user.firstName
-                          : user?.email || "User"}
+                        ? user.firstName
+                        : user?.email || "User"}
                     </div>
                     {/* UPDATED: Added dark mode text color */}
                     <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -257,15 +278,15 @@ const Navbar = () => {
     <>
       {/* Overlay */}
       <div
-        className={`fixed inset-0 bg-black bg-opacity-40 z-30 transition-opacity duration-300 ${isMobileMenuOpen || showProfileDropdown
+        className={`fixed inset-0 bg-black bg-opacity-40 z-30 transition-opacity duration-300 ${
+          isMobileMenuOpen || showProfileDropdown
             ? "opacity-100"
             : "opacity-0 pointer-events-none"
-          }`}
+        }`}
         onClick={closeAllMenus}
       />
 
-      <nav className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md dark:bg-black border-b border-gray-300 dark:border-gray-800 py-5 transition-colors duration-300"
-      >
+      <nav className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md dark:bg-black border-b border-gray-300 dark:border-gray-800 py-5 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-4">
           {/* Brand */}
           <Link to="/" className="flex-shrink-0">
@@ -342,20 +363,29 @@ const Navbar = () => {
                             key={sub.name}
                             to={sub.href}
                             onClick={() => setOpenDropdown(null)}
-                            // UPDATED: Added dark mode classes for both active and inactive states                           
+                            // UPDATED: Added dark mode classes for both active and inactive states
                             className={`group flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors duration-200
-                              ${location.pathname === sub.href
-                                ? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400"
-                                : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                              ${
+                                location.pathname === sub.href
+                                  ? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400"
+                                  : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
                               }
                               ${idx === 0 ? "rounded-t-2xl" : ""} 
-                              ${idx === item.subItems.length - 1 ? "rounded-b-2xl" : ""}
+                              ${
+                                idx === item.subItems.length - 1
+                                  ? "rounded-b-2xl"
+                                  : ""
+                              }
                             `}
                           >
                             {/* Icon with animation */}
                             <motion.span
                               whileHover={{ scale: 1.2, rotate: 8 }}
-                              transition={{ type: "spring", stiffness: 300, damping: 12 }}
+                              transition={{
+                                type: "spring",
+                                stiffness: 300,
+                                damping: 12,
+                              }}
                             >
                               {sub.icon}
                             </motion.span>
@@ -372,10 +402,11 @@ const Navbar = () => {
                   key={item.name}
                   to={item.href}
                   // UPDATED: Added dark mode classes for both active and inactive states
-                  className={`flex items-center gap-3 py-2 px-3 rounded-lg font-medium transition-colors ${isActive
+                  className={`flex items-center gap-3 py-2 px-3 rounded-lg font-medium transition-colors ${
+                    isActive
                       ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
                       : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700"
-                    }`}
+                  }`}
                 >
                   {item.icon} {item.name}
                 </Link>
@@ -513,9 +544,9 @@ const Navbar = () => {
               );
             })}
             <div className="mt-2 px-1 flex items-center">
-              <ThemeToggleButton /> <p className=" dark:text-gray-300 text-black">Theme</p>
+              <ThemeToggleButton />{" "}
+              <p className=" dark:text-gray-300 text-black">Theme</p>
             </div>
-
           </div>
 
           {/* Auth Section */}
@@ -545,7 +576,9 @@ const Navbar = () => {
                       {user?.firstName || user?.email?.split("@")[0] || "User"}
                     </p>
                     {/* UPDATED: Added dark mode text */}
-                    <p className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      {user?.email}
+                    </p>
                   </div>
                 </div>
 
@@ -555,9 +588,10 @@ const Navbar = () => {
                   onClick={closeAllMenus}
                   // UPDATED: Added dark mode active/inactive colors
                   className={`flex items-center gap-3 px-3 py-3 rounded-lg relative transition-colors 
-                    ${location.pathname === "/dashboard"
-                      ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                    ${
+                      location.pathname === "/dashboard"
+                        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
                     }`}
                 >
                   <LayoutDashboard className="w-5 h-5" />
@@ -574,9 +608,10 @@ const Navbar = () => {
                   onClick={closeAllMenus}
                   // UPDATED: Added dark mode active/inactive colors
                   className={`flex items-center gap-3 px-3 py-3 rounded-lg relative transition-colors 
-                    ${location.pathname === "/profile"
-                      ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                    ${
+                      location.pathname === "/profile"
+                        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
                     }`}
                 >
                   <ShieldUser className="w-5 h-5" />
