@@ -458,7 +458,7 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {/* UPDATED: Added dark mode background */}
         <div
-          className={`fixed top-0 right-0 h-screen w-72 bg-white dark:bg-gray-800 shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out 
+          className={`fixed top-0 right-0 h-screen overflow-y-auto w-72 bg-white dark:bg-gray-800 shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out 
           ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
         >
           {/* Header */}
@@ -488,6 +488,10 @@ const Navbar = () => {
           {/* Mobile Navigation Links */}
           <div className="flex flex-col px-5 py-4 space-y-2 lg:hidden">
             {navItems.map((item) => {
+              const isActive = item.href
+                ? location.pathname === item.href
+                : item.subItems?.some((sub) => location.pathname === sub.href);
+
               if (item.subItems) {
                 return (
                   <div key={item.name} className="relative">
@@ -498,14 +502,24 @@ const Navbar = () => {
                           openDropdown === item.name ? null : item.name
                         );
                       }}
-                      // UPDATED: Added dark mode text and hover colors
-                      className="flex items-center justify-between w-full px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                      className={`flex items-center justify-between w-full px-4 py-2 rounded-lg transition-colors
+            ${
+              isActive
+                ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+                : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+            }
+          `}
                     >
-                      <span className="flex items-center gap-2">
+                      <span className="flex items-center gap-2 relative">
                         {item.icon} {item.name}
+                        {isActive && (
+                          <span className="absolute left-0 -bottom-1 h-0.5 w-full rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></span>
+                        )}
                       </span>
                       <svg
-                        className="w-4 h-4"
+                        className={`w-4 h-4 transform transition-transform ${
+                          openDropdown === item.name ? "rotate-180" : ""
+                        }`}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -518,39 +532,73 @@ const Navbar = () => {
                         />
                       </svg>
                     </button>
+
                     {openDropdown === item.name && (
                       <div className="mt-1 ml-4 flex flex-col space-y-1">
-                        {item.subItems.map((sub) => (
-                          <Link
-                            key={sub.name}
-                            to={sub.href}
-                            onClick={() => {
-                              setOpenDropdown(null);
-                              setIsMobileMenuOpen(false);
-                            }}
-                            // UPDATED: Added dark mode text and hover colors
-                            className="flex items-center gap-2 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400 rounded-lg"
-                          >
-                            {sub.icon} {sub.name}
-                          </Link>
-                        ))}
+                        {item.subItems.map((sub) => {
+                          const isSubActive = location.pathname === sub.href;
+                          return (
+                            <Link
+                              key={sub.name}
+                              to={sub.href}
+                              onClick={() => {
+                                setOpenDropdown(null);
+                                setIsMobileMenuOpen(false);
+                              }}
+                              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors
+    ${
+      isSubActive
+        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+    }
+  `}
+                            >
+                              {/* icon stays as-is */}
+                              {sub.icon}
+
+                              {/* underline wraps only text */}
+                              <span className="relative">
+                                {sub.name}
+                                {isSubActive && (
+                                  <span className="absolute left-0 -bottom-1 h-0.5 w-full rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></span>
+                                )}
+                              </span>
+                            </Link>
+                          );
+                        })}
                       </div>
                     )}
                   </div>
                 );
               }
+
               return (
                 <Link
                   key={item.name}
                   to={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  // UPDATED: Added dark mode text and hover colors
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors
+    ${
+      isActive
+        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+    }
+  `}
                 >
-                  {item.icon} {item.name}
+                  {/* icon only */}
+                  {item.icon}
+
+                  {/* underline only below text */}
+                  <span className="relative">
+                    {item.name}
+                    {isActive && (
+                      <span className="absolute left-0 -bottom-1 h-0.5 w-full rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></span>
+                    )}
+                  </span>
                 </Link>
               );
             })}
+
             <div className="mt-2 px-1 flex items-center">
               <ThemeToggleButton />{" "}
               <p className=" dark:text-gray-300 text-black">Theme</p>
