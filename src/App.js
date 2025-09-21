@@ -41,6 +41,7 @@ import Terms from "./Pages/Terms";
 import { Privacy } from "./Pages/Privacy";
 import ApiDocs from "./Pages/ApiDocs";
 import HelpCenter from "./Pages/HelpCenter";
+import FAQPage from "./Pages/FAQ/FAQPage";
 
 import { ThemeProvider } from './context/ThemeContext';
 function App() {
@@ -62,6 +63,7 @@ function App() {
                 <Route path="/leaderBoard" element={<LeaderBoard />} />
                 <Route path="/contributorguide" element={<ContributorGuide />} />
                 <Route path="/about" element={<AboutPage />} />
+                <Route path="/faq" element={<FAQPage />} />
                 <Route path="/terms" element={<Terms />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/apiDocs" element={<ApiDocs />} />
