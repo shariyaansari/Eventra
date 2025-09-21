@@ -313,7 +313,7 @@ const Footer = () => {
 
           {/* Copyright - Below the line, centered */}
           {/* UPDATED: Added dark mode border color */}
-          <div className="border-t border-gray-400 dark:border-gray-700 mt-4 pt-3 pb-2 flex justify-center">
+          <div className="border-t border-gray-300 dark:border-gray-700 mt-8 pt-4 pb-2 flex justify-center">
             {/* UPDATED: Added dark mode text color */}
             <p className="text-sm text-gray-500 dark:text-gray-400">
               © {currentYear} Eventra. All rights reserved.
