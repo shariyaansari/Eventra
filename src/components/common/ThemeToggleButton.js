@@ -18,7 +18,7 @@ const ThemeToggleButton = () => {
 
   return (
     <button onClick={toggleTheme} style={buttonStyle}>
-      {/* Show a different icon based on the current theme */}
+        {/* Show a different icon based on the current theme */}
       {theme === 'light' ? '🌙' : '☀️'}
     </button>
   );
