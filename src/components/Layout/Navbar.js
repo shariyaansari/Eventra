@@ -214,12 +214,12 @@ const Navbar = () => {
       );
     } else {
       return (
-        <div className="hidden md:flex items-center space-x-3">
+        <div className="hidden md:flex items-center space-x-2">
           {/* Sign In Button */}
           {/* UPDATED: Added dark mode text and hover colors */}
           <Link
             to="/login"
-            className="flex items-center px-3 py-2 text-gray-800 dark:text-gray-200 font-medium rounded-full hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-all duration-300 group whitespace-nowrap"
+            className="flex items-center px-3 py-2 text-gray-800 dark:text-gray-200 font-medium rounded-full hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-all duration-300 group whitespace-nowrap text-sm"
           >
             {/* UPDATED: Added dark mode text colors */}
             <LogIn className="w-5 h-5 mr-2 text-gray-600 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-transform duration-300 transform group-hover:translate-x-1" />
@@ -229,7 +229,8 @@ const Navbar = () => {
           {/* Get Started Button with animated gradient */}
           <Link
             to="/signup"
-            className="relative flex items-center px-5 py-2 font-medium rounded-full text-white overflow-hidden group whitespace-nowrap"
+           className="relative flex items-center px-4 py-2 font-medium rounded-full text-white overflow-hidden group whitespace-nowrap ml-2"
+            style={{ minWidth: 'auto' }}
           >
             {/* Animated gradient background */}
             <span
@@ -238,9 +239,10 @@ const Navbar = () => {
             ></span>
 
             {/* Button content */}
-            <span className="relative z-10 flex items-center">
+            <span className="relative z-10 flex items-center text-sm">
               Get Started
-              <ArrowRight className="w-5 h-5 ml-2 animate-bounce-slow" />
+              <ArrowRight className="w-4 h-4 ml-1.5 animate-bounce-slow" />
+
             </span>
 
             {/* Overlay for hover effect */}
@@ -421,7 +423,7 @@ const Navbar = () => {
           </div>
 
           {/* Auth Section Desktop */}
-          <div className="hidden lg:flex items-center flex-shrink-0">
+           <div className="hidden lg:flex items-center flex-shrink-0 space-x-2">
             <ThemeToggleButton />
             {renderAuthSection()}
           </div>
