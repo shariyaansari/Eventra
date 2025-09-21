@@ -395,20 +395,20 @@ const Signup = () => {
                 />
               </div>
 
-              <AnimatePresence>
-                {phoneError && (
-                  <motion.p
-                    // UPDATED: Error text
-                    className="text-xs text-red-600 dark:text-red-500 mt-1"
-                    initial={{ opacity: 0, y: -10 }}
+            <AnimatePresence
+            {phoneError && (
+              <motion.p'
+
+              className="text-xs text-red-600 dark:text-red-500 mt-1"
+              initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.2 }}
                   >
                     {phoneError}
                   </motion.p>
-                )}
-              </AnimatePresence>
+            )}
+            </AnimatePresence>
             </motion.div> */}
 
             <motion.div
