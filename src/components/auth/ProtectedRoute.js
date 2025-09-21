@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import Loading from '../common/Loading'; 
 
@@ -11,6 +11,7 @@ const ProtectedRoute = ({
   redirectTo = '/login' 
 }) => {
   const { isAuthenticated, hasRole, hasPermission, loading } = useAuth();
+  const location = useLocation();
 
   // Show loading spinner while checking authentication
   if (loading) {
@@ -23,14 +24,15 @@ const ProtectedRoute = ({
 
   // Check if authentication is required
   if (requireAuth && !isAuthenticated()) {
-    return <Navigate to={redirectTo} replace />;
+     // ⬇️ preserve where the user wanted to go
+    return <Navigate to={redirectTo} replace state={{ from: location }} />;
   }
 
   // Check required roles
   if (requiredRoles.length > 0) {
     const hasRequiredRole = requiredRoles.some(role => hasRole(role));
     if (!hasRequiredRole) {
-      return <Navigate to="/unauthorized" replace />;
+      return <Navigate to="/unauthorized" replace state={{ from: location }} />;
     }
   }
 
@@ -38,7 +40,7 @@ const ProtectedRoute = ({
   if (requiredPermissions.length > 0) {
     const hasRequiredPermission = requiredPermissions.some(permission => hasPermission(permission));
     if (!hasRequiredPermission) {
-      return <Navigate to="/unauthorized" replace />;
+      return <Navigate to="/unauthorized" replace state={{ from: location }} />;
     }
   }
 

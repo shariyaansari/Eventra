@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +14,9 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
+  const from = location.state?.from?.pathname || "/dashboard";
 
   // Email regex for validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -59,7 +62,7 @@ const Login = () => {
     try {
       // assuming login(email, password) exists in your auth context
       await login(formData.email, formData.password);
-      navigate("/dashboard");
+      navigate(from, { replace: true });
     } catch (err) {
       console.error("Login error:", err);
       setError({ general: "Invalid email or password" });
