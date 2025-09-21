@@ -558,11 +558,12 @@ const FeedbackPage = () => {
 
                 {/* UPDATED: Textarea and its floating label */}
                 <div className="relative mt-6">
+                  <FiMessageSquare className="absolute left-3 top-4 text-gray-400 text-xl" />
                   <motion.label
                     htmlFor="message"
-                    className={`absolute left-4 transition-all duration-300 ${
+                    className={`absolute left-14 transition-all duration-300 ${
                       formData.message
-                        ? "top-0 text-xs text-indigo-600 dark:text-indigo-400 font-medium"
+                        ? "top-3 text-xs text-indigo-600 dark:text-indigo-400 font-medium"
                         : "top-4 text-sm text-gray-500 dark:text-gray-400"
                     } ${errors.message ? "text-red-500 dark:text-red-400" : ""}`}
                     initial={false}
@@ -571,7 +572,8 @@ const FeedbackPage = () => {
                       scale: formData.message ? 0.85 : 1,
                     }}
                   >
-                    Your Message *
+                    
+                     Your Message *
                   </motion.label>
                   <textarea
                     id="message"
