@@ -93,8 +93,8 @@ const EventsPage = () => {
   };
 
   const scrollToCard = () => {
-    cardSectionRef.current?.scrollIntoView({ behaviour: "smooth" });
-  };
+    cardSectionRef.current?.scrollIntoView({behaviour : "smooth"});
+  }
 
   // -----------------------------
   // JSX Render

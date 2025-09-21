@@ -258,6 +258,28 @@ const Footer = () => {
                   We respect your privacy. Unsubscribe at any time.
                 </p>
               </div>
+              {/* Social Media Icons - Below Newsletter */}
+              <div className="mt-6">
+                <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 uppercase tracking-wider mb-3">
+                  Follow Us
+                </h4>
+                <div className="flex space-x-3">
+                  {socialLinks.map((link) => (
+                    <a
+                      key={link.name}
+                      href={link.href}
+                      className="text-gray-400 dark:text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={link.name}
+                      title={link.name}
+                    >
+                      <span className="sr-only">{link.name}</span>
+                      {link.icon}
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {Object.entries(footerLinks).map(([key, links]) => (
@@ -289,29 +311,9 @@ const Footer = () => {
             ))}
           </div>
 
-          {/* Social Media Icons - Above the line, right side */}
-          <div className="mt-3 pt-2 flex justify-end">
-            <div className="flex space-x-4">
-              {socialLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  // UPDATED: Added dark mode text and hover colors
-                  className="text-gray-400 dark:text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={link.name}
-                >
-                  <span className="sr-only">{link.name}</span>
-                  {link.icon}
-                </a>
-              ))}
-            </div>
-          </div>
-
           {/* Copyright - Below the line, centered */}
           {/* UPDATED: Added dark mode border color */}
-          <div className="border-t border-gray-400 dark:border-gray-700 mt-4 pt-3 pb-2 flex justify-center">
+          <div className="border-t border-gray-300 dark:border-gray-700 mt-8 pt-4 pb-2 flex justify-center">
             {/* UPDATED: Added dark mode text color */}
             <p className="text-sm text-gray-500 dark:text-gray-400">
               © {currentYear} Eventra. All rights reserved.
