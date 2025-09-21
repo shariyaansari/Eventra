@@ -20,6 +20,7 @@ import {
   ShieldUser,
   MessageSquare,
   Book,
+  HelpCircle,
 } from "lucide-react";
 import { RocketLaunchIcon } from "@heroicons/react/20/solid";
 
@@ -88,6 +89,11 @@ const Navbar = () => {
       name: "About",
       href: "/about",
       icon: <Info className="w-5 h-5 text-cyan-500" />,
+    },
+    {
+      name: "FAQ",
+      href: "/faq",
+      icon: <HelpCircle className="w-5 h-5 text-amber-500" />,
     },
     {
       name: "Contact",
