@@ -295,9 +295,9 @@ const Navbar = () => {
       />
 
       <nav className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md dark:bg-black border-b border-gray-300 dark:border-gray-800 py-5 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center gap-4">
+        <div className="max-w-7xl mx-14 px-6 4 lg:px-8 flex justify-between items-center gap-5">
           {/* Brand */}
-          <Link to="/" className="flex-shrink-0">
+          <Link to="/" className="flex-shrink-0 ml-0 mr-auto">
             <h2
               className="text-2xl font-bold text-transparent bg-clip-text relative overflow-hidden"
               style={{
