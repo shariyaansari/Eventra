@@ -17,6 +17,23 @@ import {
 const GITHUB_USER = "SandeepVashishtha";
 const GITHUB_REPO = "Eventra";
 
+const TOKEN = process.env.REACT_APP_GITHUB_TOKEN || ""; // optional
+const LS_KEY = "eventra:repoStats";
+const CACHE_MS = 30 * 60 * 1000; // 30 min
+
+const readCache = () => {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return null;
+    const { data, ts } = JSON.parse(raw);
+    return Date.now() - ts > CACHE_MS ? null : data;
+  } catch { return null; }
+};
+const writeCache = (data) => {
+  try { localStorage.setItem(LS_KEY, JSON.stringify({ data, ts: Date.now() })); } catch {}
+};
+
+
 export default function GitHubStats() {
   const [stats, setStats] = useState({
     stars: 0,
@@ -32,58 +49,81 @@ export default function GitHubStats() {
     languages: {},
   });
 
-  useEffect(() => {
-    async function fetchGitHubStats() {
-      try {
-        const repoRes = await fetch(
-          `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}`
-        );
-        const repoData = await repoRes.json();
+useEffect(() => {
+  let mounted = true;
+  const cached = readCache();
+  if (cached && mounted) setStats(cached);
 
-        const contributorsRes = await fetch(
-          `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contributors?per_page=100`
-        );
-        const contributorsData = await contributorsRes.json();
+  (async () => {
+    try {
+      const headers = {
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {}),
+      };
 
-        const pullsRes = await fetch(
-          `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/pulls?state=open`
-        );
-        const pullsData = await pullsRes.json();
+      const repoRes = await fetch(
+        `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}`,
+        { headers }
+      );
+      if (!repoRes.ok) throw new Error(`Repo ${repoRes.status}`);
+      const repoData = await repoRes.json();
 
-        const releasesRes = await fetch(
-          `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/releases`
-        );
-        const releasesData = await releasesRes.json();
+     // contributors
+     let contribCount = "—";
+     try {
+       const cRes = await fetch(
+         `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contributors?per_page=100`,
+         { headers }
+       );
+       if (cRes.ok) {
+         const cData = await cRes.json();
+         if (Array.isArray(cData)) contribCount = cData.length;
+       }
+     } catch {}
 
-        const languagesRes = await fetch(
-          `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/languages`
-        );
-        const languagesData = await languagesRes.json();
+     // pull requests
+     let prCount = "—";
+     try {
+       const pRes = await fetch(
+         `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/pulls?state=open`,
+         { headers }
+       );
+       if (pRes.ok) {
+         const pData = await pRes.json();
+         if (Array.isArray(pData)) prCount = pData.length;
+       }
+     } catch {}
 
-        setStats({
-          stars: repoData.stargazers_count || 0,
-          forks: repoData.forks_count || 0,
-          issues: repoData.open_issues_count || 0,
-          contributors: Array.isArray(contributorsData)
-            ? contributorsData.length
-            : 0,
-          lastCommit: repoData.pushed_at
-            ? new Date(repoData.pushed_at).toLocaleDateString("en-GB")
-            : "N/A",
-          size: repoData.size || 0,
-          pullRequests: Array.isArray(pullsData) ? pullsData.length : 0,
-          releases: Array.isArray(releasesData) ? releasesData.length : 0,
-          license: repoData.license?.spdx_id || "N/A",
-          watchers: repoData.subscribers_count || 0,
-          languages: languagesData || {},
-        });
-      } catch (err) {
-        console.error("Error fetching GitHub stats:", err);
+      const next = {
+        stars: repoData.stargazers_count || 0,
+        forks: repoData.forks_count || 0,
+        issues: repoData.open_issues_count || 0,
+       contributors: contribCount,
+        lastCommit: repoData.pushed_at
+          ? new Date(repoData.pushed_at).toLocaleDateString("en-GB")
+          : "N/A",
+        size: repoData.size || 0,
+       pullRequests: prCount,
+        releases: "—",
+        license: repoData.license?.spdx_id || "N/A",
+        watchers: repoData.subscribers_count || 0,
+        languages: {},
+      };
+
+      if (mounted) {
+        setStats(next);
+        writeCache(next);
       }
+    } catch (err) {
+      console.warn("GitHub stats fetch failed", err);
+      if (!cached && mounted) setStats({ ...stats, stars:"—", forks:"—", issues:"—" });
     }
+  })();
 
-    fetchGitHubStats();
-  }, []);
+  return () => { mounted = false; };
+}, []);
+
 
   const statCards = [
     {
