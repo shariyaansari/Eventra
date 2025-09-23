@@ -28,13 +28,15 @@ const EventCard = ({ event }) => {
   return (
     <motion.div
       // UPDATED: Added dark mode background and border
-      className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 flex flex-col"
+      className="bg-gradient-to-l from-indigo-200 to-white dark:from-black dark:via-indigo-950/60 dark:to-black text-gray-900 dark:text-gray-100 rounded-2xl shadow-lg overflow-hidden border border-gray-400 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 flex flex-col"
       whileHover={{ y: -4 }}
     >
       {/* --- Header --- */}
       {/* UPDATED: Changed gradient, border, and icon background for dark mode */}
-      <div className="flex items-center px-6 py-4 gap-4 bg-gradient-to-r from-indigo-50 dark:from-gray-700 to-white dark:to-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div className="p-2 bg-indigo-100 dark:bg-gray-600 rounded-lg">{randomIcon}</div>
+      <div className="flex items-center px-6 py-4 gap-4 from-indigo-200 to-white dark:from-black dark:via-indigo-950/60 dark:to-black border-b border-gray-400 dark:border-gray-700">
+        <div className="p-2 bg-indigo-100 dark:bg-gray-900 rounded-lg">
+          {randomIcon}
+        </div>
         {/* UPDATED: Added dark mode text color */}
         <h3 className="text-gray-800 dark:text-gray-100 font-semibold text-lg truncate">
           {event.title}
@@ -61,7 +63,7 @@ const EventCard = ({ event }) => {
 
       {/* --- Description --- */}
       {/* UPDATED: Added dark mode border color */}
-      <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+      <div className="px-6 py-4 border-b border-gray-400 dark:border-gray-700">
         {/* UPDATED: Added dark mode text color */}
         <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
           {event.description}
@@ -106,7 +108,7 @@ const EventCard = ({ event }) => {
         <Link
           to={`/events/${event.id}`}
           // UPDATED: Added dark mode styles for the secondary button
-          className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
+          className="flex-1 inline-flex items-center justify-center gap-2 rounded-lg border border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
         >
           View Details
         </Link>
