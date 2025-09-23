@@ -13,6 +13,7 @@ import {
   Rocket,
   Globe,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const FAQPage = () => {
   const [openFAQ, setOpenFAQ] = useState(null);
@@ -249,20 +250,20 @@ const FAQPage = () => {
                 Our community and support team are here to help you succeed with your events.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="/contact"
+                <Link
+                  to="/contact"
                   className="inline-flex items-center justify-center px-6 py-3 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
                 >
                   <MessageCircle className="w-5 h-5 mr-2" />
                   Contact Support
-                </a>
-                <a
-                  href="/communityEvent"
+                </Link>
+                <Link
+                  to="/communityEvent"
                   className="inline-flex items-center justify-center px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-medium rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 border border-gray-200 dark:border-gray-700"
                 >
                   <Users className="w-5 h-5 mr-2" />
                   Join Community
-                </a>
+                </Link>
               </div>
             </motion.div>
           </motion.div>
