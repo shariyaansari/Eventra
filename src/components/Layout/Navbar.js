@@ -117,7 +117,6 @@ const Navbar = () => {
               e.stopPropagation();
               setShowProfileDropdown(!showProfileDropdown);
             }}
-            // UPDATED: Added dark mode background and shadow
             className="flex items-center space-x-2 p-1 transition-shadow duration-300"
           >
             {user?.profilePicture ? (
@@ -128,7 +127,6 @@ const Navbar = () => {
                 onError={(e) => (e.target.style.display = "none")}
               />
             ) : (
-              // UPDATED: Added dark mode background and text colors
               <div className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-indigo-600 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-400">
                 <UserIcon className="w-6 h-6" />
               </div>
@@ -136,9 +134,7 @@ const Navbar = () => {
           </button>
 
           {showProfileDropdown && (
-            // UPDATED: Added dark mode background and border
             <div className="absolute top-full right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-2xl py-3 z-50 animate-fadeIn border border-transparent dark:border-gray-700">
-              {/* UPDATED: Added dark mode border */}
               <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
                 <div className="flex items-center space-x-3">
                   {user?.profilePicture ? (
@@ -149,13 +145,11 @@ const Navbar = () => {
                       onError={(e) => (e.target.style.display = "none")}
                     />
                   ) : (
-                    // UPDATED: Added dark mode background and text colors
                     <div className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-indigo-600 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-400">
                       <UserIcon className="w-6 h-6" />
                     </div>
                   )}
                   <div>
-                    {/* UPDATED: Added dark mode text color */}
                     <div className="font-semibold text-gray-900 dark:text-gray-100">
                       {user?.firstName && user?.lastName
                         ? `${user.firstName} ${user.lastName}`
@@ -163,14 +157,12 @@ const Navbar = () => {
                         ? user.firstName
                         : user?.email || "User"}
                     </div>
-                    {/* UPDATED: Added dark mode text color */}
                     <div className="text-sm text-gray-500 dark:text-gray-400">
                       {user?.email || "No email available"}
                     </div>
                   </div>
                 </div>
               </div>
-              {/* UPDATED: Added dark mode text and hover colors */}
               <Link
                 to="/dashboard"
                 onClick={() => setShowProfileDropdown(false)}
@@ -199,7 +191,6 @@ const Navbar = () => {
                 Edit Profile
               </Link>
 
-              {/* UPDATED: Added dark mode hover color */}
               <button
                 onClick={handleLogout}
                 className="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/50 flex items-center rounded-lg transition-colors"
@@ -213,59 +204,52 @@ const Navbar = () => {
     } else {
       return (
         <div className="hidden md:flex items-center space-x-2 flex-wrap max-w-full">
-
-          {/* Sign In Button */}
-          {/* UPDATED: Added dark mode text and hover colors */}
+          {/* --- CHANGE 3: Padding reduced --- */}
           <Link
             to="/login"
-            className="flex items-center px-3 py-2 text-gray-800 dark:text-gray-200 font-medium rounded-full hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-all duration-300 group whitespace-nowrap text-sm"
+            className="flex items-center px-2 py-2 text-gray-800 dark:text-gray-200 font-medium rounded-full hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-all duration-300 group whitespace-nowrap text-sm"
           >
-            {/* UPDATED: Added dark mode text colors */}
             <LogIn className="w-5 h-5 mr-2 text-gray-600 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-transform duration-300 transform group-hover:translate-x-1" />
             Sign In
           </Link>
 
-          {/* Get Started Button with animated gradient */}
+          {/* --- CHANGE 3: Padding reduced --- */}
           <Link
             to="/signup"
-            className="relative flex items-center px-4 py-2 font-medium rounded-full text-white overflow-hidden group whitespace-nowrap ml-2"
+            className="relative flex items-center px-3 py-2 font-medium rounded-full text-white overflow-hidden group whitespace-nowrap ml-2"
             style={{ minWidth: "auto" }}
           >
-            {/* Animated gradient background */}
             <span
               className="absolute inset-0 bg-gradient-to-r from-purple-500 via-indigo-600 to-indigo-400 animate-gradient-x transition-all duration-300"
               style={{ zIndex: 0 }}
             ></span>
 
-            {/* Button content */}
             <span className="relative z-10 flex items-center text-sm">
               Get Started
               <ArrowRight className="w-4 h-4 ml-1.5 animate-bounce-slow" />
             </span>
 
-            {/* Overlay for hover effect */}
             <span className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 rounded-full transition-opacity duration-300"></span>
 
-            {/* Inline keyframes for gradient animation */}
             <style>
               {`
-          @keyframes gradient-x {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-          }
-          .animate-gradient-x {
-            background-size: 200% 200%;
-            animation: gradient-x 3s ease infinite;
-          }
-          @keyframes bounce-slow {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(4px); }
-          }
-          .animate-bounce-slow {
-            animation: bounce-slow 1s infinite;
-          }
-        `}
+        @keyframes gradient-x {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient-x {
+          background-size: 200% 200%;
+          animation: gradient-x 3s ease infinite;
+        }
+        @keyframes bounce-slow {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(4px); }
+        }
+        .animate-bounce-slow {
+          animation: bounce-slow 1s infinite;
+        }
+      `}
             </style>
           </Link>
         </div>
@@ -282,7 +266,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Overlay */}
       <div
         className={`fixed inset-0 bg-black bg-opacity-40 z-30 transition-opacity duration-300 ${
           isMobileMenuOpen || showProfileDropdown
@@ -293,11 +276,9 @@ const Navbar = () => {
       />
 
       <nav className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md dark:bg-black border-b border-gray-300 dark:border-gray-800 py-5 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-6 lg:px-0 flex justify-between items-center gap-5">
-
-
-          {/* Brand */}
-          <Link to="/" className="flex-shrink-0 ml-0 mr-auto">
+        {/* --- CHANGE 1: Reduced padding and gap --- */}
+        <div className="max-w-screen-2xl mx-auto px-4 flex justify-between items-center gap-2">
+          <Link to="/" className="flex-shrink-0">
             <h2
               className="text-2xl font-bold text-transparent bg-clip-text relative overflow-hidden"
               style={{
@@ -310,7 +291,6 @@ const Navbar = () => {
               Eventra
             </h2>
 
-            {/* Inline keyframes for diagonal shimmer */}
             <style>
               {`
         @keyframes shimmer {
@@ -321,24 +301,22 @@ const Navbar = () => {
             </style>
           </Link>
 
-          {/* Nav Items Desktop */}
-          <div className="hidden lg:flex items-center space-x-0.5 flex-1 justify-center">
+          <div className="hidden lg:flex items-center space-x-0.5 justify-center">
             {navItems.map((item) => {
               const isActive = location.pathname === item.href;
 
               if (item.subItems) {
                 return (
                   <div key={item.name} className="relative">
-                    {/* Parent Button */}
+                    {/* --- CHANGE 2: Padding reduced --- */}
                     <button
                       onClick={(e) => {
-                        e.stopPropagation(); // Prevent the global click handler
+                        e.stopPropagation();
                         setOpenDropdown(
                           openDropdown === item.name ? null : item.name
                         );
                       }}
-                      // UPDATED: Added dark mode text and hover colors
-                      className="flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-colors"
+                      className="flex items-center gap-2 px-2 py-2 rounded-lg font-medium text-sm text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-colors"
                     >
                       {item.icon} {item.name}
                       <svg
@@ -356,14 +334,12 @@ const Navbar = () => {
                       </svg>
                     </button>
 
-                    {/* Dropdown */}
                     {openDropdown === item.name && (
                       <motion.div
                         initial={{ opacity: 0, y: -8 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -8 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        // UPDATED: Added dark mode background, border, and divider colors
                         className="absolute left-0 mt-2 w-56 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-xl rounded-2xl z-50 border border-gray-100 dark:border-gray-700 divide-y divide-gray-300 dark:divide-gray-600"
                       >
                         {item.subItems.map((sub, idx) => (
@@ -371,22 +347,20 @@ const Navbar = () => {
                             key={sub.name}
                             to={sub.href}
                             onClick={() => setOpenDropdown(null)}
-                            // UPDATED: Added dark mode classes for both active and inactive states
                             className={`group flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors duration-200
-                                ${
-                                  location.pathname === sub.href
-                                    ? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400"
-                                    : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
-                                }
-                                ${idx === 0 ? "rounded-t-2xl" : ""} 
-                                ${
-                                  idx === item.subItems.length - 1
-                                    ? "rounded-b-2xl"
-                                    : ""
-                                }
-                              `}
+                                  ${
+                                    location.pathname === sub.href
+                                      ? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400"
+                                      : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                                  }
+                                  ${idx === 0 ? "rounded-t-2xl" : ""} 
+                                  ${
+                                    idx === item.subItems.length - 1
+                                      ? "rounded-b-2xl"
+                                      : ""
+                                  }
+                                `}
                           >
-                            {/* Icon with animation */}
                             <motion.span
                               whileHover={{ scale: 1.2, rotate: 8 }}
                               transition={{
@@ -406,11 +380,11 @@ const Navbar = () => {
                 );
               }
               return (
+                // --- CHANGE 2: Padding reduced ---
                 <Link
                   key={item.name}
                   to={item.href}
-                  // UPDATED: Added dark mode classes for both active and inactive states
-                  className={`flex items-center gap-3 py-2 px-3 rounded-lg font-medium transition-colors ${
+                  className={`flex items-center gap-3 py-2 px-2 rounded-lg font-medium text-sm transition-colors ${
                     isActive
                       ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
                       : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700"
@@ -422,20 +396,17 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* Auth Section Desktop */}
           <div className="hidden lg:flex items-center flex-shrink-0 space-x-2">
             <ThemeToggleButton />
             {renderAuthSection()}
           </div>
 
-          {/* Mobile Menu Button */}
           <div className="lg:hidden">
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 setIsMobileMenuOpen(!isMobileMenuOpen);
               }}
-              // UPDATED: Added dark mode text and hover colors
               className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
               <svg
@@ -455,18 +426,13 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        {/* UPDATED: Added dark mode background */}
         <div
           className={`fixed top-0 right-0 h-screen overflow-y-auto w-72 bg-white dark:bg-gray-800 shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out 
-            ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+          ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
         >
-          {/* Header */}
-          {/* UPDATED: Added dark mode border and background */}
           <div className="flex items-center justify-end px-5 py-2 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
             <button
               onClick={closeAllMenus}
-              // UPDATED: Added dark mode text and background colors
               className="p-2 rounded-full text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
             >
               <svg
@@ -484,8 +450,6 @@ const Navbar = () => {
               </svg>
             </button>
           </div>
-          {/* Navigation Links */}
-          {/* Mobile Navigation Links */}
           <div className="flex flex-col px-5 py-4 space-y-2 lg:hidden">
             {navItems.map((item) => {
               const isActive = item.href
@@ -503,12 +467,12 @@ const Navbar = () => {
                         );
                       }}
                       className={`flex items-center justify-between w-full px-4 py-2 rounded-lg transition-colors
-              ${
-                isActive
-                  ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
-              }
-            `}
+          ${
+            isActive
+              ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+              : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+          }
+        `}
                     >
                       <span className="flex items-center gap-2 relative">
                         {item.icon} {item.name}
@@ -546,17 +510,15 @@ const Navbar = () => {
                                 setIsMobileMenuOpen(false);
                               }}
                               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors
-      ${
-        isSubActive
-          ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
-          : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
-      }
-    `}
+    ${
+      isSubActive
+        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+    }
+  `}
                             >
-                              {/* icon stays as-is */}
                               {sub.icon}
 
-                              {/* underline wraps only text */}
                               <span className="relative">
                                 {sub.name}
                                 {isSubActive && (
@@ -578,17 +540,15 @@ const Navbar = () => {
                   to={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors
-      ${
-        isActive
-          ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
-          : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
-      }
-    `}
+    ${
+      isActive
+        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+    }
+  `}
                 >
-                  {/* icon only */}
                   {item.icon}
 
-                  {/* underline only below text */}
                   <span className="relative">
                     {item.name}
                     {isActive && (
@@ -605,12 +565,9 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Auth Section */}
-          {/* UPDATED: Added dark mode border */}
           <div className="border-t border-gray-200 dark:border-gray-700">
             {isAuthenticated() ? (
               <div className="px-4 py-4 space-y-1">
-                {/* User Info */}
                 <div className="flex items-center space-x-3 mb-3">
                   {user?.profilePicture ? (
                     <img
@@ -620,35 +577,30 @@ const Navbar = () => {
                       onError={(e) => (e.target.style.display = "none")}
                     />
                   ) : (
-                    // UPDATED: Added dark mode background and text
                     <div className="w-9 h-9 flex items-center justify-center rounded-full border border-indigo-500 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-400">
                       <UserIcon className="w-5 h-5" />
                     </div>
                   )}
 
                   <div>
-                    {/* UPDATED: Added dark mode text */}
                     <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
                       {user?.firstName || user?.email?.split("@")[0] || "User"}
                     </p>
-                    {/* UPDATED: Added dark mode text */}
                     <p className="text-xs text-gray-500 dark:text-gray-400">
                       {user?.email}
                     </p>
                   </div>
                 </div>
 
-                {/* Links with icons + active styles */}
                 <Link
                   to="/dashboard"
                   onClick={closeAllMenus}
-                  // UPDATED: Added dark mode active/inactive colors
                   className={`flex items-center gap-3 px-3 py-3 rounded-lg relative transition-colors 
-                      ${
-                        location.pathname === "/dashboard"
-                          ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
-                          : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
-                      }`}
+                        ${
+                          location.pathname === "/dashboard"
+                            ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                        }`}
                 >
                   <LayoutDashboard className="w-5 h-5" />
                   <span className="relative inline-block">
@@ -662,13 +614,12 @@ const Navbar = () => {
                 <Link
                   to="/profile"
                   onClick={closeAllMenus}
-                  // UPDATED: Added dark mode active/inactive colors
                   className={`flex items-center gap-3 px-3 py-3 rounded-lg relative transition-colors 
-                      ${
-                        location.pathname === "/profile"
-                          ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
-                          : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
-                      }`}
+                        ${
+                          location.pathname === "/profile"
+                            ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                        }`}
                 >
                   <ShieldUser className="w-5 h-5" />
                   <span className="relative inline-block">
@@ -684,7 +635,6 @@ const Navbar = () => {
                     handleLogout();
                     closeAllMenus();
                   }}
-                  // UPDATED: Added dark mode hover color
                   className="flex items-center gap-3 w-full text-left px-3 py-3 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/50 transition-colors"
                 >
                   <LogOut className="w-5 h-5" />
@@ -696,7 +646,6 @@ const Navbar = () => {
                 <Link
                   to="/login"
                   onClick={closeAllMenus}
-                  // UPDATED: Added dark mode colors
                   className="group flex w-full items-center justify-center px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
                 >
                   <LogIn className="w-5 h-5 mr-2 text-gray-600" />
