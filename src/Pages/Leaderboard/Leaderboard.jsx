@@ -5,6 +5,7 @@ import {
   FaChevronDown,
   FaChevronLeft,
   FaChevronRight,
+  FaUsers,
 } from "react-icons/fa";
 import { Menu, Transition } from "@headlessui/react";
 import confetti from "canvas-confetti";
@@ -26,6 +27,7 @@ export default function LeaderBoard() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState("points");
+  const [isDark, setIsDark] = useState(false);
 
   const CONTRIBUTORS_PER_PAGE = 10;
 
@@ -189,6 +191,13 @@ export default function LeaderBoard() {
     ranksMap[c.username] = i + 1;
   });
 
+  // Calculate stats
+  const stats = {
+    totalContributors: contributors.length,
+    flooredTotalPRs: contributors.reduce((sum, c) => sum + c.prs, 0),
+    flooredTotalPoints: contributors.reduce((sum, c) => sum + c.points, 0),
+  };
+
   const sortOptions = [
     { label: "Points", value: "points" },
     { label: "PRs", value: "prs" },
@@ -225,7 +234,6 @@ export default function LeaderBoard() {
             placeholder="Search contributors..."
             className="w-full max-w-xs px-4 py-2 border border-gray-300 dark:border-gray-800 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
           />
-
           <Menu as="div" className="relative inline-block text-left">
             {/* UPDATED: Sort dropdown button */}
             <Menu.Button className="inline-flex justify-center w-48 px-4 py-2 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400">
@@ -264,6 +272,54 @@ export default function LeaderBoard() {
               </Menu.Items>
             </Transition>
           </Menu>
+
+          
+
+          
+        </div>
+
+
+        {/* stats */}
+        <div style={{ display: "flex", gap: 18, marginBottom: 16, flexWrap: "wrap" }}>
+          <div style={{ flex: 1, minWidth: 220, padding: 24, borderRadius: 16, boxShadow: "0 2px 8px rgba(0,0,0,0.04)", border: `1px solid ${isDark ? "#444" : "#eee"}`, background: isDark ? "linear-gradient(135deg,#23272f,#1a1d23)" : "linear-gradient(135deg,#e0e7ff,#f3f4f6)" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ padding: 12, borderRadius: 12, background: isDark ? "rgba(59,130,246,0.2)" : "#dbeafe", color: isDark ? "#60a5fa" : "#2563eb", marginRight: 16 }}>
+                <FaUsers style={{ fontSize: 22 }} />
+              </div>
+              <div>
+                <p style={{ fontSize: 14, color: isDark ? "#b3b3b3" : "#555" }}>Contributors</p>
+                <p style={{ fontSize: 22, fontWeight: 700, color: isDark ? "#fff" : "#222" }}>
+                  {loading ? "..." : stats.totalContributors}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div style={{ flex: 1, minWidth: 220, padding: 24, borderRadius: 16, boxShadow: "0 2px 8px rgba(0,0,0,0.04)", border: `1px solid ${isDark ? "#444" : "#eee"}`, background: isDark ? "linear-gradient(135deg,#23272f,#1a1d23)" : "linear-gradient(135deg,#e0e7ff,#f3f4f6)" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ padding: 12, borderRadius: 12, background: isDark ? "rgba(16,185,129,0.2)" : "#bbf7d0", color: isDark ? "#34d399" : "#059669", marginRight: 16 }}>
+                <FaCode style={{ fontSize: 22 }} />
+              </div>
+              <div>
+                <p style={{ fontSize: 14, color: isDark ? "#b3b3b3" : "#555" }}>Pull Requests</p>
+                <p style={{ fontSize: 22, fontWeight: 700, color: isDark ? "#fff" : "#222" }}>
+                  {loading ? "..." : stats.flooredTotalPRs}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div style={{ flex: 1, minWidth: 220, padding: 24, borderRadius: 16, boxShadow: "0 2px 8px rgba(0,0,0,0.04)", border: `1px solid ${isDark ? "#444" : "#eee"}`, background: isDark ? "linear-gradient(135deg,#23272f,#1a1d23)" : "linear-gradient(135deg,#e0e7ff,#f3f4f6)" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ padding: 12, borderRadius: 12, background: isDark ? "rgba(139,92,246,0.2)" : "#ede9fe", color: isDark ? "#a78bfa" : "#7c3aed", marginRight: 16 }}>
+                <FaStar style={{ fontSize: 22 }} />
+              </div>
+              <div>
+                <p style={{ fontSize: 14, color: isDark ? "#b3b3b3" : "#555" }}>Total Points</p>
+                <p style={{ fontSize: 22, fontWeight: 700, color: isDark ? "#fff" : "#222" }}>
+                  {loading ? "..." : stats.flooredTotalPoints}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* UPDATED: Table container */}
