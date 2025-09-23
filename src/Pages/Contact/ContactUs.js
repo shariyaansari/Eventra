@@ -431,7 +431,7 @@ const ContactUs = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     error={errors.phone}
-                    type="tel" 
+                    type="number"
                     inputMode="numeric" 
                     pattern="[0-9]*" 
                     name="phone"
