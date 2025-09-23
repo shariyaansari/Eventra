@@ -16,7 +16,7 @@ const TOKEN = process.env.REACT_APP_GITHUB_TOKEN || "";
 const POINTS = {
   "level-1": 3,
   "level-2": 7,
-  level3: 10,
+  "level-3": 10,
 };
 
 export default function LeaderBoard() {
