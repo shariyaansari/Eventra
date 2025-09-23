@@ -27,12 +27,15 @@ const readCache = () => {
     if (!raw) return null;
     const { data, ts } = JSON.parse(raw);
     return Date.now() - ts > CACHE_MS ? null : data;
-  } catch { return null; }
+  } catch {
+    return null;
+  }
 };
 const writeCache = (data) => {
-  try { localStorage.setItem(LS_KEY, JSON.stringify({ data, ts: Date.now() })); } catch {}
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify({ data, ts: Date.now() }));
+  } catch {}
 };
-
 
 export default function GitHubStats() {
   const [stats, setStats] = useState({
@@ -49,81 +52,83 @@ export default function GitHubStats() {
     languages: {},
   });
 
-useEffect(() => {
-  let mounted = true;
-  const cached = readCache();
-  if (cached && mounted) setStats(cached);
+  useEffect(() => {
+    let mounted = true;
+    const cached = readCache();
+    if (cached && mounted) setStats(cached);
 
-  (async () => {
-    try {
-      const headers = {
-        Accept: "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-        ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {}),
-      };
+    (async () => {
+      try {
+        const headers = {
+          Accept: "application/vnd.github+json",
+          "X-GitHub-Api-Version": "2022-11-28",
+          ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {}),
+        };
 
-      const repoRes = await fetch(
-        `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}`,
-        { headers }
-      );
-      if (!repoRes.ok) throw new Error(`Repo ${repoRes.status}`);
-      const repoData = await repoRes.json();
+        const repoRes = await fetch(
+          `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}`,
+          { headers }
+        );
+        if (!repoRes.ok) throw new Error(`Repo ${repoRes.status}`);
+        const repoData = await repoRes.json();
 
-     // contributors
-     let contribCount = "—";
-     try {
-       const cRes = await fetch(
-         `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contributors?per_page=100`,
-         { headers }
-       );
-       if (cRes.ok) {
-         const cData = await cRes.json();
-         if (Array.isArray(cData)) contribCount = cData.length;
-       }
-     } catch {}
+        // contributors
+        let contribCount = "—";
+        try {
+          const cRes = await fetch(
+            `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contributors?per_page=100`,
+            { headers }
+          );
+          if (cRes.ok) {
+            const cData = await cRes.json();
+            if (Array.isArray(cData)) contribCount = cData.length;
+          }
+        } catch {}
 
-     // pull requests
-     let prCount = "—";
-     try {
-       const pRes = await fetch(
-         `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/pulls?state=open`,
-         { headers }
-       );
-       if (pRes.ok) {
-         const pData = await pRes.json();
-         if (Array.isArray(pData)) prCount = pData.length;
-       }
-     } catch {}
+        // pull requests
+        let prCount = "—";
+        try {
+          const pRes = await fetch(
+            `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/pulls?state=open`,
+            { headers }
+          );
+          if (pRes.ok) {
+            const pData = await pRes.json();
+            if (Array.isArray(pData)) prCount = pData.length;
+          }
+        } catch {}
 
-      const next = {
-        stars: repoData.stargazers_count || 0,
-        forks: repoData.forks_count || 0,
-        issues: repoData.open_issues_count || 0,
-       contributors: contribCount,
-        lastCommit: repoData.pushed_at
-          ? new Date(repoData.pushed_at).toLocaleDateString("en-GB")
-          : "N/A",
-        size: repoData.size || 0,
-       pullRequests: prCount,
-        releases: "—",
-        license: repoData.license?.spdx_id || "N/A",
-        watchers: repoData.subscribers_count || 0,
-        languages: {},
-      };
+        const next = {
+          stars: repoData.stargazers_count || 0,
+          forks: repoData.forks_count || 0,
+          issues: repoData.open_issues_count || 0,
+          contributors: contribCount,
+          lastCommit: repoData.pushed_at
+            ? new Date(repoData.pushed_at).toLocaleDateString("en-GB")
+            : "N/A",
+          size: repoData.size || 0,
+          pullRequests: prCount,
+          releases: "—",
+          license: repoData.license?.spdx_id || "N/A",
+          watchers: repoData.subscribers_count || 0,
+          languages: {},
+        };
 
-      if (mounted) {
-        setStats(next);
-        writeCache(next);
+        if (mounted) {
+          setStats(next);
+          writeCache(next);
+        }
+      } catch (err) {
+        console.warn("GitHub stats fetch failed", err);
+        if (!cached && mounted)
+          setStats({ ...stats, stars: "—", forks: "—", issues: "—" });
       }
-    } catch (err) {
-      console.warn("GitHub stats fetch failed", err);
-      if (!cached && mounted) setStats({ ...stats, stars:"—", forks:"—", issues:"—" });
-    }
-  })();
+    })();
 
-  return () => { mounted = false; };
-}, []);
-
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const statCards = [
     {
@@ -193,7 +198,7 @@ useEffect(() => {
 
   return (
     // UPDATED: Section background
-    <section className="py-16 bg-gradient-to-l from-indigo-100 to-indigo-50 dark:from-gray-800 dark:to-gray-900">
+    <section className="py-16 bg-gradient-to-t from-indigo-50 via-indigo-100 to-white dark:from-gray-900 dark:via-indigo-900/20 dark:to-black ">
       <div className="max-w-7xl mx-auto px-6">
         <motion.h2
           initial={{ opacity: 0, y: -30 }}
