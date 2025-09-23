@@ -98,7 +98,7 @@ const Community = () => {
 
   return (
     // UPDATED: Section background
-    <section className="py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+    <section className="py-16 bg-gradient-to-t from-indigo-50 via-indigo-100 to-white dark:from-gray-900 dark:via-indigo-900/20 dark:to-black ">
       <div className="max-w-6xl mx-auto px-4 text-center">
         <motion.h2
           variants={cardVariant}

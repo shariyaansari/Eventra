@@ -49,9 +49,12 @@ const WhatsHappening = () => {
 
   // UPDATED: Added dark mode classes for all statuses
   const statusColors = {
-    "Registration Open": "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300",
-    "Coming Soon": "bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300",
-    Planning: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300",
+    "Registration Open":
+      "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300",
+    "Coming Soon":
+      "bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300",
+    Planning:
+      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300",
   };
 
   const nextSlide = () => {
@@ -78,7 +81,10 @@ const WhatsHappening = () => {
 
   return (
     // UPDATED: Section background
-    <section ref={ref} className="py-12 sm:py-16 bg-white dark:bg-gray-800">
+    <section
+      ref={ref}
+      className="py-12 sm:py-16 bg-gradient-to-t from-indigo-50 via-indigo-100 to-white dark:from-gray-900 dark:via-indigo-900/20 dark:to-black "
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
@@ -119,7 +125,7 @@ const WhatsHappening = () => {
                 exit="exit"
                 transition={{ duration: 0.5 }}
                 // UPDATED: Card background and border/ring
-                className={`flex flex-col rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-gray-800 ${
+                className={`flex flex-col rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-black/60 ${
                   upcomingEvents[current].featured
                     ? "ring-2 ring-indigo-500 dark:ring-indigo-400"
                     : "border border-gray-100 dark:border-gray-700"
@@ -235,7 +241,9 @@ const WhatsHappening = () => {
               }}
               // UPDATED: Dot colors
               className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full ${
-                current === i ? "bg-indigo-600 dark:bg-indigo-400" : "bg-gray-300 dark:bg-gray-600"
+                current === i
+                  ? "bg-indigo-600 dark:bg-indigo-400"
+                  : "bg-gray-300 dark:bg-gray-600"
               }`}
             />
           ))}
@@ -244,7 +252,7 @@ const WhatsHappening = () => {
         {/* Info Section */}
         <motion.div
           // UPDATED: Info box background
-          className="mt-12 sm:mt-16 bg-indigo-50 dark:bg-gray-700/50 rounded-xl p-6 sm:p-10"
+          className="mt-12 sm:mt-16 bg-indigo-50 dark:bg-gray-800 rounded-xl p-6 sm:p-10"
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.3 }}

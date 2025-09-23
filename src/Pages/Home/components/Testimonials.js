@@ -35,7 +35,7 @@ const Testimonials = () => {
 
   return (
     //  UPDATED: Section background
-    <section className="py-16 sm:py-20 bg-white dark:bg-gray-800 overflow-hidden">
+    <section className="py-16 sm:py-20 bg-gradient-to-b from-indigo-50 via-indigo-100 to-white dark:from-gray-900 dark:via-indigo-900/20 dark:to-black  overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Title */}
         <motion.div
@@ -80,7 +80,9 @@ const Testimonials = () => {
                 {/*  UPDATED: Decorative quote icon color */}
                 <FaQuoteLeft className="absolute top-6 right-6 text-gray-100 dark:text-gray-600 text-4xl -z-10" />
                 {/*  UPDATED: Quote text color */}
-                <p className="text-gray-700 dark:text-gray-300 mb-6">{testimonial.quote}</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-6">
+                  {testimonial.quote}
+                </p>
                 {/*  UPDATED: Divider border color */}
                 <div className="mt-auto pt-6 border-t border-gray-100 dark:border-gray-600 flex items-center">
                   <img
