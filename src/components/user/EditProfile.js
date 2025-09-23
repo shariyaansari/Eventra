@@ -1,4 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { useContext } from "react";
+import { apiUtils, API_ENDPOINTS } from "../../config/api";
+import { useAuth } from "../../context/AuthContext";
+
 import {
   User as UserIcon,
   AtSign,
@@ -24,18 +28,6 @@ const initialFormState = {
   avatarBase64: "",
 };
 
-const mockUserProfile = {
-  fullName: "Jane Doe",
-  username: "",
-  email: "jane.doe@example.com",
-  phone: "+1234567890",
-  bio: "",
-  skills: [],
-  github: "",
-  linkedin: "",
-  portfolio: "",
-  avatarBase64: "",
-};
 
 const allSkillSuggestions = [
   "JavaScript",
@@ -88,26 +80,25 @@ const allSkillSuggestions = [
   /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-._~:/?#[\]@!$&'()*+,;=]*)?$/i;
 
 const EditProfile = () => {
-  const [form, setForm] = useState(initialFormState);
+
+   const { user, setUser } = useAuth();
+  const [form, setForm] = useState(user || initialFormState);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [loadingInitial, setLoadingInitial] = useState(true);
+  const [loadingInitial, setLoadingInitial] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [currentSkillInput, setCurrentSkillInput] = useState("");
   const fileInputRef = useRef(null);
-
+  // Load user from localStorage (fallback) once on mount
   useEffect(() => {
-    setLoadingInitial(true);
-    const savedProfile = localStorage.getItem("userProfile");
-
-    if (savedProfile) {
-      setForm(JSON.parse(savedProfile));
-    } else {
-      setForm(mockUserProfile);
+    const saved = localStorage.getItem("user");
+    if (saved) {
+      setForm(JSON.parse(saved));
+    } else if (user) {
+      setForm(user);
     }
-    setLoadingInitial(false);
-  }, []);
+  }, [user]);
 
   const validate = (nextForm) => {
     const v = {};
@@ -156,24 +147,32 @@ const EditProfile = () => {
     reader.readAsDataURL(file);
   };
 
-  const performSave = () => {
-    setSuccessMessage("");
-    const validation = validate(form);
-    setErrors(validation);
 
-    if (Object.keys(validation).length > 0) {
-      return;
-    }
+const performSave = () => {
+  setSuccessMessage("");
+  const validation = validate(form);
+  setErrors(validation);
 
-    setLoading(true);
+  if (Object.keys(validation).length > 0) {
+    return;
+  }
 
-    setTimeout(() => {
-      setLoading(false);
-      setSuccessMessage("Profile updated successfully");
-      setConfirmOpen(false);
-      localStorage.setItem("userProfile", JSON.stringify(form));
-    }, 1500);
-  };
+  setLoading(true);
+
+  setTimeout(() => {
+    setLoading(false);
+    setSuccessMessage("Profile updated successfully");
+    setConfirmOpen(false);
+
+    // ✅ Persist updates to both context and localStorage
+    setUser(form);
+    localStorage.setItem("user", JSON.stringify(form));
+
+  }, 1500);
+};
+
+
+
 
   const handleRemoveImage = () => {
     setForm((prev) => ({ ...prev, avatarBase64: "" }));

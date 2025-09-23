@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import NavbarLink from "./NavbarLink";
 import { motion } from "framer-motion";
 import ThemeToggleButton from "../common/ThemeToggleButton";
 import {
@@ -31,6 +30,25 @@ const Navbar = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Smart display lines for user identity
+  const primaryLine =
+    (user?.fullName && user.fullName.trim()) ||
+    ([user?.firstName, user?.lastName].filter(Boolean).join(" ").trim()) ||
+    (user?.username && user.username.trim()) ||
+    (user?.email && user.email.trim()) ||
+    "User";
+
+  const secondaryCandidate =
+    (user?.email && user.email.trim()) ||
+    (user?.username && user.username.trim()) ||
+    "";
+
+  // Only show secondary if it's different from primary
+  const secondaryLine =
+    secondaryCandidate && secondaryCandidate !== primaryLine
+      ? secondaryCandidate
+      : null;
 
   const closeAllMenus = () => {
     setShowProfileDropdown(false);
@@ -139,37 +157,32 @@ const Navbar = () => {
             // UPDATED: Added dark mode background and border
             <div className="absolute top-full right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-2xl py-3 z-50 animate-fadeIn border border-transparent dark:border-gray-700">
               {/* UPDATED: Added dark mode border */}
-              <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
-                <div className="flex items-center space-x-3">
-                  {user?.profilePicture ? (
-                    <img
-                      src={user.profilePicture}
-                      alt="Profile"
-                      className="w-10 h-10 rounded-full object-cover border-2 border-indigo-600"
-                      onError={(e) => (e.target.style.display = "none")}
-                    />
-                  ) : (
-                    // UPDATED: Added dark mode background and text colors
-                    <div className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-indigo-600 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-400">
-                      <UserIcon className="w-6 h-6" />
-                    </div>
-                  )}
-                  <div>
-                    {/* UPDATED: Added dark mode text color */}
-                    <div className="font-semibold text-gray-900 dark:text-gray-100">
-                      {user?.firstName && user?.lastName
-                        ? `${user.firstName} ${user.lastName}`
-                        : user?.firstName
-                        ? user.firstName
-                        : user?.email || "User"}
-                    </div>
-                    {/* UPDATED: Added dark mode text color */}
-                    <div className="text-sm text-gray-500 dark:text-gray-400">
-                      {user?.email || "No email available"}
-                    </div>
-                  </div>
-                </div>
-              </div>
+               <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                 <div className="flex items-center space-x-3">
+                   {user?.profilePicture ? (
+                     <img
+                       src={user.profilePicture}
+                       alt="Profile"
+                       className="w-10 h-10 rounded-full object-cover border-2 border-indigo-600"
+                       onError={(e) => (e.target.style.display = "none")}
+                     />
+                   ) : (
+                     <div className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-indigo-600 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-400">
+                       <UserIcon className="w-6 h-6" />
+                     </div>
+                   )}
+                   <div>
+                     <div className="font-semibold text-gray-900 dark:text-gray-100">
+                       {primaryLine}
+                     </div>
+                     {secondaryLine && (
+                       <div className="text-sm text-gray-500 dark:text-gray-400">
+                         {secondaryLine}
+                       </div>
+                     )}
+                   </div>
+                 </div>
+               </div>
               {/* UPDATED: Added dark mode text and hover colors */}
               <Link
                 to="/dashboard"
@@ -629,12 +642,14 @@ const Navbar = () => {
                   <div>
                     {/* UPDATED: Added dark mode text */}
                     <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                      {user?.firstName || user?.email?.split("@")[0] || "User"}
+                      {primaryLine}
                     </p>
-                    {/* UPDATED: Added dark mode text */}
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      {user?.email}
-                    </p>
+                    {secondaryLine && (
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        {secondaryLine}
+                      </p>
+                    )}
+
                   </div>
                 </div>
 
