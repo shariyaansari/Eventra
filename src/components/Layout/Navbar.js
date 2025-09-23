@@ -118,7 +118,7 @@ const Navbar = () => {
               setShowProfileDropdown(!showProfileDropdown);
             }}
             // UPDATED: Added dark mode background and shadow
-            className="flex items-center space-x-2 bg-white dark:bg-gray-700 p-1 rounded-full hover:shadow-md transition-shadow duration-300"
+            className="flex items-center space-x-2 p-1 transition-shadow duration-300"
           >
             {user?.profilePicture ? (
               <img
@@ -133,23 +133,6 @@ const Navbar = () => {
                 <UserIcon className="w-6 h-6" />
               </div>
             )}
-
-            {/* UPDATED: Added dark mode text color */}
-            <span className="text-gray-800 dark:text-gray-200 font-medium">
-              {user?.firstName || user?.email?.split("@")[0] || "User"}
-            </span>
-            {/* UPDATED: Added dark mode text color */}
-            <svg
-              className="w-5 h-5 text-gray-600 dark:text-gray-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
           </button>
 
           {showProfileDropdown && (
@@ -190,17 +173,32 @@ const Navbar = () => {
               {/* UPDATED: Added dark mode text and hover colors */}
               <Link
                 to="/dashboard"
-                className="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                onClick={() => setShowProfileDropdown(false)}
+                className={`flex items-center px-4   py-3 rounded-xl transition-colors
+    ${
+      location.pathname === "/dashboard"
+        ? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400"
+        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700"
+    }
+  `}
               >
                 Dashboard
               </Link>
-              {/* UPDATED: Added dark mode text and hover colors */}
+
               <Link
                 to="/profile"
-                className="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                onClick={() => setShowProfileDropdown(false)}
+                className={`flex items-center px-4 py-3 rounded-xl transition-colors
+    ${
+      location.pathname === "/profile"
+        ? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400"
+        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700"
+    }
+  `}
               >
                 Edit Profile
               </Link>
+
               {/* UPDATED: Added dark mode hover color */}
               <button
                 onClick={handleLogout}
@@ -214,7 +212,8 @@ const Navbar = () => {
       );
     } else {
       return (
-        <div className="hidden md:flex items-center space-x-2">
+        <div className="hidden md:flex items-center space-x-2 flex-wrap max-w-full">
+
           {/* Sign In Button */}
           {/* UPDATED: Added dark mode text and hover colors */}
           <Link
@@ -229,8 +228,8 @@ const Navbar = () => {
           {/* Get Started Button with animated gradient */}
           <Link
             to="/signup"
-           className="relative flex items-center px-4 py-2 font-medium rounded-full text-white overflow-hidden group whitespace-nowrap ml-2"
-            style={{ minWidth: 'auto' }}
+            className="relative flex items-center px-4 py-2 font-medium rounded-full text-white overflow-hidden group whitespace-nowrap ml-2"
+            style={{ minWidth: "auto" }}
           >
             {/* Animated gradient background */}
             <span
@@ -242,7 +241,6 @@ const Navbar = () => {
             <span className="relative z-10 flex items-center text-sm">
               Get Started
               <ArrowRight className="w-4 h-4 ml-1.5 animate-bounce-slow" />
-
             </span>
 
             {/* Overlay for hover effect */}
@@ -251,23 +249,23 @@ const Navbar = () => {
             {/* Inline keyframes for gradient animation */}
             <style>
               {`
-        @keyframes gradient-x {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animate-gradient-x {
-          background-size: 200% 200%;
-          animation: gradient-x 3s ease infinite;
-        }
-        @keyframes bounce-slow {
-          0%, 100% { transform: translateX(0); }
-          50% { transform: translateX(4px); }
-        }
-        .animate-bounce-slow {
-          animation: bounce-slow 1s infinite;
-        }
-      `}
+          @keyframes gradient-x {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+          }
+          .animate-gradient-x {
+            background-size: 200% 200%;
+            animation: gradient-x 3s ease infinite;
+          }
+          @keyframes bounce-slow {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(4px); }
+          }
+          .animate-bounce-slow {
+            animation: bounce-slow 1s infinite;
+          }
+        `}
             </style>
           </Link>
         </div>
@@ -295,7 +293,9 @@ const Navbar = () => {
       />
 
       <nav className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md dark:bg-black border-b border-gray-300 dark:border-gray-800 py-5 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex justify-between items-center gap-5">
+        <div className="max-w-7xl mx-auto px-6 lg:px-0 flex justify-between items-center gap-5">
+
+
           {/* Brand */}
           <Link to="/" className="flex-shrink-0 ml-0 mr-auto">
             <h2
@@ -313,11 +313,11 @@ const Navbar = () => {
             {/* Inline keyframes for diagonal shimmer */}
             <style>
               {`
-      @keyframes shimmer {
-        0% { background-position: -200% -200%; }
-        100% { background-position: 200% 200%; }
-      }
-    `}
+        @keyframes shimmer {
+          0% { background-position: -200% -200%; }
+          100% { background-position: 200% 200%; }
+        }
+      `}
             </style>
           </Link>
 
@@ -373,18 +373,18 @@ const Navbar = () => {
                             onClick={() => setOpenDropdown(null)}
                             // UPDATED: Added dark mode classes for both active and inactive states
                             className={`group flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors duration-200
-                              ${
-                                location.pathname === sub.href
-                                  ? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400"
-                                  : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
-                              }
-                              ${idx === 0 ? "rounded-t-2xl" : ""} 
-                              ${
-                                idx === item.subItems.length - 1
-                                  ? "rounded-b-2xl"
-                                  : ""
-                              }
-                            `}
+                                ${
+                                  location.pathname === sub.href
+                                    ? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-400"
+                                    : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                                }
+                                ${idx === 0 ? "rounded-t-2xl" : ""} 
+                                ${
+                                  idx === item.subItems.length - 1
+                                    ? "rounded-b-2xl"
+                                    : ""
+                                }
+                              `}
                           >
                             {/* Icon with animation */}
                             <motion.span
@@ -423,7 +423,7 @@ const Navbar = () => {
           </div>
 
           {/* Auth Section Desktop */}
-           <div className="hidden lg:flex items-center flex-shrink-0 space-x-2">
+          <div className="hidden lg:flex items-center flex-shrink-0 space-x-2">
             <ThemeToggleButton />
             {renderAuthSection()}
           </div>
@@ -459,7 +459,7 @@ const Navbar = () => {
         {/* UPDATED: Added dark mode background */}
         <div
           className={`fixed top-0 right-0 h-screen overflow-y-auto w-72 bg-white dark:bg-gray-800 shadow-2xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out 
-          ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+            ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
         >
           {/* Header */}
           {/* UPDATED: Added dark mode border and background */}
@@ -503,12 +503,12 @@ const Navbar = () => {
                         );
                       }}
                       className={`flex items-center justify-between w-full px-4 py-2 rounded-lg transition-colors
-            ${
-              isActive
-                ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
-                : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
-            }
-          `}
+              ${
+                isActive
+                  ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+                  : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+              }
+            `}
                     >
                       <span className="flex items-center gap-2 relative">
                         {item.icon} {item.name}
@@ -546,12 +546,12 @@ const Navbar = () => {
                                 setIsMobileMenuOpen(false);
                               }}
                               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors
-    ${
-      isSubActive
-        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
-        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
-    }
-  `}
+      ${
+        isSubActive
+          ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+          : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+      }
+    `}
                             >
                               {/* icon stays as-is */}
                               {sub.icon}
@@ -578,12 +578,12 @@ const Navbar = () => {
                   to={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors
-    ${
-      isActive
-        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
-        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
-    }
-  `}
+      ${
+        isActive
+          ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+          : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+      }
+    `}
                 >
                   {/* icon only */}
                   {item.icon}
@@ -644,11 +644,11 @@ const Navbar = () => {
                   onClick={closeAllMenus}
                   // UPDATED: Added dark mode active/inactive colors
                   className={`flex items-center gap-3 px-3 py-3 rounded-lg relative transition-colors 
-                    ${
-                      location.pathname === "/dashboard"
-                        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
-                        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
-                    }`}
+                      ${
+                        location.pathname === "/dashboard"
+                          ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+                          : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                      }`}
                 >
                   <LayoutDashboard className="w-5 h-5" />
                   <span className="relative inline-block">
@@ -664,11 +664,11 @@ const Navbar = () => {
                   onClick={closeAllMenus}
                   // UPDATED: Added dark mode active/inactive colors
                   className={`flex items-center gap-3 px-3 py-3 rounded-lg relative transition-colors 
-                    ${
-                      location.pathname === "/profile"
-                        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
-                        : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
-                    }`}
+                      ${
+                        location.pathname === "/profile"
+                          ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
+                          : "text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-indigo-400"
+                      }`}
                 >
                   <ShieldUser className="w-5 h-5" />
                   <span className="relative inline-block">
