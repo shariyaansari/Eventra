@@ -204,6 +204,7 @@ const Navbar = () => {
     } else {
       return (
         <div className="hidden md:flex items-center space-x-2 flex-wrap max-w-full">
+          {/* --- CHANGE 3: Padding reduced --- */}
           <Link
             to="/login"
             className="flex items-center px-2 py-2 text-gray-800 dark:text-gray-200 font-medium rounded-full hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-all duration-300 group whitespace-nowrap text-sm"
@@ -212,6 +213,7 @@ const Navbar = () => {
             Sign In
           </Link>
 
+          {/* --- CHANGE 3: Padding reduced --- */}
           <Link
             to="/signup"
             className="relative flex items-center px-3 py-2 font-medium rounded-full text-white overflow-hidden group whitespace-nowrap ml-2"
@@ -274,8 +276,9 @@ const Navbar = () => {
       />
 
       <nav className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md dark:bg-black border-b border-gray-300 dark:border-gray-800 py-5 transition-colors duration-300">
-        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 flex justify-between items-center gap-4">
-          <Link to="/" className="flex-shrink-0 ml-0 mr-auto">
+        {/* --- CHANGE 1: Reduced padding and gap --- */}
+        <div className="max-w-screen-2xl mx-auto px-4 flex justify-between items-center gap-2">
+          <Link to="/" className="flex-shrink-0">
             <h2
               className="text-2xl font-bold text-transparent bg-clip-text relative overflow-hidden"
               style={{
@@ -298,7 +301,6 @@ const Navbar = () => {
             </style>
           </Link>
 
-          {/* --- FINAL CHANGE: Removed flex-1 to stop this container from taking all extra space --- */}
           <div className="hidden lg:flex items-center space-x-0.5 justify-center">
             {navItems.map((item) => {
               const isActive = location.pathname === item.href;
@@ -306,6 +308,7 @@ const Navbar = () => {
               if (item.subItems) {
                 return (
                   <div key={item.name} className="relative">
+                    {/* --- CHANGE 2: Padding reduced --- */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -313,7 +316,7 @@ const Navbar = () => {
                           openDropdown === item.name ? null : item.name
                         );
                       }}
-                      className="flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-sm text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-colors"
+                      className="flex items-center gap-2 px-2 py-2 rounded-lg font-medium text-sm text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-colors"
                     >
                       {item.icon} {item.name}
                       <svg
@@ -377,10 +380,11 @@ const Navbar = () => {
                 );
               }
               return (
+                // --- CHANGE 2: Padding reduced ---
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`flex items-center gap-3 py-2 px-3 rounded-lg font-medium text-sm transition-colors ${
+                  className={`flex items-center gap-3 py-2 px-2 rounded-lg font-medium text-sm transition-colors ${
                     isActive
                       ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-gray-700"
                       : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-gray-700"
@@ -392,7 +396,7 @@ const Navbar = () => {
             })}
           </div>
 
-          <div className="hidden lg:flex items-center flex-shrink-0 space-x-1">
+          <div className="hidden lg:flex items-center flex-shrink-0 space-x-2">
             <ThemeToggleButton />
             {renderAuthSection()}
           </div>
