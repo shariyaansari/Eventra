@@ -162,20 +162,22 @@ const login = async (email, password) => {
     return hasRole('EVENT_MANAGER');
   };
 
-  const value = {
-    user,
-    token,
-    loading,
-    login,
-    logout,
-    isAuthenticated,
-    hasRole,
-    hasPermission,
-    hasAnyRole,
-    hasAnyPermission,
-    isAdmin,
-    isEventManager
-  };
+const value = {
+  user,
+  token,
+  loading,
+  login,
+  logout,
+  setUser,   // ✅ expose setUser
+  isAuthenticated,
+  hasRole,
+  hasPermission,
+  hasAnyRole,
+  hasAnyPermission,
+  isAdmin,
+  isEventManager
+};
+
 
   return (
     <AuthContext.Provider value={value}>
