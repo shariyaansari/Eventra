@@ -205,8 +205,11 @@ const Contributors = () => {
 
   // UPDATED: Loading text color
   if (loading)
-    return <p className="text-center py-20 text-gray-600 dark:text-gray-400">Loading contributors...</p>;
-
+    return (
+      <p className="text-center py-20 text-gray-600 dark:text-gray-400">
+        Loading contributors...
+      </p>
+    );
 
   const visibleContributors = contributors.slice(
     currentIndex,
@@ -219,7 +222,7 @@ const Contributors = () => {
     <section
       ref={sectionRef}
       // UPDATED: Section background
-      className="py-20 bg-gradient-to-br from-indigo-50 to-white dark:from-gray-900 dark:to-black"
+      className="py-20 bg-gradient-to-b from-indigo-50 via-indigo-100 to-white dark:from-gray-900 dark:via-indigo-900/20 dark:to-black "
     >
       <div className="max-w-7xl mx-auto px-6">
         <motion.h2
@@ -229,11 +232,8 @@ const Contributors = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          🌟 Our Amazing{" "}
-          {/* UPDATED: Gradient text for dark mode */}
-          <span
-            className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 dark:from-indigo-400 dark:via-purple-500 dark:to-pink-500 bg-clip-text text-transparent animate-pulse"
-          >
+          🌟 Our Amazing {/* UPDATED: Gradient text for dark mode */}
+          <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 dark:from-indigo-400 dark:via-purple-500 dark:to-pink-500 bg-clip-text text-transparent animate-pulse">
             Contributors
           </span>
         </motion.h2>
@@ -304,7 +304,8 @@ const Contributors = () => {
                       {c.name ? c.name : c.login || "Unknown Contributor"}
                     </h3>
                     <p className="text-indigo-600 dark:text-indigo-400 text-sm font-medium mb-3 flex items-center justify-center gap-1">
-                      <FaMedal className="text-yellow-500 animate-bounce" /> {c.role}
+                      <FaMedal className="text-yellow-500 animate-bounce" />{" "}
+                      {c.role}
                     </p>
 
                     {/* UPDATED: Contribution Badges */}
@@ -332,24 +333,34 @@ const Contributors = () => {
                     <div className="flex flex-col items-center bg-white/60 dark:bg-gray-600/50 backdrop-blur-md p-2 rounded-lg shadow-sm">
                       <FaCodeBranch className="text-indigo-600 dark:text-indigo-400 mb-1" />
                       <span className="font-semibold">{c.public_repos}</span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">Repos</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        Repos
+                      </span>
                     </div>
                     <div className="flex flex-col items-center bg-white/60 dark:bg-gray-600/50 backdrop-blur-md p-2 rounded-lg shadow-sm">
                       <FaUserFriends className="text-indigo-600 dark:text-indigo-400 mb-1" />
                       <span className="font-semibold">{c.followers}</span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">Followers</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        Followers
+                      </span>
                     </div>
                     <div className="flex flex-col items-center bg-white/60 dark:bg-gray-600/50 backdrop-blur-md p-2 rounded-lg shadow-sm">
-                      <span className="text-indigo-600 dark:text-indigo-400 font-bold">🔥</span>
+                      <span className="text-indigo-600 dark:text-indigo-400 font-bold">
+                        🔥
+                      </span>
                       <span className="font-semibold">{c.contributions}</span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">Contribs</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        Contribs
+                      </span>
                     </div>
                   </div>
 
                   {/* Contribution Progress Bar */}
                   {/* UPDATED: Progress bar background */}
                   <div className="w-full bg-gray-200 dark:bg-gray-600 h-2 rounded-full overflow-hidden mb-4">
-                    <div className="h-2 bg-gradient-to-r from-indigo-500 to-purple-500" /* ... */></div>
+                    <div
+                      className="h-2 bg-gradient-to-r from-indigo-500 to-purple-500" /* ... */
+                    ></div>
                   </div>
 
                   {/* Extra Info */}

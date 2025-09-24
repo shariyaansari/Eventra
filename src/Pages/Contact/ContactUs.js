@@ -128,21 +128,24 @@ const FloatingInput = ({
 // Contact Us Page Component
 
 const socialLinks = [
-  { 
-    name: "X", 
-    icon: <span className="w-5 h-5 flex items-center justify-center font-bold">X</span>, 
-    href: "https://x.com" 
+  {
+    name: "X",
+    icon: (
+      <span className="w-5 h-5 flex items-center justify-center font-bold">
+        X
+      </span>
+    ),
+    href: "https://x.com",
   },
   {
     name: "GitHub",
     icon: <FaGithub className="w-5 h-5" />,
-    href: "https://github.com",
+    href: "https://github.com/SandeepVashishtha/Eventra",
   },
-  { 
-    name: "LinkedIn", 
-    icon: <FaLinkedin className="w-5 h-5" />, 
-    href: "https://www.linkedin.com/in/sandeepvashishtha/" 
-
+  {
+    name: "LinkedIn",
+    icon: <FaLinkedin className="w-5 h-5" />,
+    href: "https://www.linkedin.com/in/sandeepvashishtha/",
   },
   {
     name: "Discord",
@@ -431,7 +434,7 @@ const ContactUs = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     error={errors.phone}
-                    type="tel" 
+                    type="number"
                     inputMode="numeric" 
                     pattern="[0-9]*" 
                     name="phone"

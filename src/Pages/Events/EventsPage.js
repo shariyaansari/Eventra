@@ -93,15 +93,15 @@ const EventsPage = () => {
   };
 
   const scrollToCard = () => {
-    cardSectionRef.current?.scrollIntoView({behaviour : "smooth"});
-  }
+    cardSectionRef.current?.scrollIntoView({ behaviour: "smooth" });
+  };
 
   // -----------------------------
   // JSX Render
   // -----------------------------
   return (
     // UPDATED: Main page background
-    <div className="min-h-screen bg-gray-50 dark:bg-black">
+    <div className="flex flex-col min-h-screen bg-gradient-to-l from-indigo-200 to-white dark:from-gray-900 dark:to-black text-gray-900 dark:text-gray-100">
       {/* Hero section will be updated in the next step */}
       <EventHero
         searchQuery={searchQuery}
@@ -207,9 +207,11 @@ const EventsPage = () => {
           )}
         </AnimatePresence>
       </div>
-      
+
       {/* These components will be updated in the next steps */}
+
       <EventCTA />
+
       <FeedbackButton />
     </div>
   );

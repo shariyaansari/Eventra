@@ -5,6 +5,7 @@ import {
   FaChevronDown,
   FaChevronLeft,
   FaChevronRight,
+  FaUsers,
 } from "react-icons/fa";
 import { Menu, Transition } from "@headlessui/react";
 import confetti from "canvas-confetti";
@@ -16,7 +17,7 @@ const TOKEN = process.env.REACT_APP_GITHUB_TOKEN || "";
 const POINTS = {
   "level-1": 3,
   "level-2": 7,
-  level3: 10,
+  "level-3": 10,
 };
 
 export default function LeaderBoard() {
@@ -26,6 +27,7 @@ export default function LeaderBoard() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState("points");
+  const [isDark, setIsDark] = useState(false);
 
   const CONTRIBUTORS_PER_PAGE = 10;
 
@@ -189,6 +191,13 @@ export default function LeaderBoard() {
     ranksMap[c.username] = i + 1;
   });
 
+  // Calculate stats
+  const stats = {
+    totalContributors: contributors.length,
+    flooredTotalPRs: contributors.reduce((sum, c) => sum + c.prs, 0),
+    flooredTotalPoints: contributors.reduce((sum, c) => sum + c.points, 0),
+  };
+
   const sortOptions = [
     { label: "Points", value: "points" },
     { label: "PRs", value: "prs" },
@@ -201,8 +210,12 @@ export default function LeaderBoard() {
         <div className="text-center mb-12">
           {/* UPDATED: Header text */}
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-            <span className="block text-indigo-700 dark:text-indigo-400">GSSoC'25</span>
-            <span className="text-gray-800 dark:text-gray-200">Contributor Leaderboard</span>
+            <span className="block text-indigo-700 dark:text-indigo-400">
+              GSSoC'25
+            </span>
+            <span className="text-gray-800 dark:text-gray-200">
+              Contributor Leaderboard
+            </span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Recognizing the amazing contributions from our open source community
@@ -219,9 +232,8 @@ export default function LeaderBoard() {
               setCurrentPage(1);
             }}
             placeholder="Search contributors..."
-            className="w-full max-w-xs px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+            className="w-full max-w-xs px-4 py-2 border border-gray-300 dark:border-gray-800 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
           />
-
           <Menu as="div" className="relative inline-block text-left">
             {/* UPDATED: Sort dropdown button */}
             <Menu.Button className="inline-flex justify-center w-48 px-4 py-2 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400">
@@ -247,7 +259,9 @@ export default function LeaderBoard() {
                         onClick={() => setSortBy(option.value)}
                         // Active state is fine, just need to update inactive text
                         className={`${
-                          active ? "bg-indigo-500 text-white" : "text-gray-700 dark:text-gray-300"
+                          active
+                            ? "bg-indigo-500 text-white"
+                            : "text-gray-700 dark:text-gray-300"
                         } group flex w-full items-center px-4 py-2 text-sm`}
                       >
                         {option.label}
@@ -258,44 +272,98 @@ export default function LeaderBoard() {
               </Menu.Items>
             </Transition>
           </Menu>
+
+          
+
+          
+        </div>
+
+
+        {/* stats */}
+        <div style={{ display: "flex", gap: 18, marginBottom: 16, flexWrap: "wrap" }}>
+          <div style={{ flex: 1, minWidth: 220, padding: 24, borderRadius: 16, boxShadow: "0 2px 8px rgba(0,0,0,0.04)", border: `1px solid ${isDark ? "#444" : "#eee"}`, background: isDark ? "linear-gradient(135deg,#23272f,#1a1d23)" : "linear-gradient(135deg,#e0e7ff,#f3f4f6)" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ padding: 12, borderRadius: 12, background: isDark ? "rgba(59,130,246,0.2)" : "#dbeafe", color: isDark ? "#60a5fa" : "#2563eb", marginRight: 16 }}>
+                <FaUsers style={{ fontSize: 22 }} />
+              </div>
+              <div>
+                <p style={{ fontSize: 14, color: isDark ? "#b3b3b3" : "#555" }}>Contributors</p>
+                <p style={{ fontSize: 22, fontWeight: 700, color: isDark ? "#fff" : "#222" }}>
+                  {loading ? "..." : stats.totalContributors}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div style={{ flex: 1, minWidth: 220, padding: 24, borderRadius: 16, boxShadow: "0 2px 8px rgba(0,0,0,0.04)", border: `1px solid ${isDark ? "#444" : "#eee"}`, background: isDark ? "linear-gradient(135deg,#23272f,#1a1d23)" : "linear-gradient(135deg,#e0e7ff,#f3f4f6)" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ padding: 12, borderRadius: 12, background: isDark ? "rgba(16,185,129,0.2)" : "#bbf7d0", color: isDark ? "#34d399" : "#059669", marginRight: 16 }}>
+                <FaCode style={{ fontSize: 22 }} />
+              </div>
+              <div>
+                <p style={{ fontSize: 14, color: isDark ? "#b3b3b3" : "#555" }}>Pull Requests</p>
+                <p style={{ fontSize: 22, fontWeight: 700, color: isDark ? "#fff" : "#222" }}>
+                  {loading ? "..." : stats.flooredTotalPRs}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div style={{ flex: 1, minWidth: 220, padding: 24, borderRadius: 16, boxShadow: "0 2px 8px rgba(0,0,0,0.04)", border: `1px solid ${isDark ? "#444" : "#eee"}`, background: isDark ? "linear-gradient(135deg,#23272f,#1a1d23)" : "linear-gradient(135deg,#e0e7ff,#f3f4f6)" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ padding: 12, borderRadius: 12, background: isDark ? "rgba(139,92,246,0.2)" : "#ede9fe", color: isDark ? "#a78bfa" : "#7c3aed", marginRight: 16 }}>
+                <FaStar style={{ fontSize: 22 }} />
+              </div>
+              <div>
+                <p style={{ fontSize: 14, color: isDark ? "#b3b3b3" : "#555" }}>Total Points</p>
+                <p style={{ fontSize: 22, fontWeight: 700, color: isDark ? "#fff" : "#222" }}>
+                  {loading ? "..." : stats.flooredTotalPoints}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* UPDATED: Table container */}
-        <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
-          {loading ?  (
+        <div className="bg-gray-50 dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden">
+          {loading ? (
             <div className="overflow-x-auto">{/* Skeleton loader */}</div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead className="bg-gray-50 dark:bg-gray-700/50">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-500">
+                <thead className="bg-gray-50 dark:bg-gray-900">
                   <tr>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Rank
+                    <th className="px-6 py-4 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Rank
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <th className="px-6 py-4 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Contributor
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <th className="px-6 py-4 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Points
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    <th className="px-6 py-4 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       PRs
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700">
+                <tbody className="bg-gradient-to-b from-indigo-50 to-white dark:from-gray-900  dark:to-black  divide-y divide-gray-400 dark:divide-gray-500">
                   {currentContributors.map((c) => {
                     const rank = ranksMap[c.username];
                     return (
-                      <tr key={c.username} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150 border-b border-gray-100 dark:border-gray-700">
+                      <tr
+                        key={c.username}
+                        className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150 border-b border-gray-100 dark:border-gray-700"
+                      >
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
                             // UPDATED: Rank badges
                             className={`inline-flex items-center justify-center w-8 h-8 rounded-full font-medium ${
-                              rank === 1 ? "bg-yellow-500 text-white"
-                              : rank === 2 ? "bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200"
-                              : rank === 3 ? "bg-amber-800 text-white"
-                              : "bg-indigo-50 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300"
+                              rank === 1
+                                ? "bg-yellow-500 text-white"
+                                : rank === 2
+                                ? "bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200"
+                                : rank === 3
+                                ? "bg-amber-800 text-white"
+                                : "bg-indigo-50 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300"
                             }`}
                           >
                             {rank}
@@ -304,7 +372,11 @@ export default function LeaderBoard() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="flex-shrink-0 h-10 w-10">
-                              <img className="h-10 w-10 rounded-full border-2 border-indigo-200 dark:border-gray-600" src={c.avatar} alt={c.username} />
+                              <img
+                                className="h-10 w-10 rounded-full border-2 border-indigo-200 dark:border-gray-600"
+                                src={c.avatar}
+                                alt={c.username}
+                              />
                             </div>
                             <div className="ml-4">
                               <a
@@ -341,8 +413,12 @@ export default function LeaderBoard() {
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex justify-center items-center space-x-2 py-4 bg-white dark:bg-gray-800">
-                  <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1} className="px-3 py-1 text-sm rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 flex items-center bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                <div className="flex justify-center items-center space-x-2 py-4 bg-white dark:bg-black/80">
+                  <button
+                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                    disabled={currentPage === 1}
+                    className="px-3 py-1 text-sm rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 flex items-center bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+                  >
                     <FaChevronLeft />
                   </button>
                   {[...Array(totalPages)].map((_, i) => (
@@ -358,18 +434,26 @@ export default function LeaderBoard() {
                       {i + 1}
                     </button>
                   ))}
-                  <button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} className="px-3 py-1 text-sm rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 flex items-center bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                  <button
+                    onClick={() =>
+                      setCurrentPage((p) => Math.min(p + 1, totalPages))
+                    }
+                    disabled={currentPage === totalPages}
+                    className="px-3 py-1 text-sm rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 flex items-center bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+                  >
                     <FaChevronRight />
                   </button>
                 </div>
               )}
             </div>
           )}
-          
+
           {/* UPDATED: Table footer */}
-          <div className="bg-gray-50 dark:bg-gray-800 px-6 py-2 text-right border-t border-gray-200 dark:border-gray-700">
+          <div className="bg-gray-50 dark:bg-black/70 px-6 py-2 text-right border-t border-gray-200 dark:border-gray-700">
             {lastUpdated && (
-              <span className="text-xs text-gray-500 dark:text-gray-400">{lastUpdated}</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {lastUpdated}
+              </span>
             )}
           </div>
         </div>

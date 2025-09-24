@@ -154,8 +154,7 @@ const Footer = () => {
       href: "https://github.com/sandeepvashishtha/Eventra",
       icon: (
         <FaGithub
-          // UPDATED: Added dark mode background and hover colors
-          className="size-10 p-2 rounded-full text-indigo-500 bg-white dark:bg-gray-700 shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100 dark:hover:bg-gray-600"
+          className="size-10 p-2 rounded-full text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-gray-900 hover:scale-110 hover:-translate-y-1"
           size={20}
         />
       ),
@@ -165,8 +164,7 @@ const Footer = () => {
       href: "https://x.com/#",
       icon: (
         <SiX
-          // UPDATED: Added dark mode background and hover colors
-          className="size-10 p-2 rounded-full text-indigo-500 bg-white dark:bg-gray-700 shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100 dark:hover:bg-gray-600"
+          className="size-10 p-2 rounded-full text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:scale-110 hover:-translate-y-1"
           size={20}
         />
       ),
@@ -176,8 +174,7 @@ const Footer = () => {
       href: "https://www.linkedin.com/in/sandeepvashishtha/",
       icon: (
         <FaLinkedin
-          // UPDATED: Added dark mode background and hover colors
-          className="size-10 p-2 rounded-full text-indigo-500 bg-white dark:bg-gray-700 shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100 dark:hover:bg-gray-600"
+          className="size-10 p-2 rounded-full text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white hover:scale-110 hover:-translate-y-1"
           size={20}
         />
       ),
@@ -187,8 +184,7 @@ const Footer = () => {
       href: "#discord",
       icon: (
         <FaDiscord
-          // UPDATED: Added dark mode background and hover colors
-          className="size-10 p-2 rounded-full text-indigo-500 bg-white dark:bg-gray-700 shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100 dark:hover:bg-gray-600"
+          className="size-10 p-2 rounded-full text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white hover:scale-110 hover:-translate-y-1"
           size={20}
         />
       ),
@@ -198,8 +194,7 @@ const Footer = () => {
       href: "https://t.me/eventra",
       icon: (
         <FaTelegram
-          // UPDATED: Added dark mode background and hover colors
-          className="size-10 p-2 rounded-full text-indigo-500 bg-white dark:bg-gray-700 shadow-sm hover:shadow-md transition-all duration-300 hover:bg-indigo-100 dark:hover:bg-gray-600"
+          className="size-10 p-2 rounded-full text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 hover:bg-blue-500 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white hover:scale-110 hover:-translate-y-1"
           size={20}
         />
       ),
@@ -293,16 +288,16 @@ const Footer = () => {
                     <li key={link.name}>
                       <Link
                         to={link.href}
-                        // UPDATED: Added dark mode text and hover colors
-                        className="text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-2 transition-colors"
+                        className="text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-2 transition-all duration-300 hover:translate-x-1 group"
                       >
                         {link.icon && (
-                          // UPDATED: Added dark mode icon text color
-                          <span className="text-indigo-500 dark:text-indigo-400">
+                          <span className="text-indigo-500 dark:text-indigo-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 group-hover:scale-110 transition-all duration-300">
                             {link.icon}
                           </span>
                         )}
-                        {link.name}
+                        <span className="group-hover:font-medium transition-all duration-300">
+                          {link.name}
+                        </span>
                       </Link>
                     </li>
                   ))}

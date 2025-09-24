@@ -1,35 +1,14 @@
 import { motion } from "framer-motion";
 import { Search, X, Rocket, Users, Award, Code2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
-/**
- * HackathonHero Component
- * ---------------------------------------------------------
- * This component serves as the hero section of the Hackathons page.
- * It contains:
- *  - Title & tagline for hackathons
- *  - A live search box with tag filters
- *  - Call-to-action buttons (Explore Hackathons, Host a Hackathon)
- *  - Stats summary section
- *  - Smooth animations using Framer Motion
- * 
- * Props:
- *  - hackathons: array of hackathon objects
- *  - searchQuery: current text in the search input
- *  - setSearchQuery: setter for updating the query
- *  - scrollToCards: callback function to scroll to the hackathon list
- */
 export default function HackathonHero({
   hackathons = [], // default empty array if no hackathons
   searchQuery, // current search term
   setSearchQuery, // function to update the search input
   scrollToCards, // function to scroll down to hackathon cards
 }) {
-  /**
-   * Filter hackathons based on search query
-   * - Matches title, description, location, or tech stack
-   * - Converts everything to lowercase for case-insensitive matching
-   */
   const filteredHackathons = hackathons.filter(
     (h) =>
       h.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -42,6 +21,7 @@ export default function HackathonHero({
 
   // React Router hook to navigate programmatically
   const navigate = useNavigate();
+  const { user, token } = useAuth();
 
   return (
     // UPDATED: Main background gradient and base text color
@@ -53,8 +33,7 @@ export default function HackathonHero({
           transition={{ duration: 0.7 }}
           className="text-4xl sm:text-6xl font-extrabold leading-tight"
         >
-          Discover{" "}
-          {/* UPDATED: Text gradient for dark mode */}
+          Discover {/* UPDATED: Text gradient for dark mode */}
           <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent animate-gradient">
             Amazing Hackathons
           </span>
@@ -135,7 +114,8 @@ export default function HackathonHero({
             {/* UPDATED: Hackathon count text color */}
             <span className="text-sm text-indigo-600 dark:text-indigo-400 font-semibold">
               {filteredHackathons.length}{" "}
-              {filteredHackathons.length === 1 ? "hackathon" : "hackathons"} found
+              {filteredHackathons.length === 1 ? "hackathon" : "hackathons"}{" "}
+              found
             </span>
           </div>
         </motion.div>
@@ -165,7 +145,13 @@ export default function HackathonHero({
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => navigate("/host-hackathon")}
+            onClick={() => {
+              if (!user) {
+                navigate("/login");
+              } else {
+                navigate("/submit-project");
+              }
+            }}
             className="relative px-7 py-3.5 rounded-xl font-medium text-gray-800 shadow-md backdrop-blur-md border border-gray-300 hover:border-indigo-400 transition-all duration-300 bg-white/70"
           >
             <span className="relative flex items-center">

@@ -57,8 +57,7 @@ export default function EventHero({
           transition={{ duration: 0.7 }}
           className="text-4xl sm:text-6xl font-extrabold leading-tight"
         >
-          Discover{" "}
-          {/* UPDATED: Text gradient for dark mode */}
+          Discover {/* UPDATED: Text gradient for dark mode */}
           <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent animate-gradient">
             Amazing Events
           </span>
@@ -91,7 +90,6 @@ export default function EventHero({
               {/* UPDATED: Search icon color */}
               <Search className="h-5 w-5 text-gray-400 dark:text-gray-500 group-focus-within:text-indigo-500 dark:group-focus-within:text-indigo-400 transition-colors" />
             </div>
-
 
             {/* call handleSearch instead of setSearchQuery */}
             <input
@@ -160,7 +158,6 @@ export default function EventHero({
             className="relative px-7 py-3.5 rounded-xl font-semibold text-white shadow-lg overflow-hidden group"
             onClick={scrollToCard}
           >
-            
             <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-800 group-hover:from-indigo-500 group-hover:to-indigo-600 transition-all duration-500" />
             <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700 ease-in-out" />
             <span className="relative flex items-center">
@@ -206,7 +203,7 @@ export default function EventHero({
             }}
             whileHover={{ scale: 1.05 }}
             // UPDATED: Stat card styles
-            className="relative group bg-white dark:bg-gray-800 rounded-2xl shadow-md shadow-blue-200/40 dark:shadow-indigo-900/40 p-5 flex flex-col items-center text-center hover:shadow-lg transition-all duration-300"
+            className="relative group bg-white dark:bg-gray-900 rounded-2xl shadow-md shadow-blue-200/40 dark:shadow-indigo-900/80 p-5 flex flex-col items-center text-center hover:shadow-lg transition-all duration-300"
           >
             <motion.div
               whileHover={{ scale: 1.2 }}
@@ -217,8 +214,12 @@ export default function EventHero({
               <stat.icon className="h-7 w-7" />
             </motion.div>
             {/* UPDATED: Text colors */}
-            <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{stat.value}</p>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{stat.label}</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+              {stat.value}
+            </p>
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              {stat.label}
+            </p>
           </motion.div>
         ))}
       </div>
