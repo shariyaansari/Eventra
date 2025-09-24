@@ -296,6 +296,13 @@ We welcome contributions! To get started:
 
 5. **Open a Pull Request**
 
+### ⚡ Issue Assignment Automation
+
+This repository has automated issue management:
+- Issues are automatically unassigned after **7 days** if no PR is opened
+- Open a draft PR to maintain your assignment
+- See [Auto-unassign Documentation](.github/AUTO_UNASSIGN.md) for details
+
 ## Development Guidelines
 
 1. Follow Java coding conventions for backend
@@ -303,6 +310,7 @@ We welcome contributions! To get started:
 3. Write meaningful commit messages
 4. Update documentation for new features
 5. Test thoroughly before submitting PRs
+6. **Open PRs within 7 days** of issue assignment to avoid auto-unassignment
 
 ### Code Structure
 
@@ -441,12 +449,18 @@ We welcome contributions! Please follow these guidelines:
 4. Push to the branch: `git push origin feature/amazing-feature`
 5. Open a Pull Request
 
+### ⏰ Assignment Policy
+- Issues are **auto-unassigned after 7 days** without PR activity
+- Open a draft PR to keep your assignment
+- See detailed info: [Auto-unassign Guide](.github/AUTO_UNASSIGN.md)
+
 ### Code Standards
 - **Backend**: Follow Java conventions and Spring Boot best practices
 - **Frontend**: Use ESLint and Prettier for consistent code style
 - **Testing**: Write comprehensive tests for new features
 - **Documentation**: Update API documentation for any changes
 - **Commit Messages**: Use conventional commit messages
+- **Timeline**: Open PRs within 7 days of assignment to avoid auto-unassignment
 
 ### Getting Started for Contributors
 1. Set up the development environment as described in the Quick Start section
