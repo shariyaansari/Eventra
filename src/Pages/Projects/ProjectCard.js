@@ -53,16 +53,19 @@ const ProjectCard = ({ project }) => {
   return (
     <motion.div
       // UPDATED: Card background and border
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-gray-100 dark:border-gray-700 max-w-sm mx-auto hover:shadow-lg transition-all duration-300"
+      className="bg-gradient-to-l from-indigo-200 to-white dark:from-indigo-950 dark:to-black rounded-xl shadow-md overflow-hidden border border-gray-100 dark:border-gray-700 max-w-sm mx-auto hover:shadow-lg transition-all duration-300"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4, scale: 1.02 }}
     >
       {/* Header */}
       {/* UPDATED: Header gradient, border, icon, and title text */}
-      <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-indigo-50 dark:from-gray-700/50 to-white dark:to-gray-800">
+      <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-700 bbg-gradient-to-l from-indigo-200 to-white dark:from-indigo-950 dark:to-black">
         <div className="border-2 border-indigo-500 p-2 rounded-full flex items-center justify-center">
-          <RandomIcon size={24} className="text-indigo-600 dark:text-indigo-400" />
+          <RandomIcon
+            size={24}
+            className="text-indigo-600 dark:text-indigo-400"
+          />
         </div>
         <h3 className="text-center text-lg font-semibold text-gray-900 dark:text-gray-100 flex-1 mx-3 line-clamp-1">
           {project.title}
@@ -121,10 +124,12 @@ const ProjectCard = ({ project }) => {
       {/* UPDATED: Section border, author styles, and stat tag styles */}
       <div className="px-5 py-4 flex justify-between items-center border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-600 flex items-center justify-center text-sm font-medium text-indigo-600 dark:text-indigo-400 border-2 border-indigo-500">
+          <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-900 flex items-center justify-center text-sm font-medium text-indigo-600 dark:text-indigo-400 border-2 border-indigo-500">
             {project.author.charAt(0)}
           </div>
-          <span className="text-sm text-gray-700 dark:text-gray-300">{project.author}</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">
+            {project.author}
+          </span>
         </div>
         <div className="flex gap-2 text-xs">
           <div className="flex items-center gap-1 bg-yellow-50 dark:bg-yellow-900/40 px-2 py-1 rounded-md text-yellow-700 dark:text-yellow-300">
