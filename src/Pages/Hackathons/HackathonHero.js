@@ -131,7 +131,7 @@ export default function HackathonHero({
           <motion.button
             whileHover={{ scale: 1.07 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => navigate("/host-hackathon")}
+            onClick={scrollToCards}
             className="relative px-7 py-3.5 rounded-xl font-medium text-gray-800 dark:text-gray-200 shadow-md backdrop-blur-md border border-gray-300 dark:border-gray-600 hover:border-indigo-400 transition-all duration-300 bg-white/70 dark:bg-gray-800/70"
           >
             <span className="relative flex items-center">
