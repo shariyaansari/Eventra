@@ -19,7 +19,7 @@ const HackathonCard = ({ hackathon, isFeatured = false }) => {
   return (
     <motion.div
       // UPDATED: Card background, border, and featured ring
-      className={`bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 dark:border-gray-700 overflow-hidden relative ${
+      className={`bg-gradient-to-br from-indigo-200 to-white dark:from-gray-800 dark:to-black rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 dark:border-gray-700 overflow-hidden relative ${
         isFeatured ? "ring-2 ring-indigo-500 dark:ring-indigo-400" : ""
       }`}
       whileHover={{ y: -4 }}
@@ -82,7 +82,7 @@ const HackathonCard = ({ hackathon, isFeatured = false }) => {
           <BuildingLibraryIcon className="w-4 h-4 text-purple-500" />
           <span>{hackathon.organizer}</span>
         </div>
-        
+
         {/* UPDATED: Divider color */}
         <div className="border-b border-gray-200 dark:border-gray-700" />
 
@@ -164,18 +164,30 @@ const HackathonCard = ({ hackathon, isFeatured = false }) => {
         <div className="grid grid-cols-3 gap-4 bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg min-h-[60px]">
           <div className="text-center">
             <UserGroupIcon className="w-5 h-5 text-red-500 mx-auto mb-1" />
-            <div className="text-lg font-bold text-red-500">{stats.participants || "--"}</div>
-            <div className="text-xs text-gray-500 dark:text-gray-400">Participants</div>
+            <div className="text-lg font-bold text-red-500">
+              {stats.participants || "--"}
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">
+              Participants
+            </div>
           </div>
           <div className="text-center">
             <UserGroupIcon className="w-5 h-5 text-green-500 mx-auto mb-1 rotate-90" />
-            <div className="text-lg font-bold text-green-500">{stats.teams || "--"}</div>
-            <div className="text-xs text-gray-500 dark:text-gray-400">Teams</div>
+            <div className="text-lg font-bold text-green-500">
+              {stats.teams || "--"}
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">
+              Teams
+            </div>
           </div>
           <div className="text-center">
             <UserGroupIcon className="w-5 h-5 text-blue-500 mx-auto mb-1" />
-            <div className="text-lg font-bold text-blue-500">{stats.submissions || "--"}</div>
-            <div className="text-xs text-gray-500 dark:text-gray-400">Submissions</div>
+            <div className="text-lg font-bold text-blue-500">
+              {stats.submissions || "--"}
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">
+              Submissions
+            </div>
           </div>
         </div>
 

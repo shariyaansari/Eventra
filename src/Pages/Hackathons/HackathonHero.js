@@ -25,7 +25,7 @@ export default function HackathonHero({
 
   return (
     // UPDATED: Main background gradient and base text color
-    <div className="relative bg-gradient-to-l from-indigo-200 to-white dark:from-gray-900 dark:to-black text-gray-900 dark:text-gray-100 py-6 ">
+    <div className="bg-gradient-to-l from-indigo-200 to-white dark:from-gray-900 dark:to-black">
       <div className="relative max-w-6xl mx-auto px-8 text-center mt-12">
         <motion.h1
           initial={{ opacity: 0, y: -30 }}
@@ -152,7 +152,7 @@ export default function HackathonHero({
                 navigate("/submit-project");
               }
             }}
-            className="relative px-7 py-3.5 rounded-xl font-medium text-gray-800 shadow-md backdrop-blur-md border border-gray-300 hover:border-indigo-400 transition-all duration-300 bg-white/70"
+            className="relative px-7 py-3.5 rounded-xl font-medium text-gray-800 dark:text-gray-100 shadow-md backdrop-blur-md border border-gray-300 hover:border-indigo-400 transition-all duration-300 bg-white/70 dark:bg-gray-800"
           >
             <span className="relative flex items-center">
               <Users className="inline-block w-5 h-5 mr-2 text-indigo-600" />
@@ -178,7 +178,7 @@ export default function HackathonHero({
             transition={{ delay: 0.2 + idx * 0.15, duration: 0.6 }}
             whileHover={{ scale: 1.05 }}
             // UPDATED: Stat card styles
-            className="relative bg-gradient-to-br from-indigo-50 to-white dark:from-gray-800 dark:to-gray-700 rounded-3xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-2xl transition-all duration-300"
+            className="relative bg-gradient-to-br from-indigo-50 to-white dark:from-gray-800 dark:to-gray-800 rounded-3xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-2xl transition-all duration-300"
           >
             {/* Animated Icon in a circular container */}
             <motion.div

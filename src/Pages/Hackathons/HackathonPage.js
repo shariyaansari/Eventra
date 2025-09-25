@@ -80,37 +80,36 @@ const HackathonHub = () => {
   };
 
   const fuse = new Fuse(hackathons, {
-  keys: ["title", "description", "location", "techStack"],
-  threshold: 0.4, // adjust sensitivity (0 = exact, 1 = loose)
-});
-
-const searchedHackathons = searchQuery
-  ? fuse.search(searchQuery).map((result) => result.item)
-  : hackathons;
-
-const filteredHackathons = searchedHackathons
-  .filter((hackathon) => {
-    if (activeTab === "all") return true;
-    return hackathon.status === activeTab;
-  })
-  .filter((hackathon) => {
-    if (filters.difficulty && hackathon.difficulty !== filters.difficulty)
-      return false;
-    if (
-      filters.prize &&
-      !hackathon.prize.toLowerCase().includes(filters.prize.toLowerCase())
-    )
-      return false;
-    if (
-      filters.location &&
-      !hackathon.location
-        .toLowerCase()
-        .includes(filters.location.toLowerCase())
-    )
-      return false;
-    return true;
+    keys: ["title", "description", "location", "techStack"],
+    threshold: 0.4, // adjust sensitivity (0 = exact, 1 = loose)
   });
 
+  const searchedHackathons = searchQuery
+    ? fuse.search(searchQuery).map((result) => result.item)
+    : hackathons;
+
+  const filteredHackathons = searchedHackathons
+    .filter((hackathon) => {
+      if (activeTab === "all") return true;
+      return hackathon.status === activeTab;
+    })
+    .filter((hackathon) => {
+      if (filters.difficulty && hackathon.difficulty !== filters.difficulty)
+        return false;
+      if (
+        filters.prize &&
+        !hackathon.prize.toLowerCase().includes(filters.prize.toLowerCase())
+      )
+        return false;
+      if (
+        filters.location &&
+        !hackathon.location
+          .toLowerCase()
+          .includes(filters.location.toLowerCase())
+      )
+        return false;
+      return true;
+    });
 
   const featuredHackathons = [...hackathons]
     .filter((h) => h.featured)
@@ -139,7 +138,7 @@ const filteredHackathons = searchedHackathons
 
   return (
     // UPDATED: Main page background
-    <div className="bg-white dark:bg-black relative">
+    <div className="bg-gradient-to-l from-indigo-200 to-white dark:from-gray-900 dark:to-black text-gray-900 dark:text-gray-100 py-6 ">
       {/* Floating Action Button */}
       <motion.div
         className="fixed bottom-6 right-6 z-50"
@@ -487,7 +486,10 @@ const filteredHackathons = searchedHackathons
                 {/* Subtitle with dynamic message based on filters */}
                 {/* ------------------------------ */}
                 <p className="mt-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                  {searchQuery || filters.difficulty || filters.prize || filters.location
+                  {searchQuery ||
+                  filters.difficulty ||
+                  filters.prize ||
+                  filters.location
                     ? "No hackathons match your current filters. Try adjusting your search or filters."
                     : "Check back later for exciting new hackathons!"}
                 </p>
@@ -517,7 +519,7 @@ const filteredHackathons = searchedHackathons
                     whileTap={{ scale: 0.95 }}
                     onClick={() => {}} // Placeholder function for navigation
                     className="flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium rounded-lg text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:bg-indigo-50 dark:hover:bg-gray-600 shadow-md transition-all"
-                >
+                  >
                     Explore Hackathons
                     <FiCompass className="w-4 h-4" />
                   </motion.button>
