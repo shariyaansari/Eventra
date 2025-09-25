@@ -144,7 +144,7 @@ const ProjectGallery = () => {
 
   return (
     // UPDATED: Main page background
-    <div className="min-h-screen bg-gray-50 dark:bg-black">
+    <div className="flex flex-col min-h-screen bg-gradient-to-l from-indigo-200 to-white dark:from-indigo-950 dark:to-black">
       {/* Hero Section with CTA */}
       <ProjectHero setShowSubmissionModal={setShowSubmissionModal} scrollToCard={scrollToCard} />
       {/* Main Container */}
@@ -152,7 +152,7 @@ const ProjectGallery = () => {
         {/* Search and Filter Panel */}
         <motion.div
           // UPDATED: Panel background and border
-          className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 mb-8"
+          className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 mb-8"
           style={{ boxShadow: "0 10px 25px rgba(59, 130, 246, 0.1)" }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -172,7 +172,7 @@ const ProjectGallery = () => {
                 type="text"
                 placeholder="Search projects by name, tech stack, or category..."
                 // UPDATED: Input styles
-                className="block w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 shadow-sm transition-all duration-300"
+                className="block w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-indigo-500 dark:focus:border-indigo-400 text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-800 shadow-sm transition-all duration-300"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -189,7 +189,7 @@ const ProjectGallery = () => {
                 >
                   <div
                     // UPDATED: Dropdown button styles
-                    className="flex items-center justify-between px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl shadow-sm bg-white dark:bg-gray-700 hover:ring-2 hover:ring-indigo-500 transition-all"
+                    className="flex items-center justify-between px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl shadow-sm bg-white dark:bg-gray-800 hover:ring-2 hover:ring-indigo-500 transition-all"
                     onClick={() => setCategoryOpen((prev) => !prev)}
                   >
                     <span className="text-gray-700 dark:text-gray-200">
@@ -343,7 +343,7 @@ const ProjectGallery = () => {
             // No projects found placeholder
             <motion.div
               // UPDATED: Main container styles
-              className="relative overflow-hidden rounded-3xl p-10 text-center shadow-xl border border-gray-100 dark:border-gray-800 bg-gradient-to-br from-white via-indigo-50 to-purple-50 dark:from-gray-800 dark:via-indigo-900/20 dark:to-purple-900/20"
+              className="relative overflow-hidden rounded-3xl p-10 text-center shadow-xl border border-gray-100 dark:border-gray-900 bg-gradient-to-br from-white via-indigo-50 to-purple-50 dark:from-gray-800 dark:via-indigo-900/20 dark:to-purple-900/20"
               initial={{ opacity: 0, y: 30, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6, ease: "easeOut" }}

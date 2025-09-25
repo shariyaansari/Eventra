@@ -43,7 +43,7 @@ export default function ProjectHero({ setShowSubmissionModal, scrollToCard }) {
 
   return (
     // UPDATED: Main background gradient
-    <div className="relative min-h-screen py-24 overflow-hidden bg-gradient-to-l from-indigo-200 to-white dark:from-gray-900 dark:to-black">
+    <div className="relative min-h-screen py-24 overflow-hidden bg-gradient-to-l from-indigo-200 to-white dark:from-indigo-950 dark:to-black">
       {/* Floating Shapes */}
       {floatingShapes.map((shape, idx) => (
         <motion.div
@@ -66,8 +66,12 @@ export default function ProjectHero({ setShowSubmissionModal, scrollToCard }) {
       ))}
 
       {/* Continuous Zigzag Icon Train */}
-      <div className="absolute right-8 top-0 h-full flex flex-col items-center justify-start overflow-hidden z-0
-                hidden lg:flex"> {/* hide on small screens, show on large screens */}
+      <div
+        className="absolute right-8 top-0 h-full flex flex-col items-center justify-start overflow-hidden z-0
+                hidden lg:flex"
+      >
+        {" "}
+        {/* hide on small screens, show on large screens */}
         <motion.div
           animate={{ y: ["0%", "-100%"] }}
           transition={{
@@ -109,7 +113,10 @@ export default function ProjectHero({ setShowSubmissionModal, scrollToCard }) {
           // UPDATED: Title text color and gradient
           className="text-4xl sm:text-6xl font-extrabold mb-6 mt-6 bg-gradient-to-r from-indigo-600 dark:from-indigo-400 to-purple-600 dark:to-purple-400 text-transparent bg-clip-text leading-tight"
         >
-          Discover <span className="text-gray-900 dark:text-gray-100">Amazing Projects</span>
+          Discover{" "}
+          <span className="text-gray-900 dark:text-gray-100">
+            Amazing Projects
+          </span>
         </motion.h1>
 
         <motion.p
