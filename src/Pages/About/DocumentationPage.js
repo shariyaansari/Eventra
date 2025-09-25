@@ -126,23 +126,42 @@ export default function DocumentationPage() {
       >
         {/* UPDATED: Title icon and text colors */}
         <div className="flex items-center mb-6 text-indigo-800 dark:text-indigo-400">
-          <FiBookOpen className="mr-3 text-3xl" />
-          <h2 className="text-3xl font-bold">Features</h2>
-        </div>
-        <div className="grid md:grid-cols-2 gap-6 text-indigo-900 dark:text-gray-300">
-          <div className="space-y-2">
-            <h3 className="font-semibold text-xl">Core Features</h3>
-            <ul className="list-disc list-inside space-y-1">
-              {/* List items will inherit text color */}
-            </ul>
-          </div>
-          <div className="space-y-2">
-            <h3 className="font-semibold text-xl">Platform Features</h3>
-            <ul className="list-disc list-inside space-y-1">
-              {/* List items will inherit text color */}
-            </ul>
-          </div>
-        </div>
+  <FiBookOpen className="mr-3 text-3xl" />
+  <h2 className="text-3xl font-bold">Features</h2>
+</div>
+<div className="grid md:grid-cols-2 gap-6 text-indigo-900 dark:text-gray-300">
+  <div className="space-y-2">
+    <h3 className="font-semibold text-xl">Core Features</h3>
+    <ul className="list-disc list-inside space-y-1">
+      <li>Create and manage hackathons</li>
+      <li>Register participants and teams</li>
+      <li>Project submission and tracking</li>
+      <li>Event schedule and agenda management</li>
+      <li>Real-time updates and notifications</li>
+      <li>Judging and scoring system</li>
+      <li>Winner announcement and certificates</li>
+      <li>Discussion forums for participants</li>
+      <li>Resource sharing (guides, datasets, APIs)</li>
+      <li>Customizable hackathon branding</li>
+    </ul>
+  </div>
+  <div className="space-y-2">
+    <h3 className="font-semibold text-xl">Platform Features</h3>
+    <ul className="list-disc list-inside space-y-1">
+      <li>User authentication and profiles</li>
+      <li>Dark mode and theme support</li>
+      <li>Responsive and mobile-friendly design</li>
+      <li>Search and filter events/projects</li>
+      <li>Integration with calendar apps</li>
+      <li>Notifications for upcoming deadlines</li>
+      <li>Team collaboration tools</li>
+      <li>Analytics dashboard for organizers</li>
+      <li>Social media sharing and promotion</li>
+      <li>Cloud storage for project files</li>
+    </ul>
+  </div>
+</div>
+
       </motion.section>
 
       {/* Tech Stack Section */}
