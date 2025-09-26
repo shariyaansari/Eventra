@@ -1,0 +1,305 @@
+name: Auto-approve Vercel deployments for trusted users
+
+on:
+  deployment_status:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  deployments: write
+  pull-requests: write
+  contents: read
+  actions: read
+  statuses: write
+
+jobs:
+  auto-approve-trusted-users:
+    runs-on: ubuntu-latest
+    if: >
+      (github.event.deployment_status && 
+       github.event.deployment_status.environment_url && 
+       contains(github.event.deployment_status.environment_url, 'vercel.app')) ||
+      github.event_name == 'pull_request_target'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github/vercel-auto-approve-config.yml
+          sparse-checkout-cone-mode: false
+
+      - name: Load configuration
+        id: config
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const yaml = require('js-yaml');
+            
+            try {
+              const configContent = fs.readFileSync('.github/vercel-auto-approve-config.yml', 'utf8');
+              const config = yaml.load(configContent);
+              console.log('Loaded configuration:', JSON.stringify(config, null, 2));
+              return config;
+            } catch (error) {
+              console.log('Failed to load config, using defaults:', error.message);
+              // Default configuration if file doesn't exist or fails to load
+              return {
+                trusted_users: ['sandeepvashishtha'],
+                criteria: {
+                  core_maintainer: { min_contributions: 100, min_followers: 50, auto_approve: true },
+                  senior_dev: { min_contributions: 50, min_followers: 20, auto_approve: true },
+                  active_contributor: { min_contributions: 20, min_followers: 0, auto_approve: true },
+                  regular_contributor: { min_contributions: 10, min_followers: 0, auto_approve: false }
+                },
+                settings: {
+                  comment_on_approval: true,
+                  notify_trusted_status: true,
+                  auto_approve_environments: ['vercel.app', 'vercel-preview'],
+                  max_auto_approvals_per_pr: 5
+                }
+              };
+            }
+      - name: Get PR information
+        id: pr-info
+        uses: actions/github-script@v7
+        with:
+          script: |
+            let prNumber, prAuthor, headSha;
+            
+            if (context.eventName === 'deployment_status') {
+              // For deployment status events, we need to find the associated PR
+              const { data: deployment } = await github.rest.repos.getDeployment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                deployment_id: context.payload.deployment_status.deployment.id
+              });
+              
+              headSha = deployment.sha;
+              
+              // Find PR with this commit
+              const { data: prs } = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                head: `${context.repo.owner}:${deployment.ref}`
+              });
+              
+              if (prs.length > 0) {
+                prNumber = prs[0].number;
+                prAuthor = prs[0].user.login;
+              } else {
+                console.log('No open PR found for this deployment');
+                return { skip: true };
+              }
+            } else {
+              // For PR events
+              prNumber = context.payload.pull_request.number;
+              prAuthor = context.payload.pull_request.user.login;
+              headSha = context.payload.pull_request.head.sha;
+            }
+            
+            console.log(`Processing PR #${prNumber} by ${prAuthor}`);
+            
+            return {
+              prNumber,
+              prAuthor,
+              headSha,
+              skip: false
+            };
+
+      - name: Check if user is trusted
+        id: check-trusted
+        if: steps.pr-info.outputs.skip != 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prAuthor = '${{ fromJson(steps.pr-info.outputs.result).prAuthor }}';
+            const config = ${{ steps.config.outputs.result }};
+            
+            // Check if user is explicitly trusted
+            if (config.trusted_users.includes(prAuthor)) {
+              console.log(`${prAuthor} is a trusted user (explicit list)`);
+              return { isTrusted: true, reason: 'explicit-trusted-user' };
+            }
+            
+            try {
+              // Get contributor info from GitHub API
+              const { data: contributors } = await github.rest.repos.listContributors({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                per_page: 100
+              });
+              
+              const contributor = contributors.find(c => c.login === prAuthor);
+              if (!contributor) {
+                console.log(`${prAuthor} is not a contributor to this repository`);
+                return { isTrusted: false, reason: 'not-contributor' };
+              }
+              
+              // Get user profile for additional details
+              const { data: user } = await github.rest.users.getByUsername({
+                username: prAuthor
+              });
+              
+              const contributions = contributor.contributions;
+              const followers = user.followers || 0;
+              const publicRepos = user.public_repos || 0;
+              
+              console.log(`${prAuthor} stats: ${contributions} contributions, ${followers} followers, ${publicRepos} public repos`);
+              
+              // Apply trusted user criteria based on configuration
+              let isTrusted = false;
+              let reason = '';
+              
+              // Check core_maintainer criteria
+              if (contributions >= config.criteria.core_maintainer.min_contributions && 
+                  followers >= config.criteria.core_maintainer.min_followers &&
+                  config.criteria.core_maintainer.auto_approve) {
+                isTrusted = true;
+                reason = 'core-maintainer';
+              }
+              // Check senior_dev criteria  
+              else if (contributions >= config.criteria.senior_dev.min_contributions && 
+                       followers >= config.criteria.senior_dev.min_followers &&
+                       config.criteria.senior_dev.auto_approve) {
+                isTrusted = true;
+                reason = 'senior-dev';
+              }
+              // Check active_contributor criteria
+              else if (contributions >= config.criteria.active_contributor.min_contributions && 
+                       followers >= config.criteria.active_contributor.min_followers &&
+                       config.criteria.active_contributor.auto_approve) {
+                isTrusted = true;
+                reason = 'active-contributor';
+              }
+              else {
+                reason = 'insufficient-contributions';
+              }
+              
+              console.log(`${prAuthor} trusted status: ${isTrusted} (${reason})`);
+              
+              return { isTrusted, reason };
+              
+            } catch (error) {
+              console.log(`Error checking user ${prAuthor}: ${error.message}`);
+              return { isTrusted: false, reason: 'api-error' };
+            }
+
+      - name: Auto-approve Vercel deployment
+        if: >
+          steps.pr-info.outputs.skip != 'true' && 
+          fromJson(steps.check-trusted.outputs.result).isTrusted == true &&
+          github.event_name == 'deployment_status' &&
+          github.event.deployment_status.state == 'pending'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = ${{ fromJson(steps.pr-info.outputs.result).prNumber }};
+            const prAuthor = '${{ fromJson(steps.pr-info.outputs.result).prAuthor }}';
+            const reason = '${{ fromJson(steps.check-trusted.outputs.result).reason }}';
+            const deploymentId = context.payload.deployment_status.deployment.id;
+            const config = ${{ steps.config.outputs.result }};
+            const environmentUrl = context.payload.deployment_status.environment_url || '';
+            
+            // Check if this is an approved environment
+            const isApprovedEnvironment = config.settings.auto_approve_environments.some(env => 
+              environmentUrl.includes(env)
+            );
+            
+            if (!isApprovedEnvironment) {
+              console.log(`Environment ${environmentUrl} is not in approved list: ${config.settings.auto_approve_environments.join(', ')}`);
+              return;
+            }
+            
+            try {
+              // Update deployment status to success (auto-approve)
+              await github.rest.repos.createDeploymentStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                deployment_id: deploymentId,
+                state: 'success',
+                description: `Auto-approved for trusted user (${reason})`,
+                auto_inactive: false
+              });
+              
+              console.log(`✅ Auto-approved Vercel deployment for trusted user ${prAuthor} (${reason})`);
+              
+              // Add comment to PR explaining the auto-approval (if enabled)
+              if (config.settings.comment_on_approval) {
+                const commentBody = [
+                  '🤖 **Vercel Deployment Auto-Approved**',
+                  '',
+                  `✅ Vercel deployment has been automatically approved for @${prAuthor}`,
+                  `📊 **Reason**: ${reason.replace('-', ' ')}`,
+                  `🌐 **Environment**: ${environmentUrl}`,
+                  '⚡ **Status**: Deployment can proceed automatically',
+                  '',
+                  '*This automation helps trusted contributors deploy faster while maintaining security.*'
+                ].join('\n');
+                
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  body: commentBody
+                });
+              }
+              
+            } catch (error) {
+              console.log(`❌ Failed to auto-approve deployment: ${error.message}`);
+              
+              // Add comment about the failure
+              const errorComment = [
+                '🤖 **Vercel Deployment Auto-Approval Failed**',
+                '',
+                `❌ Failed to auto-approve Vercel deployment for @${prAuthor}`,
+                `📝 **Error**: ${error.message}`,
+                '',
+                '*Manual approval may be required for this deployment.*'
+              ].join('\n');
+              
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: errorComment
+              });
+            }
+
+      - name: Add trusted user status comment
+        if: >
+          steps.pr-info.outputs.skip != 'true' && 
+          github.event_name == 'pull_request_target' &&
+          fromJson(steps.check-trusted.outputs.result).isTrusted == true
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = ${{ fromJson(steps.pr-info.outputs.result).prNumber }};
+            const prAuthor = '${{ fromJson(steps.pr-info.outputs.result).prAuthor }}';
+            const reason = '${{ fromJson(steps.check-trusted.outputs.result).reason }}';
+            const config = ${{ steps.config.outputs.result }};
+            
+            // Only add comment if notification is enabled
+            if (!config.settings.notify_trusted_status) {
+              console.log('Trusted user status notifications are disabled');
+              return;
+            }
+            
+            const commentBody = [
+              '🤖 **Trusted User Detected**',
+              '',
+              `✅ @${prAuthor} is recognized as a trusted contributor`,
+              `📊 **Status**: ${reason.replace('-', ' ')}`,
+              '⚡ **Benefit**: Vercel deployments will be auto-approved for faster deployment',
+              '',
+              '*This helps maintain development velocity for experienced contributors.*'
+            ].join('\n');
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: commentBody
+            });
