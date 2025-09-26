@@ -454,6 +454,12 @@ We welcome contributions! Please follow these guidelines:
 - Open a draft PR to keep your assignment
 - See detailed info: [Auto-unassign Guide](.github/AUTO_UNASSIGN.md)
 
+### 🚀 Deployment Automation
+- **Vercel auto-approval** for trusted contributors speeds up deployments
+- Trusted status based on contribution history and GitHub activity
+- See detailed info: [Vercel Auto-Approval Guide](.github/VERCEL_AUTO_APPROVE.md)
+- Check your trusted status: `.github/manage-trusted-users.sh check <username>`
+
 ### Code Standards
 - **Backend**: Follow Java conventions and Spring Boot best practices
 - **Frontend**: Use ESLint and Prettier for consistent code style
