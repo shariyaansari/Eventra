@@ -18,8 +18,11 @@ export const ThemeProvider = ({ children }) => {
   // Effect to apply the theme class to the body element and save to localStorage
   useEffect(() => {
     const root = document.documentElement; // Get the <html> element
-    root.className = ''; // Clear existing classes
-    root.classList.add(theme); // Add the current theme class 'light' or 'dark'
+    if (theme === 'dark') {
+      root.classList.add('dark'); // Add 'dark' class for Tailwind dark mode
+    } else {
+      root.classList.remove('dark'); // Remove 'dark' class for light mode
+    }
     
     // Save theme preference to localStorage
     localStorage.setItem('eventra-theme', theme);
