@@ -1,54 +1,58 @@
-// src/components/common/ThemeToggleButton.js
+import { useEffect, useState } from "react";
+import { FiSun, FiMoon } from "react-icons/fi";
 
-import React, { useContext } from 'react';
-import { ThemeContext } from '../../context/ThemeContext';
-import { motion } from 'framer-motion';
+// ThemeToggleButton Component
+// ---------------------------
+// A toggle switch that lets the user switch
+// between light mode ☀️ and dark mode 🌙.
+// The state is also stored in localStorage so
+// the preference persists even after reload.
 
 const ThemeToggleButton = () => {
-  // Get theme and toggleTheme from the context
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  // State to track whether dark mode is ON or OFF
+  // Initialized from localStorage (if user already selected a theme before)
+  const [darkMode, setDarkMode] = useState(
+    () => localStorage.getItem("theme") === "dark"
+  );
+
+  // Whenever darkMode changes, update <html> tag's class
+  // and save the current theme in localStorage
+  useEffect(() => {
+    const root = document.documentElement; // root <html> element
+    if (darkMode) {
+      root.classList.add("dark"); // Apply Tailwind's dark styles
+      localStorage.setItem("theme", "dark"); // Save preference
+    } else {
+      root.classList.remove("dark"); // Remove dark styles
+      localStorage.setItem("theme", "light"); // Save preference
+    }
+  }, [darkMode]);
 
   return (
-    <motion.button
-      onClick={toggleTheme}
-      className="relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-transparent hover:border-indigo-300 dark:hover:border-indigo-500"
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-      initial={{ opacity: 0, rotate: -180 }}
-      animate={{ opacity: 1, rotate: 0 }}
-      transition={{ duration: 0.5 }}
-      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+    // Outer clickable container
+    <div
+      className="flex items-center cursor-pointer select-none"
+      onClick={() => setDarkMode((prev) => !prev)} // Toggle darkMode state
     >
-      <motion.div
-        key={theme}
-        initial={{ opacity: 0, rotate: -180 }}
-        animate={{ opacity: 1, rotate: 0 }}
-        exit={{ opacity: 0, rotate: 180 }}
-        transition={{ duration: 0.3 }}
-        className="text-xl"
+      {/* Track (background of toggle switch) */}
+      <div
+        className={`w-16 h-8 rounded-full p-1 bg-gray-300 dark:bg-gray-700 relative`}
       >
-        {theme === 'light' ? (
-          <motion.span
-            className="text-gray-700 dark:text-gray-300"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-          >
-            🌙
-          </motion.span>
-        ) : (
-          <motion.span
-            className="text-yellow-500"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-          >
-            ☀️
-          </motion.span>
-        )}
-      </motion.div>
-      
-      {/* Subtle background glow effect */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-400 to-purple-400 opacity-0 hover:opacity-20 transition-opacity duration-300 -z-10" />
-    </motion.button>
+        {/* Circle that slides left <-> right */}
+        <div
+          className={`w-6 h-6 bg-white rounded-full shadow-lg flex items-center justify-center
+            transform transition-all duration-300 ease-in-out absolute top-1
+            ${darkMode ? "translate-x-8" : "translate-x-0"}`}
+        >
+          {/* Icon inside circle changes depending on mode */}
+          {darkMode ? (
+            <FiSun className="text-yellow-500" /> // Sun icon for dark mode
+          ) : (
+            <FiMoon className="text-gray-700" /> // Moon icon for light mode
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 
