@@ -80,10 +80,6 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-black dark:to-gray-900">
-      {/* Floating Theme Toggle */}
-      <div className="absolute top-6 right-6 z-10">
-        <ThemeToggleButton size="small" showLabel={false} />
-      </div>
       {/* Floating Gradient Shapes */}
       {shapes.map((shape, i) => (
         <motion.div

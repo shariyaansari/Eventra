@@ -13,7 +13,6 @@ import {
 
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import ThemeToggleButton from "../common/ThemeToggleButton";
 
 const UserDashboard = () => {
   // Mock stats
@@ -190,10 +189,6 @@ const UserDashboard = () => {
                 Here's what's happening with your events, hackathons, and projects.
               </p>
             </motion.div>
-            {/* Theme Toggle in Dashboard Header */}
-            <div className="ml-4">
-              <ThemeToggleButton size="default" showLabel={false} />
-            </div>
           </div>
         </motion.div>
 
