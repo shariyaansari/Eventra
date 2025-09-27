@@ -1,11 +1,15 @@
 // Importing necessary React hooks and libraries
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion"; // for animations
+import { Link } from "react-router-dom"; // navigation
 import mockEvents from "./eventsMockData.json"; // mock data file
 import EventHero from "./EventHero"; // Hero section with search
 import EventCard from "./EventCard"; // Card for displaying event details
 import { Grid, List } from "lucide-react"; // icons for toggle view
 import FeedbackButton from "../../components/FeedbackButton"; // Feedback button component
+import { FiCalendar } from "react-icons/fi";
+import { FiRefreshCw } from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi";
 import EventCTA from "./EventCTA";
 import Fuse from "fuse.js";
 
@@ -46,7 +50,7 @@ const EventsPage = () => {
   // -----------------------------
   // Search handler function
   // -----------------------------
-  const handleSearch = useCallback((query = "") => {
+  const handleSearch = (query = "") => {
     setSearchQuery(query);
 
     let results = events;
@@ -65,12 +69,12 @@ const EventsPage = () => {
     });
 
     setFilteredEvents(final);
-  }, [events, filterType, fuse]);
+  };
 
   // Recalculate when filterType or events change
   useEffect(() => {
     handleSearch(searchQuery);
-  }, [events, filterType, handleSearch, searchQuery]);
+  }, [events, filterType]);
 
   // -----------------------------
   // Animation Variants
@@ -79,25 +83,13 @@ const EventsPage = () => {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { 
-        staggerChildren: 0.08,
-        delayChildren: 0.2,
-        duration: 0.6,
-        ease: "easeOut"
-      },
+      transition: { staggerChildren: 0.15 }, // stagger animation for children
     },
   };
 
-  const filterBarVariants = {
-    hidden: { opacity: 0, y: -20 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
+  const item = {
+    hidden: { y: 20, opacity: 0 }, // slide up effect
+    show: { y: 0, opacity: 1, transition: { duration: 0.5 } },
   };
 
   const scrollToCard = () => {
@@ -127,9 +119,8 @@ const EventsPage = () => {
         {/* Filters + Toggle View Section */}
         <motion.div
           className="mb-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
-          variants={filterBarVariants}
-          initial="hidden"
-          animate="show"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
         >
           {/* Filter Buttons */}
           <div className="flex flex-wrap gap-3">
@@ -139,89 +130,51 @@ const EventsPage = () => {
               { key: "past", label: "Past" },
               { key: "conference", label: "Conferences" },
               { key: "workshop", label: "Workshops" },
-            ].map((filter, index) => (
-              <motion.button
+            ].map((filter) => (
+              <button
                 key={filter.key}
                 onClick={() => setFilterType(filter.key)}
-                className={`px-4 py-2 text-sm rounded-full transition-all duration-300 ${
+                // UPDATED: Inactive button styles for dark mode
+                className={`px-4 py-2 text-sm rounded-full transition ${
                   filterType === filter.key
-                    ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg"
+                    ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
                     : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-indigo-50 dark:hover:bg-gray-700"
                 }`}
-                whileHover={{ 
-                  scale: 1.05,
-                  y: -2,
-                  boxShadow: "0 10px 20px rgba(0, 0, 0, 0.1)"
-                }}
-                whileTap={{ 
-                  scale: 0.95,
-                  y: 0
-                }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ 
-                  opacity: 1, 
-                  y: 0,
-                  transition: { 
-                    delay: index * 0.1,
-                    duration: 0.5,
-                    ease: "easeOut"
-                  }
-                }}
               >
                 {filter.label}
-              </motion.button>
+              </button>
             ))}
           </div>
 
           {/* Toggle View Buttons (Grid / List) */}
           {/* UPDATED: Toggle container background */}
-          <motion.div 
-            className="flex items-center space-x-2 bg-white dark:bg-gray-800 rounded-lg p-1 shadow-sm"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1,
-              transition: { 
-                delay: 0.5,
-                duration: 0.4,
-                ease: "easeOut"
-              }
-            }}
-          >
+          <div className="flex items-center space-x-2 bg-white dark:bg-gray-800 rounded-lg p-1 shadow-sm">
             {/* Grid View Button */}
-            <motion.button
+            <button
               onClick={() => setViewMode("grid")}
+              // UPDATED: Inactive toggle styles
               className={`p-2 rounded-md transition-all duration-200 flex items-center justify-center ${
                 viewMode === "grid"
                   ? "bg-gradient-to-r from-indigo-400 to-purple-400 text-white shadow-md"
                   : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
               }`}
-              whileHover={{ 
-                scale: 1.1,
-                rotate: viewMode !== "grid" ? 5 : 0
-              }}
-              whileTap={{ scale: 0.9 }}
             >
               <Grid size={16} />
-            </motion.button>
+            </button>
 
             {/* List View Button */}
-            <motion.button
+            <button
               onClick={() => setViewMode("list")}
+              // UPDATED: Inactive toggle styles
               className={`p-2 rounded-md transition-all duration-200 flex items-center justify-center ${
                 viewMode === "list"
                   ? "bg-gradient-to-r from-indigo-400 to-purple-400 text-white shadow-md"
                   : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
               }`}
-              whileHover={{ 
-                scale: 1.1,
-                rotate: viewMode !== "list" ? -5 : 0
-              }}
-              whileTap={{ scale: 0.9 }}
             >
               <List size={16} />
-            </motion.button>
-          </motion.div>
+            </button>
+          </div>
         </motion.div>
 
         {/* Event Cards Section */}
@@ -239,8 +192,8 @@ const EventsPage = () => {
               animate="show"
               exit={{ opacity: 0 }}
             >
-              {filteredEvents.map((event, index) => (
-                <EventCard key={event.id} event={event} index={index} />
+              {filteredEvents.map((event) => (
+                <EventCard key={event.id} event={event} />
               ))}
             </motion.div>
           ) : (
