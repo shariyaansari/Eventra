@@ -197,7 +197,30 @@ A huge thank you to everyone who has contributed to Eventra! Your efforts make t
 </p>
 
 ### Maintainers
-- **Sandeep Vashishtha** - [@SandeepVashishtha](https://github.com/SandeepVashishtha)
+<table>
+<tr>
+<td align="center">
+<a href="https://github.com/sandeepvashishtha">
+  <img src="https://avatars.githubusercontent.com/u/64915843?v=4" height="140px" width="140px" alt="Sandeep">
+</a><br>
+<sub><b>Sandeep Vashishtha</b><br>
+<a href="https://www.linkedin.com/in/sandeepvashishtha/" target="_blank">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="20" height="20" alt="LinkedIn"/>
+</a>
+</sub>
+</td>
+<td align="center">
+<a href="https://github.com/RhythmPahwa14">
+  <img src="https://avatars.githubusercontent.com/u/170720661?v=4" height="140px" width="140px" alt="Rhythm">
+</a><br>
+<sub><b>Rhythm</b><br>
+<a href="https://www.linkedin.com/in/rhythmpahwa14/" target="_blank">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="20" height="20" alt="LinkedIn"/>
+</a>
+</sub>
+</td>
+</tr>
+</table>
 
 ---
 **Built with ❤️ by the Eventra Team**
