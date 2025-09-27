@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiStar, FiMessageSquare, FiUser, FiMail, FiCheckCircle } from "react-icons/fi";
 import { FaGithub, FaLinkedin, FaDiscord } from "react-icons/fa";
 import { FiChevronDown } from "react-icons/fi"; 
+import { useNavigate } from "react-router-dom";
 import "./FeedbackPage.css";
 
 //Social media links
@@ -291,6 +292,7 @@ const FloatingSelect = ({
 
 // Feedback Page Component
 const FeedbackPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -331,19 +333,12 @@ const FeedbackPage = () => {
     if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email";
     }
-
-    if (!formData.feedbackType) {
-      newErrors.feedbackType = "Please select a feedback type";
-    }
-
+    
+    // feedbackType and rating are optional; only message is required
     if (!formData.message.trim()) {
       newErrors.message = "Message is required";
     } else if (formData.message.trim().length < 10) {
       newErrors.message = "Message should be at least 10 characters";
-    }
-
-    if (formData.rating === 0) {
-      newErrors.rating = "Please provide a rating";
     }
 
     setErrors(newErrors);
@@ -397,16 +392,31 @@ const FeedbackPage = () => {
 
     // Simulate API call
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 300));
 
-      // Show success toast
+      // Save locally in localStorage
+      try {
+        const existing = JSON.parse(localStorage.getItem("eventra_feedback") || "[]");
+        const payload = {
+          name: formData.name?.trim() || null,
+          email: formData.email?.trim() || null,
+          message: formData.message?.trim(),
+          feedbackType: formData.feedbackType || null,
+          rating: formData.rating || null,
+          submittedAt: new Date().toISOString(),
+        };
+        existing.push(payload);
+        localStorage.setItem("eventra_feedback", JSON.stringify(existing));
+      } catch {}
+
+      // Show success toast (might not be visible due to redirect)
       setToast({
         message:
           "Thank you for your feedback! We appreciate your input and will review it carefully.",
         type: "success",
       });
 
-      // Reset form
+      // Reset form and redirect to homepage
       setFormData({
         name: "",
         email: "",
@@ -414,6 +424,8 @@ const FeedbackPage = () => {
         message: "",
         rating: 0,
       });
+
+      navigate("/");
     } catch (error) {
       setToast({
         message: "There was an error submitting your feedback. Please try again.",

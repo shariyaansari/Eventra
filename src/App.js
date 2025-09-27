@@ -5,6 +5,7 @@ import "./App.css";
 import Navbar from "./components/Layout/Navbar";
 import Footer from "./components/Layout/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import FeedbackButton from "./components/FeedbackButton";
 
 // --------------- PAGES
 import Contributors from "./components/Contributors";
@@ -133,6 +134,9 @@ function App() {
               
             />
 
+
+            {/* Global floating Feedback button */}
+            <FeedbackButton />
 
             <Footer />
           </div>
