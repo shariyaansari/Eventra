@@ -28,7 +28,7 @@ import ThemeToggleButton from "../common/ThemeToggleButton";
 const Toast = ({ message, type, onClose }) => {
   return (
     <div
-      className={`fixed bottom-4 right-4 p-4 rounded-md shadow-lg text-white ${
+      className={`fixed bottom-4 left-4 p-4 rounded-md shadow-lg text-white ${
         type === "success" ? "bg-green-500" : "bg-red-500"
       } transition-opacity duration-300`}
     >
