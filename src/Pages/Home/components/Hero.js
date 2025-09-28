@@ -1,9 +1,17 @@
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ThemeToggleButton from "../../../components/common/ThemeToggleButton";
+import Fuse from "fuse.js";
+import { Search, X, Calendar, Trophy, Code, ExternalLink } from "lucide-react";
+
+// Import mock data
+import eventsData from "../../Events/eventsMockData.json";
+import hackathonsData from "../../Hackathons/hackathonMockData.json";
+import projectsData from "../../Projects/mockProjectsData.json";
 
 const Hero = () => {
+  const navigate = useNavigate();
   const phrases = [
     "Amazing Tech Events",
     "Exciting Hackathons Today",
@@ -12,6 +20,9 @@ const Hero = () => {
   ];
 
   const [index, setIndex] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [showResults, setShowResults] = useState(false);
 
   // Change phrase every 3 seconds
   useEffect(() => {
@@ -20,12 +31,69 @@ const Hero = () => {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
   const controls = useAnimation();
 
   useEffect(() => {
     controls.start("show");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [controls]);
+
+  // Global search functionality
+  const allData = [
+    ...eventsData.map(item => ({ ...item, type: 'event', searchType: 'Events' })),
+    ...hackathonsData.map(item => ({ ...item, type: 'hackathon', searchType: 'Hackathons' })),
+    ...projectsData.map(item => ({ ...item, type: 'project', searchType: 'Projects' }))
+  ];
+
+  const fuse = new Fuse(allData, {
+    keys: [
+      "title",
+      "description",
+      "location",
+      "tags",
+      "techStack",
+      "category",
+      "author",
+      "organizer",
+      "type"
+    ],
+    threshold: 0.3,
+    includeScore: true,
+  });
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query.trim()) {
+      const results = fuse.search(query).slice(0, 8); // Limit to 8 results
+      setSearchResults(results);
+      setShowResults(true);
+    } else {
+      setSearchResults([]);
+      setShowResults(false);
+    }
+  };
+
+  const handleResultClick = (result, type) => {
+    setShowResults(false);
+    setSearchQuery("");
+    if (type === 'event') {
+      navigate('/events');
+    } else if (type === 'hackathon') {
+      navigate('/hackathons');
+    } else if (type === 'project') {
+      navigate('/projects');
+    }
+  };
+
+  const getResultIcon = (type) => {
+    switch (type) {
+      case 'event': return <Calendar className="w-4 h-4" />;
+      case 'hackathon': return <Trophy className="w-4 h-4" />;
+      case 'project': return <Code className="w-4 h-4" />;
+      default: return <Search className="w-4 h-4" />;
+    }
+  };
 
   const container = {
     hidden: {},
@@ -143,12 +211,113 @@ const Hero = () => {
           <motion.p
             variants={fadeUp}
             // Subtext color
-            className="text-base sm:text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mt-2 mb-12"
+            className="text-base sm:text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mt-2 mb-8"
           >
             "Connect with developers, learn new skills, and grow your network at
             the best tech events, hackathons, and workshops in your area."
           </motion.p>
 
+          {/* Global Search Bar */}
+          <motion.div
+            variants={fadeUp}
+            className="w-full max-w-2xl mx-auto mb-12 relative"
+          >
+            <div className="relative group">
+              <div className="absolute inset-y-0 left-0 pl-6 flex items-center z-10 pointer-events-none">
+                <Search className="h-5 w-5 text-gray-400 dark:text-gray-500 group-focus-within:text-indigo-500 dark:group-focus-within:text-indigo-400 transition-colors duration-300" />
+              </div>
+
+              <input
+                type="text"
+                placeholder="Search events, hackathons, projects..."
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
+                className="block w-full pl-14 pr-12 py-4 text-lg text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border-2 border-gray-200 dark:border-gray-700 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/20 dark:focus:ring-indigo-400/20 focus:border-indigo-500 dark:focus:border-indigo-400 transition-all duration-300 shadow-lg hover:shadow-xl"
+                onFocus={() => searchQuery && setShowResults(true)}
+                onBlur={() => setTimeout(() => setShowResults(false), 200)}
+              />
+
+              {searchQuery && (
+                <motion.button
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                  whileHover={{ rotate: 90, scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => {
+                    setSearchQuery("");
+                    setSearchResults([]);
+                    setShowResults(false);
+                  }}
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors z-10"
+                >
+                  <X className="h-5 w-5" />
+                </motion.button>
+              )}
+            </div>
+
+            {/* Search Results Dropdown */}
+            <AnimatePresence>
+              {showResults && searchResults.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 max-h-96 overflow-y-auto z-50"
+                >
+                  <div className="p-4">
+                    <div className="text-sm text-gray-500 dark:text-gray-400 mb-3 font-medium">
+                      Search Results ({searchResults.length})
+                    </div>
+                    <div className="space-y-2">
+                      {searchResults.map((result, index) => (
+                        <motion.div
+                          key={`${result.item.type}-${result.item.id}`}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.05 }}
+                          onClick={() => handleResultClick(result.item, result.item.type)}
+                          className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer transition-colors group"
+                        >
+                          <div className="flex-shrink-0 p-2 bg-indigo-100 dark:bg-indigo-900/50 rounded-lg text-indigo-600 dark:text-indigo-400 group-hover:bg-indigo-200 dark:group-hover:bg-indigo-800/50 transition-colors">
+                            {getResultIcon(result.item.type)}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
+                                {result.item.title}
+                              </h4>
+                              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+                                {result.item.searchType}
+                              </span>
+                            </div>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
+                              {result.item.description?.substring(0, 100)}...
+                            </p>
+                          </div>
+                          <ExternalLink className="w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors" />
+                        </motion.div>
+                      ))}
+                    </div>
+                    {searchResults.length >= 8 && (
+                      <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
+                        <button
+                          onClick={() => {
+                            setShowResults(false);
+                            navigate('/events');
+                          }}
+                          className="w-full text-center text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium transition-colors"
+                        >
+                          View all results →
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
 
           {/* Buttons */}
           <motion.div

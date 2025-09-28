@@ -202,8 +202,8 @@ const Community = () => {
       </div>
 
       <motion.div
-        // UPDATED: CTA box background
-        className="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-gray-700/50 dark:to-gray-800/50 rounded-2xl p-8 sm:p-12 text-center max-w-5xl mx-4 sm:mx-auto"
+        // Enhanced CTA box with improved background and styling
+        className="relative bg-gradient-to-br from-indigo-100 via-purple-50 to-blue-100 dark:from-gray-800 dark:via-indigo-900/30 dark:to-gray-900 rounded-3xl p-8 sm:p-12 text-center max-w-5xl mx-4 sm:mx-auto overflow-hidden shadow-xl"
         initial={{ opacity: 0, y: 50 }}
         animate={controls}
         variants={{
@@ -219,28 +219,111 @@ const Community = () => {
           },
         }}
       >
-        {/* UPDATED: CTA text */}
-        <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-          Ready to create your first event?
-        </h3>
-        <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
-          Join hundreds of organizations using Eventra for their events
-        </p>
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
-          {/* Primary button gradient is fine for both themes */}
-          <Link
-            to="/signup"
-            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 transition-all shadow-md hover:shadow-lg"
-          >
-            Create your profile
-          </Link>
-          {/* UPDATED: Secondary button styles */}
-          <Link
-            to="/events"
-            className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all shadow-sm hover:shadow-md"
-          >
-            Browse hackathons
-          </Link>
+        {/* Decorative background elements */}
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-4 right-8 w-20 h-20 bg-gradient-to-br from-indigo-200 to-purple-200 dark:from-indigo-600 dark:to-purple-600 rounded-full opacity-20 animate-pulse"></div>
+          <div className="absolute bottom-4 left-8 w-16 h-16 bg-gradient-to-br from-blue-200 to-indigo-200 dark:from-blue-600 dark:to-indigo-600 rounded-full opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
+        </div>
+
+        {/* Enhanced CTA content */}
+        <div className="relative z-10">
+          {/* Icon and heading */}
+          <div className="flex items-center justify-center mb-6">
+            <motion.div
+              className="p-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full mr-4 shadow-lg"
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <svg
+                className="w-8 h-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+            </motion.div>
+            <h3 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-gray-100 leading-tight">
+              Ready to create your first event?
+            </h3>
+          </div>
+
+          {/* Enhanced subtitle */}
+          <p className="text-xl text-gray-700 dark:text-gray-300 mb-10 max-w-3xl mx-auto font-medium leading-relaxed">
+            Join hundreds of organizations using Eventra for their events and start building amazing experiences today
+          </p>
+
+          {/* Enhanced buttons with micro-interactions */}
+          <div className="flex flex-col sm:flex-row justify-center gap-6">
+            {/* Primary button with enhanced styling */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <Link
+                to="/signup"
+                className="group relative inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-xl text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 hover:from-indigo-700 hover:via-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-2xl overflow-hidden"
+              >
+                <span className="relative z-10 flex items-center">
+                  Create your profile
+                  <motion.svg
+                    className="ml-3 w-5 h-5 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    initial={{ x: 0 }}
+                    whileHover={{ x: 5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </motion.svg>
+                </span>
+                {/* Animated background glow */}
+                <span className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              </Link>
+            </motion.div>
+
+            {/* Secondary button with enhanced styling */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <Link
+                to="/events"
+                className="group relative inline-flex items-center justify-center px-8 py-4 border-2 border-gray-300 dark:border-gray-500 text-lg font-semibold rounded-xl text-gray-700 dark:text-gray-200 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-white dark:hover:bg-gray-700 hover:border-indigo-400 dark:hover:border-indigo-500 transition-all duration-300 shadow-md hover:shadow-xl"
+              >
+                <span className="relative z-10 flex items-center">
+                  Browse events
+                  <motion.svg
+                    className="ml-3 w-5 h-5 text-gray-600 dark:text-gray-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    initial={{ x: 0 }}
+                    whileHover={{ x: 5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </motion.svg>
+                </span>
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </motion.div>
     </section>
