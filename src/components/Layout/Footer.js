@@ -314,11 +314,7 @@ const Footer = () => {
             <p className="text-sm text-gray-500 dark:text-gray-400">
               © {currentYear} Eventra. All rights reserved.
             </p>
-            {/* Theme Toggle in Footer */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-500 dark:text-gray-400">Theme:</span>
-              <ThemeToggleButton size="small" showLabel={true} />
-            </div>
+            
           </div>
         </div>
       </footer>
