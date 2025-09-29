@@ -22,7 +22,7 @@ import {
   FaComments,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import ThemeToggleButton from "../common/ThemeToggleButton";
+
 
 // Toast Component
 const Toast = ({ message, type, onClose }) => {
@@ -161,16 +161,6 @@ const Footer = () => {
       ),
     },
     {
-      name: "X (formerly Twitter)",
-      href: "https://x.com/#",
-      icon: (
-        <SiX
-          className="size-10 p-2 rounded-full text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:scale-110 hover:-translate-y-1"
-          size={20}
-        />
-      ),
-    },
-    {
       name: "LinkedIn",
       href: "https://www.linkedin.com/in/sandeepvashishtha/",
       icon: (
@@ -179,27 +169,7 @@ const Footer = () => {
           size={20}
         />
       ),
-    },
-    {
-      name: "Discord",
-      href: "#discord",
-      icon: (
-        <FaDiscord
-          className="size-10 p-2 rounded-full text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white hover:scale-110 hover:-translate-y-1"
-          size={20}
-        />
-      ),
-    },
-    {
-      name: "Telegram",
-      href: "https://t.me/eventra",
-      icon: (
-        <FaTelegram
-          className="size-10 p-2 rounded-full text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 hover:bg-blue-500 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white hover:scale-110 hover:-translate-y-1"
-          size={20}
-        />
-      ),
-    },
+    }
   ];
 
   return (
@@ -312,7 +282,7 @@ const Footer = () => {
           <div className="border-t border-gray-300 dark:border-gray-700 mt-8 pt-4 pb-2 flex flex-col sm:flex-row justify-between items-center gap-4">
             {/* UPDATED: Added dark mode text color */}
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              © {currentYear} Eventra. All rights reserved.
+              © {currentYear} Eventra. All rights reserved. Created with ❤️ by Sandeep Vashishtha, Rhythm and the amazing open-source community.
             </p>
             
           </div>
